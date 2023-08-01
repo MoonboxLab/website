@@ -19,7 +19,6 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
       <body className={`${inter.className} min-h-screen`}>
         <ToastContainer />
         <WagmiProviders>

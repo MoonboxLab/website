@@ -10,10 +10,6 @@ const Header: React.FC = () => {
   const { openConnectModal } = useConnectModal()
   const { address } = useAccount()
 
-  useEffect(() => {
-    // @ts-ignore
-    console.log(window.returnCitySN)
-  }, [])
 
   return <header className='h-12 sm:h-[72px] 3xl:h-[80px] flex items-center'>
     <div className=' hidden w-full sm:flex sm:px-[20px] xl:px-[32px] justify-between items-center 3xl:px-[50px] bg-white'>

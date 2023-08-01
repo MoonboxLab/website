@@ -13,7 +13,6 @@ import { useMemo } from "react";
 import moment from "moment";
 import { useCountDown } from "ahooks";
 
-
 export default function Mint() {
 
   // 读取合约相关数据

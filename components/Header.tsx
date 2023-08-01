@@ -1,15 +1,22 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from '@/components/ui/button';
 import { ConnectButton, useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
-
+import { useEffect } from "react";
 
 const Header: React.FC = () => {
   const { openConnectModal } = useConnectModal()
   const { address } = useAccount()
 
-  return <header className=' h-12 sm:h-auto  '>
-    <div className=' hidden  sm:flex justify-between items-center px-[50px] py-[24px] bg-white'>
+  useEffect(() => {
+    // @ts-ignore
+    console.log(window.returnCitySN)
+  }, [])
+
+  return <header className='h-12 sm:h-[72px] 3xl:h-[80px] flex items-center'>
+    <div className=' hidden w-full sm:flex sm:px-[20px] xl:px-[32px] justify-between items-center 3xl:px-[50px] bg-white'>
       <Link href={"/"}>
         <div className=' font-extrabold'>
           Logo
@@ -24,15 +31,14 @@ const Header: React.FC = () => {
       <div>
         {
           address ? <ConnectButton label='Connect' accountStatus={"address"} showBalance={false} chainStatus={"none"} /> :
-            <Button className=' bg-active rounded-[30px] hover:bg-active' onClick={() => {
+            <Button className=' w-[140px] bg-active rounded-[30px] hover:bg-active' onClick={() => {
               openConnectModal && openConnectModal()
-              console.log("click", openConnectModal)
             }}>Connect</Button>
         }
 
       </div>
     </div>
-    <div className='sm:hidden h-full flex justify-between items-center px-5'>
+    <div className='sm:hidden h-full w-full flex justify-between items-center px-5'>
       <Link href={"/"}>
         <div className=' font-semibold'>
           Logo

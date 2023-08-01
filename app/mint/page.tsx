@@ -8,15 +8,11 @@ import MintSection from "./MintSection";
 import StageProgress from "./StageProgress";
 import { PresaleMintEndTime, PresaleMintStartTime, PublicMintEndTime, StageType } from "@/constants/stage";
 import { useContractReads } from "wagmi";
-import { CONTRACT_ABI, NFT_CONTRACT_ADDRESS } from "@/constants/contract";
+import { CONTRACT_ABI, NFT_CONTRACT_ADDRESS, ContractInfo } from "@/constants/contract";
 import { useMemo } from "react";
 import moment from "moment";
 import { useCountDown } from "ahooks";
 
-export const ContractInfo = {
-  address: NFT_CONTRACT_ADDRESS,
-  abi: CONTRACT_ABI,
-}
 
 export default function Mint() {
 

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { CONTRACT_ABI, NFT_CONTRACT_ADDRESS, PRESALE_PRICE, PUBLICSALE_PRICE, TOTAL_NFT_COUNT } from "@/constants/contract"
+import { CONTRACT_ABI, ContractInfo, NFT_CONTRACT_ADDRESS, PRESALE_PRICE, PUBLICSALE_PRICE, TOTAL_NFT_COUNT } from "@/constants/contract"
 import { useCountDown } from "ahooks"
 import { useMemo, useState } from "react"
 import Image from "next/image"
@@ -9,9 +9,9 @@ import { useConnectModal } from "@rainbow-me/rainbowkit"
 import clsx from "clsx"
 import { formatAddress } from "@/lib/utils"
 import { toast } from "react-toastify"
-import { ContractInfo } from "./page"
 import { PresaleMintEndTime, PresaleMintStartTime, PublicMintEndTime, PublicMintStartTime, StageType, StagesInfo } from "@/constants/stage"
 import { formatEther } from "viem"
+
 
 interface MintSectionProps {
   currentStage: StageType
@@ -261,7 +261,8 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
         }
       </p>
       <div className="hidden lg:block text-[30px] leading-[30px] font-medium my-[10px] 3xl:text-4xl 3xl:leading-[36px]">
-        <span className=" text-active">{countDay || '00'}</span>d:<span className=" text-active">{countHour || '00'}</span>h:<span className=" text-active">{countMinute || "00"}</span>m:<span className="countdown text-active"><span style={{ "--value": countSecond || "00" }}></span></span>s
+        {/* @ts-ignore */}
+        <span className=" text-active">{countDay || '00'}</span>d:<span className=" text-active">{countHour || '00'}</span>h:<span className=" text-active">{countMinute || "00"}</span>m:<span className="countdown text-active"><span style={{ "--value": countSecond}}></span></span>s
       </div>
 
       <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-[10px] justify-between  3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-5">

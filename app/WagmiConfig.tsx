@@ -39,7 +39,7 @@ const wagmiConfig = createConfig({
 })
 
 
-export function WagmiConfigClient({ children }) {
+export function WagmiConfigClient({ children }: any) {
 
   return <WagmiConfig config={wagmiConfig}>
     {children}

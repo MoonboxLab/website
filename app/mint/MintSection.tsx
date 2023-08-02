@@ -47,16 +47,27 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
         ...ContractInfo,
         functionName: 'balanceOf',
         args: [address as `0x${string}`]
+      },
+      {
+        ...ContractInfo,
+        functionName: 'numberAllowedToMint',
+        args: [address as `0x${string}`]
       }
     ],
     watch: true,
   })
 
-  const [totalSupply, isPresaleStage, isPublicStage, userBalance] = useMemo(() => {
+  const [totalSupply, isPresaleStage, isPublicStage, userBalance, isInWhitelist] = useMemo(() => {
     // console.log(contractData)
-    const [mintSupply, isPresale, isPublic, userBalance] = contractData || []
+    const [mintSupply, isPresale, isPublic, userBalance, presaleAllowNumber] = contractData || []
 
-    return [Number(mintSupply?.result || 0), isPresale?.result || false, isPublic?.result || false, Number(userBalance?.result || 0)]
+    return [
+      Number(mintSupply?.result || 0),
+      isPresale?.result || false,
+      isPublic?.result || false,
+      Number(userBalance?.result || 0),
+      (Number(presaleAllowNumber?.result || 0)) > 0
+    ]
   }, [contractData])
 
   const isExtendLimit = useMemo(() => {
@@ -175,12 +186,10 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       isLoading ||
       isExtendLimit ||
       (currentStage === StageType.Presale && !isPresaleStage) || // 已进入 Presale 阶段，但合约 Presale Mint 接口尚未开放
+      (currentStage === StageType.Presale && !isInWhitelist) || // 已经进入 Presale 阶段，但当前地址不在预售白名单中
       (currentStage === StageType.PublicSale && !isPublicStage) || // 已进入 Public 阶段，但合约 Public Mint 接口尚未开放 或 合约 Public Mint 接口已关闭
       (currentStage === StageType.EndSale)
     ) return
-
-
-    // TODO:如果是 Presale 阶段，需判断当前地址是否在白名单中
 
     setIsLoading(true)
 
@@ -216,7 +225,6 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       return
     }
     if (publicSaleMint) {
-
       try {
         await publicSaleMint()
 
@@ -228,8 +236,6 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
     }
     setIsLoading(false)
   }
-
-
 
 
   return <section className="w-full flex flex-col p-5 items-center space-y-[20px] sm:max-w-[680px] lg:max-w-[864px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[40px] lg:p-0 lg:py-10 2xl:max-w-[1200px] 3xl:py-[70px] 3xl:space-x-[70px]">
@@ -262,7 +268,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       </p>
       <div className="hidden lg:block text-[30px] leading-[30px] font-medium my-[10px] 3xl:text-4xl 3xl:leading-[36px]">
         {/* @ts-ignore */}
-        <span className=" text-active">{countDay || '00'}</span>d:<span className=" text-active">{countHour || '00'}</span>h:<span className=" text-active">{countMinute || "00"}</span>m:<span className="countdown text-active"><span style={{ "--value": countSecond}}></span></span>s
+        <span className=" text-active">{countDay || '00'}</span>d:<span className=" text-active">{countHour || '00'}</span>h:<span className=" text-active">{countMinute || "00"}</span>m:<span className="countdown text-active"><span style={{ "--value": countSecond }}></span></span>s
       </div>
 
       <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-[10px] justify-between  3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-5">
@@ -306,6 +312,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
                 "bg-black/20 hover:bg-black/20 active:bg-black/20 cursor-not-allowed":
                   isExtendLimit ||
                   (currentStage === StageType.Presale && !isPresaleStage) || // 已进入 Presale 阶段，但合约 Presale Mint 接口尚未开放
+                  (currentStage === StageType.Presale && !isInWhitelist) || // 已经进入 Presale 阶段，但当前地址不在预售白名单中
                   (currentStage === StageType.PublicSale && !isPublicStage) || // 已进入 Public 阶段，但合约 Public Mint 接口尚未开放 或 合约 Public Mint 接口已关闭
                   (currentStage === StageType.EndSale) // Public Mint stage end
               })
@@ -322,14 +329,25 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
             Connect Wallet
           </Button>
       }
+
       {
-        isExtendLimit &&
-        <span className=" text-active text-base font-medium leading-[22px] mt-2 inline-flex items-center">
+        isExtendLimit && <span className=" text-active text-base font-medium leading-[22px] mt-2 inline-flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>
-          Address {formatAddress(address, 4)} has minted 2 NFTs yet!</span>
+          Address {formatAddress(address, 4)} has minted 2 NFTs yet!
+        </span>
       }
+
+      {/* {
+        isPresaleStage && !isInWhitelist &&
+        <span className="text-active text-base font-medium leading-[22px] mt-2 inline-flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          </svg>
+          Address {formatAddress(address, 4)} is not in presale whitelist!
+        </span>
+      } */}
     </div>
   </section>
 }

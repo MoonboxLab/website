@@ -338,7 +338,6 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
           Address {formatAddress(address, 4)} has minted 2 NFTs yet!
         </span>
       }
-
       {/* {
         isPresaleStage && !isInWhitelist &&
         <span className="text-active text-base font-medium leading-[22px] mt-2 inline-flex items-center">

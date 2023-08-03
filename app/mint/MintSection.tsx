@@ -12,7 +12,6 @@ import { toast } from "react-toastify"
 import { PresaleMintEndTime, PresaleMintStartTime, PublicMintEndTime, PublicMintStartTime, StageType, StagesInfo } from "@/constants/stage"
 import { formatEther } from "viem"
 
-
 interface MintSectionProps {
   currentStage: StageType
 }
@@ -331,7 +330,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       }
 
       {
-        isExtendLimit && <span className=" text-active text-base font-medium leading-[22px] mt-2 inline-flex items-center">
+        isExtendLimit && <span className=" text-active text-sm lg:text-base font-medium leading-[22px] mt-2 inline-flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>
@@ -339,16 +338,16 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
         </span>
       }
 
-      
-      {/* {
-        isPresaleStage && !isInWhitelist &&
-        <span className="text-active text-base font-medium leading-[22px] mt-2 inline-flex items-center">
+      {
+        Boolean(isPresaleStage) && !isInWhitelist && address &&
+        <span className="text-active text-sm lg:text-base font-medium leading-[22px] mt-2 inline-flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>
-          Address {formatAddress(address, 4)} is not in presale whitelist!
+          {/* Address {formatAddress(address, 4)} is not in presale whitelist! */}
+          Current address is not in presale whitelist!
         </span>
-      } */}
+      }
     </div>
   </section>
 }

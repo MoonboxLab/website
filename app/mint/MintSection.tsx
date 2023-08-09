@@ -277,7 +277,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       <Progress className=" hidden lg:block max-w-[400px] h-2 mt-3 bg-[#E9E9E9FF] 4xl:mt-4" value={totalSupply / 100} />
 
 
-      <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-5 lg:mt-[54px] 3xl:mt-[48px]  4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-[52.5px]">
+      <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-5 lg:mt-[54px] 3xl:mt-[40px] 4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-[52.5px]">
         <span className=" grow">Amount: </span>
         <div className=" inline-flex items-center">
           <Button
@@ -304,7 +304,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       {
         address ?
           <Button className={
-            clsx("w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 4xl:h-14 4xl:mt-5 4xl:rounded-[28px]",
+            clsx("w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 3xl:h-12 3xl:rounded-[24px] 4xl:h-14 4xl:mt-5 4xl:rounded-[28px]",
               { " opacity-70": isLoading },
               {
                 "bg-black/20 hover:bg-black/20 active:bg-black/20 cursor-not-allowed":
@@ -321,7 +321,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
             Mint
           </Button>
           :
-          <Button className="w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 4xl:h-14 4xl:mt-5 4xl:rounded-[28px]"
+          <Button className="w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 3xl:h-12 3xl:rounded-[24px] 4xl:h-14 4xl:mt-5 4xl:rounded-[28px]"
             onClick={openConnectModal}
           >
             Connect Wallet

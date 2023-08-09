@@ -30,4 +30,4 @@ export const PresaleMintStartTime = "2023-07-31 16:50:00"
 export const PresaleMintEndTime = "2023-07-31 16:51:00"
 
 export const PublicMintStartTime = "2023-07-31 16:52:00"
-export const PublicMintEndTime = "2023-08-07 16:53:00"
+export const PublicMintEndTime = "2023-08-30 16:53:00"

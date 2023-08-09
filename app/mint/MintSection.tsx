@@ -236,10 +236,9 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
     setIsLoading(false)
   }
 
+  return <section className="w-full flex flex-col p-5 items-center space-y-[20px] sm:max-w-[680px] lg:max-w-[864px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[40px] lg:p-0 lg:py-10 2xl:max-w-[1200px] 4xl:py-[70px] 4xl:space-x-[70px]">
 
-  return <section className="w-full flex flex-col p-5 items-center space-y-[20px] sm:max-w-[680px] lg:max-w-[864px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[40px] lg:p-0 lg:py-10 2xl:max-w-[1200px] 3xl:py-[70px] 3xl:space-x-[70px]">
-
-    <div className=" relative overflow-hidden w-full max-w-[400px] max-h-[400px] lg:max-w-[420px] lg:max-h-[420px] 3xl:max-h-[530px] 3xl:max-w-[530px] aspect-square bg-gray-600 rounded-[10px]">
+    <div className="relative overflow-hidden w-full max-w-[400px] max-h-[400px] lg:max-w-[420px] lg:max-h-[420px] 4xl:max-h-[530px] 4xl:max-w-[530px] aspect-square bg-gray-600 rounded-[10px]">
       <Image src="/alien_nft_cover.svg" alt="nft_cover" fill />
       <div className=" absolute pb-5 pl-5 bottom-0 w-full bg-gradient-to-b from-white/5 to-[#f3e5d1]/70 sm:hidden">
         <p className=" text-white text-base leading-4 font-medium">End in:</p>
@@ -247,38 +246,38 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       </div>
     </div>
 
-    <div className=" w-full flex flex-col justify-start items-start lg:max-w-[350px] 3xl:max-w-[400px]">
-      <h3 className=" text-2xl leading-6 font-bold lg:text-[30px] lg:leading-[30px] 2xl:text-4xl 2xl:leading-9 3xl:text-5xl 3xl:leading-[48px]">
+    <div className=" w-full flex flex-col justify-start items-start lg:max-w-[350px] 4xl:max-w-[400px]">
+      <h3 className=" text-2xl leading-6 font-bold lg:text-[30px] lg:leading-[30px] 3xl:text-4xl 3xl:leading-9 4xl:text-5xl 4xl:leading-[48px]">
         {StagesInfo[currentStage]?.name}
       </h3>
-      <p className=" hidden lg:block text-base leading-4 font-medium mt-[10px] lg:mt-3 3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-4">Supply: {TOTAL_NFT_COUNT}</p>
-      <p className=" text-base leading-4 font-medium mt-[10px] lg:mt-3  3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-4">
+      <p className="hidden lg:block text-base leading-4 font-medium mt-[10px] lg:mt-3 4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-4">Supply: {TOTAL_NFT_COUNT}</p>
+      <p className=" text-base leading-4 font-medium mt-[10px] lg:mt-3  4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-4">
         Price: {currentStage === StageType.Presale ?
           formatEther(PRESALE_PRICE) :
           formatEther(PUBLICSALE_PRICE)}
         ETH
       </p>
-      <p className=" text-base leading-4 font-medium mt-[10px] lg:mt-3  3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-4">Max mint per wallet: 2</p>
+      <p className="text-base leading-4 font-medium mt-[10px] lg:mt-3  4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-4">Max mint per wallet: 2</p>
 
-      <p className=" hidden lg:block text-base leading-4 font-medium mt-10  3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-[60px]">
+      <p className="hidden lg:block text-base leading-4 font-medium mt-10  4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-[60px]">
         {
           (presaleStartTime || (!presaleEndTime && publicSaleStartTime)) ? 'Start in:' : 'End in:'
         }
       </p>
-      <div className="hidden lg:block text-[30px] leading-[30px] font-medium my-[10px] 3xl:text-4xl 3xl:leading-[36px]">
+      <div className="hidden lg:block text-[30px] leading-[30px] font-medium my-[10px] 4xl:text-4xl 4xl:leading-[36px]">
         {/* @ts-ignore */}
         <span className=" text-active">{countDay || '00'}</span>d:<span className=" text-active">{countHour || '00'}</span>h:<span className=" text-active">{countMinute || "00"}</span>m:<span className="countdown text-active"><span style={{ "--value": countSecond }}></span></span>s
       </div>
 
-      <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-[10px] justify-between  3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-5">
+      <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-[10px] justify-between  4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-5">
         <span>Progress: </span>
         <Progress className=" lg:hidden mx-[10px] h-2 bg-[#E9E9E9FF]" value={totalSupply / 100} />
         <span>{totalSupply}/{TOTAL_NFT_COUNT}</span>
       </div>
-      <Progress className=" hidden lg:block max-w-[400px] h-2 mt-3 bg-[#E9E9E9FF] 3xl:mt-4" value={totalSupply / 100} />
+      <Progress className=" hidden lg:block max-w-[400px] h-2 mt-3 bg-[#E9E9E9FF] 4xl:mt-4" value={totalSupply / 100} />
 
 
-      <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-5 lg:mt-[50px]  3xl:text-[21px] 3xl:leading-[21px] 3xl:mt-[52px]">
+      <div className="w-full max-w-[400px] inline-flex items-center text-base leading-4 font-medium mt-5 lg:mt-[54px] 3xl:mt-[48px]  4xl:text-[21px] 4xl:leading-[21px] 4xl:mt-[52.5px]">
         <span className=" grow">Amount: </span>
         <div className=" inline-flex items-center">
           <Button
@@ -305,7 +304,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       {
         address ?
           <Button className={
-            clsx("w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 3xl:h-14 3xl:mt-5",
+            clsx("w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 4xl:h-14 4xl:mt-5 4xl:rounded-[28px]",
               { " opacity-70": isLoading },
               {
                 "bg-black/20 hover:bg-black/20 active:bg-black/20 cursor-not-allowed":
@@ -322,7 +321,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
             Mint
           </Button>
           :
-          <Button className="w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 3xl:h-14 3xl:mt-5"
+          <Button className="w-full h-12 rounded-3xl mt-3 bg-active hover:bg-active active:bg-active text-lg leading-[18px] font-bold lg:h-10 lg:mt-5 lg:max-w-[400px] 4xl:h-14 4xl:mt-5 4xl:rounded-[28px]"
             onClick={openConnectModal}
           >
             Connect Wallet
@@ -330,7 +329,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
       }
 
       {
-        isExtendLimit && <span className=" text-active text-sm lg:text-base font-medium leading-[22px] mt-2 inline-flex items-center">
+        isExtendLimit && <span className=" text-active text-sm  4xl:text-base font-medium leading-[22px] mt-2 inline-flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>
@@ -340,7 +339,7 @@ const MintSection: React.FC<MintSectionProps> = (props) => {
 
       {
         Boolean(isPresaleStage) && !isInWhitelist && address &&
-        <span className="text-active text-sm lg:text-base font-medium leading-[22px] mt-2 inline-flex items-center">
+        <span className="text-active text-sm 4xl:text-base font-medium leading-[22px] mt-2 inline-flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>

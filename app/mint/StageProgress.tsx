@@ -39,19 +39,19 @@ const StageProgress: React.FC<StageProgressProps> = (props) => {
 
       <div className={clsx("relative z-20 bg-white text-black/30", { '!text-black/100': currentStage == StageType.WhitelistPhase })}>
         <h3 className=" text-[18px] leading-[40px] font-bold w-[170px] h-[40px] rounded-[20px] border-dashed border-[1px] border-[#0000004C;] text-center xl:w-[200px] ">{StagesInfo[StageType.WhitelistPhase].name}:</h3>
-        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center ">{StagesInfo[StageType.WhitelistPhase].desc}</p>
+        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center xl:max-w-[200px]">{StagesInfo[StageType.WhitelistPhase].desc}</p>
       </div>
       <div className={clsx("relative z-20 bg-white text-black/30", { '!text-black/100': currentStage === StageType.Presale })}>
         <h3 className=" text-[18px] leading-[40px] font-bold w-[170px] h-[40px] rounded-[20px] border-dashed border-[1px] border-[#0000004C;] text-center xl:w-[200px]">{StagesInfo[StageType.Presale].name}:</h3>
-        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center ">{StagesInfo[StageType.Presale].desc}</p>
+        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center xl:max-w-[200px]">{StagesInfo[StageType.Presale].desc}</p>
       </div>
       <div className={clsx("relative z-20 bg-white text-black/30", { '!text-black/100': currentStage === StageType.PublicSale })}>
         <h3 className=" text-[18px] leading-[40px] font-bold w-[170px] h-[40px] rounded-[20px] border-dashed border-[1px] border-[#0000004C;] text-center xl:w-[200px]">{StagesInfo[StageType.PublicSale].name}:</h3>
-        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center ">{StagesInfo[StageType.PublicSale].desc}</p>
+        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center xl:max-w-[200px]">{StagesInfo[StageType.PublicSale].desc}</p>
       </div>
       <div className={clsx("relative z-20 bg-white text-black/30", { '!text-black/100': currentStage === StageType.EndSale })}>
         <h3 className=" text-[18px] leading-[40px] font-bold w-[170px] h-[40px] rounded-[20px] border-dashed border-[1px] border-[#0000004C;] text-center xl:w-[200px]">{StagesInfo[StageType.EndSale].name}:</h3>
-        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center ">{StagesInfo[StageType.EndSale].desc}</p>
+        <p className=" text-base leading-[21px] font-medium mt-4 max-w-[170px] text-center xl:max-w-[200px]">{StagesInfo[StageType.EndSale].desc}</p>
       </div>
     </div>
   </section >

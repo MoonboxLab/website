@@ -50,10 +50,9 @@ export default function Mint() {
   }, [contractData, endTimeCount])
 
 
-
   return <div className=" min-h-[calc(100vh-88px)]">
-    <div className="h-[6px] lg:h-[10px] 3xl:h-[12px] bg-[#f3f3f3]"></div>
-    <div className=" 2xl:max-w-[1200px] 3xl:max-w-[1200px] bg-white m-auto pb-[140px] flex flex-col items-center">
+    <div className="h-[6px] lg:h-[10px] 4xl:h-[12px] bg-[#f3f3f3]"></div>
+    <div className=" 2xl:max-w-[1200px] 4xl:max-w-[1200px] bg-white m-auto lg:pb-[140px] flex flex-col items-center">
 
       <MintSection currentStage={currentStage} />
 

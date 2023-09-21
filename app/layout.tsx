@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen`}>
         <ToastContainer />
         <WagmiProviders>
-          <Header />
+          {/* <Header /> */}
           {children}
         </WagmiProviders>
       </body>

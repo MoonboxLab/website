@@ -13,7 +13,7 @@ export default function Home() {
   const [playingMedia, setPlayingMedia] = useState<boolean>(false);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-gray-500">
+    <main className="flex h-screen flex-col items-center justify-between bg-gray-500">
       <header className=' absolute z-50 top-0 flex items-center justify-between w-full px-[16px] mt-[20px] lg:px-[40px] lg:mt-[40px]'>
         <div className=' relative w-[177px] h-[36px] lg:w-[236px] lg:h-[48px]'>
           <Image src={"/moonbox_logo_white.png"} alt='logo' priority={true} fill />
@@ -40,7 +40,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className=' hidden sm:block h-screen w-screen relative'>
+      <div className=' hidden sm:block h-full w-screen relative'>
         <ReactPlayer
           // @ts-ignore
           ref={playerRef}
@@ -70,7 +70,7 @@ export default function Home() {
       </div>
 
       {/* Mobile Video */}
-      <div className='h-screen w-screen relative sm:hidden flex flex-col justify-center'>
+      <div className='h-full w-screen relative sm:hidden flex flex-col justify-center'>
         <div className='w-full h-full absolute top-0 left-0 '>
           <Image src={"/home_video_cover_mobile.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
           {playingMedia && <div className='w-full h-full bg-black/80 relative z-[100]'></div>}

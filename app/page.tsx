@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import Modal from 'react-modal'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 export default function Home() {
   const playerRef = useRef<ReactPlayer>();
@@ -39,7 +40,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className='h-screen w-screen relative'>
+      <div className=' hidden sm:block h-screen w-screen relative'>
         <ReactPlayer
           // @ts-ignore
           ref={playerRef}
@@ -58,16 +59,40 @@ export default function Home() {
           width={"100%"}
           height={"100%"}
           url={"/test_video.mp4"}
-          // playIcon={<div className=' h-[96px] w-[96px] rounded-full bg-black/80 inline-flex items-center justify-center border-[4px]'>
-          //   <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="36" height="36"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
-          // </div>}
         />
-        {!playingMedia && <div className=' w-full h-full absolute top-0 left-0 z-10'>
+
+        {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
           <Image src={"/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} />
           <div className=' absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[96px] w-[96px] rounded-full bg-black/80 inline-flex items-center justify-center border-[4px] cursor-pointer ' onClick={() => setPlayingMedia(true)}>
             <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="36" height="36"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
           </div>
         </div>}
+      </div>
+
+      {/* Mobile Video */}
+      <div className='h-screen w-screen relative sm:hidden flex flex-col justify-center'>
+        <div className='w-full h-full absolute top-0 left-0 '>
+          <Image src={"/home_video_cover_mobile.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
+          {playingMedia && <div className='w-full h-full bg-black/80 relative z-[100]'></div>}
+        </div>
+        <div className=' relative z-[110]'>
+          <AspectRatio ratio={1920 / 1080}>
+            {playingMedia && <ReactPlayer
+              // @ts-ignore
+              ref={playerRef}
+              controls
+              playing={playingMedia}
+              onEnded={() => {
+                setPlayingMedia(false)
+                // @ts-ignore
+                playerRef.current?.seekTo(0, 'fraction')
+              }}
+              width="100%"
+              height="auto"
+              url={"/test_video.mp4"}
+            />}
+          </AspectRatio>
+        </div>
       </div>
 
       <Modal
@@ -98,6 +123,16 @@ export default function Home() {
           Leave your email address to <br />
           get the latest news on the whitelist.</h3>
       </Modal>
+
+      {/* mobile */}
+      <div className='absolute z-20 bottom-[30px] sm:hidden'>
+        <div className=' h-[56px] min-w-[300px] mx-[30px] bg-white rounded-full px-[20px] py-[14px] cursor-pointer' onClick={() => setPlayingMedia(true)}>
+          <div className=' w-[28px] h-[28px] rounded-full bg-black inline-flex items-center justify-center'>
+            <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="12" height="12"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
+          </div>
+          <span className=' text-[18px] leading-[18px] font-semibold ml-[10px]'>Watch Video</span>
+        </div>
+      </div>
     </main>
   )
 }

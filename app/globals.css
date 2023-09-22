@@ -76,3 +76,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+video {
+  object-fit: cover !important;
+}

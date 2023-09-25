@@ -13,7 +13,7 @@ import { useSize } from 'ahooks'
 
 export default function Home() {
   const playerRef = useRef<ReactPlayer>();
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const mediaSize = useSize(document.querySelector('body'));
 

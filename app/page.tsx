@@ -1,16 +1,102 @@
 "use client"
 // import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { cache, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import Modal from 'react-modal'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
+import { toast } from 'react-toastify'
+import { useSize } from 'ahooks'
 
 export default function Home() {
   const playerRef = useRef<ReactPlayer>();
+  const inputRef = useRef<HTMLInputElement>();
+
+  const mediaSize = useSize(document.querySelector('body'));
 
   const [showMainModal, setShowMainModal] = useState<boolean>(false);
   const [playingMedia, setPlayingMedia] = useState<boolean>(false);
+
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
+
+  const handleSubmitEmail = async () => {
+    if (isSubmitting) return
+
+    const inputEmail = inputRef.current?.value || "";
+    if (!inputEmail) return
+
+    if (!isValidEmail(inputEmail)) {
+      toast.warn('Valid email format required!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+    setSubmitting(true);
+
+    try {
+      const { status, statusText } = await fetch("/api/add-email", {
+        method: 'POST',
+        body: JSON.stringify({ "email": inputEmail })
+      })
+
+      if (status == 200) {
+        toast.success('Submit email successfully', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setShowMainModal(false);
+      } else {
+        toast.error(
+          statusText, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+        )
+      }
+    } catch (err: any) {
+      console.log(err)
+      toast.error(
+        err.message || "Submit Error", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+      )
+    }
+    setSubmitting(false);
+  }
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
 
   return (
     <main className="flex h-screen flex-col items-center justify-between bg-gray-500">
@@ -52,7 +138,8 @@ export default function Home() {
 
             // playerRef.current.showPreview()
 
-            // setShowMainModal(true);
+            // TODO: 判断是否有过提交
+            setShowMainModal(true);
           }}
           // controls
           // light={"/home_video_cover.png"}
@@ -86,6 +173,8 @@ export default function Home() {
                 setPlayingMedia(false)
                 // @ts-ignore
                 playerRef.current?.seekTo(0, 'fraction')
+
+                setShowMainModal(true);
               }}
               width="100%"
               height="auto"
@@ -99,8 +188,8 @@ export default function Home() {
         isOpen={showMainModal}
         style={{
           content: {
-            width: '440px',
-            height: '350px',
+            width: (mediaSize?.width || 0) > 640 ? "440px" : '350px',
+            height: (mediaSize?.width || 0) > 640 ? "350px" : '295px',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -110,7 +199,7 @@ export default function Home() {
           }
         }}
       >
-        <div className=' relative w-[112px] h-[107px] top-[-39px] mx-auto'>
+        <div className=' absolute w-[96px] h-[91px] top-[-32px]  sm:w-[112px] sm:h-[107px] sm:top-[-39px] left-0 right-0 mx-auto'>
           <Image src="/mail_modal_ill.png" fill alt='mail modal' />
         </div>
 
@@ -119,9 +208,20 @@ export default function Home() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </div>
-        <h3 className=' px-[35px] text-[21px] leading-[30px] font-semibold text-center'>
+
+        <h3 className=' mt-[78px] mb-[16px] px-[0] text-[18px] leading-[24px]  sm:mb-[33px] sm:px-[30px] sm:text-[21px] sm:leading-[30px] font-semibold text-center'>
           Leave your email address to <br />
           get the latest news on the whitelist.</h3>
+
+        <Input placeholder='Enter email' className='mx-auto w-[300px] h-[48px] text-[16px] leading-[16px] px-4  sm:mx-[40px] sm:w-[360px] sm:h-[56px] rounded-full bg-black/10 sm:text-[18px] sm:leading-[18px] font-normal sm:px-6 outline-none focus:outline-none active:outline-none focus:ring-0 active:ring-0 focus-visible:ring-0' ref={inputRef} />
+
+        <Button className="flex mx-auto w-[300px] h-[48px] text-[16px] leading-[16px] sm:mx-[40px] sm:w-[360px] sm:h-[56px] rounded-full sm:text-[18px] sm:leading-[18px] font-semibold mt-[12px] sm:mt-[20px]"
+          disabled={isSubmitting}
+          onClick={handleSubmitEmail}
+        >
+          {isSubmitting && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+          Submit
+        </Button>
       </Modal>
 
       {/* mobile */}

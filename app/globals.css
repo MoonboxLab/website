@@ -79,6 +79,8 @@
 
 .ReactModal__Overlay {
   background-color: rgba(0, 0, 0, 0.3) !important;
+  position: relative;
+  z-index: 110;
 }
 
 video {

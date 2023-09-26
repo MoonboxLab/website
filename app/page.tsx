@@ -185,7 +185,7 @@ export default function Home() {
             {playingMedia && <ReactPlayer
               // @ts-ignore
               ref={playerRef}
-              controls
+              // controls
               playing={playingMedia}
               // onReady={() => {
               //   // @ts-ignore

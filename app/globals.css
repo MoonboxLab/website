@@ -78,9 +78,16 @@
 }
 
 .ReactModal__Overlay {
-  background-color: rgba(0, 0, 0, 0.3) !important;
+  background-color: transparent !important;
+  /* background-color: rgba(0, 0, 0, 0.3) !important; */
   position: relative;
   z-index: 110;
+}
+
+@media screen and (max-width: 640px){
+  .ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+  } 
 }
 
 video {

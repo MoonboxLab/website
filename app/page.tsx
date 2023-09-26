@@ -1,7 +1,7 @@
 "use client"
 // import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Image from 'next/image'
-import { cache, useRef, useState } from 'react'
+import { RefObject, cache, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import Modal from 'react-modal'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
@@ -9,22 +9,31 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'react-toastify'
-import { useSize } from 'ahooks'
+import { useLocalStorageState, useSize } from 'ahooks'
 
 export default function Home() {
   const playerRef = useRef<ReactPlayer>();
   const inputRef = useRef<HTMLInputElement>(null);
+  const secondInputRef = useRef<HTMLInputElement>(null);
 
   const mediaSize = useSize(document.querySelector('body'));
 
   const [showMainModal, setShowMainModal] = useState<boolean>(false);
+  const [showSecondModal, setShowSecondModal] = useState<boolean>(true);
   const [playingMedia, setPlayingMedia] = useState<boolean>(false);
 
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
-  const handleSubmitEmail = async () => {
+  const [isSubmitedEmail, setSubmitEmail] = useLocalStorageState<boolean | undefined>(
+    "moonbox-email-submit", {
+    defaultValue: false
+  }
+  )
+
+  const handleSubmitEmail = async (valueRef: RefObject<HTMLInputElement>) => {
     if (isSubmitting) return
 
+    const inputRef = valueRef;
     const inputEmail = inputRef.current?.value || "";
     if (!inputEmail) return
 
@@ -61,6 +70,13 @@ export default function Home() {
           theme: "light",
         });
         setShowMainModal(false);
+
+        setSubmitEmail(true);
+
+        if (inputRef.current?.value) {
+          inputRef.current.value = ""
+        }
+
       } else {
         toast.error(
           statusText, {
@@ -131,18 +147,19 @@ export default function Home() {
           // @ts-ignore
           ref={playerRef}
           playing={playingMedia}
+          onReady={() => {
+            // @ts-ignore
+            playerRef.current?.seekTo(0, 'fraction')
+          }}
           onEnded={() => {
             setPlayingMedia(false)
             // @ts-ignore
             playerRef.current?.seekTo(0, 'fraction')
 
-            // playerRef.current.showPreview()
-
-            // TODO: 判断是否有过提交
-            setShowMainModal(true);
+            if (!isSubmitedEmail) {
+              setShowMainModal(true);
+            }
           }}
-          // controls
-          // light={"/home_video_cover.png"}
           width={"100%"}
           height={"100%"}
           url={"/test_video.mp4"}
@@ -150,9 +167,10 @@ export default function Home() {
 
         {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
           <Image src={"/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} />
-          <div className=' absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[96px] w-[96px] rounded-full bg-black/80 inline-flex items-center justify-center border-[4px] cursor-pointer ' onClick={() => setPlayingMedia(true)}>
-            <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="36" height="36"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
-          </div>
+        </div>}
+
+        {!playingMedia && !showMainModal && <div className=' absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[96px] w-[96px] rounded-full bg-black/80 inline-flex items-center justify-center border-[4px] cursor-pointer z-[120] ' onClick={() => setPlayingMedia(true)}>
+          <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="36" height="36"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
         </div>}
       </div>
 
@@ -169,12 +187,18 @@ export default function Home() {
               ref={playerRef}
               controls
               playing={playingMedia}
+              // onReady={() => {
+              //   // @ts-ignore
+              //   playerRef.current?.seekTo(0, 'fraction')
+              // }}
               onEnded={() => {
                 setPlayingMedia(false)
                 // @ts-ignore
                 playerRef.current?.seekTo(0, 'fraction')
 
-                setShowMainModal(true);
+                if (!isSubmitedEmail) {
+                  setShowMainModal(true);
+                }
               }}
               width="100%"
               height="auto"
@@ -217,20 +241,58 @@ export default function Home() {
 
         <Button className="flex mx-auto w-[300px] h-[48px] text-[16px] leading-[16px] sm:mx-[40px] sm:w-[360px] sm:h-[56px] rounded-full sm:text-[18px] sm:leading-[18px] font-semibold mt-[12px] sm:mt-[20px]"
           disabled={isSubmitting}
-          onClick={handleSubmitEmail}
+          onClick={() => handleSubmitEmail(inputRef)}
         >
           {isSubmitting && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
           Submit
         </Button>
       </Modal>
 
+      {/* PC small modal */}
+      {!playingMedia && !showMainModal && (mediaSize?.width || 0) > 640
+        && <Modal
+          isOpen={showSecondModal}
+          style={{
+            content: {
+              width: "450px",
+              height: "177px",
+              top: 'calc(100% - 197px)',
+              left: '20px',
+              borderRadius: '16px',
+              background: 'rgba(103, 103, 103, 1)',
+              border: 'none',
+              padding: '30px',
+            }
+          }}
+        >
+          <h3 className=' text-[18px] leading-[24px] font-semibold text-white font-Inter mb-[20px]'>Leave your email address to get the latest news on the whitelist.</h3>
+
+          <div className=' flex justify-between'>
+            <Input placeholder='Enter email' className=' w-[260px] h-[48px] rounded-[24px] bg-black/20 border-none !focus-visible:ring-0 !focus-visible:outline-none active:outline-none focus:outline-none !focus:ring-0 !active:ring-0 focus-visible:ring-offset-0 outline-none ring-0 border-transparent text-[16px] leading-[16px] font-medium text-white' ref={secondInputRef} />
+
+            <Button className=" w-[120px] h-[48px] text-[16px] leading-[16px] rounded-full font-normal bg-[#3B84FFFF] hover:bg-[#3B84FFFF]"
+              disabled={isSubmitting}
+              onClick={() => handleSubmitEmail(secondInputRef)}
+            >
+              {isSubmitting && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+              Submit
+            </Button>
+          </div>
+        </Modal>}
+
       {/* mobile */}
       <div className='absolute z-20 bottom-[30px] sm:hidden'>
-        <div className=' h-[56px] min-w-[300px] mx-[30px] bg-white rounded-full px-[20px] py-[14px] cursor-pointer' onClick={() => setPlayingMedia(true)}>
+        <div className='h-[56px] w-[350px] mx-auto bg-white rounded-full px-[20px] py-[14px] cursor-pointer mb-[10px]' onClick={() => setPlayingMedia(true)}>
           <div className=' w-[28px] h-[28px] rounded-full bg-black inline-flex items-center justify-center'>
             <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="12" height="12"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
           </div>
           <span className=' text-[18px] leading-[18px] font-semibold ml-[10px]'>Watch Video</span>
+        </div>
+        <div className='h-[56px] w-[350px] mx-auto bg-white rounded-full px-[20px] py-[14px] cursor-pointer inline-flex items-center' onClick={() => setShowMainModal(true)}>
+          <div className=' w-[28px] h-[28px] rounded-full inline-flex items-center justify-center'>
+            <Image src={"/email_icon.png"} alt='email' width="24" height="17" />
+          </div>
+          <span className=' text-[18px] leading-[18px] font-semibold ml-[10px]'>Register for email rewards</span>
         </div>
       </div>
     </main>

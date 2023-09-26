@@ -185,7 +185,9 @@ export default function Home() {
             {playingMedia && <ReactPlayer
               // @ts-ignore
               ref={playerRef}
-              // controls
+              pip={false}
+              controls
+              controlslist="nofullscreen play timeline volume"
               playing={playingMedia}
               // onReady={() => {
               //   // @ts-ignore

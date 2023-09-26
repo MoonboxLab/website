@@ -226,7 +226,7 @@ export default function Home() {
         }}
       >
         <div className=' absolute w-[96px] h-[91px] top-[-32px]  sm:w-[112px] sm:h-[107px] sm:top-[-39px] left-0 right-0 mx-auto'>
-          <Image src="/mail_modal_ill.png" fill alt='mail modal' />
+          <Image src="/mail_modal_ill.png" fill alt='mail modal' priority />
         </div>
 
         <div className=' absolute top-[20px] right-[20px] opacity-50 cursor-pointer' onClick={() => setShowMainModal(false)}>

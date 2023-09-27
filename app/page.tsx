@@ -7,7 +7,7 @@ import Modal from 'react-modal'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
+import { Loader2, X } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { useLocalStorageState, useSize } from 'ahooks'
 import Head from 'next/head'
@@ -205,6 +205,15 @@ export default function Home() {
           {playingMedia && <div className='w-full h-full bg-black/80 relative z-[100]'></div>}
         </div>
         <div className=' relative z-[110]'>
+          {playingMedia && <div className=' absolute right-2 top-[-30px] w-[22px] h-[22px] rounded-full bg-slate-400/40 inline-flex items-center justify-center cursor-pointer'
+            onClick={() => {
+              setPlayingMedia(false);
+              // @ts-ignore
+              playerRef.current?.seekTo(0, 'fraction')
+            }}
+          >
+            <X size={18} color='#d2d2d2' />
+          </div>}
           <AspectRatio ratio={1920 / 1080}>
             {playingMedia && <ReactPlayer
               // @ts-ignore

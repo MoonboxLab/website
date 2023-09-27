@@ -171,6 +171,7 @@ export default function Home() {
           // @ts-ignore
           ref={playerRef}
           playing={playingMedia}
+          muted
           onReady={() => {
             // @ts-ignore
             playerRef.current?.seekTo(0, 'fraction')
@@ -220,6 +221,7 @@ export default function Home() {
               ref={playerRef}
               pip={false}
               controls
+              muted
               controlslist="nofullscreen play timeline volume"
               playing={playingMedia}
               // onReady={() => {

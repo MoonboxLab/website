@@ -167,28 +167,25 @@ export default function Home() {
       </header>
 
       <div className=' hidden sm:block h-full w-screen relative'>
-        <ReactPlayer
-          // @ts-ignore
-          ref={playerRef}
-          playing={playingMedia}
-          muted
-          onReady={() => {
+        {(mediaSize?.width || 0) > 640 &&
+          <ReactPlayer
+            key={"PC"}
             // @ts-ignore
-            playerRef.current?.seekTo(0, 'fraction')
-          }}
-          onEnded={() => {
-            setPlayingMedia(false)
-            // @ts-ignore
-            playerRef.current?.seekTo(0, 'fraction')
+            ref={playerRef}
+            playing={playingMedia}
+            onEnded={() => {
+              setPlayingMedia(false)
+              // @ts-ignore
+              playerRef.current?.seekTo(0, 'fraction')
 
-            if (!isSubmitedEmail) {
-              setShowMainModal(true);
-            }
-          }}
-          width={"100%"}
-          height={"100%"}
-          url={"/video_home.mp4"}
-        />
+              if (!isSubmitedEmail) {
+                setShowMainModal(true);
+              }
+            }}
+            width={"100%"}
+            height={"100%"}
+            url={"/video_home.mp4"}
+          />}
 
         {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
           <Image src={"/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} />
@@ -216,31 +213,28 @@ export default function Home() {
             <X size={18} color='#d2d2d2' />
           </div>}
           <AspectRatio ratio={1920 / 1080}>
-            {playingMedia && <ReactPlayer
-              // @ts-ignore
-              ref={playerRef}
-              pip={false}
-              controls
-              muted
-              controlslist="nofullscreen play timeline volume"
-              playing={playingMedia}
-              // onReady={() => {
-              //   // @ts-ignore
-              //   playerRef.current?.seekTo(0, 'fraction')
-              // }}
-              onEnded={() => {
-                setPlayingMedia(false)
+            {(mediaSize?.width || 0) <= 640 && playingMedia && 
+              <ReactPlayer
+                key={"Mobile"}
                 // @ts-ignore
-                playerRef.current?.seekTo(0, 'fraction')
+                ref={playerRef}
+                pip={false}
+                controls
+                controlslist="nofullscreen play timeline volume"
+                playing={playingMedia}
+                onEnded={() => {
+                  setPlayingMedia(false)
+                  // @ts-ignore
+                  playerRef.current?.seekTo(0, 'fraction')
 
-                if (!isSubmitedEmail) {
-                  setShowMainModal(true);
-                }
-              }}
-              width="100%"
-              height="auto"
-              url={"/video_home.mp4"}
-            />}
+                  if (!isSubmitedEmail) {
+                    setShowMainModal(true);
+                  }
+                }}
+                width="100%"
+                height="auto"
+                url={"/video_home.mp4"}
+              />}
           </AspectRatio>
         </div>
       </div>

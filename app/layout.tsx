@@ -2,6 +2,7 @@
 import './globals.css'
 import '@rainbow-me/rainbowkit/styles.css';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { Analytics } from '@vercel/analytics/react';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           {/* <Header /> */}
           {children}
         </WagmiProviders>
+        <Analytics />
       </body>
     </html>
   )

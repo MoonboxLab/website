@@ -11,6 +11,7 @@ import { Loader2, X } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { useLocalStorageState, useSize } from 'ahooks'
 import Head from 'next/head'
+import { Metadata } from 'next'
 
 export default function Home() {
   const playerRef = useRef<ReactPlayer>();
@@ -334,4 +335,23 @@ export default function Home() {
       </div>
     </main>
   )
+}
+
+
+export const metadata: Metadata = {
+  title: 'Moonbox',
+  description: 'Bring life to NFTs',
+  openGraph: {
+    title: 'Moonbox',
+    description: 'Bring life to NFTs',
+    type: "website",
+    images: '/home_video_cover.png',
+    url: "https://moonbox.com"
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Moonbox',
+    description: 'Bring life to NFTs',
+    images: ['/home_video_cover.png'],
+  },
 }

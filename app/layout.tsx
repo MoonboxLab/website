@@ -33,7 +33,6 @@ export default function RootLayout({
   )
 }
 
-
 export const metadata: Metadata = {
   title: 'Moonbox',
   description: 'Bring life to NFTs',
@@ -50,8 +49,8 @@ export const metadata: Metadata = {
     description: 'Bring life to NFTs',
     images: ['/twitter_card_image.gif'],
     players: {
-      playerUrl: "/video_home.mp4",
-      streamUrl: "/video_home.mp4",
+      playerUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
+      streamUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
       width: 1920,
       height: 1080,
     }

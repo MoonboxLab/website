@@ -345,7 +345,7 @@ export default function Home() {
           <div className=' w-[28px] h-[28px] rounded-full inline-flex items-center justify-center'>
             <Image src={"/email_icon.png"} alt='email' width="24" height="17" />
           </div>
-          <span className=' text-[18px] leading-[18px] font-semibold ml-[10px]'>Register for email rewards</span>
+          <span className=' text-[18px] leading-[18px] font-semibold ml-[10px]'>Subscribe for whitelist updates</span>
         </div>
       </div>
     </main>

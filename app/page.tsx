@@ -40,9 +40,9 @@ export default function Home() {
 
     if (!isValidEmail(inputEmail)) {
       toast.warn('Valid email format required!', {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -60,11 +60,11 @@ export default function Home() {
       })
 
       if (status == 200) {
-        toast.success('Submit email successfully', {
-          position: "top-right",
+        toast.success('You have successfully subscribed to our newsletter.', {
+          position: "top-center",
           autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: true,
+          hideProgressBar: true,
+          closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
@@ -81,9 +81,9 @@ export default function Home() {
       } else {
         toast.error(
           statusText, {
-          position: "top-right",
+          position: "top-center",
           autoClose: 5000,
-          hideProgressBar: false,
+          hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
@@ -96,9 +96,9 @@ export default function Home() {
       console.log(err)
       toast.error(
         err.message || "Submit Error", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 5000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -119,18 +119,18 @@ export default function Home() {
     <main className="flex h-screen flex-col items-center justify-between bg-gray-500">
       <Head>
         <title>Moonbox</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Bring life to NFTs" />
         <meta
           property="og:title"
           content="Moonbox"
         />
         <meta
           property="og:description"
-          content=""
+          content="Bring life to NFTs"
         />
         <meta
           property="og:image"
-          content=""
+          content="/home_video_cover.png"
         />
         <meta
           property="og:url"
@@ -213,7 +213,7 @@ export default function Home() {
             <X size={18} color='#d2d2d2' />
           </div>}
           <AspectRatio ratio={1920 / 1080}>
-            {(mediaSize?.width || 0) <= 640 && playingMedia && 
+            {(mediaSize?.width || 0) <= 640 && playingMedia &&
               <ReactPlayer
                 key={"Mobile"}
                 // @ts-ignore
@@ -243,8 +243,8 @@ export default function Home() {
         isOpen={showMainModal}
         style={{
           content: {
-            width: (mediaSize?.width || 0) > 640 ? "440px" : '350px',
-            height: (mediaSize?.width || 0) > 640 ? "350px" : '295px',
+            width: (mediaSize?.width || 0) > 640 ? "636px" : '350px',
+            height: (mediaSize?.width || 0) > 640 ? "370px" : '305px',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -258,24 +258,25 @@ export default function Home() {
           <Image src="/mail_modal_ill.png" fill alt='mail modal' priority />
         </div>
 
-        <div className=' absolute top-[20px] right-[20px] opacity-50 cursor-pointer' onClick={() => setShowMainModal(false)}>
+        <div className=' absolute top-[20px] right-[20px] opacity-80 cursor-pointer' onClick={() => setShowMainModal(false)}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </div>
 
-        <h3 className=' mt-[78px] mb-[16px] px-[0] text-[18px] leading-[24px]  sm:mb-[33px] sm:px-[30px] sm:text-[21px] sm:leading-[30px] font-semibold text-center'>
-          Leave your email address to <br />
-          get the latest news on the whitelist.</h3>
+        <h3 className=' mt-[78px] mb-[16px] px-[15px] text-[18px] leading-[24px] sm:mt-[86.6px]  sm:mb-[40px] sm:px-[20px] sm:text-[24px] sm:leading-[30px] font-semibold text-center'>
+          Subscribe to our newsletter and <br />be the first to know about our whitelist release.
+        </h3>
 
-        <Input placeholder='Enter email' className='mx-auto w-[300px] h-[48px] text-[16px] leading-[16px] px-4  sm:mx-[40px] sm:w-[360px] sm:h-[56px] rounded-full bg-black/10 sm:text-[18px] sm:leading-[18px] font-normal sm:px-6 outline-none focus:outline-none active:outline-none focus:ring-0 active:ring-0 focus-visible:ring-0' ref={inputRef} />
+        <Input placeholder='Enter your email' className='mx-auto w-[300px] h-[48px] text-[16px] leading-[16px] px-4  
+        sm:mx-[40px] sm:w-[556px] sm:h-[56px] rounded-full bg-black/10 sm:text-[18px] sm:leading-[18px] font-normal sm:px-6 outline-none focus:outline-none active:outline-none focus:ring-0 active:ring-0 focus-visible:ring-0 placeholder:text-[18px] placeholder:font-normal placeholder:text-black/20' ref={inputRef} />
 
-        <Button className="flex mx-auto w-[300px] h-[48px] text-[16px] leading-[16px] sm:mx-[40px] sm:w-[360px] sm:h-[56px] rounded-full sm:text-[18px] sm:leading-[18px] font-semibold mt-[12px] sm:mt-[20px]"
+        <Button className="flex mx-auto w-[300px] h-[48px] text-[16px] leading-[16px] sm:mx-[40px] sm:w-[556px] sm:h-[56px] rounded-full sm:text-[18px] sm:leading-[18px] font-semibold mt-[12px] sm:mt-[20px]"
           disabled={isSubmitting}
           onClick={() => handleSubmitEmail(inputRef)}
         >
           {isSubmitting && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-          Submit
+          Subscribe
         </Button>
       </Modal>
 
@@ -301,17 +302,17 @@ export default function Home() {
             <Image src="/mail_modal_ill.png" fill alt='mail modal' priority />
           </div>
 
-          <h3 className=' text-[18px] leading-[24px] font-semibold text-white font-Inter mb-[20px] mt-[20px]'>Leave your email address to get the latest news on the whitelist.</h3>
+          <h3 className=' text-[18px] leading-[24px] font-semibold text-white font-Inter mb-[20px] mt-[20px]'>Subscribe to our newsletter and be the first to know about our whitelist release.</h3>
 
-          <div className=' flex justify-between'>
-            <Input placeholder='Enter email' className=' w-[260px] h-[48px] rounded-[24px] bg-black/20 border-none !focus-visible:ring-0 !focus-visible:outline-none active:outline-none focus:outline-none !focus:ring-0 !active:ring-0 focus-visible:ring-offset-0 outline-none ring-0 border-transparent text-[16px] leading-[16px] font-medium text-white' ref={secondInputRef} />
+          <div className='flex justify-between'>
+            <Input placeholder='Enter your email' className=' w-[260px] h-[48px] rounded-[24px] bg-black/20 border-none !focus-visible:ring-0 !focus-visible:outline-none active:outline-none focus:outline-none !focus:ring-0 !active:ring-0 focus-visible:ring-offset-0 outline-none ring-0 border-transparent text-[16px] leading-[16px] font-medium text-white/30 placeholder:text-[16px] placeholder:font-medium placeholder:text-white/30 px-4' ref={secondInputRef} />
 
             <Button className=" w-[120px] h-[48px] text-[16px] leading-[16px] rounded-full font-normal text-black bg-white hover:bg-white"
               disabled={isSubmitting}
               onClick={() => handleSubmitEmail(secondInputRef)}
             >
               {isSubmitting && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-              Submit
+              Subscribe
             </Button>
           </div>
         </Modal>}

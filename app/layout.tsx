@@ -48,6 +48,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Moonbox',
     description: 'Bring life to NFTs',
-    images: ['/home_video_cover.png'],
+    images: ['/twitter_card_image.gif'],
   },
 }

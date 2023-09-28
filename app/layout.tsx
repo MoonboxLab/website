@@ -45,9 +45,15 @@ export const metadata: Metadata = {
     url: "https://moonbox.com"
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "player",
     title: 'Moonbox',
     description: 'Bring life to NFTs',
     images: ['/twitter_card_image.gif'],
+    players: {
+      playerUrl: "/video_home.mp4",
+      streamUrl: "/video_home.mp4",
+      width: 1920,
+      height: 1080,
+    }
   },
 }

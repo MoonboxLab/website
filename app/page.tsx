@@ -11,7 +11,7 @@ import { Loader2, X } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { useLocalStorageState, useSize } from 'ahooks'
 import Head from 'next/head'
-import { Metadata } from 'next'
+import clsx from 'clsx'
 
 export default function Home() {
   const playerRef = useRef<ReactPlayer>();
@@ -28,6 +28,12 @@ export default function Home() {
 
   const [isSubmitedEmail, setSubmitEmail] = useLocalStorageState<boolean | undefined>(
     "moonbox-email-submit", {
+    defaultValue: false
+  }
+  )
+
+  const [isMuted, setVidoeMuted] = useLocalStorageState<boolean | undefined>(
+    "moonbox-hove-video-mute", {
     defaultValue: false
   }
   )
@@ -174,6 +180,7 @@ export default function Home() {
             // @ts-ignore
             ref={playerRef}
             playing={playingMedia}
+            muted={isMuted}
             onEnded={() => {
               setPlayingMedia(false)
               // @ts-ignore
@@ -194,6 +201,14 @@ export default function Home() {
 
         {!playingMedia && !showMainModal && <div className=' absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[96px] w-[96px] rounded-full bg-black/80 inline-flex items-center justify-center border-[4px] cursor-pointer z-[120] ' onClick={() => setPlayingMedia(true)}>
           <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="36" height="36"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
+        </div>}
+
+        {playingMedia && <div className={clsx(' absolute z-[11] cursor-pointer w-[64px] h-[64px] rounded-full right-[40px] bottom-[40px] inline-flex items-center justify-center', {
+          "bg-white/30": !isMuted
+        })} onClick={() => setVidoeMuted(!isMuted)}>
+          {isMuted ?
+            <Image src={"/video_music_muted.png"} alt='volumn_switch_muted' width={64} height={64} /> :
+            <Image src={"/video_music.gif"} alt='volumn_switch' width={40} height={40} />}
         </div>}
       </div>
 

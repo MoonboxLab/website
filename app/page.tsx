@@ -337,21 +337,3 @@ export default function Home() {
   )
 }
 
-
-export const metadata: Metadata = {
-  title: 'Moonbox',
-  description: 'Bring life to NFTs',
-  openGraph: {
-    title: 'Moonbox',
-    description: 'Bring life to NFTs',
-    type: "website",
-    images: '/home_video_cover.png',
-    url: "https://moonbox.com"
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Moonbox',
-    description: 'Bring life to NFTs',
-    images: ['/home_video_cover.png'],
-  },
-}

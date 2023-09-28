@@ -207,8 +207,8 @@ export default function Home() {
           "bg-white/30": !isMuted
         })} onClick={() => setVidoeMuted(!isMuted)}>
           {isMuted ?
-            <Image src={"/video_music_muted.png"} alt='volumn_switch_muted' width={64} height={64} /> :
-            <Image src={"/video_music.gif"} alt='volumn_switch' width={40} height={40} />}
+            <Image priority src={"/video_music_muted.png"} alt='volumn_switch_muted' width={64} height={64} /> :
+            <Image priority src={"/video_music.gif"} alt='volumn_switch' width={40} height={40} />}
         </div>}
       </div>
 

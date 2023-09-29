@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: 'Moonbox',
     description: 'Bring life to NFTs',
-    images: ['/home_video_cover.png'],
+    images: ['https://moonbox.com/home_video_cover.png'],
     // players: {
     //   playerUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
     //   streamUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",

@@ -1,0 +1,14 @@
+{
+  "Home": {
+    "header_chat": "对话",
+    "header_language": "Zh",
+    "email_modal_title": "订阅我们的邮箱，获取一首信息和潜在白名单机会",
+    "email_modal_subscribe": "订阅",
+    "email_modal_input_placeholder": "请输入邮箱",
+    "chat_model_placeholder": "输入对话",
+    "chat_modal_closeBtn": "关闭对话",
+    "mobile_chat_btn": "聊天对话",
+    "mobile_email_btn": "订阅白名单更新",
+    "submit_success": "您已成功订阅我们的通讯"
+  }
+}

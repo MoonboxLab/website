@@ -1,58 +1,10 @@
-// "use client"
-import './globals.css'
-import '@rainbow-me/rainbowkit/styles.css';
-import 'react-toastify/dist/ReactToastify.min.css';
-import { Analytics } from '@vercel/analytics/react';
+import {ReactNode} from 'react';
+import './globals.css';
 
-import { ToastContainer } from 'react-toastify';
+type Props = {
+  children: ReactNode;
+};
 
-import { Inter } from 'next/font/google'
-import { WagmiProviders } from './wagmiProvider'
-import Header from '@/components/Header';
-import { Metadata } from 'next';
-
-const inter = Inter({ subsets: ['latin'] })
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-
-  return (
-    <html lang="en">
-      <body className={`${inter.className}`}>
-        <ToastContainer />
-        <WagmiProviders>
-          {/* <Header /> */}
-          {children}
-        </WagmiProviders>
-        <Analytics />
-      </body>
-    </html>
-  )
-}
-
-export const metadata: Metadata = {
-  title: 'Moonbox',
-  description: 'Bring life to NFTs',
-  openGraph: {
-    title: 'Moonbox',
-    description: 'Bring life to NFTs',
-    type: "website",
-    images: '/home_video_cover.png',
-    url: "https://moonbox.com"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: 'Moonbox',
-    description: 'Bring life to NFTs',
-    images: ['https://moonbox.com/home_video_cover.png'],
-    // players: {
-    //   playerUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
-    //   streamUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
-    //   width: 1920,
-    //   height: 1080,
-    // }
-  },
+export default function RootLayout({children}: Props) {
+  return children;
 }

@@ -1,7 +1,7 @@
 "use client"
 // import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Image from 'next/image'
-import { RefObject, cache, useRef, useState, useTransition } from 'react'
+import { RefObject, cache, useEffect, useRef, useState, useTransition } from 'react'
 import ReactPlayer from 'react-player'
 import Modal from 'react-modal'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
@@ -66,20 +66,17 @@ export default function Home() {
       role: "assistant",
       content: "I'm a helpful assistant. Do you want to chat with me?"
     }],
-    onFinish(message) {
-      chatListBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    },
-    onResponse(response) {
-      chatListBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    },
   });
+
+  useEffect(() => {
+    chatListBottomRef.current?.scrollTo({top:chatListBottomRef.current?.scrollHeight, behavior: "smooth"})
+  }, [chatListBottomRef.current?.scrollHeight])
 
   const handleLocaleChange = (locale: String) => {
     startTransition(() => {
       router.replace(pathname, { locale: locale })
     })
   }
-
 
   const submitEmail = async (inputEmail: String) => {
     setSubmitting(true);
@@ -183,7 +180,6 @@ export default function Home() {
 
     // 验证码逻辑
     try {
-      console.log(locale)
       // @ts-ignore
       var captcha = new TencentCaptcha("189924595", (res) => {
         console.log(res)
@@ -443,22 +439,20 @@ export default function Home() {
         <div className=' flex justify-end sm:hidden mb-1'>
           <X color='white' onClick={() => setShowChatModal(false)} />
         </div>
-        <div className='h-[88.5%] sm:h-[92%] min-h-[200px] overflow-y-scroll'>
+        <div className='h-[88.5%] sm:h-[92%] min-h-[200px] overflow-y-auto' ref={chatListBottomRef}>
           {
             messages.map(item => {
               if (item.role == 'assistant') {
-                return <BotMessageItem message={item.content} key={item.id} />
+                return <BotMessageItem message={item.content} id={messages.length == 1 ? item.id : ""} key={item.id} />
               }
               if (item.role == 'user') {
                 return <UserMessageItem message={item.content} key={item.id} />
               }
             })
           }
-          <div ref={chatListBottomRef} ></div>
         </div>
         <form onSubmit={(...args) => {
           handleSubmit(...args);
-          chatListBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
         }}>
           <div className={clsx('m-auto w-full max-w-[700px] h-[48px] sm:h-[68px] rounded-[12px]  border-[2px] border-white/10 flex p-[4px] sm:px-[10px] sm:py-[8px] bg-black/40  sm:bg-[#1D1D1DFF]')}>
             <Input value={input} onChange={(e) => {

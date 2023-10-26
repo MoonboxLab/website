@@ -32,7 +32,7 @@ export const runtime = 'edge';
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  const response = await fetch('https://trij7gqo6gm2swl4cn76bpppiy0ftpnt.lambda-url.ap-east-1.on.aws/', {
+  const response = await fetch('https://a7jgyyz7tfity7krgg4zhazwa40sygrg.lambda-url.ap-east-1.on.aws/', {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",

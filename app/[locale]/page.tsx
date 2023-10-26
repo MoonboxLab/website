@@ -435,7 +435,7 @@ export default function Home() {
         <div className=' flex justify-end sm:hidden mb-1'>
           <X color='white' onClick={() => setShowChatModal(false)} />
         </div>
-        <div className='h-[88.5%] sm:h-[92%] min-h-[200px] overflow-y-auto' ref={chatListBottomRef}>
+        <div className='h-[84%] sm:h-[92%] min-h-[200px] overflow-y-scroll' ref={chatListBottomRef}>
           {
             messages.map(item => {
               if (item.role == 'assistant') {

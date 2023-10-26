@@ -16,7 +16,7 @@ export default function BotMessageItem(props: BotMessageItemProps) {
       // @ts-ignore
       var typed = new Typed(messageRef.current, {
         strings: [message],
-        typeSpeed: 60,
+        typeSpeed: 40,
         cursorChar: ""
       })
       typed.start()

@@ -69,7 +69,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    chatListBottomRef.current?.scrollTo({top:chatListBottomRef.current?.scrollHeight, behavior: "smooth"})
+    chatListBottomRef.current?.scrollTo({ top: chatListBottomRef.current?.scrollHeight, behavior: "smooth" })
   }, [chatListBottomRef.current?.scrollHeight])
 
   const handleLocaleChange = (locale: String) => {
@@ -105,7 +105,6 @@ export default function Home() {
         if (inputRef.current?.value) {
           inputRef.current.value = ""
         }
-
       } else {
         toast.error(
           statusText, {
@@ -307,11 +306,8 @@ export default function Home() {
           />}
 
         {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
-          {
-            showChatModal
-              ? <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
-              : <Image src={"/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
-          }
+          <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
+          {!showChatModal && <Image src={"/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
         </div>}
 
         {!playingMedia && !showMainModal && !showChatModal &&

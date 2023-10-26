@@ -9,6 +9,7 @@
     "chat_modal_closeBtn": "Closure Dialogue",
     "mobile_chat_btn": "Come quickly, chat with me",
     "mobile_email_btn": "Subscribe for whitelist updates",
-    "submit_success": "You have successfully subscribed to our newsletter."
+    "submit_success": "You have successfully subscribed to our newsletter.",
+    "submit_email_format_error": "Valid email format required!"
   }
 }

@@ -1,14 +1,15 @@
 {
   "Home": {
-    "header_chat": "对话",
+    "header_chat": "聊天",
     "header_language": "Zh",
-    "email_modal_title": "订阅我们的邮箱，获取一首信息和潜在白名单机会",
-    "email_modal_subscribe": "订阅",
-    "email_modal_input_placeholder": "请输入邮箱",
-    "chat_model_placeholder": "输入对话",
-    "chat_modal_closeBtn": "关闭对话",
-    "mobile_chat_btn": "聊天对话",
-    "mobile_email_btn": "订阅白名单更新",
-    "submit_success": "您已成功订阅我们的通讯"
+    "email_modal_title": "訂閱我們的電子報，第一時間瞭解我們的白名單發布資訊",
+    "email_modal_subscribe": "訂閱",
+    "email_modal_input_placeholder": "輸入您的電子郵件地址",
+    "chat_model_placeholder": "進入對話",
+    "chat_modal_closeBtn": "結束對話",
+    "mobile_chat_btn": "快來和我聊聊",
+    "mobile_email_btn": "訂閱即時更新白名單資訊",
+    "submit_success": "您已經成功訂閱了我們的電子報",
+    "submit_email_format_error": "需要有效的電子郵件格式！"
   }
 }

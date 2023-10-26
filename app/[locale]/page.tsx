@@ -165,7 +165,7 @@ export default function Home() {
     if (!inputEmail) return
 
     if (!isValidEmail(inputEmail)) {
-      toast.warn('Valid email format required!', {
+      toast.warn(t('submit_email_format_error'), {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,

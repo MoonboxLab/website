@@ -240,8 +240,8 @@ export default function Home() {
 
         <div className=' flex items-center'>
           {(mediaSize?.width || 0) > 640 &&
-            <div className=' inline-flex items-end justify-center h-[36px] w-[108px] lg:h-[48px] lg:w-[136px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow' 
-            onClick={() => setShowChatModal(true)}>
+            <div className=' inline-flex items-end justify-center h-[36px] w-[108px] lg:h-[48px] lg:w-[136px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow'
+              onClick={() => setShowChatModal(true)}>
               <Image src={"/chat_bot_avatar.png"} alt='Chat bot avatar' width={(mediaSize?.width || 0) > 1024 ? 44 : 35} height={(mediaSize?.width || 0) > 1024 ? 57 : 45} />
               <span className='text-[16px] leading-[32px] sm:text-[21px] lg:leading-[43px] font-semibold text-black ml-[6px] lg:ml-[10px]'>{t('header_chat')}</span>
             </div>}
@@ -311,7 +311,11 @@ export default function Home() {
           />}
 
         {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
-          <Image src={showChatModal ? "/chat_background.png" : "/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} />
+          {
+            showChatModal
+              ? <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
+              : <Image src={"/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
+          }
         </div>}
 
         {!playingMedia && !showMainModal && !showChatModal &&

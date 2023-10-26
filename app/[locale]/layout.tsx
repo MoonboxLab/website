@@ -44,7 +44,7 @@ export default async function LocaleLayout({
         </WagmiProviders>
         <Analytics />
         {/* <!-- 动态引入验证码JS示例 --> */}
-        <script src="https://sg.captcha.qcloud.com/TCaptcha-global.js"></script>
+        <script async src="https://sg.captcha.qcloud.com/TCaptcha-global.js"></script>
       </body>
     </html>
   )

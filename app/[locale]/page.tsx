@@ -443,10 +443,10 @@ export default function Home() {
           {
             messages.map(item => {
               if (item.role == 'assistant') {
-                return <BotMessageItem message={item.content} />
+                return <BotMessageItem message={item.content} key={item.id} />
               }
               if (item.role == 'user') {
-                return <UserMessageItem message={item.content} />
+                return <UserMessageItem message={item.content} key={item.id} />
               }
             })
           }

@@ -105,6 +105,10 @@ export default function Home() {
         if (inputRef.current?.value) {
           inputRef.current.value = ""
         }
+        if (secondInputRef.current?.value) {
+          secondInputRef.current.value = ""
+        }
+        
       } else {
         toast.error(
           statusText, {
@@ -180,7 +184,7 @@ export default function Home() {
     // 验证码逻辑
     try {
       // @ts-ignore
-      var captcha = new TencentCaptcha("189924595", (res) => {
+      var captcha = new TencentCaptcha("189960004", (res) => {
         console.log(res)
         submitEmail(inputEmail)
         if (res.ret == 0) {

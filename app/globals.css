@@ -77,6 +77,12 @@
   }
 }
 
+@layer components {
+  .hover-btn-shadow {
+    @apply hover:shadow-none cursor-pointer transition ease-in-out hover:translate-x-1 hover:translate-y-1;
+  }
+}
+
 .ReactModal__Overlay {
   background-color: transparent !important;
   /* background-color: rgba(0, 0, 0, 0.3) !important; */

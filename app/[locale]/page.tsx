@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 import { useLocalStorageState, useSize } from 'ahooks'
 import Head from 'next/head'
 import { useChat } from 'ai/react';
+import { track } from '@vercel/analytics';
 import clsx from 'clsx'
 import BotMessageItem from '../../components/BotMessageItem'
 import UserMessageItem from '../../components/UserMessageItem'
@@ -204,7 +205,6 @@ export default function Home() {
     return emailRegex.test(email);
   }
 
-  console.log(messages)
   return (
     <main className="flex h-screen flex-col items-center justify-between bg-gray-500">
       <Head>
@@ -231,16 +231,23 @@ export default function Home() {
       </Head>
 
       <header className='absolute z-[100] top-0 flex items-center justify-between w-full px-[16px] mt-[20px] lg:px-[40px] lg:mt-[40px] sm:z-[300]'>
-        <div className='relative w-[36px] h-[36px] sm:w-[177px] sm:h-[36px] lg:w-[236px] lg:h-[48px]'>
-          <Image src={(mediaSize?.width || 0) > 640
-            ? "/moonbox_logo_white.png"
-            : "/moonbox_logo_mobile.png"} alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
-        </div>
+        <a href='/'>
+          <div className='relative w-[36px] h-[36px] sm:w-[177px] sm:h-[36px] lg:w-[236px] lg:h-[48px]'>
+            <Image src={(mediaSize?.width || 0) > 640
+              ? "/moonbox_logo_white.png"
+              : "/moonbox_logo_mobile.png"} alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
+          </div>
+        </a>
 
         <div className=' flex items-center'>
           {(mediaSize?.width || 0) > 640 &&
             <div className=' inline-flex items-end justify-center h-[36px] w-[108px] lg:h-[48px] lg:w-[136px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow'
-              onClick={() => setShowChatModal(true)}>
+              onClick={() => {
+                if (!showChatModal) {
+                  track("OpenChat")
+                }
+                setShowChatModal(true)
+              }}>
               <Image src={"/chat_bot_avatar.png"} alt='Chat bot avatar' width={(mediaSize?.width || 0) > 1024 ? 44 : 35} height={(mediaSize?.width || 0) > 1024 ? 57 : 45} />
               <span className='text-[16px] leading-[32px] sm:text-[21px] lg:leading-[43px] font-semibold text-black ml-[6px] lg:ml-[10px]'>{t('header_chat')}</span>
             </div>}
@@ -453,6 +460,7 @@ export default function Home() {
         </div>
         <form onSubmit={(...args) => {
           handleSubmit(...args);
+          track('SendMessage');
         }}>
           <div className={clsx('m-auto w-full max-w-[700px] h-[48px] sm:h-[68px] rounded-[12px]  border-[2px] border-white/10 flex p-[4px] sm:px-[10px] sm:py-[8px] bg-black/40  sm:bg-[#1D1D1DFF]')}>
             <Input value={input} onChange={(e) => {

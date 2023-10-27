@@ -13,7 +13,7 @@ export default function UserMessageItem(props:UserMessageItemProps) {
     </div>
 
     <div className="w-[32px] h-[32px] ml-[6px] sm:ml-[10px] sm:w-[56px] sm:h-[56px] rounded-full relative shrink-0 ">
-      <Image src="/user_message_avatar.png" alt="chat avatar" width={56} height={56} />
+      <Image src="/user_message_avatar.png" alt="chat avatar" width={56} height={56} priority />
     </div>
   </div>
 }

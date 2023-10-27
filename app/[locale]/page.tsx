@@ -185,7 +185,7 @@ export default function Home() {
     // 验证码逻辑
     try {
       // @ts-ignore
-      var captcha = new TencentCaptcha("189960004", (res) => {
+      var captcha = new TencentCaptcha("189924595", (res) => {
         console.log(res)
         if (res.ret == 0) {
           submitEmail(inputEmail)
@@ -446,7 +446,7 @@ export default function Home() {
         <div className=' flex justify-end sm:hidden mb-1'>
           <X color='white' onClick={() => setShowChatModal(false)} />
         </div>
-        <div className='h-[84%] sm:h-[92%] min-h-[200px] overflow-y-scroll' ref={chatListBottomRef}>
+        <div className='h-[84%] sm:h-[92%] min-h-[200px] overflow-y-scroll hide-scrollbar' ref={chatListBottomRef}>
           {
             messages.map(item => {
               if (item.role == 'assistant') {
@@ -531,8 +531,8 @@ export default function Home() {
               }} />
 
             <Button className={clsx(
-              "w-[120px] h-[48px] text-[16px] leading-[16px] rounded-full font-normal text-black hover:bg-white",
-              secondInputRef.current?.value ? "bg-white" : "bg-white/40"
+              "w-[120px] h-[48px] text-[16px] leading-[16px] rounded-full font-normal text-black",
+              secondInputRef.current?.value ? "bg-white hover:bg-white" : "bg-white/40 hover:bg-white/40"
             )}
               disabled={isSubmitting}
               onClick={() => handleSubmitEmail(secondInputRef)}

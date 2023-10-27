@@ -25,7 +25,7 @@ export default function BotMessageItem(props: BotMessageItemProps) {
 
   return <div className="flex mb-[24px] sm:mb-[30px]">
     <div className="mr-[6px] w-[32px] h-[32px] sm:mr-[10px] sm:w-[56px] sm:h-[56px] rounded-full relative shrink-0 ">
-      <Image src="/chat_message_avatar.png" alt="chat avatar" fill />
+      <Image src="/chat_message_avatar.png" alt="chat avatar" fill priority />
     </div>
     <div ref={messageRef} className=" rounded-[12px] bg-white sm:px-[18px] sm:py-[18px] sm:text-[18px] sm:leading-[24px] sm:font-normal max-w-[700px]
     text-[16px] leading-[21px] font-medium p-[12px] whitespace-pre-wrap

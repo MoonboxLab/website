@@ -204,7 +204,7 @@ export default function FirstSection(props: FirstSectionProps) {
     return emailRegex.test(email);
   }
 
-  return <div className='section relative'>
+  return <div className='section relative w-full h-screen'>
     {(mediaSize?.width || 0) > 640 &&
       <ReactPlayer
         key={"PC"}

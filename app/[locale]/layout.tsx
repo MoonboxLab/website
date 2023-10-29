@@ -22,7 +22,7 @@ export default async function LocaleLayout({
   children, params: { locale }
 }: {
   children: React.ReactNode,
-  params: { locale: string}
+  params: { locale: string }
 }) {
 
   let messages;
@@ -45,7 +45,7 @@ export default async function LocaleLayout({
         <Analytics />
         {/* <!-- 动态引入验证码JS示例 --> */}
         {/* <script async src="https://sg.captcha.qcloud.com/TCaptcha-global.js"></script> */}
-        <script async src="https://ca.turing.captcha.qcloud.com/TCaptcha-global.js"></script> 
+        <script async src="https://ca.turing.captcha.qcloud.com/TCaptcha-global.js"></script>
         <script async src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
       </body>
     </html>

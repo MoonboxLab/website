@@ -84,17 +84,21 @@
   .hide-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* &::-webkit-scrollbar {
-      display: none;
-    } */
   }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* 隐藏Chrome和Safari浏览器上的滚动条 */
+  }
+}
+
+.fp-watermark {
+  display: none !important;
 }
 
 .ReactModal__Overlay {
   background-color: transparent !important;
   /* background-color: rgba(0, 0, 0, 0.3) !important; */
-  position: relative;
-  z-index: 110;
+  /* position: relative; */
+  /* z-index: 110; */
 }
 
 @media screen and (max-width: 640px) {

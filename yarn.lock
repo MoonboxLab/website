@@ -7466,6 +7466,11 @@ typed-array-length@^1.0.4:
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
 
+typed.js@^2.0.16:
+  version "2.0.16"
+  resolved "https://registry.npmmirror.com/typed.js/-/typed.js-2.0.16.tgz#2ba416821ec8a59521466f405784077eddb1d95e"
+  integrity sha512-IBB52GlJiTUOnomwdVVf7lWgC6gScn8md+26zTHj5oJWA+4pSuclHE76rbGI2hnyO+NT+QXdIUHbfjAY5nEtcw==
+
 typedarray-to-buffer@3.1.5:
   version "3.1.5"
   resolved "https://registry.npmmirror.com/typedarray-to-buffer/-/typedarray-to-buffer-3.1.5.tgz#a97ee7a9ff42691b9f783ff1bc5112fe3fca9080"

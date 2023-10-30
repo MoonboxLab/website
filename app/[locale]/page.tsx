@@ -18,6 +18,7 @@ import {
   FullpageSection,
 } from '@shinyongjun/react-fullpage';
 import '@shinyongjun/react-fullpage/css';
+import Typed from 'typed.js'
 
 export default function Home() {
   const t = useTranslations('Home');
@@ -31,6 +32,8 @@ export default function Home() {
 
   const chatListBottomRef = useRef<HTMLEmbedElement>(null);
   const fullpageRef = useRef<HTMLDivElement>(null);
+
+  const secondPageStoryIntroduce = useRef<HTMLDivElement>(null);
 
   const mediaSize = useSize(document.querySelector('body'));
 
@@ -74,6 +77,21 @@ export default function Home() {
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({ top: chatListBottomRef.current?.scrollHeight, behavior: "smooth" })
   }, [chatListBottomRef.current?.scrollHeight])
+
+  useEffect(() => {
+    if (activeIndex == 1) {
+      var typed = new Typed(secondPageStoryIntroduce.current, {
+        strings: [t('story_introduce')],
+        typeSpeed: 40,
+        // cursorChar: ""
+      })
+      // typed.start()
+
+      return () => {
+        // typed.destroy();
+      }
+    }
+  }, [activeIndex])
 
   const handleLocaleChange = (locale: String) => {
     startTransition(() => {
@@ -249,6 +267,8 @@ export default function Home() {
                 if (!showChatModal) {
                   track("OpenChat")
                 }
+                // 回滚到首屏
+                setActiveIndex(0)
                 setShowChatModal(true)
               }}>
               <Image src={"/chat_bot_avatar.png"} alt='Chat bot avatar' width={(mediaSize?.width || 0) > 1024 ? 44 : 35} height={(mediaSize?.width || 0) > 1024 ? 57 : 45} />
@@ -316,7 +336,7 @@ export default function Home() {
               <Image src="/rocket.png" alt='rocket' fill />
             </div>
             <div className=' m-auto max-w-[80%] lg:ml-[170px] '>
-              <p className=' text-[24px] leading-[36px] lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px] font-medium text-white max-w-[1093px]'>{t('story_introduce')}</p>
+              <p className=' text-[24px] leading-[36px] lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px] font-medium text-white max-w-[1093px]' ref={secondPageStoryIntroduce}></p>
             </div>
           </div>
         </FullpageSection>

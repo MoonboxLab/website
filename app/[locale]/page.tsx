@@ -320,14 +320,18 @@ export default function Home() {
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
         transitionDuration={600}
-        onBeforeChange={(before,after) => {
+        onBeforeChange={(before, after) => {
           if (showChatModal) {
             setActiveIndex(0)
           }
         }}
       >
         <FullpageSection>
-          <FirstSection showChatModal={showChatModal} setShowChatModal={setShowChatModal} />
+          <FirstSection
+            playingMedia={playingMedia}
+            setPlayingMedia={setPlayingMedia}
+            showChatModal={showChatModal}
+            setShowChatModal={setShowChatModal} />
         </FullpageSection>
         <FullpageSection>
           <div className=" w-full h-screen bg-[#151515] bg-contain bg-[80%_80%] bg-[url('/bg-section2.png')] relative flex items-center">

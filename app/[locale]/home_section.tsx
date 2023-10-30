@@ -20,9 +20,11 @@ import { track } from "@vercel/analytics/react";
 interface FirstSectionProps {
   showChatModal: boolean,
   setShowChatModal: (arg: boolean) => any
+  playingMedia: boolean
+  setPlayingMedia: (arg: boolean) => any 
 }
 export default function FirstSection(props: FirstSectionProps) {
-  const { showChatModal, setShowChatModal } = props
+  const { showChatModal, setShowChatModal, playingMedia, setPlayingMedia } = props
 
   const mediaSize = useSize(document.querySelector('body'));
   const t = useTranslations('Home');
@@ -38,7 +40,7 @@ export default function FirstSection(props: FirstSectionProps) {
 
   const [showMainModal, setShowMainModal] = useState<boolean>(false);
   const [showSecondModal, setShowSecondModal] = useState<boolean>(true);
-  const [playingMedia, setPlayingMedia] = useState<boolean>(false);
+  // const [playingMedia, setPlayingMedia] = useState<boolean>(false);
 
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
   const [isSubmitingEmail, setSubmitingEmail] = useState<boolean>(false);
@@ -215,12 +217,13 @@ export default function FirstSection(props: FirstSectionProps) {
         }}
         width={"100%"}
         height={"100%"}
-        url={"/video_home.mp4"}
+        url={"/home_video2.mp4"}
       />}
 
     {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
       <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
       {!showChatModal && <Image src={"/home_background_stage2.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
+      {!showChatModal && <Image src={"/home_bg_stage2.gif"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
     </div>}
 
     {!playingMedia && !showMainModal && !showChatModal && (mediaSize?.width || 0) > 640 &&
@@ -281,7 +284,7 @@ export default function FirstSection(props: FirstSectionProps) {
               }}
               width="100%"
               height="auto"
-              url={"/video_home.mp4"}
+              url={"/home_video2.mp4"}
             />}
         </AspectRatio>
       </div>

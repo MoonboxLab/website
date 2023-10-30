@@ -47,6 +47,7 @@ export default function Home() {
   const [isSubmitingEmail, setSubmitingEmail] = useState<boolean>(false);
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isTypedSecondPage, setTypedSecondPage] = useState<boolean>(false);
 
 
   const [isSubmitedEmail, setSubmitEmail] = useLocalStorageState<boolean | undefined>(
@@ -79,17 +80,13 @@ export default function Home() {
   }, [chatListBottomRef.current?.scrollHeight])
 
   useEffect(() => {
-    if (activeIndex == 1) {
+    if (activeIndex == 1 && !isTypedSecondPage) {
       var typed = new Typed(secondPageStoryIntroduce.current, {
         strings: [t('story_introduce')],
         typeSpeed: 20,
         // cursorChar: ""
       })
-      // typed.start()
-
-      return () => {
-        // typed.destroy();
-      }
+      setTypedSecondPage(true)
     }
   }, [activeIndex])
 

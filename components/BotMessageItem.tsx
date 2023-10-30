@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { useEffect, useRef } from "react"
 import Typed from 'typed.js'
+import Markdown from 'react-markdown'
 
 type BotMessageItemProps = {
   message: string,
@@ -32,7 +33,7 @@ export default function BotMessageItem(props: BotMessageItemProps) {
     text-[16px] leading-[21px] font-medium p-[12px] whitespace-pre-wrap
     messageBox
     ">
-      {id != "InitInfo" && message}
+      {id != "InitInfo" && <Markdown>{message}</Markdown>}
     </div>
   </div>
 }

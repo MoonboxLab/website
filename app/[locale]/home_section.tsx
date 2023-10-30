@@ -226,7 +226,7 @@ export default function FirstSection(props: FirstSectionProps) {
 
     {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
       <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
-      {!showChatModal && <Image src={"/home_video_cover.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
+      {!showChatModal && <Image src={"/home_background_stage2.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
     </div>}
 
     {!playingMedia && !showMainModal && !showChatModal && (mediaSize?.width || 0) > 640 &&

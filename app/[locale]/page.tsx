@@ -82,7 +82,7 @@ export default function Home() {
     if (activeIndex == 1) {
       var typed = new Typed(secondPageStoryIntroduce.current, {
         strings: [t('story_introduce')],
-        typeSpeed: 40,
+        typeSpeed: 20,
         // cursorChar: ""
       })
       // typed.start()
@@ -323,19 +323,24 @@ export default function Home() {
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
         transitionDuration={600}
+        onBeforeChange={(before,after) => {
+          if (showChatModal) {
+            setActiveIndex(0)
+          }
+        }}
       >
         <FullpageSection>
           <FirstSection showChatModal={showChatModal} setShowChatModal={setShowChatModal} />
         </FullpageSection>
         <FullpageSection>
           <div className=" w-full h-screen bg-[#151515] bg-contain bg-[80%_80%] bg-[url('/bg-section2.png')] relative flex items-center">
-            <div className=' absolute scale-[0.45] top-[8%] sm:top-[130px] left-[-5%] sm:left-[170px] w-[186px] h-[128px] sm:scale-50  2xl:scale-75 3xl:scale-100'>
+            <div className=' absolute scale-[0.45] top-[8%] sm:top-[130px] left-[-5%] sm:left-[170px] w-[186px] h-[128px] sm:scale-50 lg:scale-[0.6] 2xl:scale-[0.7] 3xl:scale-[0.8] 4xl:scale-[0.9]'>
               <Image src="/spaceship.png" alt='spaceship' fill />
             </div>
             <div className=' absolute sm:bottom-[122px] bottom-[8%] right-[3%] sm:right-[171px] w-[125px] h-[139px] scale-[0.50] sm:scale-50  2xl:scale-75 3xl:scale-100'>
               <Image src="/rocket.png" alt='rocket' fill />
             </div>
-            <div className=' m-auto max-w-[80%] lg:ml-[170px] '>
+            <div className=' m-auto max-w-[80%] lg:ml-[170px] relative z-10 '>
               <p className=' text-[24px] leading-[36px] lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px] font-medium text-white max-w-[1093px]' ref={secondPageStoryIntroduce}></p>
             </div>
           </div>

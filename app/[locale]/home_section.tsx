@@ -258,7 +258,7 @@ export default function FirstSection(props: FirstSectionProps) {
           <X size={18} color='#d2d2d2' />
         </div>}
 
-        {!playingMedia && <div className=' absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[64px] w-[64px] rounded-full bg-black/80 inline-flex items-center justify-center border-[2px] cursor-pointer z-[120] ' onClick={() => setPlayingMedia(true)}>
+        {!playingMedia && <div className=' absolute left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%] h-[64px] w-[64px] rounded-full bg-black/80 inline-flex items-center justify-center border-[2px] cursor-pointer z-[120] ' onClick={() => setPlayingMedia(true)}>
           <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="30" height="30"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff"></path></svg>
         </div>}
 
@@ -327,7 +327,7 @@ export default function FirstSection(props: FirstSectionProps) {
 
     {/* mobile */}
     {!showChatModal &&
-      <div className='absolute z-20 bottom-[30px] sm:hidden left-0 right-0'>
+      <div className='absolute z-20 bottom-[75px] sm:hidden left-0 right-0'>
         <div className='h-[56px] w-[360px] mx-auto bg-white rounded-[12px] px-[14px] cursor-pointer mb-[10px] border-[2px] border-black shadow-[4px_4px_0px_#000000FF] flex items-end' onClick={() => setShowChatModal(true)}>
           <Image src={"/chat_bot_avatar.png"} alt='chat avatar' width={50} height={65} />
           <span className=' text-[18px] leading-[48px] font-semibold ml-[10px]'>{t('mobile_chat_btn')}</span>

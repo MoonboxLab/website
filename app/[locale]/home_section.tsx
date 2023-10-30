@@ -246,7 +246,7 @@ export default function FirstSection(props: FirstSectionProps) {
     {/* Mobile Video */}
     <div className='h-full w-screen relative sm:hidden flex flex-col justify-center'>
       <div className='w-full h-full absolute top-0 left-0 '>
-        <Image src={"/home_video_cover_mobile.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
+        <Image src={"/home_bg_mobile_stage2.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
         {playingMedia && <div className='w-full h-full bg-black/80 relative z-[100]'></div>}
       </div>
       <div className=' relative z-[110]'>

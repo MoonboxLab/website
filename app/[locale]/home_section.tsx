@@ -70,13 +70,7 @@ export default function FirstSection(props: FirstSectionProps) {
 
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({ top: chatListBottomRef.current?.scrollHeight, behavior: "smooth" })
-  }, [chatListBottomRef.current?.scrollHeight])
-
-  const handleLocaleChange = (locale: String) => {
-    startTransition(() => {
-      router.replace(pathname, { locale: locale })
-    })
-  }
+  }, [chatListBottomRef.current?.scrollHeight, messages])
 
   const submitEmail = async (inputEmail: String) => {
     setSubmitting(true);
@@ -143,7 +137,7 @@ export default function FirstSection(props: FirstSectionProps) {
 
   const sendWeclomeEmailToUser = async (email: string, captchaRes: Record<string, any>) => {
     try {
-      const result = await fetch('https://dev-server-api.mbxlab.io/email/send', {
+      const result = await fetch('https://homeapi.moonbox.com/email/send', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

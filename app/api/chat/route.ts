@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     console.log("error chat api:", err)
 
     const encoder = new TextEncoder();
-    const uint8Array = encoder.encode('Network error, please try again');
+    const uint8Array = encoder.encode('⚠️ *Network error, please try again*');
     var errStream = createUint8ArrayReadableStream(uint8Array)
     return new StreamingTextResponse(errStream);
   }

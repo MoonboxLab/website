@@ -68,6 +68,10 @@ export default function FirstSection(props: FirstSectionProps) {
       role: "assistant",
       content: t.raw('ai_sayhi')
     }],
+    onError(error) {
+      console.log(error)
+      console.log(messages)
+    },
   });
 
   useEffect(() => {

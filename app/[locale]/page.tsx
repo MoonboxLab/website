@@ -289,7 +289,7 @@ export default function Home() {
               <DropdownMenuItem onClick={() => handleLocaleChange('zh')} className=' mt-2'>
                 <div className=' h-[25px] inline-flex items-center justify-between px-3'>
                   <span className=' text-[21px] font-semibold mr-[10px]'>Zh</span>
-                  <span className=' text-[18px] leading-[18px] font-medium'>繁体中文</span>
+                  <span className=' text-[18px] leading-[18px] font-medium'>繁體中文</span>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

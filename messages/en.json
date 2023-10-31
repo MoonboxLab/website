@@ -12,6 +12,6 @@
     "submit_success": "You have successfully subscribed to our newsletter.",
     "submit_email_format_error": "Valid email format required!",
     "story_introduce": "Moonbox blends the world of web3 with AI-powered interactive storytelling. Our NFTs are more than just art; they’re your personal AI character, designed to converse and immerse you in a unique narrative journey. Keep an eye out for the debut of our next NFT collection.",
-    "ai_sayhi": "<b>Is anyone there? I'm really scared right now. Can anyone come and help me, the bus we were riding on has caught fire! I don't know where I'm going to end up here.</b>\n\n<i>(Inner Voice appears in The Director's mind, and The Director begins to attempt communication with Inner Voice.)</i>"
+    "ai_sayhi": "<b>Is anyone there? I'm really scared right now. Can anyone come and help me, the bus we were riding on has caught fire! I don't know where I'm going to end up here.</b>\n\n<i>(You are the inner voice of The Director. Your objective is to help The Director escape from this mess.)</i>"
   }
 }

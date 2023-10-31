@@ -5,13 +5,13 @@
     "email_modal_title": "訂閱我們的電子報，第一時間瞭解我們的白名單發布資訊",
     "email_modal_subscribe": "訂閱",
     "email_modal_input_placeholder": "輸入您的電子郵件地址",
-    "chat_model_placeholder": "進入對話",
+    "chat_model_placeholder": "輸入 Inner Voice",
     "chat_modal_closeBtn": "結束對話",
     "mobile_chat_btn": "快來和我聊天吧",
     "mobile_email_btn": "訂閱白名單資訊",
     "submit_success": "您已經成功訂閱了我們的電子報",
     "submit_email_format_error": "需要有效的電子郵件格式！",
     "story_introduce": "Moonbox 將 web3 世界與 AI 驅動的互動敘事相結合。我們的 NFT 不僅僅是藝術; 它們是您的個人 AI 角色，旨在與您對話並將您浸入獨特的敘事旅程中。敬請期待我們下一個 NFT 系列的首次亮相。",
-    "ai_sayhi": "(皺著眉頭，一臉狐疑。)\n“<b>我本來搭飛船去參加朋友的婚禮，結果不知怎麼的就掉到這個鬼地方來了。這究竟是什麼地方？你又是誰？我們怎麼會在這裡相遇？真是匪夷所思！</b>”"
+    "ai_sayhi": "<b>有人吗? 我现在好害怕，谁能来帮帮我，我乘坐的大巴着火了！我在这也不知道要飘到哪里去。</b>\n\n<i>（你是The Director的inner voice。你的目標是幫助The Director逃離困境。）</i>"
   }
 }

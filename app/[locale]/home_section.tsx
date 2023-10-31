@@ -66,7 +66,7 @@ export default function FirstSection(props: FirstSectionProps) {
     initialMessages: [{
       id: 'InitInfo',
       role: "assistant",
-      content: t('ai_sayhi')
+      content: t.raw('ai_sayhi')
     }],
   });
 

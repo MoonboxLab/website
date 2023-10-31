@@ -15,13 +15,11 @@ export default function BotMessageItem(props: BotMessageItemProps) {
 
   useEffect(() => {
     if (id == 'InitInfo') {
-      // @ts-ignore
       var typed = new Typed(messageRef.current, {
         strings: [message],
         typeSpeed: 15,
         cursorChar: ""
       })
-      typed.start()
     }
   }, [])
 

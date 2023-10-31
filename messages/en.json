@@ -1,0 +1,17 @@
+{
+  "Home": {
+    "header_chat": "Chat",
+    "header_language": "En",
+    "email_modal_title": "Subscribe to our newsletter and be the first to know about our whitelist release.",
+    "email_modal_subscribe": "Subscribe",
+    "email_modal_input_placeholder": "Enter your email",
+    "chat_model_placeholder": "Enter Dialogue",
+    "chat_modal_closeBtn": "Closure Dialogue",
+    "mobile_chat_btn": "Chat with me",
+    "mobile_email_btn": "Subscribe for whitelist updates",
+    "submit_success": "You have successfully subscribed to our newsletter.",
+    "submit_email_format_error": "Valid email format required!",
+    "story_introduce": "A new adventure awaits. This time, a PFP NFT is no longer just a jpeg, but a living soul. It is a friend whom you will spend time with and take care of. You learn, explore, and grow together.<br/><br/>Can’t wait to learn more? Join the great adventure now!",
+    "ai_sayhi": "floats in space, looking confused (What the hell is this place? How did I go from attending a wedding to floating in space?) Hey! Who are you? How are you also floating here? What kind of weird place have we fallen into?"
+  }
+}

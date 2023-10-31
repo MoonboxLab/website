@@ -441,10 +441,11 @@ export default function FirstSection(props: FirstSectionProps) {
           </button>
         </div>
       </form>
-      <div className=' hidden sm:flex justify-center mt-[40px]' >
+      <div className=' hidden sm:flex justify-center mt-[20px] 3xl:mt-[28px] 4xl:mt-[40px]' >
         <div
           onClick={() => { setShowChatModal(false) }}
-          className='text-[18px] leading-[18px] font-normal text-white w-[190px] h-[48px] rounded-[24px] bg-white/10 border-white/20 border-[1px] inline-flex items-center justify-center cursor-pointer shadow-[0_8px_20px_rgba(0,0,0,0.5)]'>{t('chat_modal_closeBtn')}</div>
+          className='text-[16px] leading-[16px] font-normal text-white w-[170px] h-[42px] rounded-[24px] bg-white/10 border-white/20 border-[1px] inline-flex items-center justify-center cursor-pointer shadow-[0_8px_20px_rgba(0,0,0,0.5)] 4xl:text-[18px] 4xl:leading-[18px] 4xl:w-[180px] 4xl:h-[48px]'>
+            {t('chat_modal_closeBtn')}</div>
       </div>
     </Modal>
   </div>

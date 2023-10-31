@@ -21,7 +21,7 @@ interface FirstSectionProps {
   showChatModal: boolean,
   setShowChatModal: (arg: boolean) => any
   playingMedia: boolean
-  setPlayingMedia: (arg: boolean) => any 
+  setPlayingMedia: (arg: boolean) => any
 }
 export default function FirstSection(props: FirstSectionProps) {
   const { showChatModal, setShowChatModal, playingMedia, setPlayingMedia } = props
@@ -406,14 +406,16 @@ export default function FirstSection(props: FirstSectionProps) {
       </div>
       <div className='h-[84%] sm:h-[92%] min-h-[200px] overflow-y-scroll hide-scrollbar' ref={chatListBottomRef}>
         {
-          messages.map(item => {
-            if (item.role == 'assistant') {
-              return <BotMessageItem message={item.content} id={messages.length == 1 ? item.id : ""} key={item.id} />
-            }
-            if (item.role == 'user') {
-              return <UserMessageItem message={item.content} key={item.id} />
-            }
-          })
+          messages.length === 1 ?
+            <BotMessageItem message={messages[0].content} id={messages[0].id} key={messages[0].id} /> :
+            messages.map(item => {
+              if (item.role == 'assistant') {
+                return <BotMessageItem message={item.content} id="" key={`${item.id}_${new Date().toString()}`} />
+              }
+              if (item.role == 'user') {
+                return <UserMessageItem message={item.content} key={item.id} />
+              }
+            })
         }
       </div>
       <form onSubmit={(...args) => {
@@ -445,7 +447,7 @@ export default function FirstSection(props: FirstSectionProps) {
         <div
           onClick={() => { setShowChatModal(false) }}
           className='text-[16px] leading-[16px] font-normal text-white w-[170px] h-[42px] rounded-[24px] bg-white/10 border-white/20 border-[1px] inline-flex items-center justify-center cursor-pointer shadow-[0_8px_20px_rgba(0,0,0,0.5)] 4xl:text-[18px] 4xl:leading-[18px] 4xl:w-[180px] 4xl:h-[48px]'>
-            {t('chat_modal_closeBtn')}</div>
+          {t('chat_modal_closeBtn')}</div>
       </div>
     </Modal>
   </div>

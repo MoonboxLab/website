@@ -59,14 +59,14 @@ export const metadata: Metadata = {
     title: 'Moonbox',
     description: 'Bring life to NFTs',
     type: "website",
-    images: '/home_video_cover.png',
+    images: '/home_background_stage2.jpg',
     url: "https://moonbox.com"
   },
   twitter: {
     card: "summary_large_image",
     title: 'Moonbox',
     description: 'Bring life to NFTs',
-    images: ['https://moonbox.com/home_video_cover.png'],
+    images: ['https://moonbox.com/home_background_stage2.jpg'],
     // players: {
     //   playerUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
     //   streamUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",

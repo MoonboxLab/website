@@ -315,6 +315,7 @@ export default function Home() {
           </a>
         </div>
       </header>
+      <div className='hidden sm:block absolute z-[120] w-full h-[120px] bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply'></div>
 
       <FullpageContainer
         activeIndex={activeIndex}

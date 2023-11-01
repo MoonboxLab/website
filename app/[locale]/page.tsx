@@ -75,9 +75,12 @@ export default function Home() {
       content: "I'm a helpful assistant. Do you want to chat with me?"
     }],
   });
-  
+
   useEffect(() => {
-    const vConsole = new VConsole();
+    if (typeof window !== 'undefined') {
+      // 在浏览器环境下执行需要使用 XMLHttpRequest 的代码
+      const vConsole = new VConsole();
+    }
   }, [])
 
   useEffect(() => {

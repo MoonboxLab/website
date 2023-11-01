@@ -76,12 +76,6 @@ export default function Home() {
     }],
   });
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // 在浏览器环境下执行需要使用 XMLHttpRequest 的代码
-      const vConsole = new VConsole();
-    }
-  }, [])
 
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({ top: chatListBottomRef.current?.scrollHeight, behavior: "smooth" })

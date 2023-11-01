@@ -5,13 +5,13 @@
     "email_modal_title": "Subscribe to our newsletter and be the first to know about our whitelist release.",
     "email_modal_subscribe": "Subscribe",
     "email_modal_input_placeholder": "Enter your email",
-    "chat_model_placeholder": "Enter Inner Voice",
+    "chat_model_placeholder": "Enter Dialogue",
     "chat_modal_closeBtn": "Close Dialogue",
     "mobile_chat_btn": "Chat with me",
     "mobile_email_btn": "Subscribe for whitelist updates",
     "submit_success": "You have successfully subscribed to our newsletter.",
     "submit_email_format_error": "Valid email format required!",
     "story_introduce": "Moonbox blends the world of web3 with AI-powered interactive storytelling. Our NFTs are more than just art; they’re your personal AI character, designed to converse and immerse you in a unique narrative journey. Keep an eye out for the debut of our next NFT collection.",
-    "ai_sayhi": "<b>Is anyone there? I’m really scared right now. Can someone come and help me? The bus I’m on is on fire! I have no idea where I will drift to.</b>\n\n<i>(You are the inner voice of The Director. Your objective is to help The Director escape from this mess.)</i>"
+    "ai_sayhi": "<b>Is anyone there? I’m really scared right now. Can someone come and help me? The bus I’m on is on fire! I have no idea where I will drift to.</b>\n\n<i>(The director’s body was injured, and his consciousness began to blur. Hazy and disoriented, he noticed another form of himself not far away, looking at his trapped self inside the bus. Suddenly, he realized, “That must be my soul!” Something extraordinary happened: his soul started to speak to him.)</i>"
   }
 }

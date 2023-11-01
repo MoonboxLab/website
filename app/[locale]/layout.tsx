@@ -1,8 +1,10 @@
 // "use client"
 import '../globals.css'
+import 'core-js/features/object/has-own';
 import '@rainbow-me/rainbowkit/styles.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Analytics } from '@vercel/analytics/react';
+import Script from 'next/script'
 
 import { ToastContainer } from 'react-toastify';
 
@@ -47,6 +49,10 @@ export default async function LocaleLayout({
         {/* <script async src="https://sg.captcha.qcloud.com/TCaptcha-global.js"></script> */}
         <script async src="https://ca.turing.captcha.qcloud.com/TCaptcha-global.js"></script>
         {/* <script async src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script> */}
+        {/* <script async src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script> */}
+        {/* <Script id='vconsole' async>
+          var vConsole = new window.VConsole();
+        </Script> */}
       </body>
     </html>
   )

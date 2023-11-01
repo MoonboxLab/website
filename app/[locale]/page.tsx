@@ -1,5 +1,6 @@
 "use client"
 // import { ConnectButton } from '@rainbow-me/rainbowkit'
+import 'core-js/features/object/has-own';
 import Image from 'next/image'
 import { RefObject, cache, useEffect, useRef, useState, useTransition } from 'react'
 import ReactPlayer from 'react-player'
@@ -19,6 +20,7 @@ import {
 } from '@shinyongjun/react-fullpage';
 import '@shinyongjun/react-fullpage/css';
 import Typed from 'typed.js'
+// import VConsole from 'vconsole'
 
 export default function Home() {
   const t = useTranslations('Home');
@@ -74,6 +76,7 @@ export default function Home() {
       content: "I'm a helpful assistant. Do you want to chat with me?"
     }],
   });
+
 
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({ top: chatListBottomRef.current?.scrollHeight, behavior: "smooth" })

@@ -1,4 +1,6 @@
 "use client"
+import 'core-js/features/object/has-own';
+
 import Modal from 'react-modal'
 import ReactPlayer from "react-player";
 import Image from "next/image";

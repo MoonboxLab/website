@@ -19,6 +19,7 @@ import {
 } from '@shinyongjun/react-fullpage';
 import '@shinyongjun/react-fullpage/css';
 import Typed from 'typed.js'
+import VConsole from 'vconsole'
 
 export default function Home() {
   const t = useTranslations('Home');
@@ -74,6 +75,10 @@ export default function Home() {
       content: "I'm a helpful assistant. Do you want to chat with me?"
     }],
   });
+  
+  useEffect(() => {
+    const vConsole = new VConsole();
+  }, [])
 
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({ top: chatListBottomRef.current?.scrollHeight, behavior: "smooth" })

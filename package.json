@@ -29,6 +29,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
+    "core-js": "^3.33.2",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.6",
     "lucide-react": "^0.279.0",

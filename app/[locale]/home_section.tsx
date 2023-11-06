@@ -14,7 +14,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { RefObject, useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "react-toastify";
 import { usePathname, useRouter } from "next-intl/client";
-import { useChat } from 'ai/react';
+// import { useChat } from 'ai/react';
+import { useChat } from '@/lib/useChat'
 import BotMessageItem from "@/components/BotMessageItem";
 import UserMessageItem from "@/components/UserMessageItem";
 import { track } from "@vercel/analytics/react";

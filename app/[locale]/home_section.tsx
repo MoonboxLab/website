@@ -224,7 +224,7 @@ export default function FirstSection(props: FirstSectionProps) {
         }}
         width={"100%"}
         height={"100%"}
-        url={"https://vodsourcebucket.s3.ap-east-1.amazonaws.com/homepage-scene/2/playlist.m3u8"}
+        url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/2/playlist.m3u8"}
       />}
 
     {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
@@ -291,7 +291,7 @@ export default function FirstSection(props: FirstSectionProps) {
               }}
               width="100%"
               height="auto"
-              url={"https://vodsourcebucket.s3.ap-east-1.amazonaws.com/homepage-scene/2/playlist.m3u8"}
+              url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/2/playlist.m3u8"}
             />}
         </AspectRatio>
       </div>

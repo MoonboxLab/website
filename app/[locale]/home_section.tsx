@@ -13,7 +13,6 @@ import { Loader2, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { RefObject, useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "react-toastify";
-import { usePathname, useRouter } from "next-intl/client";
 // import { useChat } from 'ai/react';
 import { useChat } from '@/lib/useChat'
 import BotMessageItem from "@/components/BotMessageItem";
@@ -43,7 +42,6 @@ export default function FirstSection(props: FirstSectionProps) {
 
   const [showMainModal, setShowMainModal] = useState<boolean>(false);
   const [showSecondModal, setShowSecondModal] = useState<boolean>(true);
-  // const [playingMedia, setPlayingMedia] = useState<boolean>(false);
 
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
   const [isSubmitingEmail, setSubmitingEmail] = useState<boolean>(false);
@@ -61,9 +59,6 @@ export default function FirstSection(props: FirstSectionProps) {
   )
 
   const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     initialMessages: [{
@@ -73,7 +68,6 @@ export default function FirstSection(props: FirstSectionProps) {
     }],
     onError(error) {
       console.log(error)
-      console.log(messages)
     },
   });
 

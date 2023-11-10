@@ -8,7 +8,7 @@ export default function Trilogy() {
   return (
     <div className="flex bg-black">
       <Header />
-      <div className="mt-[92px] flex w-full flex-col items-center pb-[80px] lg:mt-[200px] lg:pb-[150px]">
+      <div className="mt-[80px] flex w-full flex-col items-center pb-[80px] lg:mt-[120px] lg:pb-[150px]">
         <div className="mt-[40px] flex w-min flex-col">
           <iframe
             className="h-[180px] w-[320px] md:h-[360px] md:w-[640px] lg:h-[432px] lg:w-[768px] xl:h-[576px] xl:w-[1024px]"

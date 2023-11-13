@@ -39,7 +39,7 @@ export default function Trilogy() {
             {t("chapter_two_description")}
           </span>
         </div>
-        <div className="mt-[80px] flex w-min flex-col">
+        {/* <div className="mt-[80px] flex w-min flex-col">
           <iframe
             className="h-[180px] w-[320px] md:h-[360px] md:w-[640px] lg:h-[432px] lg:w-[768px] xl:h-[576px] xl:w-[1024px]"
             src="https://www.youtube.com/embed/euXWjps13aw?rel=0"
@@ -53,7 +53,7 @@ export default function Trilogy() {
           <span className="font-Inter mt-[10px] text-[16px] font-semibold leading-[24px] text-white lg:mt-[20px] lg:text-[21px]">
             {t("chapter_three_description")}
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -4,13 +4,11 @@ import 'core-js/features/object/has-own';
 import '@rainbow-me/rainbowkit/styles.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Analytics } from '@vercel/analytics/react';
-import Script from 'next/script'
-
 import { ToastContainer } from 'react-toastify';
 
 import { Inter } from 'next/font/google'
 import { WagmiProviders } from '../wagmiProvider'
-import Header from '@/components/Header';
+import Header from '@/components/Header_Backup';
 import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 
@@ -46,7 +44,6 @@ export default async function LocaleLayout({
         </WagmiProviders>
         <Analytics />
         {/* <!-- 动态引入验证码JS示例 --> */}
-        {/* <script async src="https://sg.captcha.qcloud.com/TCaptcha-global.js"></script> */}
         <script async src="https://ca.turing.captcha.qcloud.com/TCaptcha-global.js"></script>
         {/* <script async src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script> */}
         {/* <script async src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script> */}
@@ -73,11 +70,5 @@ export const metadata: Metadata = {
     title: 'Moonbox',
     description: 'Bring life to NFTs',
     images: ['https://moonbox.com/home_background_stage2.jpg'],
-    // players: {
-    //   playerUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
-    //   streamUrl: "https://nft-website-git-dev-moonbox.vercel.app/video_home.mp4",
-    //   width: 1920,
-    //   height: 1080,
-    // }
   },
 }

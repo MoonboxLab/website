@@ -17,10 +17,10 @@ export default function Trilogy() {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           />
-          <h3 className="font-Inter mt-[20px] text-[21px] font-semibold leading-[24px] text-white lg:mt-[40px] lg:text-[30px]">
+          <h3 className="font-Inter mt-[20px] text-[21px] font-semibold leading-[24px] text-white lg:mt-[40px] lg:text-[28px]">
             {t("chapter_one")}
           </h3>
-          <span className="font-Inter mt-[10px] text-[16px] font-semibold leading-[24px] text-white lg:mt-[20px] lg:text-[21px]">
+          <span className="font-Inter mt-[10px] text-[16px] font-semibold leading-[24px] text-white lg:mt-[20px] lg:text-[19px]">
             {t("chapter_one_description")}
           </span>
         </div>
@@ -32,10 +32,10 @@ export default function Trilogy() {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           />
-          <h3 className="font-Inter mt-[20px] text-[21px] font-semibold leading-[24px] text-white lg:mt-[40px] lg:text-[30px]">
+          <h3 className="font-Inter mt-[20px] text-[21px] font-semibold leading-[24px] text-white lg:mt-[40px] lg:text-[28px]">
             {t("chapter_two")}
           </h3>
-          <span className="font-Inter mt-[10px] text-[16px] font-semibold leading-[24px] text-white lg:mt-[20px] lg:text-[21px]">
+          <span className="font-Inter mt-[10px] text-[16px] font-semibold leading-[24px] text-white lg:mt-[20px] lg:text-[19px]">
             {t("chapter_two_description")}
           </span>
         </div>

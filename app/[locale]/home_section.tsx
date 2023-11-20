@@ -18,6 +18,14 @@ import { useChat } from "@/lib/useChat";
 import BotMessageItem from "@/components/BotMessageItem";
 import UserMessageItem from "@/components/UserMessageItem";
 import { track } from "@vercel/analytics/react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface FirstSectionProps {
   showChatModal: boolean;
@@ -215,11 +223,11 @@ export default function FirstSection(props: FirstSectionProps) {
       {(mediaSize?.width || 0) > 640 && (
         <div className="relative left-0 top-0 z-10 hidden h-full w-full sm:block">
           <div className="ml-[125px] flex h-screen w-full flex-col justify-center">
-            <span className="z-50 flex-nowrap text-[72px] font-semibold leading-[72px] text-white text-shadow">
+            <span className="text-shadow z-50 flex-nowrap text-[72px] font-semibold leading-[72px] text-white">
               {t("auction_start_soon")}
             </span>
             <div className="z-50 mt-[30px]">
-              <span className="text-gradient flex-nowrap text-[120px] font-semibold leading-[120px] text-white text-shadow">
+              <span className="text-gradient text-shadow flex-nowrap text-[120px] font-semibold leading-[120px] text-white">
                 {t("special_role")}
               </span>
             </div>
@@ -229,9 +237,24 @@ export default function FirstSection(props: FirstSectionProps) {
             <span className="z-50 w-[778px] text-[21px] font-semibold  text-white">
               {t("auction_eligibility")}
             </span>
-            <span className="z-50 mt-[30px] flex-nowrap text-[21px]  font-semibold text-white underline">
-              {t("view_rules")}
-            </span>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <span className="z-50 mt-[30px] flex-nowrap text-[21px]  font-semibold text-white underline">
+                  {t("view_rules")}
+                </span>
+              </DialogTrigger>
+              <DialogContent className="3xl:max-w-[1035px]">
+                <DialogHeader>
+                  <DialogTitle className="text-[21px]">
+                    {t("auction_rules")}
+                  </DialogTitle>
+                  <DialogDescription className="pt-[30px] text-[16px]">
+                    <div dangerouslySetInnerHTML={{__html: t.raw('auction_rules_detail')}} />
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
 
           <Image

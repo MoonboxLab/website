@@ -50,12 +50,14 @@ export default function Trilogy() {
           /> */}
 
           <div className="relative h-[180px] w-[320px] md:h-[360px] md:w-[640px] lg:h-[432px] lg:w-[768px] xl:h-[576px] xl:w-[1024px]">
-            <Image
-              fill
-              src="/trilogy_chapter_three.jpg"
-              alt="chapter three"
-              priority
-            />
+            <a href="https://www.youtube.com/watch?v=66XeItBBQQU" target="_blank">
+              <Image
+                fill
+                src="/trilogy_chapter_three.jpg"
+                alt="chapter three"
+                priority
+              />
+            </a>
           </div>
 
           <h3 className="font-Inter mt-[20px] text-[21px] font-semibold leading-[24px] text-white lg:mt-[40px] lg:text-[30px]">

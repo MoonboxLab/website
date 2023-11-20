@@ -1,8 +1,10 @@
 {
   "Home": {
+    "header_mv": "Watch MV",
     "header_chat": "Chat",
     "header_trilogy": "Trilogy",
     "header_language": "En",
+    "header_connect_wallet": "Connect Wallet",
     "email_modal_title": "Subscribe to our newsletter and be the first to know about our whitelist release.",
     "email_modal_subscribe": "Subscribe",
     "email_modal_input_placeholder": "Enter your email",
@@ -19,6 +21,11 @@
     "chapter_two": "Chapter two : Accident",
     "chapter_two_description": "The Spacebus breaks down for no reason, leaving The Director hovering in the space and drifting to nowhere.",
     "chapter_three": "Chapter three : Coming soon…",
-    "chapter_three_description": "The Spacebus breaks down for no reason, leaving The Director hovering in the space and drifting to nowhere."
+    "chapter_three_description": "The Spacebus breaks down for no reason, leaving The Director hovering in the space and drifting to nowhere.",
+    "auction_start_soon": "Auction Starts Soon",
+    "special_role": "SPECIAL ROLE",
+    "auction_start_time": "Starting time: 28/12, 2023",
+    "auction_eligibility": "Eligibility: Users who have obtained the invitation code can participate in the auction. Please check the rules for more details.",
+    "view_rules": "View Rules"
   }
 }

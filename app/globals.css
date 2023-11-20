@@ -114,3 +114,20 @@ video {
 .Toastify {
   --toastify-text-color-light: #000;
 }
+
+.text-shadow {
+  text-shadow:
+    3px -3px 0 black,
+    3px -3px 0 black,
+    -3px 3px 0 black,
+    3px 3px 0 black;
+}
+
+.text-gradient {
+  background: linear-gradient(white, 50% white, rgba(255, 240, 0, 1) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  -moz-text-fill-color: white;
+  color: white;
+}

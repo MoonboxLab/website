@@ -1,8 +1,10 @@
 {
   "Home": {
+    "header_mv": "看视频",
     "header_chat": "聊天",
     "header_trilogy": "三部曲",
     "header_language": "Zh",
+    "header_connect_wallet": "連接錢包",
     "email_modal_title": "訂閱我們的電子報，第一時間瞭解我們的白名單發布資訊",
     "email_modal_subscribe": "訂閱",
     "email_modal_input_placeholder": "輸入您的電子郵件地址",
@@ -19,6 +21,11 @@
     "chapter_two": "第二章 : 意外",
     "chapter_two_description": "太空巴士突發爆炸，The Director因故漂浮浩瀚宇宙，他將去往何方？",
     "chapter_three": "第三章 : 敬請期待…",
-    "chapter_three_description": "太空巴士全速前進，一萬外星乘客興致盎然，意慾踏上一場神秘之旅。"
+    "chapter_three_description": "太空巴士全速前進，一萬外星乘客興致盎然，意慾踏上一場神秘之旅。",
+    "auction_start_soon": "拍賣即將開始",
+    "special_role": "特殊角色",
+    "auction_start_time": "開始時間：2023年12月28日",
+    "auction_eligibility": "參與資格：有拍賣邀請碼的用戶即可參與",
+    "view_rules": "view_rules"
   }
 }

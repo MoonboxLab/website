@@ -23,6 +23,8 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogOverlay,
+  DialogPortal,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -220,6 +222,7 @@ export default function FirstSection(props: FirstSectionProps) {
 
   return (
     <div className="section relative h-screen w-full">
+      {/* PC UI */}
       {(mediaSize?.width || 0) > 640 && (
         <div className="relative left-0 top-0 z-10 hidden h-full w-full sm:block">
           <div className="ml-[125px] flex h-screen w-full flex-col justify-center">
@@ -227,9 +230,14 @@ export default function FirstSection(props: FirstSectionProps) {
               {t("auction_start_soon")}
             </span>
             <div className="z-50 mt-[30px]">
-              <span className="text-gradient text-shadow flex-nowrap text-[120px] font-semibold leading-[120px] text-white">
-                {t("special_role")}
-              </span>
+              <Image
+                src={"/home_nobody_role.png"}
+                alt="home_nobody_role"
+                height={100}
+                width={880}
+                style={{ objectFit: "cover" }}
+                priority
+              />
             </div>
             <span className="z-50 mt-[40px] flex-nowrap text-[21px]  font-semibold text-white">
               {t("auction_start_time")}
@@ -237,7 +245,6 @@ export default function FirstSection(props: FirstSectionProps) {
             <span className="z-50 w-[778px] text-[21px] font-semibold  text-white">
               {t("auction_eligibility")}
             </span>
-
             <Dialog>
               <DialogTrigger asChild>
                 <span className="z-50 mt-[30px] flex-nowrap text-[21px]  font-semibold text-white underline">
@@ -246,110 +253,87 @@ export default function FirstSection(props: FirstSectionProps) {
               </DialogTrigger>
               <DialogContent className="3xl:max-w-[1035px]">
                 <DialogHeader>
-                  <DialogTitle className="text-[21px]">
+                  <DialogTitle className="px-[16px] text-[21px]">
                     {t("auction_rules")}
                   </DialogTitle>
-                  <DialogDescription className="pt-[30px] text-[16px]">
-                    <div dangerouslySetInnerHTML={{__html: t.raw('auction_rules_detail')}} />
+                  <DialogDescription className="px-[16px] py-[30px] text-[16px] text-black">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: t.raw("auction_rules_detail"),
+                      }}
+                    />
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>
             </Dialog>
+            <div className="mouse z-50">
+              <div className="scroll z-50"></div>
+            </div>
           </div>
-
           <Image
-            src={"/home_background_auction_1.png"}
-            alt="background_image"
+            src={"/home_auction_bg_1.png"}
+            alt="home_auction_bg_1"
             fill
             style={{ objectFit: "cover" }}
-            // priority
+            priority
           />
         </div>
       )}
 
-      {/* Mobile Video */}
+      {/* Mobile UI */}
       <div className="relative flex h-full w-screen flex-col justify-center sm:hidden">
-        <div className="absolute left-0 top-0 h-full w-full ">
+        <div className="flex h-screen w-full flex-col px-[16px]">
+          <span className="text-shadow z-50 mt-[132px] flex-nowrap text-[36px] font-semibold leading-[36px] text-white">
+            {t("auction_start_soon")}
+          </span>
+          <div className="z-50 mt-[30px]">
+            <Image
+              src={"/home_nobody_role_mobile.png"}
+              alt="home_nobody_role_mobile"
+              height={150}
+              width={356}
+              style={{ objectFit: "cover" }}
+              priority
+            />
+          </div>
+          <span className="z-50 mt-[40px] flex-nowrap text-[18px] font-semibold text-white">
+            {t("auction_start_time")}
+          </span>
+          <span className="z-50 text-[18px] font-semibold text-white">
+            {t("auction_eligibility")}
+          </span>
+          <Dialog>
+            <DialogTrigger asChild>
+              <span className="z-50 mt-[20px] flex-nowrap text-[16px] font-semibold text-white underline">
+                {t("view_rules")}
+              </span>
+            </DialogTrigger>
+            <DialogContent className="max-h-[80%] max-w-[90%] overflow-scroll">
+              <DialogHeader>
+                <DialogTitle className="text-left text-[18px]">
+                  {t("auction_rules")}
+                </DialogTitle>
+                <DialogDescription className="py-[20px] text-left text-[16px] text-black">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: t.raw("auction_rules_detail"),
+                    }}
+                  />
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
           <Image
-            src={"/home_bg_mobile_stage2.jpg"}
-            alt="background_image"
+            src={"/home_auction_bg_mobile_1.png"}
+            alt="home_auction_bg_mobile_1"
             fill
             style={{ objectFit: "cover" }}
-            sizes="100vw"
-            quality={100}
+            priority
           />
-          {playingMedia && (
-            <div className="relative z-[100] h-full w-full bg-black/80"></div>
-          )}
-        </div>
-        <div className=" relative z-[110]">
-          {/* Close Button */}
-          {playingMedia && (
-            <div
-              className=" absolute right-2 top-[-30px] inline-flex h-[22px] w-[22px] cursor-pointer items-center justify-center rounded-full bg-slate-400/40"
-              onClick={() => {
-                setPlayingMedia(false);
-                // @ts-ignore
-                playerRef.current?.seekTo(0, "fraction");
-              }}
-            >
-              <X size={18} color="#d2d2d2" />
-            </div>
-          )}
-
-          {!playingMedia && (
-            <div
-              className=" absolute left-[50%] z-[120] inline-flex h-[64px] w-[64px] translate-x-[-50%] translate-y-[-50%] cursor-pointer items-center justify-center rounded-full border-[2px] bg-black/80 "
-              onClick={() => setPlayingMedia(true)}
-            >
-              <svg
-                viewBox="0 0 1024 1024"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                p-id="6577"
-                width="30"
-                height="30"
-              >
-                <path
-                  d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z"
-                  fill="#ffffff"
-                ></path>
-              </svg>
-            </div>
-          )}
-
-          <AspectRatio ratio={1920 / 1080}>
-            {(mediaSize?.width || 0) <= 640 && playingMedia && (
-              <ReactPlayer
-                key={"Mobile"}
-                // @ts-ignore
-                ref={playerRef}
-                pip={false}
-                controls
-                controlslist="nofullscreen play timeline volume"
-                playing={playingMedia}
-                onEnded={() => {
-                  setPlayingMedia(false);
-                  // @ts-ignore
-                  playerRef.current?.seekTo(0, "fraction");
-
-                  // if (!isSubmitedEmail) {
-                  //   setShowMainModal(true);
-                  // }
-                  setShowChatModal(true);
-                }}
-                width="100%"
-                height="auto"
-                url={
-                  "https://d4pw50zft54fq.cloudfront.net/homepage-scene/2/playlist.m3u8"
-                }
-              />
-            )}
-          </AspectRatio>
         </div>
       </div>
 
-      {/* PC small modal */}
+      {/* PC mail modal */}
       {!playingMedia &&
         !showMainModal &&
         !showChatModal &&
@@ -404,21 +388,21 @@ export default function FirstSection(props: FirstSectionProps) {
           </div>
         )}
 
-      {/* mobile */}
+      {/* Mobile floating window */}
       {!showChatModal && (
         <div className="absolute bottom-[120px] left-0 right-0 z-20 sm:hidden">
           <div
-            className="mx-auto mb-[10px] flex h-[56px] w-[360px] cursor-pointer items-end rounded-[12px] border-[2px] border-black bg-white px-[14px] shadow-[4px_4px_0px_#000000FF]"
+            className="mx-auto mb-[10px] flex h-[56px] w-[360px] cursor-pointer items-center rounded-[12px] border-[2px] border-black bg-white px-[14px] shadow-[4px_4px_0px_#000000FF]"
             onClick={() => setShowChatModal(true)}
           >
             <Image
-              src={"/chat_bot_avatar.png"}
+              src={"/home_auction.png"}
               alt="chat avatar"
               width={50}
               height={65}
             />
             <span className=" ml-[10px] text-[18px] font-semibold leading-[48px]">
-              {t("mobile_chat_btn")}
+              {t("participate_auction")}
             </span>
           </div>
           <div
@@ -440,7 +424,7 @@ export default function FirstSection(props: FirstSectionProps) {
         </div>
       )}
 
-      {/* Main email modal */}
+      {/* Mobile email modal */}
       <Modal
         isOpen={showMainModal}
         style={{
@@ -499,124 +483,6 @@ export default function FirstSection(props: FirstSectionProps) {
           {isSubmitting && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
           {t("email_modal_subscribe")}
         </Button>
-      </Modal>
-
-      {/* Bot Chat Modal  */}
-      <Modal
-        isOpen={showChatModal}
-        style={{
-          content: {
-            width:
-              (mediaSize?.width || 0) > 640
-                ? (mediaSize?.width || 0) > 1800
-                  ? "932px"
-                  : "832px"
-                : "92%",
-            height: (mediaSize?.width || 0) > 640 ? "70%" : "80%",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: (mediaSize?.width || 0) > 640 ? "transparent" : "gray",
-            borderRadius: (mediaSize?.width || 0) > 640 ? "24px" : "12px",
-            border: "none",
-            padding: (mediaSize?.width || 0) > 640 ? 0 : "10px",
-            overflow: "visible",
-            zIndex: "130",
-          },
-        }}
-      >
-        <div className=" mb-1 flex justify-end sm:hidden">
-          <X color="white" onClick={() => setShowChatModal(false)} />
-        </div>
-        <div
-          className="hide-scrollbar h-[84%] min-h-[200px] overflow-y-scroll sm:h-[92%]"
-          ref={chatListBottomRef}
-        >
-          {messages.length === 1 ? (
-            <BotMessageItem
-              message={messages[0].content}
-              id={messages[0].id}
-              key={messages[0].id}
-            />
-          ) : (
-            messages.map((item) => {
-              if (item.role == "assistant") {
-                return (
-                  <BotMessageItem
-                    message={item.content}
-                    id=""
-                    key={`${item.id}_${new Date().toString()}`}
-                  />
-                );
-              }
-              if (item.role == "user") {
-                return <UserMessageItem message={item.content} key={item.id} />;
-              }
-            })
-          )}
-        </div>
-        <form
-          onSubmit={(...args) => {
-            handleSubmit(...args);
-            track("SendMessage");
-          }}
-        >
-          <div
-            className={clsx(
-              "m-auto flex h-[48px] w-full max-w-[700px] rounded-[12px]  border-[2px] border-white/10 bg-black/40 p-[4px] sm:h-[68px] sm:bg-[#1D1D1DFF] sm:px-[10px]  sm:py-[8px] 4xl:max-w-[800px]",
-            )}
-          >
-            <Input
-              value={input}
-              onChange={(e) => {
-                handleInputChange(e);
-                if (!activeInput && Boolean(input)) {
-                  setActiveInput(true);
-                }
-                if (activeInput && !Boolean(input)) {
-                  setActiveInput(false);
-                }
-              }}
-              ref={chatInputRef}
-              placeholder={t("chat_model_placeholder")}
-              className={clsx(
-                "h-[36px] border-none bg-transparent pl-1 text-[18px] font-normal leading-[24px] text-white ring-0 placeholder:text-[18px] placeholder:font-normal placeholder:leading-[24px] placeholder:text-white/20 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 sm:h-[48px] sm:p-0",
-              )}
-            />
-            <button
-              type="submit"
-              className={clsx(
-                "ml-1 inline-flex h-[36px] w-[36px] shrink-0 cursor-pointer items-center justify-center  rounded-[8px] sm:ml-[10px] sm:h-[48px] sm:w-[48px]",
-                Boolean(chatInputRef.current?.value)
-                  ? "bg-[#3B84FFFF]"
-                  : "bg-white/20",
-              )}
-            >
-              <svg
-                className="h-[18px] w-[18px] sm:h-[24px] sm:w-[24px]"
-                viewBox="0 0 1024 1024"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                p-id="4973"
-                fill={
-                  Boolean(chatInputRef.current?.value) ? "#fff" : "#ffffff80"
-                }
-              >
-                <path d="M478.4128 491.7248l-202.1376-30.1056a81.92 81.92 0 0 1-64.67584-52.38784L125.52192 178.4832c-7.8848-21.17632 2.49856-44.8512 23.22432-52.92032a39.38304 39.38304 0 0 1 31.90784 1.47456L878.592 475.15648c19.90656 9.9328 28.18048 34.48832 18.432 54.82496-3.8912 8.21248-10.40384 14.848-18.432 18.8416L180.6336 896.96256a39.77216 39.77216 0 0 1-53.6576-18.8416 41.7792 41.7792 0 0 1-1.45408-32.58368l86.07744-230.74816a81.92 81.92 0 0 1 64.67584-52.38784l202.1376-30.1056a20.48 20.48 0 0 0 0-40.5504z"></path>
-              </svg>
-            </button>
-          </div>
-        </form>
-        <div className=" mt-[20px] hidden justify-center sm:flex 3xl:mt-[28px] 4xl:mt-[40px]">
-          <div
-            onClick={() => {
-              setShowChatModal(false);
-            }}
-            className="inline-flex h-[42px] w-[170px] cursor-pointer items-center justify-center rounded-[24px] border-[1px] border-white/20 bg-white/10 text-[16px] font-normal leading-[16px] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] 4xl:h-[48px] 4xl:w-[180px] 4xl:text-[18px] 4xl:leading-[18px]"
-          >
-            {t("chat_modal_closeBtn")}
-          </div>
-        </div>
       </Modal>
     </div>
   );

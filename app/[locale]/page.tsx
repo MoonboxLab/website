@@ -72,20 +72,46 @@ export default function Home() {
         </FullpageSection>
 
         <FullpageSection>
-          <div className="relative flex h-auto w-full flex-col items-center bg-[#151515] bg-[url('/bg-section2.png')] bg-contain bg-[80%_80%]">
-            <div className="flex flex-col items-center pb-[160px] pt-[230px]">
-              <span className="text-[24px] font-bold leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
-                {t("about_nobody")}
-              </span>
-              <span className="mt-[30px] max-w-[1093px] text-center text-[24px] font-medium leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
-                {t("team_welcome")}
-              </span>
-              <span className="mt-[30px] max-w-[1117px] text-center text-[24px] font-medium leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
-                {t("team_introduce")}
-              </span>
+          <div className="relative flex h-auto w-full flex-col items-center bg-[#151515] bg-contain bg-[80%_80%]">
+            <div className="relative w-full">
+              <div className="flex flex-col items-center pb-[160px] pt-[230px]">
+                <span className="text-[24px] font-bold leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
+                  {t("about_nobody")}
+                </span>
+                <span className="mt-[30px] max-w-[1093px] text-center text-[24px] font-medium leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
+                  {t("team_welcome")}
+                </span>
+                <span className="mt-[30px] max-w-[1117px] text-center text-[24px] font-medium leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
+                  {t("team_introduce")}
+                </span>
+              </div>
+              <Image
+                className="absolute right-0 top-0"
+                src={"/home_auction_bg_2.png"}
+                alt="home_auction_bg_2"
+                width={465}
+                height={365}
+                priority
+              />
+              <Image
+                className="absolute bottom-0 left-0"
+                src={"/home_auction_bg_3.png"}
+                alt="home_auction_bg_3"
+                width={566}
+                height={431}
+                priority
+              />
+              <Image
+                className="absolute bottom-[115px] right-[180px]"
+                src={"/home_auction_bg_4.png"}
+                alt="home_auction_bg_4"
+                width={112}
+                height={112}
+                priority
+              />
             </div>
             <Separator className="bg-gray-800" />
-            <div className="flex w-full flex-col items-center py-[160px]">
+            <div className="flex w-full max-w-[1920px] flex-col items-center py-[160px]">
               <span className="text-[24px] font-bold leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
                 {t("auction_schedule")}
               </span>
@@ -158,13 +184,25 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="h-[400px] w-full px-[100px]">
+            <div className="relative flex w-full flex-col items-center">
+              <Separator className="bg-gray-800" />
+              <Image
+                className="absolute -bottom-[120px] right-[25px]"
+                src={"/home_auction_bg_5.png"}
+                alt="home_auction_bg_5"
+                width={280}
+                height={460}
+                priority
+              />
+            </div>
+            <div className="mb-[160px] mt-[160px] h-[400px] w-full px-[100px]">
               <div className="flex h-full w-full items-center justify-center rounded-xl bg-white bg-opacity-10">
                 <span className="text-[60px] text-white opacity-30">
                   {t("auctioned_address")}
                 </span>
               </div>
             </div>
+            <Separator className="bg-gray-800" />
             <div className="flex h-[295px] w-full flex-col items-center justify-center py-[80px]">
               <div className="flex">
                 <a
@@ -243,14 +281,6 @@ export default function Home() {
                 ©2023 moonbox ALL RIGHTS RESERVED
               </span>
             </div>
-            <Image
-              className="absolute bottom-[25px] right-[25px]"
-              src={"/item_auctioned.png"}
-              alt="item autioned"
-              width={64}
-              height={64}
-              priority
-            />
           </div>
         </FullpageSection>
       </FullpageContainer>

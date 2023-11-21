@@ -337,7 +337,7 @@ const Header: React.FC = () => {
           )}
         </div>
       </header>
-      <div className="absolute z-[120] hidden h-[120px] w-full bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply sm:block"></div>
+      <div className="absolute z-[120] hidden h-[120px] w-full bg-gradient-to-b from-black to-slate-150 bg-blend-multiply mix-blend-multiply sm:block"></div>
     </>
   );
 };

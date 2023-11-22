@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16"
+    height="16" viewBox="0 0 16 16" fill="none">
+    <g opacity="1" transform="translate(1 1)  rotate(0)">
+        <path id="椭圆形" style="fill:#BEBEBE; opacity:1;"
+            d="M13,7c0,-3.31371 -2.6863,-6 -6,-6c-3.31371,0 -6,2.68629 -6,6c0,3.3137 2.68629,6 6,6c3.3137,0 6,-2.6863 6,-6zM15,7c0,4.4183 -3.5817,8 -8,8c-4.41828,0 -8,-3.5817 -8,-8c0,-4.41828 3.58172,-8 8,-8c4.4183,0 8,3.58172 8,8z"></path>
+        <path id="椭圆形" fill-rule="evenodd" style="fill:#BEBEBE" opacity="1"
+            d="M11 7C11 4.79 9.21 3 7 3C4.79 3 3 4.79 3 7C3 9.21 4.79 11 7 11C9.21 11 11 9.21 11 7Z"></path>
+    </g>
+</svg>

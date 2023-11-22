@@ -13,26 +13,29 @@ export default function AuctionItem(props: AuctionItemProps) {
 
   return (
     <div className="relative">
-      <div className="mx-[15px] my-[15px] flex h-[448px] w-[320px] flex-col rounded-xl bg-white">
+      <div className="flex h-full w-full flex-col rounded-xl bg-white">
         <Image
+          className="w-full"
           src={image}
           alt="aution item image"
           width={320}
           height={320}
           priority
         />
-        <div className="flex flex-col px-[16px] py-[20px]">
-          <span className="text-[18px] leading-[18px]">{name}</span>
-          <span className="mt-[15px]  text-[14px] leading-[14px]">
+        <div className="flex flex-col px-[10px] py-[10px] sm:px-[16px] sm:py-[20px]">
+          <span className="text-[16px] font-semibold leading-[16px] sm:text-[18px] sm:leading-[18px]">
+            {name}
+          </span>
+          <span className="mt-[10px] text-[12px] leading-[12px] sm:mt-[15px] sm:text-[14px] sm:leading-[14px]">
             {catchphrase}
           </span>
-          <Separator className="mt-[15px] bg-gray-200" />
+          <Separator className="mt-[10px] bg-gray-200 sm:mt-[15px]" />
           {owned ? (
-            <span className="mt-[15px] text-[14px] leading-[14px]">
+            <span className="mt-[10px] text-[12px] leading-[12px] sm:mt-[15px] sm:text-[14px] sm:leading-[14px]">
               <b>Owned</b> {owned}
             </span>
           ) : (
-            <span className="mt-[15px] text-[14px] leading-[14px]  text-gray-300">
+            <span className="mt-[10px] text-[12px] leading-[12px] text-gray-300 sm:mt-[15px] sm:text-[14px] sm:leading-[14px]">
               Owned Wait!
             </span>
           )}
@@ -40,7 +43,7 @@ export default function AuctionItem(props: AuctionItemProps) {
       </div>
       {owned && (
         <Image
-          className="absolute bottom-[25px] right-[25px]"
+          className="absolute bottom-[5px] right-[5px] sm:bottom-[25px] sm:right-[25px]"
           src={"/item_auctioned.png"}
           alt="item autioned"
           width={64}

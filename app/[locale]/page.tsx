@@ -15,6 +15,7 @@ import "@shinyongjun/react-fullpage/css";
 import Typed from "typed.js";
 import { Separator } from "@/components/ui/separator";
 import AuctionItem from "@/components/AuctionItem";
+import AddressItem from "@/components/AddressItem";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -28,7 +29,10 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isTypedSecondPage, setTypedSecondPage] = useState<boolean>(false);
 
-  const data = [{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" }]; //prettier-ignore
+  const auctionData = [{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" }]; //prettier-ignore
+
+  const addressData = [{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"}] //prettier-ignore
+  // const addressData = undefined
 
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({
@@ -75,19 +79,19 @@ export default function Home() {
           <div className="relative flex h-auto w-full flex-col items-center bg-[#151515] bg-contain bg-[80%_80%]">
             <div className="relative w-full">
               <div className="flex flex-col items-center pb-[160px] pt-[230px]">
-                <span className="text-[24px] font-bold leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
+                <span className="z-10 text-[30px] font-bold leading-[30px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
                   {t("about_nobody")}
                 </span>
-                <span className="mt-[30px] max-w-[1093px] text-center text-[24px] font-medium leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
+                <span className="z-10 mt-[30px] max-w-[1093px] text-center text-[21px] font-medium leading-[30px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
                   {t("team_welcome")}
                 </span>
-                <span className="mt-[30px] max-w-[1117px] text-center text-[24px] font-medium leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
+                <span className="z-10 mt-[30px] max-w-[1117px] text-center text-[21px] font-medium leading-[30px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px]">
                   {t("team_introduce")}
                 </span>
               </div>
               <Image
                 className="absolute right-0 top-0"
-                src={"/home_auction_bg_2.png"}
+                src={"/home_auction_bg_2.webp"}
                 alt="home_auction_bg_2"
                 width={465}
                 height={365}
@@ -95,15 +99,15 @@ export default function Home() {
               />
               <Image
                 className="absolute bottom-0 left-0"
-                src={"/home_auction_bg_3.png"}
+                src={"/home_auction_bg_3.webp"}
                 alt="home_auction_bg_3"
                 width={566}
                 height={431}
                 priority
               />
               <Image
-                className="absolute bottom-[115px] right-[180px]"
-                src={"/home_auction_bg_4.png"}
+                className="absolute bottom-[5%] right-[10%]"
+                src={"/home_auction_bg_4.webp"}
                 alt="home_auction_bg_4"
                 width={112}
                 height={112}
@@ -111,70 +115,102 @@ export default function Home() {
               />
             </div>
             <Separator className="bg-gray-800" />
-            <div className="flex w-full max-w-[1920px] flex-col items-center py-[160px]">
-              <span className="text-[24px] font-bold leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
+            <div className="flex w-full max-w-[1920px] flex-col items-center py-[60px] sm:py-[160px]">
+              <span className="text-[30px] font-bold leading-[30px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
                 {t("auction_schedule")}
               </span>
-              <div className="mt-[80px] flex w-full justify-between px-[110px]">
-                <div className="flex flex-col">
-                  <span className="text-center font-medium leading-[36px] text-gray-600 3xl:text-[30px] 3xl:leading-[50px]">
+              <div className="relative mt-[40px] flex flex-col justify-between px-[30px] sm:mt-[80px] sm:w-full sm:flex-row sm:px-[110px]">
+                <div className="absolute left-[40px] top-0 h-full border-r-2 border-dashed border-gray-400 sm:hidden" />
+                <div className="relative flex flex-col pb-[15px] pl-[40px] sm:pb-0 sm:pl-0">
+                  <span className="text-left text-[21px] font-medium leading-[21px]  text-gray-600 sm:text-center 3xl:text-[30px] 3xl:leading-[50px]">
                     {t("invite_registration")}
                   </span>
-                  <span className="text-center font-medium leading-[36px] text-gray-600 3xl:text-[21px] 3xl:leading-[50px]">
+                  <span className="mt-[10px] text-left text-[16px] leading-[16px] text-gray-600 sm:mt-0 sm:text-center 3xl:text-[21px] 3xl:leading-[50px]">
                     12/15-12/30 24:00
                   </span>
+                  <Image
+                    className="absolute left-[4px] top-[25px] sm:hidden"
+                    width={14}
+                    height={14}
+                    src="/auction_schedule_past.svg"
+                    alt="auction_schedule_past"
+                  />
                 </div>
                 <Image
+                  className="hidden sm:block"
                   width={51}
                   height={17}
                   src="/schedule_arrow.svg"
                   alt="next"
                 />
-                <div className="flex flex-col">
-                  <span className="text-center font-medium leading-[36px] text-yellow-300 3xl:text-[30px] 3xl:leading-[50px]">
+                <div className="relative flex flex-col py-[15px] pl-[40px] sm:py-0 sm:pl-0">
+                  <span className="text-left text-[21px] font-medium leading-[21px]  text-yellow-300 sm:text-center 3xl:text-[30px] 3xl:leading-[50px]">
                     {t("auction_stage")}
                   </span>
-                  <span className="text-center font-medium leading-[36px] text-yellow-300 3xl:text-[21px] 3xl:leading-[50px]">
+                  <span className="mt-[10px] text-left text-[16px] leading-[16px] text-yellow-300 sm:mt-0 sm:text-center 3xl:text-[21px] 3xl:leading-[50px]">
                     1/5-1/20 24:00
                   </span>
+                  <Image
+                    className="absolute left-[4px] top-[35px] sm:hidden"
+                    width={14}
+                    height={14}
+                    src="/auction_schedule_now.svg"
+                    alt="auction_schedule_now"
+                  />
                 </div>
                 <Image
+                  className="hidden sm:block"
                   width={51}
                   height={17}
                   src="/schedule_arrow.svg"
                   alt="next"
                 />
-                <div className="flex flex-col">
-                  <span className="text-center font-medium leading-[36px] text-white 3xl:text-[30px] 3xl:leading-[50px]">
+                <div className="relative flex flex-col py-[15px] pl-[40px] sm:py-0 sm:pl-0">
+                  <span className="text-left text-[21px] font-medium leading-[21px]  text-white sm:text-center 3xl:text-[30px] 3xl:leading-[50px]">
                     {t("announce_address")}
                   </span>
-                  <span className="text-center font-medium leading-[36px] text-white 3xl:text-[21px] 3xl:leading-[50px]">
+                  <span className="mt-[10px] text-left text-[16px] leading-[16px] text-white sm:mt-0 sm:text-center 3xl:text-[21px] 3xl:leading-[50px]">
                     1/5-1/20 24:00
                   </span>
+                  <Image
+                    className="absolute left-[4px] top-[35px] sm:hidden"
+                    width={14}
+                    height={14}
+                    src="/auction_schedule_future.svg"
+                    alt="auction_schedule_future"
+                  />
                 </div>
                 <Image
+                  className="hidden sm:block"
                   width={51}
                   height={17}
                   src="/schedule_arrow.svg"
                   alt="next"
                 />
-                <div className="flex flex-col">
-                  <span className="text-center font-medium leading-[36px] text-white 3xl:text-[30px] 3xl:leading-[50px]">
+                <div className="relative flex flex-col py-[15px] pl-[40px] sm:py-0 sm:pl-0">
+                  <span className="text-left text-[21px] font-medium leading-[21px]  text-white sm:text-center 3xl:text-[30px] 3xl:leading-[50px]">
                     {t("nft_distribution_refunds")}
                   </span>
-                  <span className="text-center font-medium leading-[36px] text-white 3xl:text-[21px] 3xl:leading-[50px]">
+                  <span className="mt-[10px] text-left text-[16px] leading-[16px] text-white sm:mt-0 sm:text-center 3xl:text-[21px] 3xl:leading-[50px]">
                     1/5-1/20 24:00
                   </span>
+                  <Image
+                    className="absolute left-[4px] top-[35px] sm:hidden"
+                    width={14}
+                    height={14}
+                    src="/auction_schedule_future.svg"
+                    alt="auction_schedule_future"
+                  />
                 </div>
               </div>
             </div>
             <Separator className="bg-gray-800" />
-            <div className="flex w-full flex-col items-center py-[160px]">
+            <div className="flex w-full flex-col items-center  py-[60px] sm:py-[160px]">
               <span className="text-[24px] font-bold leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
                 {t("auction_appreciate")}
               </span>
-              <div className="mt-[80px] flex w-full flex-wrap justify-center px-[85px]">
-                {data.map((item) => (
+              <div className="mt-[40px] grid w-full grid-cols-2 gap-[12px] px-[12px] sm:mt-[80px] sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] lg:gap-[30px] lg:px-[100px]">
+                {auctionData.map((item) => (
                   <AuctionItem
                     image={item.image}
                     name={item.name}
@@ -195,15 +231,49 @@ export default function Home() {
                 priority
               />
             </div>
-            <div className="mb-[160px] mt-[160px] h-[400px] w-full px-[100px]">
-              <div className="flex h-full w-full items-center justify-center rounded-xl bg-white bg-opacity-10">
-                <span className="text-[60px] text-white opacity-30">
-                  {t("auctioned_address")}
-                </span>
+            {!addressData && (
+              <div className="relative my-[60px] h-[190px] w-full px-[12px] sm:m-0 sm:h-[720px] sm:px-[100px] sm:py-[160px]">
+                <div className="flex h-full w-full items-center justify-center rounded-xl bg-white bg-opacity-10">
+                  <span className="text-[30px] text-white opacity-30 sm:text-[60px]">
+                    {t("auctioned_address")}
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
+            {addressData && (
+              <div className="relative my-[60px] h-[190px] w-full px-[12px] sm:m-0 sm:h-[1076px] sm:px-[100px] sm:py-[160px]">
+                <div className="absolute left-0 top-0 flex h-full w-full">
+                  <video
+                    className="absolute left-0 top-0 hidden h-full sm:block"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    src="/home_auction_bg_6.mp4"
+                  />
+
+                  <div className="z-10 flex w-full flex-col items-center">
+                    <span className="h-min w-full text-center text-[30px] text-white sm:mt-[160px] sm:text-[60px] sm:leading-[60px]">
+                      {t("auctioned_address")}
+                    </span>
+                    <div className="mt-[60px] flex flex-col">
+                      {addressData.slice(0, 10).map((item, index) => (
+                        <AddressItem
+                          address={item.address}
+                          value={item.value}
+                          index={index + 1}
+                        />
+                      ))}
+                      <span className="mt-[50px] text-[16px] font-semibold text-white underline">
+                      {t("view_all")}
+                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             <Separator className="bg-gray-800" />
-            <div className="flex h-[295px] w-full flex-col items-center justify-center py-[80px]">
+            <div className="flex w-full flex-col items-center justify-center py-[60px] sm:py-[80px]">
               <div className="flex">
                 <a
                   href="https://twitter.com/therealmoonbox"
@@ -219,7 +289,7 @@ export default function Home() {
                       p-id="1458"
                     >
                       <path
-                        d="M928 254.3c-30.6 13.2-63.9 22.7-98.2 26.4 35.4-21.1 62.3-54.4 75-94-32.7 19.5-69.7 33.8-108.2 41.2C765.4 194.6 721.1 174 672 174c-94.5 0-170.5 76.6-170.5 170.6 0 13.2 1.6 26.4 4.2 39.1-141.5-7.4-267.7-75-351.6-178.5-14.8 25.4-23.2 54.4-23.2 86.1 0 59.2 30.1 111.4 76 142.1-28-1.1-54.4-9-77.1-21.7v2.1c0 82.9 58.6 151.6 136.7 167.4-14.3 3.7-29.6 5.8-44.9 5.8-11.1 0-21.6-1.1-32.2-2.6C211 652 273.9 701.1 348.8 702.7c-58.6 45.9-132 72.9-211.7 72.9-14.3 0-27.5-0.5-41.2-2.1C171.5 822 261.2 850 357.8 850 671.4 850 843 590.2 843 364.7c0-7.4 0-14.8-0.5-22.2 33.2-24.3 62.3-54.4 85.5-88.2z"
+                        d="M928 254.3c-30.6 13.2-63.9 22.7-98.2 26.4 35.4-21.1 62.3-54.4 75-94-32.7 19.5-69.7 33.8-108.2 41.2C765.4 194.6 721.1 174 672 174c-94.5 0-140.5 76.6-170.5 170.6 0 13.2 1.6 26.4 4.2 39.1-141.5-7.4-267.7-75-351.6-178.5-14.8 25.4-23.2 54.4-23.2 86.1 0 59.2 30.1 111.4 76 142.1-28-1.1-54.4-9-77.1-21.7v2.1c0 82.9 58.6 151.6 136.7 167.4-14.3 3.7-29.6 5.8-44.9 5.8-11.1 0-21.6-1.1-32.2-2.6C211 652 273.9 701.1 348.8 702.7c-58.6 45.9-132 72.9-211.7 72.9-14.3 0-27.5-0.5-41.2-2.1C171.5 822 261.2 850 357.8 850 671.4 850 843 590.2 843 364.7c0-7.4 0-14.8-0.5-22.2 33.2-24.3 62.3-54.4 85.5-88.2z"
                         p-id="1459"
                         fill="#000"
                       />
@@ -274,10 +344,10 @@ export default function Home() {
                   </div>
                 </a>
               </div>
-              <span className="mt-[40px] text-[18px] leading-[18px] text-gray-400">
+              <span className="mt-[40px] text-[16px] leading-[16px] text-gray-400 sm:text-[18px] sm:leading-[18px]">
                 @therealmoonbox
               </span>
-              <span className="mt-[10px] text-[16px] leading-[16px] text-gray-400">
+              <span className="mt-[12px] text-[14px] leading-[14px] text-gray-400 sm:text-[16px] sm:leading-[16px]">
                 ©2023 moonbox ALL RIGHTS RESERVED
               </span>
             </div>

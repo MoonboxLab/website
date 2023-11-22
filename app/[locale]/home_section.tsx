@@ -283,10 +283,10 @@ export default function FirstSection(props: FirstSectionProps) {
       {/* Mobile UI */}
       <div className="relative flex h-full w-screen flex-col justify-center sm:hidden">
         <div className="flex h-screen w-full flex-col px-[16px]">
-          <span className="text-shadow z-50 mt-[132px] flex-nowrap text-[36px] font-semibold leading-[36px] text-white">
+          <span className="text-shadow z-50 mt-[40%] flex-nowrap text-[36px] font-semibold leading-[36px] text-white">
             {t("auction_start_soon")}
           </span>
-          <div className="z-50 mt-[30px]">
+          <div className="z-50 mt-[20px]">
             <Image
               src={"/home_nobody_role_mobile.png"}
               alt="home_nobody_role_mobile"
@@ -296,7 +296,7 @@ export default function FirstSection(props: FirstSectionProps) {
               priority
             />
           </div>
-          <span className="z-50 mt-[40px] flex-nowrap text-[18px] font-semibold text-white">
+          <span className="z-50 mt-[30px] flex-nowrap text-[18px] font-semibold text-white">
             {t("auction_start_time")}
           </span>
           <span className="z-50 text-[18px] font-semibold text-white">
@@ -390,7 +390,7 @@ export default function FirstSection(props: FirstSectionProps) {
 
       {/* Mobile floating window */}
       {!showChatModal && (
-        <div className="absolute bottom-[120px] left-0 right-0 z-20 sm:hidden">
+        <div className="absolute bottom-[5%] left-0 right-0 z-20 sm:hidden">
           <div
             className="mx-auto mb-[10px] flex h-[56px] w-[360px] cursor-pointer items-center rounded-[12px] border-[2px] border-black bg-white px-[14px] shadow-[4px_4px_0px_#000000FF]"
             onClick={() => setShowChatModal(true)}

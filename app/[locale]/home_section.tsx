@@ -198,7 +198,7 @@ export default function FirstSection(props: FirstSectionProps) {
       // @ts-ignore
       var captcha = new TencentCaptcha(
         "189994500",
-        (res) => {
+        (res: Record<string, any>) => {
           console.log(res);
           if (res.ret == 0) {
             submitEmail(inputEmail);

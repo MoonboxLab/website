@@ -219,8 +219,9 @@ export default function Home() {
               </span>
               <div className="mt-[40px] grid w-full grid-cols-2 gap-[12px] sm:mt-[80px] sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] lg:gap-[30px]">
                 {auctionItemExpand &&
-                  auctionData.map((item) => (
+                  auctionData.map((item, index) => (
                     <AuctionItem
+                      key={index}
                       image={item.image}
                       name={item.name}
                       catchphrase={item.catchphrase}
@@ -230,8 +231,9 @@ export default function Home() {
                 {!auctionItemExpand &&
                   auctionData
                     .slice(0, 6)
-                    .map((item) => (
+                    .map((item, index) => (
                       <AuctionItem
+                        key={index}
                         image={item.image}
                         name={item.name}
                         catchphrase={item.catchphrase}
@@ -292,6 +294,7 @@ export default function Home() {
                     <div className="mt-[40px] flex flex-col sm:mt-[60px]">
                       {addressData.slice(0, 10).map((item, index) => (
                         <AddressItem
+                          key={index}
                           address={item.address}
                           value={item.value}
                           index={index + 1}

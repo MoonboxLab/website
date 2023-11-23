@@ -12,13 +12,16 @@ import {
   FullpageSection,
 } from "@shinyongjun/react-fullpage";
 import "@shinyongjun/react-fullpage/css";
-import Typed from "typed.js";
 import { Separator } from "@/components/ui/separator";
 import AuctionItem from "@/components/AuctionItem";
 import AddressItem from "@/components/AddressItem";
+import { ChevronDown } from "lucide-react";
+import { useSize } from "ahooks";
 
 export default function Home() {
   const t = useTranslations("Home");
+
+  const mediaSize = useSize(document.querySelector("body"));
 
   const chatListBottomRef = useRef<HTMLEmbedElement>(null);
 
@@ -27,18 +30,23 @@ export default function Home() {
   const [showChatModal, setShowChatModal] = useState<boolean>(false);
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isTypedSecondPage, setTypedSecondPage] = useState<boolean>(false);
 
   const auctionData = [{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "0x4a…5635" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" },{ name: "阿星", image: "/auction_item_image.png", catchphrase: "你想学吗？我教你啊", owned: "" }]; //prettier-ignore
 
   const addressData = [{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"},{ address: "0x4a0be38a0ac7039ed6e3823abf33f367911b5635", value: "32.5"}] //prettier-ignore
   // const addressData = undefined
 
+  const [auctionItemExpand, setAuctionItemExpand] = useState<boolean>(false);
+
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({
       top: chatListBottomRef.current?.scrollHeight,
       behavior: "smooth",
     });
+    //
+    if ((mediaSize?.width || 0) > 640) {
+      setAuctionItemExpand(true);
+    }
   }, [chatListBottomRef.current?.scrollHeight]);
 
   return (
@@ -205,25 +213,50 @@ export default function Home() {
               </div>
             </div>
             <Separator className="bg-gray-800" />
-            <div className="flex w-full flex-col items-center  py-[60px] sm:py-[160px]">
+            <div className="flex w-full flex-col items-center px-[12px] py-[60px] sm:py-[160px] lg:px-[100px]">
               <span className="text-[24px] font-bold leading-[36px] text-white lg:text-[32px] lg:leading-[42px] 3xl:text-[60px] 3xl:leading-[60px]">
                 {t("auction_appreciate")}
               </span>
-              <div className="mt-[40px] grid w-full grid-cols-2 gap-[12px] px-[12px] sm:mt-[80px] sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] lg:gap-[30px] lg:px-[100px]">
-                {auctionData.map((item) => (
-                  <AuctionItem
-                    image={item.image}
-                    name={item.name}
-                    catchphrase={item.catchphrase}
-                    owned={item.owned}
-                  />
-                ))}
+              <div className="mt-[40px] grid w-full grid-cols-2 gap-[12px] sm:mt-[80px] sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] lg:gap-[30px]">
+                {auctionItemExpand &&
+                  auctionData.map((item) => (
+                    <AuctionItem
+                      image={item.image}
+                      name={item.name}
+                      catchphrase={item.catchphrase}
+                      owned={item.owned}
+                    />
+                  ))}
+                {!auctionItemExpand &&
+                  auctionData
+                    .slice(0, 6)
+                    .map((item) => (
+                      <AuctionItem
+                        image={item.image}
+                        name={item.name}
+                        catchphrase={item.catchphrase}
+                        owned={item.owned}
+                      />
+                    ))}
               </div>
+              {!auctionItemExpand && (
+                <div
+                  className="mt-[20px] flex h-[48px] w-full items-center justify-center rounded-[12px] bg-white sm:hidden"
+                  onClick={() => {
+                    setAuctionItemExpand(true);
+                  }}
+                >
+                  <span className="text-[16px] font-semibold leading-[16px] text-black">
+                    Load more
+                  </span>
+                  <ChevronDown className="ml-[5px] h-full pt-[5px]" />
+                </div>
+              )}
             </div>
             <div className="relative flex w-full flex-col items-center">
               <Separator className="bg-gray-800" />
               <Image
-                className="absolute -bottom-[120px] right-[25px]"
+                className="absolute right-[12px] h-[243px] w-[147px] sm:-bottom-[120px] sm:right-[25px] sm:h-[460px] sm:w-[280px]"
                 src={"/home_auction_bg_5.png"}
                 alt="home_auction_bg_5"
                 width={280}
@@ -241,7 +274,7 @@ export default function Home() {
               </div>
             )}
             {addressData && (
-              <div className="relative my-[60px] h-[190px] w-full px-[12px] sm:m-0 sm:h-[1076px] sm:px-[100px] sm:py-[160px]">
+              <div className="relative my-[60px] h-[735px] w-full px-[12px] sm:m-0 sm:h-[1076px] sm:px-[100px] sm:py-[160px]">
                 <div className="absolute left-0 top-0 flex h-full w-full">
                   <video
                     className="absolute left-0 top-0 hidden h-full sm:block"
@@ -256,7 +289,7 @@ export default function Home() {
                     <span className="h-min w-full text-center text-[30px] text-white sm:mt-[160px] sm:text-[60px] sm:leading-[60px]">
                       {t("auctioned_address")}
                     </span>
-                    <div className="mt-[60px] flex flex-col">
+                    <div className="mt-[40px] flex flex-col sm:mt-[60px]">
                       {addressData.slice(0, 10).map((item, index) => (
                         <AddressItem
                           address={item.address}
@@ -264,9 +297,9 @@ export default function Home() {
                           index={index + 1}
                         />
                       ))}
-                      <span className="mt-[50px] text-[16px] font-semibold text-white underline">
-                      {t("view_all")}
-                    </span>
+                      <span className="mt-[25px] text-[16px] font-semibold text-white underline">
+                        {t("view_all")}
+                      </span>
                     </div>
                   </div>
                 </div>

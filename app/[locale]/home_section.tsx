@@ -225,7 +225,7 @@ export default function FirstSection(props: FirstSectionProps) {
       {/* PC UI */}
       {(mediaSize?.width || 0) > 640 && (
         <div className="relative left-0 top-0 z-10 hidden h-full w-full sm:block">
-          <div className="ml-[125px] flex h-screen w-full flex-col justify-center">
+          <div className="mx-[6.5%] flex h-screen flex-col justify-center">
             <span className="text-shadow z-50 flex-nowrap text-[72px] font-semibold leading-[72px] text-white">
               {t("auction_start_soon")}
             </span>
@@ -247,11 +247,11 @@ export default function FirstSection(props: FirstSectionProps) {
             </span>
             <Dialog>
               <DialogTrigger asChild>
-                <span className="z-50 mt-[30px] flex-nowrap text-[21px]  font-semibold text-white underline">
+                <span className="z-50 mt-[30px] flex-nowrap text-[21px] font-semibold text-white underline">
                   {t("view_rules")}
                 </span>
               </DialogTrigger>
-              <DialogContent className="3xl:max-w-[1035px]">
+              <DialogContent className="max-h-[650px] max-w-[1035px] overflow-scroll">
                 <DialogHeader>
                   <DialogTitle className="px-[16px] text-[21px]">
                     {t("auction_rules")}

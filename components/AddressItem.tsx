@@ -16,12 +16,14 @@ export default function AddressItem(props: AddressItemProps) {
         <span className="z-10 w-[32px] text-center text-[16px] font-semibold leading-[16px] text-white sm:text-[18px] sm:leading-[18px]">
           {index}
         </span>
-        <span className="ml-[20px] text-center text-[16px] font-semibold leading-[16px] text-white sm:text-[24px] sm:leading-[24px]">
-          {value}
-        </span>
-        <span className="ml-[20px] text-center text-[16px]  leading-[16px]  text-gray-400 sm:text-[16px] sm:leading-[16px]">
-          {address}
-        </span>
+        <div className="grid h-full grid-cols-1 sm:grid-cols-[auto,1fr]">
+          <span className="ml-[20px] text-left text-[21px] font-semibold leading-[21px] text-white sm:text-center sm:text-[24px] sm:leading-[40px]">
+            {value}
+          </span>
+          <span className="ml-[20px] text-center text-[12px] leading-[12px] text-gray-400 sm:text-[16px] sm:leading-[40px]">
+            {address}
+          </span>
+        </div>
       </div>
       {index === 1 && (
         <Image

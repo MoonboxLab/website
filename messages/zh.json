@@ -1,8 +1,10 @@
 {
   "Home": {
+    "header_mv": "看视频",
     "header_chat": "聊天",
     "header_trilogy": "三部曲",
     "header_language": "Zh",
+    "header_connect_wallet": "連接錢包",
     "email_modal_title": "訂閱我們的電子報，第一時間瞭解我們的白名單發布資訊",
     "email_modal_subscribe": "訂閱",
     "email_modal_input_placeholder": "輸入您的電子郵件地址",
@@ -19,6 +21,25 @@
     "chapter_two": "第二章 : 意外",
     "chapter_two_description": "太空巴士突發爆炸，The Director因故漂浮浩瀚宇宙，他將去往何方？",
     "chapter_three": "第三章 : 敬請期待…",
-    "chapter_three_description": "太空巴士全速前進，一萬外星乘客興致盎然，意慾踏上一場神秘之旅。"
+    "chapter_three_description": "太空巴士全速前進，一萬外星乘客興致盎然，意慾踏上一場神秘之旅。",
+    "auction_start_soon": "限量NFT即將發售",
+    "special_role": "特殊角色",
+    "auction_start_time": "開始時間：2023年12月28日",
+    "auction_eligibility": "參與資格：獲得邀請碼的用戶即可參與競標。 請查看規則以了解更多詳情。",
+    "view_rules": "拍賣規則",
+    "about_nobody": "關於Nobody",
+    "team_welcome": "歡迎來到 Moonbox，這是一個慶祝聯繫、團結和團結的地方。",
+    "team_introduce": "我們的專業團隊致力於為我們的NFT 持有者創造價值並提供難忘的體驗。隨著我們在數位收藏品領域的不斷擴張和發展，加入我們，踏上這段激動人心的旅程。",
+    "auction_schedule": "拍賣時間表",
+    "invite_registration": "邀請註冊",
+    "auction_stage": "拍賣階段",
+    "announce_address": "公佈中獎地址",
+    "nft_distribution_refunds": "NFT 分配與退款",
+    "auction_appreciate": "拍賣鑑賞",
+    "auctioned_address": "得標地址",
+    "auction_rules": "拍賣規則",
+    "auction_rules_detail": "本次拍賣採盲拍形式，所有參與者在競標時間段內進行出價，出價最高的前40參與者中標，得標者按出價從高到低的順序選擇拍品，在所有拍品選擇結束後將得標者對應的拍品Airdorp到得標者地址。</br></br><b>拍品名稱：</b>Nobody經典系列</br><b>發行鏈：</b>ETH，出價使用ETH</br><b>參與資格：</b>擁有拍賣邀請碼的用戶參可參與拍賣，邀請碼獲取請關注官方X帳戶或加入Discord了解</br><b>參與拍賣：</b>擁有拍賣資格用戶在出價時間開啟至出價時間結束的時間段進行出價，出價需大於最低起拍價格，上不封頂。如果在出價時間段有參與者透過鏈上轉帳的方式多次出價，則累積在出價時間段內的出價金額作為最終拍賣出價，而在出價時間段之外的出價不累計到最終拍賣出價，這部分在拍賣結束後進行退回處理。</br></br><b>中標規則：</b>出價最高的前40名參與者中標，並且按出價從高到低排列順序，如果出價相同則出價時間早的排序靠前</br><b>拍品選擇：</b>將出價最高的前40名分為4組，分組選擇拍品，每組選擇時間為24小時。第一組1-10名、第二組11-20名、第三組21-30名、第四組31-40名。第一組最先開始選擇，從40個拍品中進行選擇，然後是第二組開始選擇，從剩下的30個拍品中進行選擇，以此類推當第4組選擇完畢後，所有中標者選擇的拍品完全確定。每組的得標者需在所在組選擇時間段內進行選擇，如果在當組選擇時間段中未進行選擇，則當組做出選擇的得標者按順序確定拍品，未選擇者在本組其他人選擇拍品確定後，在剩下的拍賣中隨機獲得一個拍品。</br></br><b>拍品履約：</b>在所有拍品確定歸屬後，官方會將拍品Airdrop到得標者地址；參與拍賣未得標者，拍賣結束後會將拍賣款進行退回處理。",
+    "participate_auction": "我的拍賣",
+    "view_all": "查看全部"
   }
 }

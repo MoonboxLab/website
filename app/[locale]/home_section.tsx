@@ -251,7 +251,7 @@ export default function FirstSection(props: FirstSectionProps) {
                   {t("view_rules")}
                 </span>
               </DialogTrigger>
-              <DialogContent className="max-h-[650px] max-w-[1035px] overflow-scroll">
+              <DialogContent className="overflow-scroll rounded-xl sm:max-h-[85%] sm:max-w-[90%] xl:max-h-[650px] xl:max-w-[1035px]">
                 <DialogHeader>
                   <DialogTitle className="px-[16px] text-[21px]">
                     {t("auction_rules")}
@@ -308,7 +308,7 @@ export default function FirstSection(props: FirstSectionProps) {
                 {t("view_rules")}
               </span>
             </DialogTrigger>
-            <DialogContent className="max-h-[80%] max-w-[90%] overflow-scroll">
+            <DialogContent className="max-h-[85%] max-w-[90%] overflow-scroll rounded-xl">
               <DialogHeader>
                 <DialogTitle className="text-left text-[18px]">
                   {t("auction_rules")}
@@ -339,7 +339,7 @@ export default function FirstSection(props: FirstSectionProps) {
         !showChatModal &&
         (mediaSize?.width || 0) > 640 &&
         showSecondModal && (
-          <div className=" hover-btn-shadow absolute bottom-[20px] left-[20px] z-[110] h-[178px] w-[406px] overflow-visible rounded-[16px] border-[2px] border-black bg-[rgba(77,88,99,1)] p-[20px] shadow-[5px_5px_0px_rgba(0,0,0,1)]">
+          <div className=" hover-btn-shadow absolute bottom-[20px] left-[20px] z-50 h-[178px] w-[406px] overflow-visible rounded-[16px] border-[2px] border-black bg-[rgba(77,88,99,1)] p-[20px] shadow-[5px_5px_0px_rgba(0,0,0,1)]">
             <div className=" absolute left-[30px] top-[-23px] h-[69px] w-[76px]">
               <Image src="/mail_modal_ill.png" fill alt="mail modal" priority />
             </div>

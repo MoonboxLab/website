@@ -27,7 +27,7 @@ export default function AuctionItem(props: AuctionItemProps) {
             {name}
           </span>
           <span className="mt-[10px] text-[12px] leading-[12px] sm:mt-[15px] sm:text-[14px] sm:leading-[14px]">
-            {catchphrase}
+            <i>{catchphrase}</i>
           </span>
           <Separator className="mt-[10px] bg-gray-200 sm:mt-[15px]" />
           {owned ? (

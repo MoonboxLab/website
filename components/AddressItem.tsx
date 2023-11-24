@@ -1,14 +1,14 @@
 import Image from "next/image";
-import { Separator } from "@/components/ui/separator";
 
 type AddressItemProps = {
   address: string;
   value: string;
   index: number;
+  all: boolean;
 };
 
 export default function AddressItem(props: AddressItemProps) {
-  const { address, value, index } = props;
+  const { address, value, index, all } = props;
 
   return (
     <div className="relative my-[10px] h-[40px] w-full">
@@ -17,10 +17,16 @@ export default function AddressItem(props: AddressItemProps) {
           {index}
         </span>
         <div className="grid h-full grid-cols-1 sm:grid-cols-[auto,1fr]">
-          <span className="ml-[20px] text-left text-[21px] font-semibold leading-[21px] text-white sm:text-center sm:text-[24px] sm:leading-[40px]">
-            {value}
-          </span>
-          <span className="ml-[20px] text-center text-[12px] leading-[12px] text-gray-400 sm:text-[16px] sm:leading-[40px]">
+          {all ? (
+            <span className="ml-[10px] text-left text-[21px] font-semibold leading-[21px] text-black sm:ml-[20px] sm:text-center sm:text-[24px] sm:leading-[40px]">
+              {value}
+            </span>
+          ) : (
+            <span className="ml-[10px] text-left text-[21px] font-semibold leading-[21px] text-white sm:ml-[20px] sm:text-center sm:text-[24px] sm:leading-[40px]">
+              {value}
+            </span>
+          )}
+          <span className="ml-[10px] text-center text-[12px] leading-[12px] text-gray-400 sm:ml-[20px] sm:text-[16px] sm:leading-[40px]">
             {address}
           </span>
         </div>

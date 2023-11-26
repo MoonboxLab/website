@@ -388,42 +388,6 @@ export default function FirstSection(props: FirstSectionProps) {
           </div>
         )}
 
-      {/* Mobile floating window */}
-      {!showChatModal && (
-        <div className="absolute bottom-[5%] left-0 right-0 z-20 sm:hidden">
-          <div
-            className="mx-auto mb-[10px] flex h-[56px] w-[360px] cursor-pointer items-center rounded-[12px] border-[2px] border-black bg-white px-[14px] shadow-[4px_4px_0px_#000000FF]"
-            onClick={() => setShowChatModal(true)}
-          >
-            <Image
-              src={"/home_auction.png"}
-              alt="chat avatar"
-              width={50}
-              height={65}
-            />
-            <span className=" ml-[10px] text-[18px] font-semibold leading-[48px]">
-              {t("participate_auction")}
-            </span>
-          </div>
-          <div
-            className="mx-auto flex h-[56px] w-[360px] cursor-pointer items-center rounded-[12px] border-[2px] border-black bg-white py-[14px] pl-[20px] shadow-[4px_4px_0px_#000000FF]"
-            onClick={() => setShowMainModal(true)}
-          >
-            <div className=" inline-flex h-[28px] w-[40px] items-center justify-center rounded-full">
-              <Image
-                src={"/email_icon.png"}
-                alt="email"
-                width="40"
-                height="28"
-              />
-            </div>
-            <span className="ml-[13px] text-[18px] font-semibold leading-[18px]">
-              {t("mobile_email_btn")}
-            </span>
-          </div>
-        </div>
-      )}
-
       {/* Mobile email modal */}
       <Modal
         isOpen={showMainModal}

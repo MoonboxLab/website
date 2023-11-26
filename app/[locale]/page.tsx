@@ -13,10 +13,10 @@ import AuctionItem from "@/components/AuctionItem";
 import AddressItem from "@/components/AddressItem";
 import { ChevronDown } from "lucide-react";
 import { useSize } from "ahooks";
+import { Transition } from "@headlessui/react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -42,16 +42,31 @@ export default function Home() {
 
   const [auctionItemExpand, setAuctionItemExpand] = useState<boolean>(false);
 
+  const [isScrollUp, setIsScrollUp] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({
       top: chatListBottomRef.current?.scrollHeight,
       behavior: "smooth",
     });
-    //
+    // auction items expand on PC
     if ((mediaSize?.width || 0) > 640) {
       setAuctionItemExpand(true);
     }
-  }, [chatListBottomRef.current?.scrollHeight]);
+    // show or hide bottom button
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      const isScrollingUp = currentScrollPos < prevScrollPos;
+
+      setIsScrollUp(isScrollingUp);
+      setPrevScrollPos(currentScrollPos);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [chatListBottomRef.current?.scrollHeight, prevScrollPos]);
 
   return (
     <div className=" bg-gray-600">
@@ -75,7 +90,7 @@ export default function Home() {
         setShowChatModal={setShowChatModal}
       />
 
-      <div className="relative flex h-auto w-full flex-col items-center bg-[#151515] bg-contain bg-[80%_80%]">
+      <div className="relative flex h-auto w-full flex-col bg-[#151515] bg-contain bg-[80%_80%]">
         <div className="relative w-full">
           <div className="flex flex-col items-center px-[25px] py-[80px] sm:py-[160px]">
             <span className="z-10 text-[30px] font-bold leading-[30px] text-white xl:text-[36px] xl:leading-[36px] 4xl:text-[48px] 4xl:leading-[48px]">
@@ -402,6 +417,51 @@ export default function Home() {
           </span>
         </div>
       </div>
+
+      {/* Mobile floating button */}
+      <Transition
+        className="fixed bottom-[5%] z-20 flex w-full justify-center sm:hidden"
+        show={isScrollUp}
+        enter="transition duration-300 ease-out"
+        enterFrom="translate-y-full"
+        enterTo="translate-y-0"
+        leave="transition duration-200 ease-in"
+        leaveFrom="translate-y-0"
+        leaveTo="translate-y-full"
+      >
+        <div className="w-full px-[16px]">
+          <div
+            className="mb-[10px] flex h-[56px] w-full cursor-pointer items-center rounded-[12px] border-[2px] border-black bg-white px-[14px] shadow-[4px_4px_0px_#000000FF]"
+            onClick={() => setShowChatModal(true)}
+          >
+            <Image
+              src={"/home_auction.png"}
+              alt="chat avatar"
+              width={50}
+              height={65}
+            />
+            <span className="ml-[10px] text-[18px] font-semibold leading-[48px]">
+              {t("participate_auction")}
+            </span>
+          </div>
+          <div
+            className="flex h-[56px] w-full cursor-pointer items-center rounded-[12px] border-[2px] border-black bg-white py-[14px] pl-[20px] shadow-[4px_4px_0px_#000000FF]"
+            // onClick={() => setShowMainModal(true)}
+          >
+            <div className=" inline-flex h-[28px] w-[40px] items-center justify-center rounded-full">
+              <Image
+                src={"/email_icon.png"}
+                alt="email"
+                width="40"
+                height="28"
+              />
+            </div>
+            <span className="ml-[13px] text-[18px] font-semibold leading-[18px]">
+              {t("mobile_email_btn")}
+            </span>
+          </div>
+        </div>
+      </Transition>
     </div>
   );
 }

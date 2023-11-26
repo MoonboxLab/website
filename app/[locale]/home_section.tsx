@@ -283,7 +283,7 @@ export default function FirstSection(props: FirstSectionProps) {
       {/* Mobile UI */}
       <div className="relative flex h-full w-screen flex-col justify-center sm:hidden">
         <div className="flex h-screen w-full flex-col px-[16px]">
-          <span className="text-shadow z-50 mt-[40%] flex-nowrap text-[36px] font-semibold leading-[36px] text-white">
+          <span className="text-shadow z-50 mt-[25%] flex-nowrap text-[36px] font-semibold leading-[36px] text-white">
             {t("auction_start_soon")}
           </span>
           <div className="z-50 mt-[20px]">

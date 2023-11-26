@@ -7,5 +7,9 @@ type Props = {
 };
 
 export default function RootLayout({children}: Props) {
-  return children;
+  return (
+    <html className='overscroll-none'>
+      <body className='overscroll-none'>{children}</body>
+    </html>
+  )
 }

@@ -56,9 +56,9 @@ export default function Home() {
     }
     // show or hide bottom button
     const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
+      const currentScrollPos = window.scrollY;
       const isScrollingUp = currentScrollPos < prevScrollPos;
-
+      
       setIsScrollUp(isScrollingUp);
       setPrevScrollPos(currentScrollPos);
     };

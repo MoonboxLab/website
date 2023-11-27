@@ -31,7 +31,7 @@ const Header:React.FC = () => {
         </a>
 
         <div className=' flex items-center'>
-          {(mediaSize?.width || 0) > 640 &&
+          {/* {(mediaSize?.width || 0) > 640 &&
             <div className=' inline-flex items-end justify-center h-[36px] w-[108px] lg:h-[48px] lg:w-[136px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow'
               onClick={() => {
                 if (!/\/chat/.test(pathname)) {
@@ -41,7 +41,7 @@ const Header:React.FC = () => {
               }}>
               <Image src={"/chat_bot_avatar.png"} alt='Chat bot avatar' width={(mediaSize?.width || 0) > 1024 ? 44 : 35} height={(mediaSize?.width || 0) > 1024 ? 57 : 45} />
               <span className='text-[16px] leading-[32px] sm:text-[21px] lg:leading-[43px] font-semibold text-black ml-[6px] lg:ml-[10px]'>{t('header_chat')}</span>
-            </div>}
+            </div>} */}
 
             <div className='inline-flex items-center justify-center h-[36px] w-[84px] lg:h-[48px] lg:w-[96px] pr-[8px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow'
               onClick={() => {

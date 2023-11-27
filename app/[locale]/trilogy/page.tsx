@@ -63,9 +63,9 @@ export default function Trilogy() {
           <h3 className="font-Inter mt-[20px] text-[21px] font-semibold leading-[24px] text-white lg:mt-[40px] lg:text-[30px]">
             {t("chapter_three")}
           </h3>
-          {/* <span className="font-Inter mt-[10px] text-[16px] font-semibold leading-[24px] text-white lg:mt-[20px] lg:text-[21px]">
+          <span className="font-Inter mt-[10px] text-[16px] font-semibold leading-[24px] text-white lg:mt-[20px] lg:text-[21px]">
             {t("chapter_three_description")}
-          </span> */}
+          </span>
         </div>
       </div>
     </div>

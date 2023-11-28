@@ -58,7 +58,7 @@ export default function Home() {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       const isScrollingUp = currentScrollPos < prevScrollPos;
-      
+
       setIsScrollUp(isScrollingUp);
       setPrevScrollPos(currentScrollPos);
     };
@@ -90,7 +90,7 @@ export default function Home() {
         setShowChatModal={setShowChatModal}
       />
 
-      <div className="relative flex h-auto w-full flex-col bg-[#151515] bg-contain bg-[80%_80%]">
+      <div className="relative flex h-auto w-full flex-col items-center bg-[#151515]">
         <div className="relative w-full">
           <div className="flex flex-col items-center px-[25px] py-[80px] sm:py-[160px]">
             <span className="z-10 text-[30px] font-bold leading-[30px] text-white xl:text-[36px] xl:leading-[36px] 4xl:text-[48px] 4xl:leading-[48px]">
@@ -104,7 +104,7 @@ export default function Home() {
             </span>
           </div>
           <Image
-            className="absolute right-0 top-0 h-[150px] w-[190px] sm:h-auto sm:w-[36%] xl:h-[365px] xl:w-[465px]"
+            className="absolute right-0 top-0 h-[150px] w-[190px] sm:h-auto sm:w-[29%] 4xl:h-[365px] 4xl:w-[465px]"
             src={"/home_auction_bg_2.webp"}
             alt="home_auction_bg_2"
             width={465}
@@ -112,7 +112,7 @@ export default function Home() {
             priority
           />
           <Image
-            className="absolute bottom-0 left-0 h-[185px] w-[243px] sm:h-auto sm:w-[33%] xl:h-[431px] xl:w-[566px]"
+            className="absolute bottom-0 left-0 h-[185px] w-[243px] sm:h-auto sm:w-[30%] 4xl:h-[431px] 4xl:w-[566px]"
             src={"/home_auction_bg_3.webp"}
             alt="home_auction_bg_3"
             width={566}
@@ -283,7 +283,7 @@ export default function Home() {
         )}
         {addressData && (
           <div className="my-[60px] h-[735px] w-full px-[12px] sm:m-0 sm:h-[1086px] sm:px-[100px] sm:py-[160px]">
-            <div className="flex h-full w-full justify-center">
+            <div className="flex h-full w-full justify-center pr-[100px]">
               <video
                 className="hidden h-full w-fit xl:block"
                 autoPlay
@@ -420,16 +420,16 @@ export default function Home() {
 
       {/* Mobile floating button */}
       <Transition
-        className="fixed bottom-[5%] z-20 flex w-full justify-center sm:hidden"
+        className="fixed bottom-[5%] z-20 flex w-full transform-gpu justify-center transition sm:hidden"
         show={isScrollUp}
-        enter="transition duration-300 ease-out"
-        enterFrom="translate-y-full"
-        enterTo="translate-y-0"
-        leave="transition duration-200 ease-in"
-        leaveFrom="translate-y-0"
-        leaveTo="translate-y-full"
+        enter="transition-opacity ease-linear duration-300"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity ease-linear duration-300"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
-        <div className="w-full px-[16px]">
+        <Transition.Child className="w-full px-[16px]">
           <div
             className="mb-[10px] flex h-[56px] w-full cursor-pointer items-center rounded-[12px] border-[2px] border-black bg-white px-[14px] shadow-[4px_4px_0px_#000000FF]"
             onClick={() => setShowChatModal(true)}
@@ -460,7 +460,7 @@ export default function Home() {
               {t("mobile_email_btn")}
             </span>
           </div>
-        </div>
+        </Transition.Child>
       </Transition>
     </div>
   );

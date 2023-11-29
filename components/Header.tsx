@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useTransition } from "react";
 
 import { track } from "@vercel/analytics";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next-intl/client";
 import { useSize } from "ahooks";
@@ -331,13 +331,56 @@ const Header: React.FC = () => {
           )}
 
           {(mediaSize?.width || 0) < 1024 && (
-            <div className="hover-btn-shadow relative ml-[10px] inline-flex h-[36px] w-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:h-[48px] sm:w-[48px]  sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-              <Image fill src="/header_more.svg" alt="more" />
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="hover-btn-shadow relative ml-[10px] inline-flex h-[36px] w-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:h-[48px] sm:w-[48px]  sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                  <Image fill src="/header_more.svg" alt="more" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="z-[300] -mt-[72px] h-auto w-screen rounded-[0px] px-[16px] py-[16px]">
+                <DropdownMenuItem className="mb-[15px]">
+                  <div className="flex h-auto w-full items-end justify-end">
+                    <div className="hover-btn-shadow inline-flex h-[36px] w-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:h-[48px] sm:w-[48px]  sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                      <X />
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span className="h-[30px] w-full text-center text-[18px] font-semibold">
+                    Connect Wallet
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span className="h-[30px] w-full text-center text-[18px] font-semibold">
+                    Participate Auction
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span className="h-[30px] w-full text-center text-[18px] font-semibold">
+                    Chat
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span className="h-[30px] w-full text-center text-[18px] font-semibold">
+                    Watch MV
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span className="h-[30px] w-full text-center text-[18px] font-semibold">
+                    Trilogy
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <span className="h-[30px] w-full text-center text-[18px] font-semibold">
+                    Subscribe whitelist
+                  </span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
         </div>
       </header>
-      <div className="absolute z-[120] hidden h-[120px] w-full bg-gradient-to-b from-black to-slate-150 bg-blend-multiply mix-blend-multiply sm:block"></div>
+      <div className="to-slate-150 absolute z-[120] hidden h-[120px] w-full bg-gradient-to-b from-black bg-blend-multiply mix-blend-multiply sm:block"></div>
     </>
   );
 };

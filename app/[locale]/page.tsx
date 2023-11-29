@@ -436,7 +436,7 @@ export default function Home() {
           >
             <Image
               src={"/home_auction.png"}
-              alt="chat avatar"
+              alt="acution"
               width={50}
               height={65}
             />

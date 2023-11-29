@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100"
+    height="290" viewBox="0 0 100 290" fill="none">
+    <g opacity="1" transform="translate(0 0)  rotate(0)">
+        <path id="形状结合" fill-rule="evenodd" style="fill:#FFFFFF" opacity="1"
+            d="M100,245h-40c-33.14,0 -60,-26.86 -60,-60v-80c0,-33.14 26.86,-60 60,-60h40z"></path>
+        <path id="路径" fill-rule="evenodd" style="fill:#FFFFFF" opacity="1"
+            d="M100 0C100 24.85 79.85 45 55 45L100 45L100 0Z"></path>
+        <path id="路径备份" fill-rule="evenodd" style="fill:#FFFFFF" opacity="1"
+            d="M55 245C79.85 245 100 265.15 100 290L100 245L55 245Z"></path>
+    </g>
+</svg>

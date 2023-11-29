@@ -23,11 +23,10 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import AuctionSheet from "@/components/AuctionSheet";
 
 interface FirstSectionProps {
   showChatModal: boolean;
@@ -277,6 +276,7 @@ export default function FirstSection(props: FirstSectionProps) {
             style={{ objectFit: "cover" }}
             priority
           />
+          <AuctionSheet image={""} name={""} catchphrase={""} owned={""}/>
         </div>
       )}
 

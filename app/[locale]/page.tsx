@@ -57,7 +57,7 @@ export default function Home() {
         />
         <meta
           property="og:image"
-          content="/home_video_cover.png"
+          content="/open_graph.png"
         />
         <meta
           property="og:url"

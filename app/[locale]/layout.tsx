@@ -62,13 +62,13 @@ export const metadata: Metadata = {
     title: 'Moonbox',
     description: 'Bring life to NFTs',
     type: "website",
-    images: '/home_background_stage2.jpg',
+    images: '/open_graph.jpg',
     url: "https://moonbox.com"
   },
   twitter: {
     card: "summary_large_image",
     title: 'Moonbox',
     description: 'Bring life to NFTs',
-    images: ['https://moonbox.com/home_background_stage2.jpg'],
+    images: ['https://moonbox.com/open_graph.jpg'],
   },
 }

@@ -214,17 +214,18 @@ export default function FirstSection(props: FirstSectionProps) {
           // @ts-ignore
           playerRef.current?.seekTo(0, 'fraction')
 
-          setShowChatModal(true);
+          // setShowChatModal(true);
         }}
         width={"100%"}
         height={"100%"}
-        url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/2/playlist.m3u8"}
+        url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/3/playlist.m3u8"}
       />}
 
     {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
-      <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
+      {/* <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
       {!showChatModal && <Image src={"/home_background_stage2.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
-      {!showChatModal && <Image src={"/home_bg_stage2.gif"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
+      {!showChatModal && <Image src={"/home_bg_stage2.gif"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />} */}
+      {!showChatModal && <video autoPlay loop muted playsInline  style={{width: '100%',height: '100%',objectFit: 'cover',objectPosition: 'center'}} src="/home_bg_stage3.mp4"/> }
     </div>}
 
     {!playingMedia && !showMainModal && !showChatModal && (mediaSize?.width || 0) > 640 &&
@@ -244,7 +245,7 @@ export default function FirstSection(props: FirstSectionProps) {
     {/* Mobile Video */}
     <div className='h-full w-screen relative sm:hidden flex flex-col justify-center'>
       <div className='w-full h-full absolute top-0 left-0 '>
-        <Image src={"/home_bg_mobile_stage2.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
+        <Image src={"/home_bg_mobile_stage3.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
         {playingMedia && <div className='w-full h-full bg-black/80 relative z-[100]'></div>}
       </div>
       <div className=' relative z-[110]'>
@@ -281,11 +282,11 @@ export default function FirstSection(props: FirstSectionProps) {
                 // if (!isSubmitedEmail) {
                 //   setShowMainModal(true);
                 // }
-                setShowChatModal(true);
+                // setShowChatModal(true);
               }}
               width="100%"
               height="auto"
-              url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/2/playlist.m3u8"}
+              url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/3/playlist.m3u8"}
             />}
         </AspectRatio>
       </div>
@@ -329,10 +330,10 @@ export default function FirstSection(props: FirstSectionProps) {
     {/* mobile */}
     {!showChatModal &&
       <div className='absolute z-20 bottom-[120px] sm:hidden left-0 right-0'>
-        <div className='h-[56px] w-[360px] mx-auto bg-white rounded-[12px] px-[14px] cursor-pointer mb-[10px] border-[2px] border-black shadow-[4px_4px_0px_#000000FF] flex items-end' onClick={() => setShowChatModal(true)}>
+        {/* <div className='h-[56px] w-[360px] mx-auto bg-white rounded-[12px] px-[14px] cursor-pointer mb-[10px] border-[2px] border-black shadow-[4px_4px_0px_#000000FF] flex items-end' onClick={() => setShowChatModal(true)}>
           <Image src={"/chat_bot_avatar.png"} alt='chat avatar' width={50} height={65} />
           <span className=' text-[18px] leading-[48px] font-semibold ml-[10px]'>{t('mobile_chat_btn')}</span>
-        </div>
+        </div> */}
         <div className='h-[56px] w-[360px] mx-auto bg-white rounded-[12px] pl-[20px] py-[14px] cursor-pointer flex items-center border-[2px] border-black shadow-[4px_4px_0px_#000000FF]' onClick={() => setShowMainModal(true)}>
           <div className=' w-[40px] h-[28px] rounded-full inline-flex items-center justify-center'>
             <Image src={"/email_icon.png"} alt='email' width="40" height="28" />

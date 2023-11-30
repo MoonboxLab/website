@@ -57,7 +57,7 @@ export default function Home() {
         />
         <meta
           property="og:image"
-          content="/open_graph.png"
+          content="/open-graph.png"
         />
         <meta
           property="og:url"
@@ -65,6 +65,7 @@ export default function Home() {
         />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://moonbox.com/open-graph.jpg"></meta>
       </Head>
 
       <Header />

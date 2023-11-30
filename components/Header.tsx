@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector("body"));
@@ -320,14 +321,77 @@ const Header: React.FC = () => {
           )}
 
           {(mediaSize?.width || 0) >= 1024 && (
-            <div
-              className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[48px]  lg:w-[180px]"
-              onClick={() => {}}
-            >
-              <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
-                {t("header_connect_wallet")}
-              </span>
-            </div>
+            <ConnectButton.Custom>
+              {({
+                account,
+                chain,
+                openAccountModal,
+                openChainModal,
+                openConnectModal,
+                authenticationStatus,
+                mounted,
+              }) => {
+                const ready = mounted && authenticationStatus !== "loading";
+                const connected =
+                  ready &&
+                  account &&
+                  chain &&
+                  (!authenticationStatus ||
+                    authenticationStatus === "authenticated");
+
+                return (
+                  <div
+                    {...(!ready && {
+                      "aria-hidden": true,
+                      style: {
+                        opacity: 0,
+                        pointerEvents: "none",
+                        userSelect: "none",
+                      },
+                    })}
+                  >
+                    {(() => {
+                      if (!connected) {
+                        return (
+                          <div
+                            className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[48px]  lg:w-[180px]"
+                            onClick={openConnectModal}
+                          >
+                            <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
+                              {t("header_connect_wallet")}
+                            </span>
+                          </div>
+                        );
+                      }
+
+                      if (chain.unsupported) {
+                        return (
+                          <div
+                            className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[48px]  lg:w-[180px]"
+                            onClick={openChainModal}
+                          >
+                            <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
+                              {t("header_wrong_network")}
+                            </span>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <div
+                          className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[48px]  lg:w-[180px]"
+                          onClick={openAccountModal}
+                        >
+                          <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
+                            {account.displayName}
+                          </span>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                );
+              }}
+            </ConnectButton.Custom>
           )}
 
           {(mediaSize?.width || 0) < 1024 && (

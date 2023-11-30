@@ -8,7 +8,6 @@ import { ToastContainer } from 'react-toastify';
 
 import { Inter } from 'next/font/google'
 import { WagmiProviders } from '../wagmiProvider'
-import Header from '@/components/Header_Backup';
 import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 
@@ -38,7 +37,6 @@ export default async function LocaleLayout({
         <ToastContainer />
         <WagmiProviders>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            {/* <Header /> */}
             {children}
           </NextIntlClientProvider>
         </WagmiProviders>

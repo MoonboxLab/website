@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useDisconnect } from "wagmi";
 
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector("body"));
@@ -28,6 +29,8 @@ const Header: React.FC = () => {
       router.replace(pathname, { locale: locale });
     });
   };
+
+  const { disconnect } = useDisconnect();
 
   return (
     <>
@@ -378,14 +381,33 @@ const Header: React.FC = () => {
                       }
 
                       return (
-                        <div
-                          className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[48px]  lg:w-[180px]"
-                          onClick={openAccountModal}
-                        >
-                          <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
-                            {account.displayName}
-                          </span>
-                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <div className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[48px] lg:w-[180px]">
+                              <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
+                                {account.displayName}
+                              </span>
+                            </div>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="mt-[10px] flex h-[60px] w-[180px] items-center rounded-[12px]">
+                            <DropdownMenuItem
+                              className="w-full p-[20px]"
+                              onClick={() => disconnect()}
+                            >
+                              <Image
+                                className="mr-[5px]"
+                                src={"/wallet_disconnect.png"}
+                                alt="disconnect"
+                                width={20}
+                                height={20}
+                                priority
+                              />
+                              <span className="w-full text-center text-[18px] font-medium leading-[18px]">
+                                {t("disconnect")}
+                              </span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       );
                     })()}
                   </div>

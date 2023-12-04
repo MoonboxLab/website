@@ -327,7 +327,7 @@ export default function FirstSection(props: FirstSectionProps) {
     {/* PC small modal */}
     {
       !playingMedia && !showMainModal && !showChatModal && (mediaSize?.width || 0) > 640 && showSecondModal &&
-      <div className=' absolute z-[110] bottom-[20px] left-[20px] w-[326px] h-[144px] 4xl:w-[450px] 4xl:h-[200px] rounded-[16px] bg-[rgba(77,88,99,1)] shadow-[5px_5px_0px_rgba(0,0,0,1)] border-[2px] border-black p-[10px] 4xl:p-[30px] overflow-visible hover-btn-shadow'>
+      <div className='absolute z-[110] bottom-[20px] left-[20px] w-[286px] h-[154px] 4xl:w-[420px] 4xl:h-[180px] rounded-[16px] bg-[rgba(77,88,99,1)] shadow-[5px_5px_0px_rgba(0,0,0,1)] border-[2px] border-black p-[10px] 4xl:p-[20px] overflow-visible hover-btn-shadow'>
         <div className='absolute w-[48px] h-[46px] 4xl:w-[76px] 4xl:h-[69px] top-[-23px] left-[30px]'>
           <Image src="/mail_modal_ill.png" fill alt='mail modal' priority />
         </div>
@@ -335,7 +335,7 @@ export default function FirstSection(props: FirstSectionProps) {
         <h3 className='text-[14px] leading-[18px] 4xl:text-[18px] 4xl:leading-[24px] font-semibold text-white font-Inter mb-[10px] mt-[30px] 4xl:mb-[20px] 4xl:mt-[20px]'>{t('email_modal_title')}</h3>
 
         <div className='flex justify-between'>
-          <Input placeholder={t('email_modal_input_placeholder')} className='w-[200px] h-[40px] 4xl:w-[260px] 4xl:h-[48px] rounded-[24px] bg-black/20 border-none !focus-visible:ring-0 !focus-visible:outline-none active:outline-none focus:outline-none !focus:ring-0 !active:ring-0 focus-visible:ring-offset-0 focus-visible:ring-0 outline-none ring-0 border-transparent text-[14px] leading-[14px] 4xl:text-[16px] 4xl:leading-[16px] font-medium text-white placeholder:text-[14px] 4xl:placeholder:text-[16px] placeholder:font-medium placeholder:text-white/30 px-4' ref={secondInputRef}
+          <Input placeholder={t('email_modal_input_placeholder')} className='w-[175px] h-[35px] 4xl:w-[255px] 4xl:h-[48px] rounded-[24px] bg-black/20 border-none !focus-visible:ring-0 !focus-visible:outline-none active:outline-none focus:outline-none !focus:ring-0 !active:ring-0 focus-visible:ring-offset-0 focus-visible:ring-0 outline-none ring-0 border-transparent text-[14px] leading-[14px] 4xl:text-[16px] 4xl:leading-[16px] font-medium text-white placeholder:text-[14px] 4xl:placeholder:text-[16px] placeholder:font-medium placeholder:text-white/30 px-4' ref={secondInputRef}
             onChange={() => {
               if (Boolean(secondInputRef.current?.value) && !isSubmitingEmail) {
                 setSubmitingEmail(true)
@@ -346,7 +346,7 @@ export default function FirstSection(props: FirstSectionProps) {
             }} />
 
           <Button className={clsx(
-            "w-[96px] h-[40px] 4xl:w-[120px] 4xl:h-[48px] text-[14px] leading-[14px] 4xl:text-[16px] 4xl:leading-[16px] rounded-full font-normal text-black",
+            "w-[81px] h-[35px] 4xl:w-[110px] 4xl:h-[48px] text-[14px] leading-[14px] 4xl:text-[16px] 4xl:leading-[16px] rounded-full font-normal text-black",
             secondInputRef.current?.value ? "bg-white hover:bg-white" : "bg-white/40 hover:bg-white/40"
           )}
             disabled={isSubmitting}

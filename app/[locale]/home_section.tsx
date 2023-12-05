@@ -234,7 +234,7 @@ export default function FirstSection(props: FirstSectionProps) {
         <span className='text-white text-[24px] leading-[24px] 4xl:text-[40px] 4xl:leading-[40px] text-center font-semibold'>{t('nobody_theme_song')}</span>
         <div className="border-[5px] 4xl:border-[10px] border-black rounded-3xl mt-[20px]">
           <iframe
-            className="h-[180px] w-[320px] md:h-[360px] md:w-[640px] lg:h-[432px] lg:w-[768px] xl:h-[360px] xl:w-[640px] 3xl:h-[432px] 3xl:w-[768px] 4xl:h-[576px] 4xl:w-[1024px] 5xl:h-[720px] 5xl:w-[1280px] rounded-xl"
+            className="h-[180px] w-[320px] md:h-[360px] md:w-[640px] lg:h-[432px] lg:w-[768px] xl:h-[360px] xl:w-[640px] 3xl:h-[432px] 3xl:w-[768px] 4xl:h-[576px] 4xl:w-[1024px] 5xl:h-[720px] 5xl:w-[1280px] rounded-2xl 4xl:rounded-xl"
             src="https://www.youtube.com/embed/r1D8ZSzm87U?rel=0"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

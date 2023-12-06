@@ -19,6 +19,7 @@ module.exports = {
         "2xl": "1200px",
         "3xl": "1440px",
         "4xl": "1800px",
+        "5xl": "2200px",
       },
       colors: {
         active: "rgba(255, 78, 164, 1)",

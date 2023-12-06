@@ -221,36 +221,51 @@ export default function FirstSection(props: FirstSectionProps) {
         url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/3/playlist.m3u8"}
       />}
 
-    {!playingMedia && <div className=' hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
+    {!playingMedia && <div className='hidden sm:block w-full h-full absolute top-0 left-0 z-10'>
       {/* <Image src={"/chat_background.png"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />
       {!showChatModal && <Image src={"/home_background_stage2.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />}
       {!showChatModal && <Image src={"/home_bg_stage2.gif"} alt='background_image' fill style={{ objectFit: 'cover' }} priority />} */}
-      {!showChatModal && <video autoPlay loop muted playsInline  style={{width: '100%',height: '100%',objectFit: 'cover',objectPosition: 'center'}} src="/home_bg_stage3.mp4"/> }
+      {/* {!showChatModal && <video autoPlay loop muted playsInline  style={{width: '100%',height: '100%',objectFit: 'cover',objectPosition: 'center'}} src="/home_bg_stage3.mp4"/> } */}
+      {<Image src={"/home_bg_mv.jpg"} alt='background' fill style={{ objectFit: 'cover' }} priority />}
     </div>}
 
-    {!playingMedia && !showMainModal && !showChatModal && (mediaSize?.width || 0) > 640 &&
+    {(mediaSize?.width || 0) > 640 &&
+       <div className='absolute flex flex-col left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-[120]'>
+        <span className='text-white text-[24px] leading-[24px] 4xl:text-[40px] 4xl:leading-[40px] text-center font-semibold'>{t('nobody_theme_song')}</span>
+        <div className="border-[5px] 4xl:border-[10px] border-black rounded-3xl mt-[20px]">
+          <iframe
+            className="h-[180px] w-[320px] md:h-[360px] md:w-[640px] lg:h-[432px] lg:w-[768px] xl:h-[360px] xl:w-[640px] 3xl:h-[432px] 3xl:w-[768px] 4xl:h-[576px] 4xl:w-[1024px] 5xl:h-[720px] 5xl:w-[1280px] rounded-2xl 4xl:rounded-xl"
+            src="https://www.youtube.com/embed/K7KDMH6tyfk?rel=0"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    }
+
+    {/* {!playingMedia && !showMainModal && !showChatModal && (mediaSize?.width || 0) > 640 &&
       <div className=' absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[96px] w-[96px] rounded-full bg-black/80 inline-flex items-center justify-center border-[4px] cursor-pointer z-[120] ' onClick={() => {
         setPlayingMedia(true)
       }}>
         <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="36" height="36"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff" p-id="6578"></path></svg>
-      </div>}
+      </div>} */}
 
-    {playingMedia && <div className={clsx('absolute z-[11] cursor-pointer w-[64px] h-[64px] rounded-full right-[40px] bottom-[40px] inline-flex items-center justify-center bg-white/30')} onClick={() => setVidoeMuted(!isMuted)}>
+    {/* {playingMedia && <div className={clsx('absolute z-[11] cursor-pointer w-[64px] h-[64px] rounded-full right-[40px] bottom-[40px] inline-flex items-center justify-center bg-white/30')} onClick={() => setVidoeMuted(!isMuted)}>
       {isMuted ?
         <Image priority src={"/video_music_muted.png"} alt='volumn_switch_muted' width={40} height={40} /> :
         <Image priority src={"/video_music.gif"} alt='volumn_switch' width={40} height={40} />}
-    </div>}
-    {/* </div> */}
+    </div>} */}
 
     {/* Mobile Video */}
     <div className='h-full w-screen relative sm:hidden flex flex-col justify-center'>
       <div className='w-full h-full absolute top-0 left-0 '>
-        <Image src={"/home_bg_mobile_stage3.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
+        <Image src={"/home_bg_mv_mobile.jpg"} alt='background_image' fill style={{ objectFit: 'cover' }} sizes='100vw' quality={100} />
         {playingMedia && <div className='w-full h-full bg-black/80 relative z-[100]'></div>}
       </div>
-      <div className=' relative z-[110]'>
+      <div className='relative z-[110]'>
         {/* Close Button */}
-        {playingMedia && <div className=' absolute right-2 top-[-30px] w-[22px] h-[22px] rounded-full bg-slate-400/40 inline-flex items-center justify-center cursor-pointer'
+        {/* {playingMedia && <div className=' absolute right-2 top-[-30px] w-[22px] h-[22px] rounded-full bg-slate-400/40 inline-flex items-center justify-center cursor-pointer'
           onClick={() => {
             setPlayingMedia(false);
             // @ts-ignore
@@ -258,13 +273,13 @@ export default function FirstSection(props: FirstSectionProps) {
           }}
         >
           <X size={18} color='#d2d2d2' />
-        </div>}
+        </div>} */}
 
-        {!playingMedia && <div className=' absolute left-[50%] translate-x-[-50%] translate-y-[-50%] h-[64px] w-[64px] rounded-full bg-black/80 inline-flex items-center justify-center border-[2px] cursor-pointer z-[120] ' onClick={() => setPlayingMedia(true)}>
+        {/* {!playingMedia && <div className=' absolute left-[50%] translate-x-[-50%] translate-y-[-50%] h-[64px] w-[64px] rounded-full bg-black/80 inline-flex items-center justify-center border-[2px] cursor-pointer z-[120] ' onClick={() => setPlayingMedia(true)}>
           <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6577" width="30" height="30"><path d="M817.088 484.96l-512-323.744C295.232 154.976 282.752 154.592 272.576 160.224 262.336 165.856 256 176.608 256 188.256l0 647.328c0 11.648 6.336 22.4 16.576 28.032 4.8 2.656 10.112 3.968 15.424 3.968 5.952 0 11.904-1.664 17.088-4.928l512-323.616C826.368 533.184 832 522.976 832 512 832 501.024 826.368 490.816 817.088 484.96z" fill="#ffffff"></path></svg>
-        </div>}
+        </div>} */}
 
-        <AspectRatio ratio={1920 / 1080}>
+        {/* <AspectRatio ratio={1920 / 1080}>
           {(mediaSize?.width || 0) <= 640 && playingMedia &&
             <ReactPlayer
               key={"Mobile"}
@@ -288,22 +303,39 @@ export default function FirstSection(props: FirstSectionProps) {
               height="auto"
               url={"https://d4pw50zft54fq.cloudfront.net/homepage-scene/3/playlist.m3u8"}
             />}
-        </AspectRatio>
+        </AspectRatio> */}
+        
+          {(mediaSize?.width || 0) <= 640 &&
+            <div className='flex flex-col pb-[70px]'>
+              <div className='text-white text-[30px] leading-[36px] text-center font-semibold' dangerouslySetInnerHTML={{__html: t.raw('nobody_theme_song_mobile')}} />
+              <AspectRatio ratio={16 / 9} className='px-[16px]'>
+                <div className='relative w-full pb-[56.25%] mt-[20px]'>
+                  <iframe
+                    className="absolute left-0 top-0 w-full h-full rounded-xl"
+                    src="https://www.youtube.com/embed/K7KDMH6tyfk?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+            </div>
+          }
       </div>
     </div>
 
     {/* PC small modal */}
     {
       !playingMedia && !showMainModal && !showChatModal && (mediaSize?.width || 0) > 640 && showSecondModal &&
-      <div className=' absolute z-[110] bottom-[20px] left-[20px] w-[450px] h-[200px] rounded-[16px] bg-[rgba(77,88,99,1)] shadow-[5px_5px_0px_rgba(0,0,0,1)] border-[2px] border-black p-[30px] overflow-visible hover-btn-shadow'>
-        <div className=' absolute w-[76px] h-[69px] top-[-23px] left-[30px]'>
+      <div className='absolute z-[110] bottom-[20px] left-[20px] w-[286px] h-[154px] 4xl:w-[420px] 4xl:h-[180px] rounded-[16px] bg-[rgba(77,88,99,1)] shadow-[5px_5px_0px_rgba(0,0,0,1)] border-[2px] border-black p-[10px] 4xl:p-[20px] overflow-visible hover-btn-shadow'>
+        <div className='absolute w-[48px] h-[46px] 4xl:w-[76px] 4xl:h-[69px] top-[-23px] left-[30px]'>
           <Image src="/mail_modal_ill.png" fill alt='mail modal' priority />
         </div>
 
-        <h3 className=' text-[18px] leading-[24px] font-semibold text-white font-Inter mb-[20px] mt-[20px]'>{t('email_modal_title')}</h3>
+        <h3 className='text-[14px] leading-[18px] 4xl:text-[18px] 4xl:leading-[24px] font-semibold text-white font-Inter mb-[10px] mt-[30px] 4xl:mb-[20px] 4xl:mt-[20px]'>{t('email_modal_title')}</h3>
 
         <div className='flex justify-between'>
-          <Input placeholder={t('email_modal_input_placeholder')} className='w-[260px] h-[48px] rounded-[24px] bg-black/20 border-none !focus-visible:ring-0 !focus-visible:outline-none active:outline-none focus:outline-none !focus:ring-0 !active:ring-0 focus-visible:ring-offset-0 focus-visible:ring-0 outline-none ring-0 border-transparent text-[16px] leading-[16px] font-medium text-white placeholder:text-[16px] placeholder:font-medium placeholder:text-white/30 px-4' ref={secondInputRef}
+          <Input placeholder={t('email_modal_input_placeholder')} className='w-[175px] h-[35px] 4xl:w-[255px] 4xl:h-[48px] rounded-[24px] bg-black/20 border-none !focus-visible:ring-0 !focus-visible:outline-none active:outline-none focus:outline-none !focus:ring-0 !active:ring-0 focus-visible:ring-offset-0 focus-visible:ring-0 outline-none ring-0 border-transparent text-[14px] leading-[14px] 4xl:text-[16px] 4xl:leading-[16px] font-medium text-white placeholder:text-[14px] 4xl:placeholder:text-[16px] placeholder:font-medium placeholder:text-white/30 px-4' ref={secondInputRef}
             onChange={() => {
               if (Boolean(secondInputRef.current?.value) && !isSubmitingEmail) {
                 setSubmitingEmail(true)
@@ -314,7 +346,7 @@ export default function FirstSection(props: FirstSectionProps) {
             }} />
 
           <Button className={clsx(
-            "w-[120px] h-[48px] text-[16px] leading-[16px] rounded-full font-normal text-black",
+            "w-[81px] h-[35px] 4xl:w-[110px] 4xl:h-[48px] text-[14px] leading-[14px] 4xl:text-[16px] 4xl:leading-[16px] rounded-full font-normal text-black",
             secondInputRef.current?.value ? "bg-white hover:bg-white" : "bg-white/40 hover:bg-white/40"
           )}
             disabled={isSubmitting}

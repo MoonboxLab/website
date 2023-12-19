@@ -101,8 +101,8 @@ const Header:React.FC = () => {
           {(mediaSize?.width || 0) < 1024 && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <div className=" ml-[10px] sm:ml-4 inline-flex items-center justify-center h-[36px] w-[36px] lg:h-[48px] lg:w-[48px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]  hover-btn-shadow">
-                  <Image fill src="/header_more.svg" alt="more" />
+                <div className="ml-[10px] sm:ml-4 inline-flex items-center justify-center h-[36px] w-[36px] lg:h-[48px] lg:w-[48px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]  hover-btn-shadow">
+                  <Image className='w-[20px] h-[20px]' width={24} height={24} src="/header_more_mobile.svg" alt="more" />
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="z-[300] -mt-[72px] h-auto w-screen rounded-[0px] px-[16px] py-[16px]">

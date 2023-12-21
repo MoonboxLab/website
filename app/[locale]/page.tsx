@@ -195,8 +195,8 @@ export default function Home() {
                     <div className="flex h-full flex-col">
                       <div className="relative flex-1">
                         <Image
-                          className="absolute px-[10px] pt-[60px]"
-                          src="/nobody_role_1.png"
+                          className="absolute object-cover px-[10px] pt-[60px]"
+                          src="/nobody_role_1_bg.png"
                           fill
                           alt="role1"
                           priority
@@ -204,7 +204,7 @@ export default function Home() {
                       </div>
                       <Input
                         placeholder="等你与我聊聊天…"
-                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] 4xl:placeholder:text-[18px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px]"
+                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                         ref={roleChatRef}
                       />
                     </div>
@@ -213,7 +213,7 @@ export default function Home() {
                     <div className="flex h-full flex-col">
                       <div className="relative flex-1">
                         <Image
-                          className="absolute px-[10px] pt-[60px]"
+                          className="absolute object-cover px-[10px]  pt-[60px]"
                           src="/nobody_role_2_bg.png"
                           fill
                           alt="role2"
@@ -222,7 +222,7 @@ export default function Home() {
                       </div>
                       <Input
                         placeholder="等你与我聊聊天…"
-                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] 4xl:placeholder:text-[18px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px]"
+                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                         ref={roleChatRef}
                       />
                     </div>
@@ -231,8 +231,8 @@ export default function Home() {
                     <div className="flex h-full flex-col">
                       <div className="relative flex-1">
                         <Image
-                          className="absolute px-[10px] pt-[60px]"
-                          src="/nobody_role_3.png"
+                          className="absolute object-cover px-[10px]  pt-[60px]"
+                          src="/nobody_role_3_bg.png"
                           fill
                           alt="role3"
                           priority
@@ -240,7 +240,7 @@ export default function Home() {
                       </div>
                       <Input
                         placeholder="等你与我聊聊天…"
-                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] 4xl:placeholder:text-[18px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px]"
+                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                         ref={roleChatRef}
                       />
                     </div>
@@ -249,8 +249,8 @@ export default function Home() {
                     <div className="flex h-full flex-col">
                       <div className="relative flex-1">
                         <Image
-                          className="absolute px-[10px] pt-[60px]"
-                          src="/nobody_role_4.png"
+                          className="absolute object-cover px-[10px]  pt-[60px]"
+                          src="/nobody_role_4_bg.png"
                           fill
                           alt="role4"
                           priority
@@ -258,7 +258,7 @@ export default function Home() {
                       </div>
                       <Input
                         placeholder="等你与我聊聊天…"
-                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] 4xl:placeholder:text-[18px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px]"
+                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                         ref={roleChatRef}
                       />
                     </div>
@@ -267,8 +267,8 @@ export default function Home() {
                     <div className="flex h-full flex-col">
                       <div className="relative flex-1">
                         <Image
-                          className="absolute px-[10px] pt-[60px]"
-                          src="/nobody_role_5.png"
+                          className="absolute object-cover px-[10px]  pt-[60px]"
+                          src="/nobody_role_5_bg.png"
                           fill
                           alt="role5"
                           priority
@@ -276,7 +276,7 @@ export default function Home() {
                       </div>
                       <Input
                         placeholder="等你与我聊聊天…"
-                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] 4xl:placeholder:text-[18px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px]"
+                        className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                         ref={roleChatRef}
                       />
                     </div>
@@ -289,7 +289,7 @@ export default function Home() {
                 </span>
                 <div className="flex h-full flex-col items-start">
                   <div
-                    className="text-balck mt-[30px] 4xl:mt-[50px] flex-1 text-[16px] font-semibold leading-[24px] 4xl:text-[24px] 4xl:leading-[36px]"
+                    className="text-balck mt-[30px] flex-1 text-[16px] font-semibold leading-[24px] 4xl:mt-[50px] 4xl:text-[24px] 4xl:leading-[36px]"
                     dangerouslySetInnerHTML={{
                       __html: t.raw("nobody_story_content"),
                     }}
@@ -297,7 +297,7 @@ export default function Home() {
                   <div className="grid flex-none grid-cols-3 items-center gap-[30px]">
                     <div className="flex flex-col items-center">
                       <div
-                        className="relative rounded-xl border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                        className="relative rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                         onClick={() => {
                           setVideo(
                             "https://www.youtube.com/embed/4oixai0Fgvg?rel=0",
@@ -327,7 +327,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col items-center">
                       <div
-                        className="relative rounded-xl border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                        className="relative rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                         onClick={() => {
                           setVideo(
                             "https://www.youtube.com/embed/kMTaAkQ0rcs?rel=0",
@@ -357,7 +357,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col items-center">
                       <div
-                        className="relative rounded-xl border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                        className="relative rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                         onClick={() => {
                           setVideo(
                             "https://www.youtube.com/embed/6spSsLZmEuM?rel=0",

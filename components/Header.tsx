@@ -26,7 +26,7 @@ const Header:React.FC = () => {
   }
   
   return <>
-        <header className='absolute z-[100] top-0 flex items-center justify-between w-full px-[16px] mt-[20px] lg:px-[40px] lg:mt-[40px] sm:z-[200]'>
+      <header className='absolute z-[100] top-0 flex items-center justify-between w-full px-[16px] mt-[20px] lg:px-[20px] lg:mt-[20px] sm:z-[200]'>
         <a href='/'>
           <div className='relative w-[36px] h-[36px] sm:w-[177px] sm:h-[36px] lg:w-[236px] lg:h-[48px]'>
             <Image src={(mediaSize?.width || 0) > 640
@@ -216,7 +216,7 @@ const Header:React.FC = () => {
           )}
         </div>
       </header>
-      <div className='hidden sm:block absolute z-[120] w-full h-[120px] bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply'></div>
+      <div className='hidden sm:block absolute z-[120] w-full h-[100px] bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply'></div>
   </>
 }
 

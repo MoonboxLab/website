@@ -106,7 +106,7 @@ export default function Home() {
                   setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
                   setIsShowVideo(true);
                 }}
-                className="hover-btn-shadow absolute bottom-[108px] 4xl:bottom-[140px] left-[20px] flex h-[80px] w-[200px] items-center justify-center rounded-[16px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                className="hover-btn-shadow absolute bottom-[108px] left-[20px] flex h-[80px] w-[200px] items-center justify-center rounded-[16px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:bottom-[140px]"
               >
                 <Image
                   className="mt-[5px]"
@@ -207,7 +207,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -226,7 +226,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -245,7 +245,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -264,7 +264,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -283,7 +283,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -296,7 +296,7 @@ export default function Home() {
                   </span>
                   <div className="flex h-full flex-col items-start">
                     <div
-                      className="text-balck mt-[30px] max-w-[1400px] flex-1 text-[16px] font-semibold leading-[24px]  4xl:mt-[30px] 5xl:mt-[50px] 4xl:text-[24px] 4xl:leading-[36px] 5xl:text-[28px] 5xl:leading-[40px]"
+                      className="text-balck mt-[30px] max-w-[1400px] flex-1 text-[16px] font-semibold leading-[24px]  4xl:mt-[30px] 4xl:text-[24px] 4xl:leading-[36px] 5xl:mt-[50px] 5xl:text-[28px] 5xl:leading-[40px]"
                       dangerouslySetInnerHTML={{
                         __html: t.raw("nobody_story_content"),
                       }}
@@ -304,7 +304,7 @@ export default function Home() {
                     <div className="grid flex-none grid-cols-3 items-center gap-[30px]">
                       <div className="flex flex-col items-center">
                         <div
-                          className="relative rounded-lg border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                           onClick={() => {
                             setVideo(
                               "https://www.youtube.com/embed/4oixai0Fgvg?rel=0",
@@ -313,6 +313,7 @@ export default function Home() {
                           }}
                         >
                           <Image
+                            className="rounded-lg"
                             src="/chapter_one.jpg"
                             width={400}
                             height={165}
@@ -334,7 +335,7 @@ export default function Home() {
                       </div>
                       <div className="flex flex-col items-center">
                         <div
-                          className="relative rounded-lg border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                           onClick={() => {
                             setVideo(
                               "https://www.youtube.com/embed/kMTaAkQ0rcs?rel=0",
@@ -343,6 +344,7 @@ export default function Home() {
                           }}
                         >
                           <Image
+                            className="rounded-lg"
                             src="/chapter_two.jpg"
                             width={400}
                             height={165}
@@ -364,7 +366,7 @@ export default function Home() {
                       </div>
                       <div className="flex flex-col items-center">
                         <div
-                          className="relative rounded-lg border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                           onClick={() => {
                             setVideo(
                               "https://www.youtube.com/embed/6spSsLZmEuM?rel=0",
@@ -373,6 +375,7 @@ export default function Home() {
                           }}
                         >
                           <Image
+                            className="rounded-lg"
                             src="/chapter_three.jpg"
                             width={400}
                             height={165}

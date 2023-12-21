@@ -106,9 +106,10 @@ export default function Home() {
                   setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
                   setIsShowVideo(true);
                 }}
-                className="hover-btn-shadow absolute bottom-[150px] left-[20px] flex h-[80px] w-[200px] items-center justify-center rounded-[10px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                className="hover-btn-shadow absolute bottom-[108px] 4xl:bottom-[140px] left-[20px] flex h-[80px] w-[200px] items-center justify-center rounded-[16px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)]"
               >
                 <Image
+                  className="mt-[5px]"
                   src="/home_play_mv.png"
                   height={64}
                   width={64}
@@ -122,8 +123,8 @@ export default function Home() {
             </div>
           </FullpageSection>
           <FullpageSection>
-            <div className="flex h-screen w-full items-center justify-center bg-white px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[100px]">
-              <div className="grid h-full w-[1180px] grid-cols-[30%,auto] gap-[88px] 4xl:w-[1760px] 4xl:gap-[120px]">
+            <div className="flex h-screen w-full items-center justify-center bg-white px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
+              <div className="grid h-full w-[1180px] grid-cols-[38%,auto] gap-[88px] 4xl:w-[1760px] 4xl:gap-[120px] 5xl:w-[2100px] 5xl:gap-[200px]">
                 <div className="flex h-full justify-center">
                   <Tabs
                     defaultValue="role1"
@@ -133,60 +134,60 @@ export default function Home() {
                     <TabsList className="row-span-1 grid h-[80px] grid-cols-5">
                       <TabsTrigger value="role1" className="relative">
                         {role !== "role1" && (
-                          <div className="absolute z-10 h-[80px] w-full bg-white/50" />
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
                         <Image
                           src="/nobody_role_1.png"
-                          height={75}
-                          width={75}
+                          height={100}
+                          width={100}
                           alt="role1"
                           priority
                         />
                       </TabsTrigger>
                       <TabsTrigger value="role2" className="relative">
                         {role !== "role2" && (
-                          <div className="absolute z-10 h-[80px] w-full bg-white/50" />
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
                         <Image
                           src="/nobody_role_2.png"
-                          height={75}
-                          width={75}
+                          height={100}
+                          width={100}
                           alt="role2"
                           priority
                         />
                       </TabsTrigger>
                       <TabsTrigger value="role3" className="relative">
                         {role !== "role3" && (
-                          <div className="absolute z-10 h-[80px] w-full bg-white/50" />
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
                         <Image
                           src="/nobody_role_3.png"
-                          height={75}
-                          width={75}
+                          height={100}
+                          width={100}
                           alt="role3"
                           priority
                         />
                       </TabsTrigger>
                       <TabsTrigger value="role4" className="relative">
                         {role !== "role4" && (
-                          <div className="absolute z-10 h-[80px] w-full bg-white/50" />
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
                         <Image
                           src="/nobody_role_4.png"
-                          height={75}
-                          width={75}
+                          height={100}
+                          width={100}
                           alt="role4"
                           priority
                         />
                       </TabsTrigger>
                       <TabsTrigger value="role5" className="relative">
                         {role !== "role5" && (
-                          <div className="absolute z-10 h-[80px] w-full bg-white/50" />
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
                         <Image
                           src="/nobody_role_5.png"
-                          height={75}
-                          width={75}
+                          height={100}
+                          width={100}
                           alt="role5"
                           priority
                         />
@@ -206,7 +207,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -225,7 +226,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -244,7 +245,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -263,7 +264,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -282,7 +283,7 @@ export default function Home() {
                         </div>
                         <Input
                           placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none rounded-lg border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
+                          className="h-[40px] w-full flex-none  rounded-[8px] 4xl:rounded-xl border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 5xl:h-[64px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px]"
                           ref={roleChatRef}
                         />
                       </div>
@@ -290,12 +291,12 @@ export default function Home() {
                   </Tabs>
                 </div>
                 <div className="flex h-full flex-col items-start">
-                  <span className="w-full text-left text-[36px] font-bold text-black 4xl:text-[48px]">
+                  <span className="w-full text-left text-[36px] font-bold text-black 4xl:text-[48px] 5xl:text-[56px]">
                     ORIGIN STORY OF NOBODY
                   </span>
                   <div className="flex h-full flex-col items-start">
                     <div
-                      className="text-balck mt-[30px] max-w-[970px] flex-1 text-[16px] font-semibold leading-[24px] 4xl:mt-[50px] 4xl:text-[24px] 4xl:leading-[36px]"
+                      className="text-balck mt-[30px] max-w-[1400px] flex-1 text-[16px] font-semibold leading-[24px]  4xl:mt-[30px] 5xl:mt-[50px] 4xl:text-[24px] 4xl:leading-[36px] 5xl:text-[28px] 5xl:leading-[40px]"
                       dangerouslySetInnerHTML={{
                         __html: t.raw("nobody_story_content"),
                       }}
@@ -303,7 +304,7 @@ export default function Home() {
                     <div className="grid flex-none grid-cols-3 items-center gap-[30px]">
                       <div className="flex flex-col items-center">
                         <div
-                          className="relative rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          className="relative rounded-lg border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                           onClick={() => {
                             setVideo(
                               "https://www.youtube.com/embed/4oixai0Fgvg?rel=0",
@@ -313,13 +314,13 @@ export default function Home() {
                         >
                           <Image
                             src="/chapter_one.jpg"
-                            width={300}
+                            width={400}
                             height={165}
                             alt="chapter one"
                             priority
                           />
                           <Image
-                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
                             src="/chapter_play.png"
                             width={64}
                             height={64}
@@ -333,7 +334,7 @@ export default function Home() {
                       </div>
                       <div className="flex flex-col items-center">
                         <div
-                          className="relative rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          className="relative rounded-lg border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                           onClick={() => {
                             setVideo(
                               "https://www.youtube.com/embed/kMTaAkQ0rcs?rel=0",
@@ -343,13 +344,13 @@ export default function Home() {
                         >
                           <Image
                             src="/chapter_two.jpg"
-                            width={300}
+                            width={400}
                             height={165}
                             alt="chapter two"
                             priority
                           />
                           <Image
-                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
                             src="/chapter_play.png"
                             width={64}
                             height={64}
@@ -363,7 +364,7 @@ export default function Home() {
                       </div>
                       <div className="flex flex-col items-center">
                         <div
-                          className="relative rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          className="relative rounded-lg border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                           onClick={() => {
                             setVideo(
                               "https://www.youtube.com/embed/6spSsLZmEuM?rel=0",
@@ -373,13 +374,13 @@ export default function Home() {
                         >
                           <Image
                             src="/chapter_three.jpg"
-                            width={300}
+                            width={400}
                             height={165}
                             alt="chapter three"
                             priority
                           />
                           <Image
-                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]"
+                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
                             src="/chapter_play.png"
                             width={64}
                             height={64}

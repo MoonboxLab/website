@@ -6,15 +6,15 @@ const Footer = () => {
       <Image
         className="hidden 4xl:block"
         src="/nobody_logo.png"
-        height={64}
-        width={64}
+        height={72}
+        width={72}
         alt="nobody logo"
         priority
       />
       <span className="ml-[10px] hidden text-[18px] font-bold text-white 4xl:block 4xl:text-[24px]">
         Nobody
       </span>
-      <div className="flex 4xl:ml-[50px]">
+      <div className="flex 4xl:ml-[50px] 5xl:ml-[100px]">
         <Image
           src="/mint_progress_now.png"
           height={48}
@@ -22,7 +22,7 @@ const Footer = () => {
           alt="now"
           priority
         />
-        <div className="ml-[10px] flex flex-col 4xl:ml-[20px] ">
+        <div className="ml-[10px] flex flex-col justify-center 4xl:ml-[20px]">
           <span className="text-[18px] font-semibold text-yellow-300 4xl:text-[24px]">
             Presale
           </span>
@@ -31,7 +31,7 @@ const Footer = () => {
           </span>
         </div>
       </div>
-      <div className="ml-[40px] flex 4xl:ml-[50px]">
+      <div className="ml-[40px] flex 4xl:ml-[50px] 5xl:ml-[100px]">
         <Image
           src="/mint_progress_next.png"
           height={48}
@@ -39,7 +39,7 @@ const Footer = () => {
           alt="now"
           priority
         />
-        <div className="ml-[10px] flex flex-col 4xl:ml-[20px] ">
+        <div className="ml-[10px] flex flex-col justify-center 4xl:ml-[20px]">
           <span className="text-[18px] font-semibold text-white 4xl:text-[24px]">
             Public sale
           </span>
@@ -49,7 +49,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="ml-[40px] flex 4xl:ml-[50px]">
+      <div className="ml-[40px] flex 4xl:ml-[50px] 5xl:ml-[100px]">
         <Image
           src="/mint_progress_next.png"
           height={48}
@@ -57,7 +57,7 @@ const Footer = () => {
           alt="now"
           priority
         />
-        <div className="ml-[10px] flex flex-col 4xl:ml-[20px] ">
+        <div className="ml-[10px] flex flex-col justify-center 4xl:ml-[20px]">
           <span className="text-[18px] font-semibold text-white 4xl:text-[24px]">
             Refund
           </span>
@@ -68,13 +68,13 @@ const Footer = () => {
       </div>
 
       <div className="ml-auto flex">
-        <div className="hover-btn-shadow flex h-[48px] w-[190px] items-center justify-center rounded-[10px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:h-[64px] 4xl:w-[260px]">
+        <div className="hover-btn-shadow flex h-[48px] w-[190px] items-center justify-center rounded-[12px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:h-[64px] 4xl:w-[260px]">
           <span className="text-[18px] font-semibold text-black 4xl:text-[21px]">
             Receive Waitlist
           </span>
         </div>
 
-        <div className="hover-btn-shadow ml-[20px] flex h-[48px] w-[190px] items-center justify-center rounded-[10px] border-2 border-black bg-yellow-300 pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:ml-[30px] 4xl:h-[64px] 4xl:w-[260px]">
+        <div className="hover-btn-shadow ml-[20px] flex h-[48px] w-[190px] items-center justify-center rounded-[12px] border-2 border-black bg-yellow-300 pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:ml-[30px] 4xl:h-[64px] 4xl:w-[260px]">
           <span className="text-[18px] font-semibold text-black 4xl:text-[21px]">
             Mint
           </span>

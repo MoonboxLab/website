@@ -131,8 +131,8 @@ export default function Home() {
                     className="grid h-full w-full grid-rows-6"
                     onValueChange={setRole}
                   >
-                    <TabsList className="row-span-1 grid h-[80px] grid-cols-5">
-                      <TabsTrigger value="role1" className="relative">
+                    <TabsList className="row-span-1 grid h-[100px] grid-cols-5">
+                      <TabsTrigger value="role1" className="relative h-[100px] bg-white">
                         {role !== "role1" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -144,7 +144,7 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role2" className="relative">
+                      <TabsTrigger value="role2" className="relative h-[100px] bg-white">
                         {role !== "role2" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -156,7 +156,7 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role3" className="relative">
+                      <TabsTrigger value="role3" className="relative h-[100px] bg-white">
                         {role !== "role3" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -168,7 +168,7 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role4" className="relative">
+                      <TabsTrigger value="role4" className="relative h-[100px] bg-white">
                         {role !== "role4" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -180,7 +180,7 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role5" className="relative">
+                      <TabsTrigger value="role5" className="relative h-[100px] bg-white">
                         {role !== "role5" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}

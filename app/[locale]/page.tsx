@@ -60,7 +60,8 @@ export default function Home() {
         ></meta>
       </Head>
 
-      <Footer />
+      {/* PC UI */}
+      {(mediaSize?.width || 0) >= 1024 && <Footer />}
 
       {isShowVideo && (
         <div className="absolute z-[200] h-screen w-full bg-black/80">
@@ -90,7 +91,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* PC UI */}
       {(mediaSize?.width || 0) >= 1024 && (
         <FullpageContainer
           activeIndex={activeIndex}
@@ -405,6 +405,92 @@ export default function Home() {
       )}
 
       {/* Mobile UI */}
+      {(mediaSize?.width || 0) <= 1024 && (
+        <div className="w-full bg-white">
+          <div className="items-cente relative h-screen w-full">
+            <Header />
+            <Image src="/home_bg_mint_mobile.jpg" fill alt="mint" priority />
+            <div className="absolute bottom-[45px] z-10 flex w-full flex-col px-[15px]">
+              <div className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                <Image
+                  className="absolute left-0 ml-[2px] mt-[8px]"
+                  src="/home_play_mv.png"
+                  height={50}
+                  width={50}
+                  alt="play"
+                  priority
+                />
+                <span className="text-[21px] font-semibold text-black">
+                  Nobody NFT MV
+                </span>
+              </div>
+              <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                <span className="text-[21px] font-semibold text-black">
+                  Mint
+                </span>
+                <span className="ml-[10px] text-[18px] font-semibold text-black">
+                  (01/24 08:00)
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full justify-center bg-black py-[40px]">
+            <div className="flex flex-col items-start">
+              <div className="flex h-[108px]">
+                <Image
+                  src="/mint_progress_dash_yellow_long.png"
+                  height={108}
+                  width={20}
+                  alt="now"
+                  priority
+                />
+                <div className="ml-[15px] flex flex-col justify-center">
+                  <span className="text-[21px] font-semibold leading-[21px] text-yellow-300">
+                    Presale
+                  </span>
+                  <span className="text-[16px] font-semibold leading-[21px] text-yellow-300">
+                    01/23 08:00~01/24 08:00(UTC8)
+                  </span>
+                </div>
+              </div>
+              <div className="mt-[40px] flex">
+                <Image
+                  src="/mint_progress_next.png"
+                  height={48}
+                  width={20}
+                  alt="next"
+                  priority
+                />
+                <div className="ml-[15px] flex flex-col justify-center">
+                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                    Public sale
+                  </span>
+                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                    01/24 08:00~01/25 08:00(UTC8)
+                  </span>
+                </div>
+              </div>
+              <div className="mt-[40px] flex">
+                <Image
+                  src="/mint_progress_next.png"
+                  height={48}
+                  width={20}
+                  alt="next"
+                  priority
+                />
+                <div className="ml-[15px] flex flex-col justify-center">
+                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                    Refund
+                  </span>
+                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                    Start at 01-26 08:00(UTC8)
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

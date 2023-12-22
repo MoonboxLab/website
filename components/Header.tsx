@@ -30,8 +30,8 @@ const Header:React.FC = () => {
         <a href='/'>
           <div className='relative w-[36px] h-[36px] sm:w-[177px] sm:h-[36px] lg:w-[196px] lg:h-[40px] 3xl:w-[236px] 3xl:h-[48px]'>
             <Image src={(mediaSize?.width || 0) > 640
-              ? "/moonbox_logo_white.png"
-              : "/moonbox_logo_mobile.png"} alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
+              ? "/moonbox_logo_black.png"
+              : "/moonbox_logo_black_mobile.png"} alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
           </div>
         </a>
 

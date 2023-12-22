@@ -14,6 +14,7 @@ const Footer = () => {
       <span className="ml-[10px] hidden text-[18px] font-bold text-white 4xl:block 4xl:text-[24px]">
         Nobody
       </span>
+
       <div className="flex 4xl:ml-[50px] 5xl:ml-[100px]">
         <Image
           src="/mint_progress_now.png"
@@ -31,12 +32,13 @@ const Footer = () => {
           </span>
         </div>
       </div>
+
       <div className="ml-[40px] flex 4xl:ml-[50px] 5xl:ml-[100px]">
         <Image
           src="/mint_progress_next.png"
           height={48}
           width={20}
-          alt="now"
+          alt="next"
           priority
         />
         <div className="ml-[10px] flex flex-col justify-center 4xl:ml-[20px]">
@@ -54,7 +56,7 @@ const Footer = () => {
           src="/mint_progress_next.png"
           height={48}
           width={20}
-          alt="now"
+          alt="next"
           priority
         />
         <div className="ml-[10px] flex flex-col justify-center 4xl:ml-[20px]">

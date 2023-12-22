@@ -16,6 +16,7 @@ import Footer from "@/components/ConnectWallet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -61,7 +62,7 @@ export default function Home() {
       </Head>
 
       {/* PC UI */}
-      {(mediaSize?.width || 0) >= 1024 && <Footer />}
+      {(mediaSize?.width || 0) > 1024 && <Footer />}
 
       {isShowVideo && (
         <div className="absolute z-[200] h-screen w-full bg-black/80">
@@ -91,7 +92,7 @@ export default function Home() {
         </div>
       )}
 
-      {(mediaSize?.width || 0) >= 1024 && (
+      {(mediaSize?.width || 0) > 1024 && (
         <FullpageContainer
           activeIndex={activeIndex}
           setActiveIndex={setActiveIndex}
@@ -132,7 +133,10 @@ export default function Home() {
                     onValueChange={setRole}
                   >
                     <TabsList className="row-span-1 grid h-[100px] grid-cols-5">
-                      <TabsTrigger value="role1" className="relative h-[100px] bg-white">
+                      <TabsTrigger
+                        value="role1"
+                        className="relative h-[100px] bg-white"
+                      >
                         {role !== "role1" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -144,7 +148,10 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role2" className="relative h-[100px] bg-white">
+                      <TabsTrigger
+                        value="role2"
+                        className="relative h-[100px] bg-white"
+                      >
                         {role !== "role2" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -156,7 +163,10 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role3" className="relative h-[100px] bg-white">
+                      <TabsTrigger
+                        value="role3"
+                        className="relative h-[100px] bg-white"
+                      >
                         {role !== "role3" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -168,7 +178,10 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role4" className="relative h-[100px] bg-white">
+                      <TabsTrigger
+                        value="role4"
+                        className="relative h-[100px] bg-white"
+                      >
                         {role !== "role4" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -180,7 +193,10 @@ export default function Home() {
                           priority
                         />
                       </TabsTrigger>
-                      <TabsTrigger value="role5" className="relative h-[100px] bg-white">
+                      <TabsTrigger
+                        value="role5"
+                        className="relative h-[100px] bg-white"
+                      >
                         {role !== "role5" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
                         )}
@@ -411,7 +427,13 @@ export default function Home() {
             <Header />
             <Image src="/home_bg_mint_mobile.jpg" fill alt="mint" priority />
             <div className="absolute bottom-[45px] z-10 flex w-full flex-col px-[15px]">
-              <div className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+              <div
+                className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                onClick={() => {
+                  setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
+                  setIsShowVideo(true);
+                }}
+              >
                 <Image
                   className="absolute left-0 ml-[2px] mt-[8px]"
                   src="/home_play_mv.png"
@@ -438,7 +460,7 @@ export default function Home() {
             <div className="flex flex-col items-start">
               <div className="flex h-[108px]">
                 <Image
-                  src="/mint_progress_dash_yellow_long.png"
+                  src="/mint_progress_now_long.png"
                   height={108}
                   width={20}
                   alt="now"
@@ -451,6 +473,11 @@ export default function Home() {
                   <span className="text-[16px] font-semibold leading-[21px] text-yellow-300">
                     01/23 08:00~01/24 08:00(UTC8)
                   </span>
+                  <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <span className="text-[16px] font-semibold text-black">
+                      Receive Waitlist
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="mt-[40px] flex">
@@ -487,6 +514,258 @@ export default function Home() {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+          <Tabs
+            defaultValue="role1"
+            className="grid h-full w-full grid-rows-6"
+            onValueChange={setRole}
+          >
+            <TabsList className="row-span-1 grid h-[100px] grid-cols-5">
+              <TabsTrigger
+                value="role1"
+                className="relative h-[100px] bg-white"
+              >
+                {role !== "role1" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_1.png"
+                  height={100}
+                  width={100}
+                  alt="role1"
+                  priority
+                />
+              </TabsTrigger>
+              <TabsTrigger
+                value="role2"
+                className="relative h-[100px] bg-white"
+              >
+                {role !== "role2" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_2.png"
+                  height={100}
+                  width={100}
+                  alt="role2"
+                  priority
+                />
+              </TabsTrigger>
+              <TabsTrigger
+                value="role3"
+                className="relative h-[100px] bg-white"
+              >
+                {role !== "role3" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_3.png"
+                  height={100}
+                  width={100}
+                  alt="role3"
+                  priority
+                />
+              </TabsTrigger>
+              <TabsTrigger
+                value="role4"
+                className="relative h-[100px] bg-white"
+              >
+                {role !== "role4" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_4.png"
+                  height={100}
+                  width={100}
+                  alt="role4"
+                  priority
+                />
+              </TabsTrigger>
+              <TabsTrigger
+                value="role5"
+                className="relative h-[100px] bg-white"
+              >
+                {role !== "role5" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_5.png"
+                  height={100}
+                  width={100}
+                  alt="role5"
+                  priority
+                />
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="role1" className="row-span-5">
+              <div className="flex h-full flex-col">
+                <div className="relative flex-1">
+                  <Image
+                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
+                    src="/nobody_role_1_bg.png"
+                    height={450}
+                    width={450}
+                    alt="role1"
+                    priority
+                  />
+                </div>
+                <div className="w-full px-[15px]">
+                  <Input
+                    placeholder="等你与我聊聊天…"
+                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
+                    ref={roleChatRef}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="role2" className="row-span-5">
+              <div className="flex h-full flex-col">
+                <div className="relative flex-1">
+                  <Image
+                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
+                    src="/nobody_role_2_bg.png"
+                    height={450}
+                    width={450}
+                    alt="role2"
+                    priority
+                  />
+                </div>
+                <div className="w-full px-[15px]">
+                  <Input
+                    placeholder="等你与我聊聊天…"
+                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
+                    ref={roleChatRef}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="role3" className="row-span-5">
+              <div className="flex h-full flex-col">
+                <div className="relative flex-1">
+                  <Image
+                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
+                    src="/nobody_role_3_bg.png"
+                    height={450}
+                    width={450}
+                    alt="role3"
+                    priority
+                  />
+                </div>
+                <div className="w-full px-[15px]">
+                  <Input
+                    placeholder="等你与我聊聊天…"
+                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
+                    ref={roleChatRef}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="role4" className="row-span-5">
+              <div className="flex h-full flex-col">
+                <div className="relative flex-1">
+                  <Image
+                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
+                    src="/nobody_role_4_bg.png"
+                    height={450}
+                    width={450}
+                    alt="role4"
+                    priority
+                  />
+                </div>
+                <div className="w-full px-[15px]">
+                  <Input
+                    placeholder="等你与我聊聊天…"
+                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
+                    ref={roleChatRef}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="role5" className="row-span-5">
+              <div className="flex h-full flex-col">
+                <div className="relative flex-1">
+                  <Image
+                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
+                    src="/nobody_role_5_bg.png"
+                    height={450}
+                    width={450}
+                    alt="role5"
+                    priority
+                  />
+                </div>
+                <div className="w-full px-[15px]">
+                  <Input
+                    placeholder="等你与我聊聊天…"
+                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
+                    ref={roleChatRef}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+          <div className="mt-[40px] flex w-full flex-col items-center px-[15px]">
+            <span className="text-[30px] font-bold leading-[36px] text-black">
+              ORIGIN STORY OF
+            </span>
+            <span className="text-[30px] font-bold leading-[36px] text-black">
+              NOBODY
+            </span>
+          </div>
+          <div
+            className="text-balck mt-[20px] px-[15px] text-[18px] font-medium leading-[30px]"
+            dangerouslySetInnerHTML={{
+              __html: t.raw("nobody_story_content"),
+            }}
+          />
+          <div className="mt-[40px] flex flex-col pb-[50px]">
+            <div className="flex flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/4oixai0Fgvg?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+              <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
+                Chapter One : Spacebus
+              </span>
+            </div>
+            <div className="mt-[30px] flex flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/kMTaAkQ0rcs?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+              <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
+                Chapter Two : Accident
+              </span>
+            </div>
+            <div className="mt-[30px] flex flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/6spSsLZmEuM?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+              <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
+                Chapter Three : Arrival
+              </span>
             </div>
           </div>
         </div>

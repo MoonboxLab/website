@@ -296,7 +296,7 @@ export default function Home() {
                   </span>
                   <div className="flex h-full flex-col items-start">
                     <div
-                      className="text-balck mt-[30px] max-w-[1400px] flex-1 text-[16px] font-semibold leading-[24px]  4xl:mt-[30px] 4xl:text-[24px] 4xl:leading-[36px] 5xl:mt-[50px] 5xl:text-[28px] 5xl:leading-[40px]"
+                      className="text-balck mt-[30px] max-w-[1400px] flex-1 text-[16px] font-semibold leading-[24px]  4xl:mt-[30px] 4xl:text-[24px] 4xl:leading-[32px] 5xl:mt-[50px] 5xl:text-[28px] 5xl:leading-[40px]"
                       dangerouslySetInnerHTML={{
                         __html: t.raw("nobody_story_content"),
                       }}

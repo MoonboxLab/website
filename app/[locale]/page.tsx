@@ -64,7 +64,7 @@ export default function Home() {
       {/* PC UI */}
       {(mediaSize?.width || 0) > 1024 && <Footer />}
 
-      {isShowVideo && (
+      {(mediaSize?.width || 0) > 1024 && isShowVideo && (
         <div className="absolute z-[200] h-screen w-full bg-black/80">
           <div className="absolute left-[50%] top-[50%] z-[120] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
             <Button
@@ -421,6 +421,38 @@ export default function Home() {
       )}
 
       {/* Mobile UI */}
+      {(mediaSize?.width || 0) <= 1024 && isShowVideo && (
+        <div className="absolute z-[200] h-screen w-screen bg-black/80">
+          <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
+            <Button
+              onClick={() => setIsShowVideo(false)}
+              className="bg-inherit pr-0 hover:bg-inherit active:bg-inherit"
+            >
+              <Image
+                src="/video_close.svg"
+                height={32}
+                width={32}
+                alt="play"
+                priority
+              />
+            </Button>
+            <div className="flex w-screen flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/4oixai0Fgvg?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+            </div>
+          </div>
+        </div>
+      )}
+
       {(mediaSize?.width || 0) <= 1024 && (
         <div className="w-full bg-white">
           <div className="items-cente relative h-screen w-full">

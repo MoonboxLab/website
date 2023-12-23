@@ -17,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Chat from "@/components/Chat";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -210,23 +211,7 @@ export default function Home() {
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="role1" className="row-span-5">
-                      <div className="flex h-full flex-col">
-                        <div className="relative flex-1">
-                          <Image
-                            className="absolute bottom-0 w-full"
-                            src="/nobody_role_1_bg.png"
-                            height={450}
-                            width={450}
-                            alt="role1"
-                            priority
-                          />
-                        </div>
-                        <Input
-                          placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
-                          ref={roleChatRef}
-                        />
-                      </div>
+                      <Chat />
                     </TabsContent>
                     <TabsContent value="role2" className="row-span-5">
                       <div className="flex h-full flex-col">

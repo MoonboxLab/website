@@ -79,6 +79,7 @@ type StreamingReactResponseAction = (payload: {
 
 const getStreamedResponse = async (
   api: string | StreamingReactResponseAction,
+  character: string,
   chatRequest: ChatRequest,
   mutate: KeyedMutator<Message[]>,
   mutateStreamData: KeyedMutator<any[]>,
@@ -167,6 +168,7 @@ const getStreamedResponse = async (
     method: 'POST',
     body: JSON.stringify({
       messages: constructedMessagesPayload,
+      character: character,
       ...extraMetadataRef.current.body,
       ...chatRequest.options?.body,
       ...(chatRequest.functions !== undefined && {
@@ -295,6 +297,7 @@ const getStreamedResponse = async (
 
 export function useChat({
   api = '/api/chat',
+  character="",
   id,
   initialMessages: initialMessagesParam,
   initialInput = '',
@@ -372,6 +375,7 @@ export function useChat({
           // await getStreamedResponse(} once Stream Data is not experimental
           const messagesAndDataOrJustMessage = await getStreamedResponse(
             api,
+            character,
             chatRequest,
             mutate,
             mutateStreamData,

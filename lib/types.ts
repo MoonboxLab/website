@@ -96,6 +96,8 @@ export type UseChatOptions = {
    */
   api?: string;
 
+  character?: string;
+
   /**
    * A unique identifier for the chat. If not provided, a random one will be
    * generated. When provided, the `useChat` hook with the same `id` will

@@ -12,10 +12,9 @@ import {
   FullpageSection,
 } from "@shinyongjun/react-fullpage";
 import "@shinyongjun/react-fullpage/css";
-import Footer from "@/components/ConnectWallet";
+import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Chat from "@/components/Chat";
 
@@ -26,8 +25,6 @@ export default function Home() {
 
   const chatListBottomRef = useRef<HTMLEmbedElement>(null);
 
-  const secondPageStoryIntroduce = useRef<HTMLDivElement>(null);
-
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const [role, setRole] = useState<string>("role1");
@@ -35,8 +32,6 @@ export default function Home() {
   const [video, setVideo] = useState<string>("");
 
   const [isShowVideo, setIsShowVideo] = useState<boolean>(false);
-
-  const roleChatRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({
@@ -60,17 +55,13 @@ export default function Home() {
           name="twitter:image"
           content="https://moonbox.com/open-graph.jpg"
         ></meta>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
       </Head>
 
       {/* PC UI */}
       {(mediaSize?.width || 0) > 1024 && <Footer />}
 
       {(mediaSize?.width || 0) > 1024 && isShowVideo && (
-        <div className="absolute z-[200] h-screen w-full bg-black/80">
+        <div className="absolute z-[200] h-screen w-full bg-black/80 backdrop-blur">
           <div className="absolute left-[50%] top-[50%] z-[120] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
             <Button
               onClick={() => setIsShowVideo(false)}
@@ -106,7 +97,13 @@ export default function Home() {
           <FullpageSection>
             <div className="relative h-screen w-full items-center">
               <Header />
-              <Image src="/home_bg_mint.jpg" fill alt="mint" priority />
+              <Image
+                src="/home_bg_mint.jpg"
+                fill
+                alt="mint"
+                priority
+                className="object-cover"
+              />
               <div
                 onClick={() => {
                   setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
@@ -265,19 +262,19 @@ export default function Home() {
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="role1">
-                      <Chat role={1} />
+                      <Chat role={1} character="liupiaopiao" />
                     </TabsContent>
                     <TabsContent value="role2">
-                      <Chat role={2} />
+                      <Chat role={2} character="yintianchou" />
                     </TabsContent>
                     <TabsContent value="role3">
-                      <Chat role={3} />
+                      <Chat role={3} character="cook" />
                     </TabsContent>
                     <TabsContent value="role4">
-                      <Chat role={4} />
+                      <Chat role={4} character="tang" />
                     </TabsContent>
                     <TabsContent value="role5">
-                      <Chat role={5} />
+                      <Chat role={5} character="wukong" />
                     </TabsContent>
                   </Tabs>
                 </div>
@@ -656,19 +653,19 @@ export default function Home() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="role1">
-              <Chat role={1} />
+              <Chat role={1} character="liupiaopiao" />
             </TabsContent>
             <TabsContent value="role2">
-              <Chat role={2} />
+              <Chat role={2} character="yintianchou" />
             </TabsContent>
             <TabsContent value="role3">
-              <Chat role={3} />
+              <Chat role={3} character="cook" />
             </TabsContent>
             <TabsContent value="role4">
-              <Chat role={4} />
+              <Chat role={4} character="tang" />
             </TabsContent>
             <TabsContent value="role5">
-              <Chat role={5} />
+              <Chat role={5} character="wukong" />
             </TabsContent>
           </Tabs>
           <div className="mt-[40px] flex w-full flex-col items-center px-[15px]">

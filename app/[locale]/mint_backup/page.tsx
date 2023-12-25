@@ -1,6 +1,5 @@
 "use client"
 
-import ConnectWallet from "@/components/ConnectWallet";
 import WhitelistWay from "./WhitelistWay";
 import Image from "next/image";
 import WhitelistSection from "./WhitelistSection";

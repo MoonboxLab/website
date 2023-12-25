@@ -394,7 +394,7 @@ export default function Home() {
 
       {/* Mobile UI */}
       {(mediaSize?.width || 0) <= 1024 && isShowVideo && (
-        <div className="fixed z-[200] h-screen w-screen bg-black/80">
+        <div className="fixed z-[200] h-screen w-screen bg-black/80 backdrop-blur">
           <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
             <Button
               onClick={() => setIsShowVideo(false)}

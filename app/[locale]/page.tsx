@@ -60,6 +60,10 @@ export default function Home() {
           name="twitter:image"
           content="https://moonbox.com/open-graph.jpg"
         ></meta>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
       </Head>
 
       {/* PC UI */}
@@ -130,13 +134,13 @@ export default function Home() {
                 <div className="flex h-full justify-center">
                   <Tabs
                     defaultValue="role1"
-                    className="grid h-full w-full grid-rows-6"
+                    className="grid h-full w-full grid-rows-[100px,auto]"
                     onValueChange={setRole}
                   >
-                    <TabsList className="row-span-1 grid h-[100px] grid-cols-5">
+                    <TabsList className="grid h-[100px] grid-cols-5">
                       <TabsTrigger
                         value="role1"
-                        className="relative h-[100px] bg-white"
+                        className="relative flex h-[110px] flex-col bg-white"
                       >
                         {role !== "role1" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -148,10 +152,20 @@ export default function Home() {
                           alt="role1"
                           priority
                         />
+                        {role === "role1" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
                       </TabsTrigger>
                       <TabsTrigger
                         value="role2"
-                        className="relative h-[100px] bg-white"
+                        className="relative flex h-[100px] flex-col bg-white"
                       >
                         {role !== "role2" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -163,10 +177,20 @@ export default function Home() {
                           alt="role2"
                           priority
                         />
+                        {role === "role2" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
                       </TabsTrigger>
                       <TabsTrigger
                         value="role3"
-                        className="relative h-[100px] bg-white"
+                        className="relative flex h-[100px] flex-col bg-white"
                       >
                         {role !== "role3" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -178,10 +202,20 @@ export default function Home() {
                           alt="role3"
                           priority
                         />
+                        {role === "role3" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
                       </TabsTrigger>
                       <TabsTrigger
                         value="role4"
-                        className="relative h-[100px] bg-white"
+                        className="relative flex h-[100px] flex-col bg-white"
                       >
                         {role !== "role4" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -193,10 +227,20 @@ export default function Home() {
                           alt="role4"
                           priority
                         />
+                        {role === "role4" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
                       </TabsTrigger>
                       <TabsTrigger
                         value="role5"
-                        className="relative h-[100px] bg-white"
+                        className="relative flex h-[100px] flex-col bg-white"
                       >
                         {role !== "role5" && (
                           <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -208,92 +252,38 @@ export default function Home() {
                           alt="role5"
                           priority
                         />
+                        {role === "role5" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
                       </TabsTrigger>
                     </TabsList>
-                    <TabsContent value="role1" className="row-span-5">
-                      <Chat />
+                    <TabsContent value="role1">
+                      <Chat role={1} />
                     </TabsContent>
-                    <TabsContent value="role2" className="row-span-5">
-                      <div className="flex h-full flex-col">
-                        <div className="relative flex-1">
-                          <Image
-                            className="absolute bottom-0 w-full"
-                            src="/nobody_role_2_bg.png"
-                            height={450}
-                            width={450}
-                            alt="role2"
-                            priority
-                          />
-                        </div>
-                        <Input
-                          placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
-                          ref={roleChatRef}
-                        />
-                      </div>
+                    <TabsContent value="role2">
+                      <Chat role={2} />
                     </TabsContent>
-                    <TabsContent value="role3" className="row-span-5">
-                      <div className="flex h-full flex-col">
-                        <div className="relative flex-1">
-                          <Image
-                            className="absolute bottom-0 w-full"
-                            src="/nobody_role_3_bg.png"
-                            height={450}
-                            width={450}
-                            alt="role3"
-                            priority
-                          />
-                        </div>
-                        <Input
-                          placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
-                          ref={roleChatRef}
-                        />
-                      </div>
+                    <TabsContent value="role3">
+                      <Chat role={3} />
                     </TabsContent>
-                    <TabsContent value="role4" className="row-span-5">
-                      <div className="flex h-full flex-col">
-                        <div className="relative flex-1">
-                          <Image
-                            className="absolute bottom-0 w-full"
-                            src="/nobody_role_4_bg.png"
-                            height={450}
-                            width={450}
-                            alt="role4"
-                            priority
-                          />
-                        </div>
-                        <Input
-                          placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
-                          ref={roleChatRef}
-                        />
-                      </div>
+                    <TabsContent value="role4">
+                      <Chat role={4} />
                     </TabsContent>
-                    <TabsContent value="role5" className="row-span-5">
-                      <div className="flex h-full flex-col">
-                        <div className="relative flex-1">
-                          <Image
-                            className="absolute bottom-0 w-full"
-                            src="/nobody_role_5_bg.png"
-                            height={450}
-                            width={450}
-                            alt="role5"
-                            priority
-                          />
-                        </div>
-                        <Input
-                          placeholder="等你与我聊聊天…"
-                          className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-xl 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
-                          ref={roleChatRef}
-                        />
-                      </div>
+                    <TabsContent value="role5">
+                      <Chat role={5} />
                     </TabsContent>
                   </Tabs>
                 </div>
                 <div className="flex h-full flex-col items-start">
                   <span className="w-full text-left text-[36px] font-bold text-black 4xl:text-[48px] 5xl:text-[56px]">
-                    ORIGIN STORY OF NOBODY
+                    {t("nobody_story")}
                   </span>
                   <div className="flex h-full flex-col items-start">
                     <div
@@ -331,7 +321,7 @@ export default function Home() {
                           />
                         </div>
                         <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
-                          Chapter One : Spacebus
+                          {t("chapter_one")}
                         </span>
                       </div>
                       <div className="flex flex-col items-center">
@@ -362,7 +352,7 @@ export default function Home() {
                           />
                         </div>
                         <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
-                          Chapter Two : Accident
+                          {t("chapter_two")}
                         </span>
                       </div>
                       <div className="flex flex-col items-center">
@@ -393,7 +383,7 @@ export default function Home() {
                           />
                         </div>
                         <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
-                          Chapter Three : Arrival
+                          {t("chapter_three")}
                         </span>
                       </div>
                     </div>
@@ -407,7 +397,7 @@ export default function Home() {
 
       {/* Mobile UI */}
       {(mediaSize?.width || 0) <= 1024 && isShowVideo && (
-        <div className="absolute z-[200] h-screen w-screen bg-black/80">
+        <div className="fixed z-[200] h-screen w-screen bg-black/80">
           <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
             <Button
               onClick={() => setIsShowVideo(false)}
@@ -460,7 +450,7 @@ export default function Home() {
                   priority
                 />
                 <span className="text-[21px] font-semibold text-black">
-                  Nobody NFT MV
+                  {t("nobody_nft_mv")}
                 </span>
               </div>
               <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
@@ -485,14 +475,14 @@ export default function Home() {
                 />
                 <div className="ml-[15px] flex flex-col justify-center">
                   <span className="text-[21px] font-semibold leading-[21px] text-yellow-300">
-                    Presale
+                    {t("presale")}
                   </span>
                   <span className="text-[16px] font-semibold leading-[21px] text-yellow-300">
                     01/23 08:00~01/24 08:00(UTC8)
                   </span>
                   <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                     <span className="text-[16px] font-semibold text-black">
-                      Receive Waitlist
+                      {t("receive_waitlist")}
                     </span>
                   </div>
                 </div>
@@ -507,7 +497,7 @@ export default function Home() {
                 />
                 <div className="ml-[15px] flex flex-col justify-center">
                   <span className="text-[21px] font-semibold leading-[21px] text-white">
-                    Public sale
+                    {t("public_sale")}
                   </span>
                   <span className="text-[16px] font-semibold leading-[21px] text-white">
                     01/24 08:00~01/25 08:00(UTC8)
@@ -524,7 +514,7 @@ export default function Home() {
                 />
                 <div className="ml-[15px] flex flex-col justify-center">
                   <span className="text-[21px] font-semibold leading-[21px] text-white">
-                    Refund
+                    {t("refund")}
                   </span>
                   <span className="text-[16px] font-semibold leading-[21px] text-white">
                     Start at 01-26 08:00(UTC8)
@@ -535,13 +525,13 @@ export default function Home() {
           </div>
           <Tabs
             defaultValue="role1"
-            className="grid h-full w-full grid-rows-6"
+            className="grid h-[550px] w-full grid-rows-[100px,auto]"
             onValueChange={setRole}
           >
-            <TabsList className="row-span-1 grid h-[100px] grid-cols-5">
+            <TabsList className="grid h-[100px] grid-cols-5">
               <TabsTrigger
                 value="role1"
-                className="relative h-[100px] bg-white"
+                className="relative flex h-[100px] flex-col bg-white"
               >
                 {role !== "role1" && (
                   <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -553,10 +543,20 @@ export default function Home() {
                   alt="role1"
                   priority
                 />
+                {role === "role1" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
               </TabsTrigger>
               <TabsTrigger
                 value="role2"
-                className="relative h-[100px] bg-white"
+                className="relative flex h-[100px] flex-col bg-white"
               >
                 {role !== "role2" && (
                   <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -568,10 +568,20 @@ export default function Home() {
                   alt="role2"
                   priority
                 />
+                {role === "role2" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
               </TabsTrigger>
               <TabsTrigger
                 value="role3"
-                className="relative h-[100px] bg-white"
+                className="relative flex h-[100px] flex-col bg-white"
               >
                 {role !== "role3" && (
                   <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -583,10 +593,20 @@ export default function Home() {
                   alt="role3"
                   priority
                 />
+                {role === "role3" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
               </TabsTrigger>
               <TabsTrigger
                 value="role4"
-                className="relative h-[100px] bg-white"
+                className="relative flex h-[100px] flex-col bg-white"
               >
                 {role !== "role4" && (
                   <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -598,10 +618,20 @@ export default function Home() {
                   alt="role4"
                   priority
                 />
+                {role === "role4" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
               </TabsTrigger>
               <TabsTrigger
                 value="role5"
-                className="relative h-[100px] bg-white"
+                className="relative flex h-[100px] flex-col bg-white"
               >
                 {role !== "role5" && (
                   <div className="absolute z-10 h-[100px] w-full bg-white/50" />
@@ -613,120 +643,37 @@ export default function Home() {
                   alt="role5"
                   priority
                 />
+                {role === "role5" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="role1" className="row-span-5">
-              <div className="flex h-full flex-col">
-                <div className="relative flex-1">
-                  <Image
-                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
-                    src="/nobody_role_1_bg.png"
-                    height={450}
-                    width={450}
-                    alt="role1"
-                    priority
-                  />
-                </div>
-                <div className="w-full px-[15px]">
-                  <Input
-                    placeholder="等你与我聊聊天…"
-                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
-                    ref={roleChatRef}
-                  />
-                </div>
-              </div>
+            <TabsContent value="role1">
+              <Chat role={1} />
             </TabsContent>
-            <TabsContent value="role2" className="row-span-5">
-              <div className="flex h-full flex-col">
-                <div className="relative flex-1">
-                  <Image
-                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
-                    src="/nobody_role_2_bg.png"
-                    height={450}
-                    width={450}
-                    alt="role2"
-                    priority
-                  />
-                </div>
-                <div className="w-full px-[15px]">
-                  <Input
-                    placeholder="等你与我聊聊天…"
-                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
-                    ref={roleChatRef}
-                  />
-                </div>
-              </div>
+            <TabsContent value="role2">
+              <Chat role={2} />
             </TabsContent>
-            <TabsContent value="role3" className="row-span-5">
-              <div className="flex h-full flex-col">
-                <div className="relative flex-1">
-                  <Image
-                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
-                    src="/nobody_role_3_bg.png"
-                    height={450}
-                    width={450}
-                    alt="role3"
-                    priority
-                  />
-                </div>
-                <div className="w-full px-[15px]">
-                  <Input
-                    placeholder="等你与我聊聊天…"
-                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
-                    ref={roleChatRef}
-                  />
-                </div>
-              </div>
+            <TabsContent value="role3">
+              <Chat role={3} />
             </TabsContent>
-            <TabsContent value="role4" className="row-span-5">
-              <div className="flex h-full flex-col">
-                <div className="relative flex-1">
-                  <Image
-                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
-                    src="/nobody_role_4_bg.png"
-                    height={450}
-                    width={450}
-                    alt="role4"
-                    priority
-                  />
-                </div>
-                <div className="w-full px-[15px]">
-                  <Input
-                    placeholder="等你与我聊聊天…"
-                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
-                    ref={roleChatRef}
-                  />
-                </div>
-              </div>
+            <TabsContent value="role4">
+              <Chat role={4} />
             </TabsContent>
-            <TabsContent value="role5" className="row-span-5">
-              <div className="flex h-full flex-col">
-                <div className="relative flex-1">
-                  <Image
-                    className="absolute bottom-0 left-[50%] w-full max-w-[450px] translate-x-[-50%]"
-                    src="/nobody_role_5_bg.png"
-                    height={450}
-                    width={450}
-                    alt="role5"
-                    priority
-                  />
-                </div>
-                <div className="w-full px-[15px]">
-                  <Input
-                    placeholder="等你与我聊聊天…"
-                    className="h-[40px] w-full flex-none  rounded-[8px] border-[#3B84FF] bg-white px-[20px] text-[14px] font-normal leading-[14px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-blue-200 focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0"
-                    ref={roleChatRef}
-                  />
-                </div>
-              </div>
+            <TabsContent value="role5">
+              <Chat role={5} />
             </TabsContent>
           </Tabs>
           <div className="mt-[40px] flex w-full flex-col items-center px-[15px]">
-            <span className="text-[30px] font-bold leading-[36px] text-black">
-              ORIGIN STORY OF
-            </span>
-            <span className="text-[30px] font-bold leading-[36px] text-black">
-              NOBODY
+            <span className="text-center text-[30px] font-bold leading-[36px] text-black">
+              {t("nobody_story")}
             </span>
           </div>
           <div
@@ -749,7 +696,7 @@ export default function Home() {
                 </div>
               </AspectRatio>
               <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
-                Chapter One : Spacebus
+                {t("chapter_one")}
               </span>
             </div>
             <div className="mt-[30px] flex flex-col">
@@ -765,7 +712,7 @@ export default function Home() {
                 </div>
               </AspectRatio>
               <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
-                Chapter Two : Accident
+                {t("chapter_two")}
               </span>
             </div>
             <div className="mt-[30px] flex flex-col">
@@ -781,7 +728,7 @@ export default function Home() {
                 </div>
               </AspectRatio>
               <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
-                Chapter Three : Arrival
+                {t("chapter_three")}
               </span>
             </div>
           </div>

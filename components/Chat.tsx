@@ -20,7 +20,7 @@ const Chat = (props: ChatProps) => {
 
   const [activeInput, setActiveInput] = useState<boolean>(false);
 
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     character: props.character,
     onError(error) {
       console.log(error);
@@ -83,6 +83,14 @@ const Chat = (props: ChatProps) => {
               setActiveInput(false);
             }
           }}
+          onKeyDown={
+            (event) => {
+              // Bot尚未回复上条对话，禁止发送下一条对话
+              if (event.keyCode === 13 && isLoading) {
+                event.preventDefault()
+              }
+            }
+          }
         />
       </form>
     </div>

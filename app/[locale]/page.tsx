@@ -1,108 +1,736 @@
-"use client"
-// import { ConnectButton } from '@rainbow-me/rainbowkit'
-import 'core-js/features/object/has-own';
-import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
-import Head from 'next/head'
-import { useTranslations } from 'next-intl'
-import Header from '@/components/Header'
-import FirstSection from './home_section'
+"use client";
+
+import "core-js/features/object/has-own";
+import Image from "next/image";
+import { useSize } from "ahooks";
+import { useEffect, useRef, useState } from "react";
+import Head from "next/head";
+import { useTranslations } from "next-intl";
+import Header from "@/components/Header";
 import {
   FullpageContainer,
   FullpageSection,
-} from '@shinyongjun/react-fullpage';
-import '@shinyongjun/react-fullpage/css';
-import Typed from 'typed.js'
+} from "@shinyongjun/react-fullpage";
+import "@shinyongjun/react-fullpage/css";
+import Footer from "@/components/Footer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Chat from "@/components/Chat";
 
 export default function Home() {
-  const t = useTranslations('Home');
+  const t = useTranslations("Home");
+
+  const mediaSize = useSize(document.querySelector("body"));
 
   const chatListBottomRef = useRef<HTMLEmbedElement>(null);
 
-  const secondPageStoryIntroduce = useRef<HTMLDivElement>(null);
-
-  const [playingMedia, setPlayingMedia] = useState<boolean>(false);
-
-  const [showChatModal, setShowChatModal] = useState<boolean>(false);
-
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isTypedSecondPage, setTypedSecondPage] = useState<boolean>(false);
+
+  const [role, setRole] = useState<string>("role1");
+
+  const [video, setVideo] = useState<string>("");
+
+  const [isShowVideo, setIsShowVideo] = useState<boolean>(false);
 
   useEffect(() => {
-    chatListBottomRef.current?.scrollTo({ top: chatListBottomRef.current?.scrollHeight, behavior: "smooth" })
-  }, [chatListBottomRef.current?.scrollHeight])
-
-  useEffect(() => {
-    if (activeIndex == 1 && !isTypedSecondPage) {
-      var typed = new Typed(secondPageStoryIntroduce.current, {
-        strings: [t('story_introduce')],
-        typeSpeed: 20,
-      })
-      setTypedSecondPage(true)
-    }
-  }, [activeIndex])
+    chatListBottomRef.current?.scrollTo({
+      top: chatListBottomRef.current?.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [chatListBottomRef.current?.scrollHeight]);
 
   return (
-    <div className=' bg-gray-600'>
+    <div className=" bg-gray-600">
       <Head>
         <title>Moonbox</title>
         <meta name="description" content="Bring life to NFTs" />
-        <meta
-          property="og:title"
-          content="Moonbox"
-        />
-        <meta
-          property="og:description"
-          content="Bring life to NFTs"
-        />
-        <meta
-          property="og:image"
-          content="/open-graph.png"
-        />
-        <meta
-          property="og:url"
-          content="https://moonbox.com"
-        />
+        <meta property="og:title" content="Moonbox" />
+        <meta property="og:description" content="Bring life to NFTs" />
+        <meta property="og:image" content="/open-graph.png" />
+        <meta property="og:url" content="https://moonbox.com" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://moonbox.com/open-graph.jpg"></meta>
+        <meta
+          name="twitter:image"
+          content="https://moonbox.com/open-graph.jpg"
+        ></meta>
       </Head>
 
-      <Header />
+      {/* PC UI */}
+      {(mediaSize?.width || 0) > 1024 && <Footer />}
 
-      <FullpageContainer
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
-        transitionDuration={600}
-        onBeforeChange={(before, after) => {
-          if (showChatModal) {
-            setActiveIndex(0)
-          }
-        }}
-      >
-        <FullpageSection>
-          <FirstSection
-            playingMedia={playingMedia}
-            setPlayingMedia={setPlayingMedia}
-            showChatModal={showChatModal}
-            setShowChatModal={setShowChatModal} />
-        </FullpageSection>
-
-        <FullpageSection>
-          <div className=" w-full h-screen bg-[#151515] bg-contain bg-[80%_80%] bg-[url('/bg-section2.png')] relative flex items-center">
-            <div className=' absolute scale-[0.3] top-[8%] sm:top-[130px] left-[-5%] sm:left-[170px] w-[186px] h-[128px] sm:scale-50 lg:scale-[0.6] 2xl:scale-[0.7] 3xl:scale-[0.8] 4xl:scale-[0.9]'>
-              <Image src="/spaceship.png" alt='spaceship' fill />
-            </div>
-            <div className=' absolute sm:bottom-[122px] bottom-[8%] right-[3%] sm:right-[171px] w-[125px] h-[139px] scale-[0.50] sm:scale-50  2xl:scale-75 3xl:scale-100'>
-              <Image src="/rocket.png" alt='rocket' fill />
-            </div>
-            <div className=' m-auto max-w-[80%] lg:ml-[170px] relative z-10 '>
-              <p className=' text-[24px] leading-[36px] lg:text-[32px] lg:leading-[42px] 3xl:text-[36px] 3xl:leading-[48px] font-medium text-white max-w-[1093px]' ref={secondPageStoryIntroduce}></p>
+      {(mediaSize?.width || 0) > 1024 && isShowVideo && (
+        <div className="absolute z-[200] h-screen w-full bg-black/80 backdrop-blur">
+          <div className="absolute left-[50%] top-[50%] z-[120] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
+            <Button
+              onClick={() => setIsShowVideo(false)}
+              className="bg-inherit pr-0 hover:bg-inherit active:bg-inherit"
+            >
+              <Image
+                src="/video_close.svg"
+                height={32}
+                width={32}
+                alt="play"
+                priority
+              />
+            </Button>
+            <div className="mt-[5px] rounded-3xl border-[5px] border-black">
+              <iframe
+                className="h-[180px] w-[320px] rounded-2xl md:h-[360px] md:w-[640px] lg:h-[432px] lg:w-[768px] xl:h-[360px] xl:w-[640px] 3xl:h-[432px] 3xl:w-[768px] 4xl:h-[576px] 4xl:w-[1024px] 4xl:rounded-xl 5xl:h-[720px] 5xl:w-[1280px]"
+                src={video}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </div>
-        </FullpageSection>
+        </div>
+      )}
 
-      </FullpageContainer>
+      {(mediaSize?.width || 0) > 1024 && (
+        <FullpageContainer
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          transitionDuration={600}
+        >
+          <FullpageSection>
+            <div className="relative h-screen w-full items-center">
+              <Header />
+              <Image
+                src="/home_bg_mint.jpg"
+                fill
+                alt="mint"
+                priority
+                className="object-cover"
+              />
+              <div
+                onClick={() => {
+                  setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
+                  setIsShowVideo(true);
+                }}
+                className="hover-btn-shadow absolute bottom-[108px] left-[20px] flex h-[80px] w-[200px] items-center justify-center rounded-[16px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:bottom-[140px]"
+              >
+                <Image
+                  className="mt-[5px]"
+                  src="/home_play_mv.png"
+                  height={64}
+                  width={64}
+                  alt="play"
+                  priority
+                />
+                <span className="ml-[16px] text-[18px] font-semibold leading-[24px] text-black">
+                  {t("nobody_nft_mv")}
+                </span>
+              </div>
+            </div>
+          </FullpageSection>
+          <FullpageSection>
+            <div className="flex h-screen w-full items-center justify-center bg-white px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
+              <div className="grid h-full w-[1180px] grid-cols-[38%,auto] gap-[88px] 4xl:w-[1760px] 4xl:gap-[120px] 5xl:w-[2100px] 5xl:gap-[200px]">
+                <div className="flex h-full justify-center">
+                  <Tabs
+                    defaultValue="role1"
+                    className="grid h-full w-full grid-rows-[100px,auto]"
+                    onValueChange={setRole}
+                  >
+                    <TabsList className="grid h-[100px] grid-cols-5">
+                      <TabsTrigger
+                        value="role1"
+                        className="relative flex h-[110px] flex-col bg-white"
+                      >
+                        {role !== "role1" && (
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                        )}
+                        <Image
+                          src="/nobody_role_1.png"
+                          height={100}
+                          width={100}
+                          alt="role1"
+                          priority
+                        />
+                        {role === "role1" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="role2"
+                        className="relative flex h-[100px] flex-col bg-white"
+                      >
+                        {role !== "role2" && (
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                        )}
+                        <Image
+                          src="/nobody_role_2.png"
+                          height={100}
+                          width={100}
+                          alt="role2"
+                          priority
+                        />
+                        {role === "role2" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="role3"
+                        className="relative flex h-[100px] flex-col bg-white"
+                      >
+                        {role !== "role3" && (
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                        )}
+                        <Image
+                          src="/nobody_role_3.png"
+                          height={100}
+                          width={100}
+                          alt="role3"
+                          priority
+                        />
+                        {role === "role3" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="role4"
+                        className="relative flex h-[100px] flex-col bg-white"
+                      >
+                        {role !== "role4" && (
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                        )}
+                        <Image
+                          src="/nobody_role_4.png"
+                          height={100}
+                          width={100}
+                          alt="role4"
+                          priority
+                        />
+                        {role === "role4" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="role5"
+                        className="relative flex h-[100px] flex-col bg-white"
+                      >
+                        {role !== "role5" && (
+                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                        )}
+                        <Image
+                          src="/nobody_role_5.png"
+                          height={100}
+                          width={100}
+                          alt="role5"
+                          priority
+                        />
+                        {role === "role5" && (
+                          <Image
+                            className="z-10 h-[10px] w-full"
+                            src="/nobody_role_indicator.png"
+                            height={10}
+                            width={100}
+                            alt="indicator"
+                            priority
+                          />
+                        )}
+                      </TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="role1">
+                      <Chat role={1} character="liupiaopiao" />
+                    </TabsContent>
+                    <TabsContent value="role2">
+                      <Chat role={2} character="yintianchou" />
+                    </TabsContent>
+                    <TabsContent value="role3">
+                      <Chat role={3} character="cook" />
+                    </TabsContent>
+                    <TabsContent value="role4">
+                      <Chat role={4} character="tang" />
+                    </TabsContent>
+                    <TabsContent value="role5">
+                      <Chat role={5} character="wukong" />
+                    </TabsContent>
+                  </Tabs>
+                </div>
+                <div className="flex h-full flex-col items-start">
+                  <span className="w-full text-left text-[36px] font-bold text-black 4xl:text-[48px] 5xl:text-[56px]">
+                    {t("nobody_story")}
+                  </span>
+                  <div className="flex h-full flex-col items-start">
+                    <div
+                      className="text-balck mt-[30px] max-w-[1400px] flex-1 text-[16px] font-semibold leading-[24px]  4xl:mt-[30px] 4xl:text-[24px] 4xl:leading-[32px] 5xl:mt-[50px] 5xl:text-[28px] 5xl:leading-[40px]"
+                      dangerouslySetInnerHTML={{
+                        __html: t.raw("nobody_story_content"),
+                      }}
+                    />
+                    <div className="grid flex-none grid-cols-3 items-center gap-[30px]">
+                      <div className="flex flex-col items-center">
+                        <div
+                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          onClick={() => {
+                            setVideo(
+                              "https://www.youtube.com/embed/4oixai0Fgvg?rel=0",
+                            );
+                            setIsShowVideo(true);
+                          }}
+                        >
+                          <Image
+                            className="rounded-lg"
+                            src="/chapter_one.jpg"
+                            width={400}
+                            height={165}
+                            alt="chapter one"
+                            priority
+                          />
+                          <Image
+                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
+                            src="/chapter_play.png"
+                            width={64}
+                            height={64}
+                            alt="play"
+                            priority
+                          />
+                        </div>
+                        <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
+                          {t("chapter_one")}
+                        </span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div
+                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          onClick={() => {
+                            setVideo(
+                              "https://www.youtube.com/embed/kMTaAkQ0rcs?rel=0",
+                            );
+                            setIsShowVideo(true);
+                          }}
+                        >
+                          <Image
+                            className="rounded-lg"
+                            src="/chapter_two.jpg"
+                            width={400}
+                            height={165}
+                            alt="chapter two"
+                            priority
+                          />
+                          <Image
+                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
+                            src="/chapter_play.png"
+                            width={64}
+                            height={64}
+                            alt="play"
+                            priority
+                          />
+                        </div>
+                        <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
+                          {t("chapter_two")}
+                        </span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div
+                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                          onClick={() => {
+                            setVideo(
+                              "https://www.youtube.com/embed/6spSsLZmEuM?rel=0",
+                            );
+                            setIsShowVideo(true);
+                          }}
+                        >
+                          <Image
+                            className="rounded-lg"
+                            src="/chapter_three.jpg"
+                            width={400}
+                            height={165}
+                            alt="chapter three"
+                            priority
+                          />
+                          <Image
+                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
+                            src="/chapter_play.png"
+                            width={64}
+                            height={64}
+                            alt="play"
+                            priority
+                          />
+                        </div>
+                        <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
+                          {t("chapter_three")}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FullpageSection>
+        </FullpageContainer>
+      )}
+
+      {/* Mobile UI */}
+      {(mediaSize?.width || 0) <= 1024 && isShowVideo && (
+        <div className="fixed z-[200] h-screen w-screen bg-black/80 backdrop-blur">
+          <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
+            <Button
+              onClick={() => setIsShowVideo(false)}
+              className="bg-inherit pr-0 hover:bg-inherit active:bg-inherit"
+            >
+              <Image
+                src="/video_close.svg"
+                height={32}
+                width={32}
+                alt="play"
+                priority
+              />
+            </Button>
+            <div className="flex w-screen flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/4oixai0Fgvg?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {(mediaSize?.width || 0) <= 1024 && (
+        <div className="w-full bg-white">
+          <div className="items-cente relative h-screen w-full">
+            <Header />
+            <Image src="/home_bg_mint_mobile.jpg" fill alt="mint" priority />
+            <div className="absolute bottom-[45px] z-10 flex w-full flex-col px-[15px]">
+              <div
+                className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                onClick={() => {
+                  setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
+                  setIsShowVideo(true);
+                }}
+              >
+                <Image
+                  className="absolute left-0 ml-[2px] mt-[8px]"
+                  src="/home_play_mv.png"
+                  height={50}
+                  width={50}
+                  alt="play"
+                  priority
+                />
+                <span className="text-[21px] font-semibold text-black">
+                  {t("nobody_nft_mv")}
+                </span>
+              </div>
+              <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                <span className="text-[21px] font-semibold text-black">
+                  Mint
+                </span>
+                <span className="ml-[10px] text-[18px] font-semibold text-black">
+                  (01/24 08:00)
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full justify-center bg-black py-[40px]">
+            <div className="flex flex-col items-start">
+              <div className="flex h-[108px]">
+                <Image
+                  src="/mint_progress_now_long.png"
+                  height={108}
+                  width={20}
+                  alt="now"
+                  priority
+                />
+                <div className="ml-[15px] flex flex-col justify-center">
+                  <span className="text-[21px] font-semibold leading-[21px] text-yellow-300">
+                    {t("presale")}
+                  </span>
+                  <span className="text-[16px] font-semibold leading-[21px] text-yellow-300">
+                    01/23 08:00~01/24 08:00(UTC8)
+                  </span>
+                  <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <span className="text-[16px] font-semibold text-black">
+                      {t("receive_waitlist")}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-[40px] flex">
+                <Image
+                  src="/mint_progress_next.png"
+                  height={48}
+                  width={20}
+                  alt="next"
+                  priority
+                />
+                <div className="ml-[15px] flex flex-col justify-center">
+                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                    {t("public_sale")}
+                  </span>
+                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                    01/24 08:00~01/25 08:00(UTC8)
+                  </span>
+                </div>
+              </div>
+              <div className="mt-[40px] flex">
+                <Image
+                  src="/mint_progress_next.png"
+                  height={48}
+                  width={20}
+                  alt="next"
+                  priority
+                />
+                <div className="ml-[15px] flex flex-col justify-center">
+                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                    {t("refund")}
+                  </span>
+                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                    Start at 01-26 08:00(UTC8)
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Tabs
+            defaultValue="role1"
+            className="grid h-[550px] w-full grid-rows-[100px,auto]"
+            onValueChange={setRole}
+          >
+            <TabsList className="grid h-[100px] grid-cols-5">
+              <TabsTrigger
+                value="role1"
+                className="relative flex h-[100px] flex-col bg-white"
+              >
+                {role !== "role1" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_1.png"
+                  height={100}
+                  width={100}
+                  alt="role1"
+                  priority
+                />
+                {role === "role1" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="role2"
+                className="relative flex h-[100px] flex-col bg-white"
+              >
+                {role !== "role2" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_2.png"
+                  height={100}
+                  width={100}
+                  alt="role2"
+                  priority
+                />
+                {role === "role2" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="role3"
+                className="relative flex h-[100px] flex-col bg-white"
+              >
+                {role !== "role3" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_3.png"
+                  height={100}
+                  width={100}
+                  alt="role3"
+                  priority
+                />
+                {role === "role3" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="role4"
+                className="relative flex h-[100px] flex-col bg-white"
+              >
+                {role !== "role4" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_4.png"
+                  height={100}
+                  width={100}
+                  alt="role4"
+                  priority
+                />
+                {role === "role4" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="role5"
+                className="relative flex h-[100px] flex-col bg-white"
+              >
+                {role !== "role5" && (
+                  <div className="absolute z-10 h-[100px] w-full bg-white/50" />
+                )}
+                <Image
+                  src="/nobody_role_5.png"
+                  height={100}
+                  width={100}
+                  alt="role5"
+                  priority
+                />
+                {role === "role5" && (
+                  <Image
+                    className="z-10 h-[5px] w-full"
+                    src="/nobody_role_indicator.png"
+                    height={5}
+                    width={100}
+                    alt="indicator"
+                    priority
+                  />
+                )}
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="role1">
+              <Chat role={1} character="liupiaopiao" />
+            </TabsContent>
+            <TabsContent value="role2">
+              <Chat role={2} character="yintianchou" />
+            </TabsContent>
+            <TabsContent value="role3">
+              <Chat role={3} character="cook" />
+            </TabsContent>
+            <TabsContent value="role4">
+              <Chat role={4} character="tang" />
+            </TabsContent>
+            <TabsContent value="role5">
+              <Chat role={5} character="wukong" />
+            </TabsContent>
+          </Tabs>
+          <div className="mt-[40px] flex w-full flex-col items-center px-[15px]">
+            <span className="text-center text-[30px] font-bold leading-[36px] text-black">
+              {t("nobody_story")}
+            </span>
+          </div>
+          <div
+            className="text-balck mt-[20px] px-[15px] text-[18px] font-medium leading-[30px]"
+            dangerouslySetInnerHTML={{
+              __html: t.raw("nobody_story_content"),
+            }}
+          />
+          <div className="mt-[40px] flex flex-col pb-[50px]">
+            <div className="flex flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/4oixai0Fgvg?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+              <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
+                {t("chapter_one")}
+              </span>
+            </div>
+            <div className="mt-[30px] flex flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/kMTaAkQ0rcs?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+              <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
+                {t("chapter_two")}
+              </span>
+            </div>
+            <div className="mt-[30px] flex flex-col">
+              <AspectRatio ratio={16 / 9} className="px-[15px]">
+                <div className="relative w-full pb-[56.25%]">
+                  <iframe
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"
+                    src="https://www.youtube.com/embed/6spSsLZmEuM?rel=0"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </AspectRatio>
+              <span className="mt-[5px] px-[15px] text-[18px] font-semibold leading-[18px] text-black">
+                {t("chapter_three")}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }

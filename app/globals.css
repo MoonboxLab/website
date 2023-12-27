@@ -114,3 +114,12 @@ video {
 .Toastify {
   --toastify-text-color-light: #000;
 }
+
+.grid-rows-10 {
+  grid-template-rows: repeat(10, minmax(0, 1fr));
+}
+
+.row-span-9 {
+  grid-row: span 9 / span 9;
+}
+

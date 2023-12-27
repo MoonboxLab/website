@@ -7,7 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { ToastContainer } from 'react-toastify';
 
 import { Inter } from 'next/font/google'
-import { WagmiProviders } from '../wagmiProvider'
+import { WagmiProviders } from '../provider'
 import Header from '@/components/Header_Backup';
 import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';

@@ -54,7 +54,7 @@ function createUint8ArrayReadableStream(uint8Array: Uint8Array) {
 }
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { character,messages } = await req.json();
 
   try {
     const response = await fetch('https://d73d2yy5aaymkixufhuvxk2h240uohly.lambda-url.ap-east-1.on.aws/', {
@@ -66,6 +66,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
         stream: true,
+        character,
         messages,
       })
     });

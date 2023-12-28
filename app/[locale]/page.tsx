@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSize } from "ahooks";
 import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Header from "@/components/Header";
 import {
   FullpageContainer,
@@ -32,6 +32,8 @@ export default function Home() {
   const [video, setVideo] = useState<string>("");
 
   const [isShowVideo, setIsShowVideo] = useState<boolean>(false);
+
+  const locale = useLocale();
 
   useEffect(() => {
     chatListBottomRef.current?.scrollTo({
@@ -95,10 +97,10 @@ export default function Home() {
           transitionDuration={600}
         >
           <FullpageSection>
-            <div className="relative h-screen w-full items-center">
+            <div className="relative h-screen w-full bg-white">
               <Header />
               <Image
-                src="/home_bg_mint.jpg"
+                src="/home_bg_mint_1.png"
                 fill
                 alt="mint"
                 priority
@@ -109,24 +111,72 @@ export default function Home() {
                   setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
                   setIsShowVideo(true);
                 }}
-                className="hover-btn-shadow absolute bottom-[108px] left-[20px] flex h-[80px] w-[200px] items-center justify-center rounded-[16px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:bottom-[140px]"
+                className="hover-btn-shadow absolute bottom-[108px] left-[20px] flex h-[64px] w-[160px] items-center justify-center rounded-[16px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:bottom-[140px] 4xl:left-[30px] 4xl:h-[80px] 4xl:w-[200px]"
               >
                 <Image
-                  className="mt-[5px]"
+                  className="mt-[5px] h-[48px] w-[48px] 4xl:h-[64px] 4xl:w-[64px]"
                   src="/home_play_mv.png"
                   height={64}
                   width={64}
                   alt="play"
                   priority
                 />
-                <span className="ml-[16px] text-[18px] font-semibold leading-[24px] text-black">
+                <span className="ml-[10px] text-[16px] font-semibold leading-[20px] text-black 4xl:ml-[16px] 4xl:text-[18px] 4xl:leading-[24px]">
                   {t("nobody_nft_mv")}
                 </span>
               </div>
             </div>
           </FullpageSection>
           <FullpageSection>
-            <div className="flex h-screen w-full items-center justify-center bg-white px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
+            <div className="relative h-screen w-full bg-white pb-[88px] 4xl:pb-[120px]">
+              <Image
+                src="/home_bg_mint_2.png"
+                fill
+                alt="mint"
+                priority
+                className="object-cover"
+              />
+              <div className="relative h-full w-full">
+                <Image
+                  src="/nobody_dao.png"
+                  height={820}
+                  width={820}
+                  alt="dao"
+                  priority
+                  className="absolute right-[6%] top-[50%] w-[42%] translate-y-[-50%] object-cover"
+                />
+                {locale == "en" ? (
+                  <Image
+                    src="/nobody_friend_en.png"
+                    height={747}
+                    width={366}
+                    alt="friend"
+                    priority
+                    className="absolute left-[9%] top-[50%] w-[39%] translate-y-[-50%] object-cover"
+                  />
+                ) : (
+                  <Image
+                    src="/nobody_friend_zh.png"
+                    height={747}
+                    width={366}
+                    alt="friend"
+                    priority
+                    className="absolute left-[9%] top-[50%] w-[39%] translate-y-[-50%] object-cover"
+                  />
+                )}
+                <Image
+                  src="/nobody_friend_flower.png"
+                  height={280}
+                  width={170}
+                  alt="flower"
+                  priority
+                  className="absolute bottom-0 left-[2%] w-[9%] object-cover"
+                />
+              </div>
+            </div>
+          </FullpageSection>
+          <FullpageSection>
+            <div className="flex h-screen w-full items-center justify-center bg-[#FFD600] px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
               <div className="grid h-full w-[1180px] grid-cols-[38%,auto] gap-[88px] 4xl:w-[1760px] 4xl:gap-[120px] 5xl:w-[2100px] 5xl:gap-[200px]">
                 <div className="flex h-full justify-center">
                   <Tabs
@@ -137,11 +187,8 @@ export default function Home() {
                     <TabsList className="grid h-[100px] grid-cols-5">
                       <TabsTrigger
                         value="role1"
-                        className="relative flex h-[110px] flex-col bg-white"
+                        className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
                       >
-                        {role !== "role1" && (
-                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
-                        )}
                         <Image
                           src="/nobody_role_1.png"
                           height={100}
@@ -151,7 +198,7 @@ export default function Home() {
                         />
                         {role === "role1" && (
                           <Image
-                            className="z-10 h-[10px] w-full"
+                            className="z-10 w-full"
                             src="/nobody_role_indicator.png"
                             height={10}
                             width={100}
@@ -162,11 +209,8 @@ export default function Home() {
                       </TabsTrigger>
                       <TabsTrigger
                         value="role2"
-                        className="relative flex h-[100px] flex-col bg-white"
+                        className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
                       >
-                        {role !== "role2" && (
-                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
-                        )}
                         <Image
                           src="/nobody_role_2.png"
                           height={100}
@@ -176,7 +220,7 @@ export default function Home() {
                         />
                         {role === "role2" && (
                           <Image
-                            className="z-10 h-[10px] w-full"
+                            className="z-10 w-full"
                             src="/nobody_role_indicator.png"
                             height={10}
                             width={100}
@@ -187,11 +231,8 @@ export default function Home() {
                       </TabsTrigger>
                       <TabsTrigger
                         value="role3"
-                        className="relative flex h-[100px] flex-col bg-white"
+                        className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
                       >
-                        {role !== "role3" && (
-                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
-                        )}
                         <Image
                           src="/nobody_role_3.png"
                           height={100}
@@ -201,7 +242,7 @@ export default function Home() {
                         />
                         {role === "role3" && (
                           <Image
-                            className="z-10 h-[10px] w-full"
+                            className="z-10 w-full"
                             src="/nobody_role_indicator.png"
                             height={10}
                             width={100}
@@ -212,11 +253,8 @@ export default function Home() {
                       </TabsTrigger>
                       <TabsTrigger
                         value="role4"
-                        className="relative flex h-[100px] flex-col bg-white"
+                        className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
                       >
-                        {role !== "role4" && (
-                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
-                        )}
                         <Image
                           src="/nobody_role_4.png"
                           height={100}
@@ -226,7 +264,7 @@ export default function Home() {
                         />
                         {role === "role4" && (
                           <Image
-                            className="z-10 h-[10px] w-full"
+                            className="z-10 w-full"
                             src="/nobody_role_indicator.png"
                             height={10}
                             width={100}
@@ -237,11 +275,8 @@ export default function Home() {
                       </TabsTrigger>
                       <TabsTrigger
                         value="role5"
-                        className="relative flex h-[100px] flex-col bg-white"
+                        className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
                       >
-                        {role !== "role5" && (
-                          <div className="absolute z-10 h-[100px] w-full bg-white/50" />
-                        )}
                         <Image
                           src="/nobody_role_5.png"
                           height={100}
@@ -251,7 +286,7 @@ export default function Home() {
                         />
                         {role === "role5" && (
                           <Image
-                            className="z-10 h-[10px] w-full"
+                            className="z-10 w-full"
                             src="/nobody_role_indicator.png"
                             height={10}
                             width={100}
@@ -278,111 +313,25 @@ export default function Home() {
                     </TabsContent>
                   </Tabs>
                 </div>
-                <div className="flex h-full flex-col items-start">
-                  <span className="w-full text-left text-[36px] font-bold text-black 4xl:text-[48px] 5xl:text-[56px]">
-                    {t("nobody_story")}
+                <div className="flex h-full flex-col items-center">
+                  <span className="w-full text-center text-[72px] leading-[72px] font-bold text-black 4xl:text-[96px] 4xl:leading-[96px]">
+                    {t("talk_to_me")}
                   </span>
                   <div className="flex h-full flex-col items-start">
-                    <div
-                      className="text-balck mt-[30px] max-w-[1400px] flex-1 text-[16px] font-semibold leading-[24px]  4xl:mt-[30px] 4xl:text-[24px] 4xl:leading-[32px] 5xl:mt-[50px] 5xl:text-[28px] 5xl:leading-[40px]"
-                      dangerouslySetInnerHTML={{
-                        __html: t.raw("nobody_story_content"),
-                      }}
-                    />
-                    <div className="grid flex-none grid-cols-3 items-center gap-[30px]">
-                      <div className="flex flex-col items-center">
-                        <div
-                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
-                          onClick={() => {
-                            setVideo(
-                              "https://www.youtube.com/embed/4oixai0Fgvg?rel=0",
-                            );
-                            setIsShowVideo(true);
-                          }}
-                        >
-                          <Image
-                            className="rounded-lg"
-                            src="/chapter_one.jpg"
-                            width={400}
-                            height={165}
-                            alt="chapter one"
-                            priority
-                          />
-                          <Image
-                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
-                            src="/chapter_play.png"
-                            width={64}
-                            height={64}
-                            alt="play"
-                            priority
-                          />
-                        </div>
-                        <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
-                          {t("chapter_one")}
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <div
-                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
-                          onClick={() => {
-                            setVideo(
-                              "https://www.youtube.com/embed/kMTaAkQ0rcs?rel=0",
-                            );
-                            setIsShowVideo(true);
-                          }}
-                        >
-                          <Image
-                            className="rounded-lg"
-                            src="/chapter_two.jpg"
-                            width={400}
-                            height={165}
-                            alt="chapter two"
-                            priority
-                          />
-                          <Image
-                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
-                            src="/chapter_play.png"
-                            width={64}
-                            height={64}
-                            alt="play"
-                            priority
-                          />
-                        </div>
-                        <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
-                          {t("chapter_two")}
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <div
-                          className="relative rounded-xl border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
-                          onClick={() => {
-                            setVideo(
-                              "https://www.youtube.com/embed/6spSsLZmEuM?rel=0",
-                            );
-                            setIsShowVideo(true);
-                          }}
-                        >
-                          <Image
-                            className="rounded-lg"
-                            src="/chapter_three.jpg"
-                            width={400}
-                            height={165}
-                            alt="chapter three"
-                            priority
-                          />
-                          <Image
-                            className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl"
-                            src="/chapter_play.png"
-                            width={64}
-                            height={64}
-                            alt="play"
-                            priority
-                          />
-                        </div>
-                        <span className="mt-[20px] text-[14px] font-semibold leading-[14px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
-                          {t("chapter_three")}
-                        </span>
-                      </div>
+                    <div className="mt-[40px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[80px] 4xl:p-[30px]">
+                      <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
+                        {t("nobody_content_1")}
+                      </span>
+                    </div>
+                    <div className="mt-[30px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
+                      <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
+                        {t("nobody_content_2")}
+                      </span>
+                    </div>
+                    <div className="mt-[30px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
+                      <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
+                        {t("nobody_content_3")}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -450,7 +399,7 @@ export default function Home() {
                   {t("nobody_nft_mv")}
                 </span>
               </div>
-              <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+              <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                 <span className="text-[21px] font-semibold text-black">
                   Mint
                 </span>
@@ -471,15 +420,15 @@ export default function Home() {
                   priority
                 />
                 <div className="ml-[15px] flex flex-col justify-center">
-                  <span className="text-[21px] font-semibold leading-[21px] text-yellow-300">
+                  <span className="text-[21px] font-semibold leading-[21px] text-[#FFD600]">
                     {t("presale")}
                   </span>
-                  <span className="text-[16px] font-semibold leading-[21px] text-yellow-300">
+                  <span className="text-[16px] font-semibold leading-[21px] text-[#FFD600]">
                     01/23 08:00~01/24 08:00(UTC8)
                   </span>
-                  <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-yellow-300 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                  <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                     <span className="text-[16px] font-semibold text-black">
-                      {t("receive_waitlist")}
+                      {t("join_waitlist")}
                     </span>
                   </div>
                 </div>

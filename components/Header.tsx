@@ -26,16 +26,14 @@ const Header:React.FC = () => {
   }
   
   return <>
-      <header className='absolute z-[100] top-0 flex items-center justify-between w-full px-[16px] mt-[20px] lg:px-[20px] lg:mt-[20px] sm:z-[200]'>
+      <header className='absolute z-[100] top-0 flex items-start justify-between w-full px-[20px] mt-[20px] 4xl:px-[30px] 4xl:mt-[30px] sm:z-[200]'>
         <a href='/'>
-          <div className='relative w-[36px] h-[36px] sm:w-[177px] sm:h-[36px] lg:w-[196px] lg:h-[40px] 3xl:w-[236px] 3xl:h-[48px]'>
-            <Image src={(mediaSize?.width || 0) > 640
-              ? "/moonbox_logo_black.png"
-              : "/moonbox_logo_black_mobile.png"} alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
+          <div className='relative w-[56px] h-[56px] lg:w-[72px] lg:h-[72px] 4xl:w-[96px] 4xl:h-[96px]'>
+            <Image src="/nobody_logo_black.png" alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
           </div>
         </a>
 
-        <div className=' flex items-center'>
+        <div className='flex items-center'>
           {/* {(mediaSize?.width || 0) > 640 &&
             <div className=' inline-flex items-end justify-center h-[36px] w-[108px] lg:h-[48px] lg:w-[136px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow'
               onClick={() => {

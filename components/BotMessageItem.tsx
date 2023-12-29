@@ -30,7 +30,7 @@ export default function BotMessageItem(props: BotMessageItemProps) {
         <div className="flex flex-col items-start">
           <div
             ref={messageRef}
-            className="messageBox max-w-[700px] whitespace-pre-wrap rounded-[12px] bg-black/80 p-[12px] text-[16px] font-medium leading-[21px] text-white
+            className="messageBox max-w-[700px] whitespace-pre-wrap rounded-[12px] bg-black/80 px-[24px] py-[12px] text-[16px] font-medium leading-[21px] text-white
     sm:px-[26px] sm:py-[18px] sm:text-[18px] sm:font-normal sm:leading-[24px] 4xl:max-w-[800px]"
           ></div>
           <Image
@@ -45,7 +45,7 @@ export default function BotMessageItem(props: BotMessageItemProps) {
       ) : (
         <div className="flex flex-col items-start">
           <div
-            className="messageBox max-w-[700px]  whitespace-pre-wrap rounded-[12px] bg-black/80 p-[12px] text-[16px] font-medium leading-[21px] text-white
+            className="messageBox max-w-[700px]  whitespace-pre-wrap rounded-[12px] bg-black/80 px-[24px] py-[12px] text-[16px] font-medium leading-[21px] text-white
     sm:px-[26px] sm:py-[18px] sm:text-[18px] sm:font-normal sm:leading-[24px]
     4xl:max-w-[800px]"
           >

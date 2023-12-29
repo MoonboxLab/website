@@ -45,6 +45,7 @@ const Chat = (props: ChatProps) => {
           props.role === 3 && 'bg-[url("../public/nobody_role_3_bg.png")]',
           props.role === 4 && 'bg-[url("../public/nobody_role_4_bg.png")]',
           props.role === 5 && 'bg-[url("../public/nobody_role_5_bg.png")]',
+          
         )}
         ref={chatListBottomRef}
       >

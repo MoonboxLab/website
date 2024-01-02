@@ -83,7 +83,7 @@ export default function Home() {
       {(mediaSize?.width || 0) > 1024 && <Footer countdown={countdown} />}
 
       {(mediaSize?.width || 0) > 1024 && isShowVideo && (
-        <div className="absolute z-[200] h-screen w-full bg-black/80 backdrop-blur">
+        <div className="absolute z-[200] h-screen w-full backdrop-blur">
           <div className="absolute left-[50%] top-[50%] z-[120] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
             <Button
               onClick={() => setIsShowVideo(false)}
@@ -341,18 +341,18 @@ export default function Home() {
                         {t("talk_to_me")}
                       </span>
                       <div className="flex h-full flex-col items-start">
-                        <div className="mt-[40px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:p-[30px] 5xl:mt-[80px]">
-                          <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
+                        <div className="mt-[40px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px] 5xl:mt-[80px]">
+                          <span className="w-full text-center text-[24px] font-bold leading-[36px] text-black 3xl:text-[30px] 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_1")}
                           </span>
                         </div>
-                        <div className="mt-[30px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
-                          <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
+                        <div className="mt-[20px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 3xl:mt-[30px] 4xl:mt-[40px] 4xl:p-[30px]">
+                          <span className="w-full text-center text-[24px] font-bold leading-[36px] text-black 3xl:text-[30px] 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_2")}
                           </span>
                         </div>
-                        <div className="mt-[30px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
-                          <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
+                        <div className="mt-[20px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 3xl:mt-[30px] 4xl:mt-[40px] 4xl:p-[30px]">
+                          <span className="w-full text-center text-[24px] font-bold leading-[36px] text-black 3xl:text-[30px] 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_3")}
                           </span>
                         </div>
@@ -368,7 +368,7 @@ export default function Home() {
 
       {/* Mobile UI */}
       {(mediaSize?.width || 0) <= 1024 && isShowVideo && (
-        <div className="fixed z-[200] h-screen w-screen bg-black/80 backdrop-blur">
+        <div className="fixed z-[200] h-screen w-screen backdrop-blur">
           <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-end">
             <Button
               onClick={() => setIsShowVideo(false)}
@@ -435,7 +435,12 @@ export default function Home() {
                   {t("mint")}
                 </span>
                 <span className="ml-[10px] text-[18px] font-semibold text-black">
-                  {t("mint_time")}
+                  {t("count_down", {
+                    day: countdown.days,
+                    hour: countdown.hours,
+                    minute: countdown.minutes,
+                    second: countdown.seconds,
+                  })}
                 </span>
               </div>
             </div>

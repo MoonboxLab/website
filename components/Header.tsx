@@ -210,7 +210,7 @@ const Header:React.FC = () => {
         </div>
       </header>
       <a href="/">
-        <div className="absolute z-[130] ml-[10px] mt-[10px] h-[56px] w-[56px] sm:ml-[20px] sm:mt-[5px] lg:h-[96px] lg:w-[96px] 4xl:mt-[10px]">
+        <div className="absolute z-[220] ml-[10px] mt-[10px] h-[56px] w-[56px] sm:ml-[20px] sm:mt-[5px] lg:h-[96px] lg:w-[96px] 4xl:mt-[10px]">
           <Image
             src="/nobody_logo_yellow.png"
             alt="logo"

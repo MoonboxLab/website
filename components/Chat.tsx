@@ -38,17 +38,59 @@ const Chat = (props: ChatProps) => {
   return (
     <div className="relative flex h-full flex-col px-[16px] sm:px-0 sm:pt-[40px] 4xl:pt-[60px]">
       <div
-        className={clsx(
-          "hide-scrollbar relative h-full overflow-y-scroll bg-contain bg-no-repeat bg-center",
-          props.role === 1 && 'bg-[url("../public/nobody_role_1_bg.png")]',
-          props.role === 2 && 'bg-[url("../public/nobody_role_2_bg.png")]',
-          props.role === 3 && 'bg-[url("../public/nobody_role_3_bg.png")]',
-          props.role === 4 && 'bg-[url("../public/nobody_role_4_bg.png")]',
-          props.role === 5 && 'bg-[url("../public/nobody_role_5_bg.png")]',
-
-        )}
+        className="hide-scrollbar relative h-full overflow-y-scroll"
         ref={chatListBottomRef}
       >
+        {props.role === 1 && (
+          <Image
+            src="/nobody_role_1_bg.png"
+            fill
+            alt="role1"
+            priority
+            className="object-contain"
+          />
+        )}
+
+        {props.role === 2 && (
+          <Image
+            src="/nobody_role_2_bg.png"
+            fill
+            alt="role2"
+            priority
+            className="object-contain"
+          />
+        )}
+
+        {props.role === 3 && (
+          <Image
+            src="/nobody_role_3_bg.png"
+            fill
+            alt="role3"
+            priority
+            className="object-contain"
+          />
+        )}
+
+        {props.role === 4 && (
+          <Image
+            src="/nobody_role_4_bg.png"
+            fill
+            alt="role4"
+            priority
+            className="object-contain"
+          />
+        )}
+
+        {props.role === 5 && (
+          <Image
+            src="/nobody_role_5_bg.png"
+            fill
+            alt="role5"
+            priority
+            className="object-contain"
+          />
+        )}
+
         <div className="absolute top-0 w-full">
           {messages.map((item) => {
             if (item.role == "assistant") {

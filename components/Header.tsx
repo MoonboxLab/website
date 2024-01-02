@@ -21,19 +21,14 @@ const Header:React.FC = () => {
 
   const handleLocaleChange = (locale: String) => {
     startTransition(() => {
-      router.replace(pathname, { locale: locale })
-    })
-  }
-  
-  return <>
-      <header className='absolute z-[100] top-0 flex items-start justify-between w-full px-[20px] mt-[20px] 4xl:px-[30px] 4xl:mt-[30px] sm:z-[200]'>
-        <a href='/'>
-          <div className='relative w-[56px] h-[56px] lg:w-[72px] lg:h-[72px] 4xl:w-[96px] 4xl:h-[96px]'>
-            <Image src="/nobody_logo_yellow.png" alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
-          </div>
-        </a>
+      router.replace(pathname, { locale: locale });
+    });
+  };
 
-        <div className='flex items-center'>
+  return (
+    <>
+      <header className="absolute top-0 z-[100] mt-[20px] flex w-full justify-end px-[20px] sm:z-[200] 4xl:mt-[30px] 4xl:px-[30px]">
+        <div className="flex items-center">
           {/* {(mediaSize?.width || 0) > 640 &&
             <div className=' inline-flex items-end justify-center h-[36px] w-[108px] lg:h-[48px] lg:w-[136px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow'
               onClick={() => {
@@ -214,8 +209,20 @@ const Header:React.FC = () => {
           )}
         </div>
       </header>
-      <div className='hidden sm:block absolute z-[120] w-full h-[100px] bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply'></div>
-  </>
-}
+      <a href="/">
+        <div className="absolute z-[130] ml-[10px] mt-[10px] h-[56px] w-[56px] sm:ml-[20px] sm:mt-[5px] lg:h-[96px] lg:w-[96px] 4xl:mt-[10px]">
+          <Image
+            src="/nobody_logo_yellow.png"
+            alt="logo"
+            priority={true}
+            fill
+            style={{ objectFit: "contain" }}
+          />
+        </div>
+      </a>
+      <div className="absolute top-0 z-[120] hidden h-[120px] w-full bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply sm:block"></div>
+    </>
+  );
+};
 
-export default Header
+export default Header;

@@ -117,7 +117,7 @@ export default function Home() {
           credits={{ enabled: false }}
           render={() => (
             <ReactFullpage.Wrapper>
-              <div className="section">
+              <div className="section h-screen w-screen">
                 <div className="relative h-screen w-full bg-white">
                   <Header />
                   <Image
@@ -150,7 +150,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="section">
+              <div className="section h-screen w-screen">
                 <div className="relative h-screen w-full bg-white pb-[88px] 4xl:pb-[120px]">
                   <Image
                     src="/home_bg_mint_2.png"
@@ -171,8 +171,8 @@ export default function Home() {
                     {locale == "en" ? (
                       <Image
                         src="/nobody_friend_en.png"
-                        height={747}
-                        width={366}
+                        height={2262}
+                        width={1590}
                         alt="friend"
                         priority
                         className="absolute left-[9%] top-[50%] w-[39%] translate-y-[-50%] object-cover"
@@ -180,8 +180,8 @@ export default function Home() {
                     ) : (
                       <Image
                         src="/nobody_friend_zh.png"
-                        height={747}
-                        width={366}
+                        height={1119}
+                        width={2259}
                         alt="friend"
                         priority
                         className="absolute left-[9%] top-[50%] w-[39%] translate-y-[-50%] object-cover"
@@ -198,9 +198,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="section">
+              <div className="section h-screen w-screen">
                 <div className="flex h-screen w-full items-center justify-center bg-[#FFD600] px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
-                  <div className="grid h-full w-[1180px] grid-cols-[38%,auto] gap-[88px] 4xl:w-[1760px] 4xl:gap-[120px] 5xl:w-[2100px] 5xl:gap-[200px]">
+                  <div className="grid h-full grid-cols-[46%,auto] gap-[88px] 4xl:gap-[120px] 5xl:gap-[150px]">
                     <div className="flex h-full justify-center">
                       <Tabs
                         defaultValue="role1"
@@ -341,17 +341,17 @@ export default function Home() {
                         {t("talk_to_me")}
                       </span>
                       <div className="flex h-full flex-col items-start">
-                        <div className="mt-[40px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[80px] 4xl:p-[30px]">
+                        <div className="mt-[40px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[80px] 4xl:p-[30px]">
                           <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_1")}
                           </span>
                         </div>
-                        <div className="mt-[30px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
+                        <div className="mt-[30px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
                           <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_2")}
                           </span>
                         </div>
-                        <div className="mt-[30px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
+                        <div className="mt-[30px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px]">
                           <span className="w-full text-center text-[30px] font-bold leading-[36px] text-black 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_3")}
                           </span>
@@ -505,8 +505,8 @@ export default function Home() {
             {locale == "en" ? (
               <Image
                 src="/nobody_friend_en.png"
-                height={252}
-                width={360}
+                height={2262}
+                width={1590}
                 alt="friend"
                 priority
                 className="z-10 w-full object-cover"
@@ -514,8 +514,8 @@ export default function Home() {
             ) : (
               <Image
                 src="/nobody_friend_zh.png"
-                height={167}
-                width={340}
+                height={1119}
+                width={2259}
                 alt="friend"
                 priority
                 className="z-10 w-full object-cover"
@@ -530,22 +530,22 @@ export default function Home() {
               className="z-10 mt-[40px] w-full object-cover"
             />
           </div>
-          <div className="flex w-full flex-col bg-[#FFD600] pt-[40px] pb-[60px]">
+          <div className="flex w-full flex-col bg-[#FFD600] pb-[60px] pt-[40px]">
             <span className="w-full text-center text-[48px] font-black leading-[48px] text-black">
               {t("talk_to_me")}
             </span>
             <div className="flex h-full flex-col items-start px-[16px] py-[30px]">
-              <div className="flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+              <div className="flex w-full items-center justify-center rounded-[16px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                 <span className="w-full text-center text-[24px] font-bold leading-[30px] text-black">
                   {t("nobody_content_1")}
                 </span>
               </div>
-              <div className="mt-[20px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+              <div className="mt-[20px] flex w-full items-center justify-center rounded-[16px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                 <span className="w-full text-center text-[24px] font-bold leading-[30px] text-black">
                   {t("nobody_content_2")}
                 </span>
               </div>
-              <div className="mt-[20px] flex w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+              <div className="mt-[20px] flex w-full items-center justify-center rounded-[16px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                 <span className="w-full text-center text-[24px] font-bold leading-[30px] text-black">
                   {t("nobody_content_3")}
                 </span>

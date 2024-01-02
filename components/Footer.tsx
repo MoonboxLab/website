@@ -74,7 +74,7 @@ const Footer = (props: FooterProps) => {
           </span>
         </div>
 
-        <div className="hover-btn-shadow ml-[20px] flex h-[64px] w-[180px] flex-col items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:ml-[30px] 4xl:h-[72px] 4xl:w-[260px]">
+        <div className="hover-btn-shadow ml-[20px] flex h-[64px] w-[200px] flex-col items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:ml-[30px] 4xl:h-[72px] 4xl:w-[260px]">
           <span className="text-[21px] font-semibold leading-[21px] text-black 4xl:text-[24px] 4xl:leading-[24px]">
             {t("mint")}
           </span>

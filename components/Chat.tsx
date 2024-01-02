@@ -39,7 +39,7 @@ const Chat = (props: ChatProps) => {
     <div className="relative flex h-full flex-col px-[16px] sm:px-0 sm:pt-[40px] 4xl:pt-[60px]">
       <div
         className={clsx(
-          "hide-scrollbar relative h-full overflow-y-scroll bg-cover bg-no-repeat",
+          "hide-scrollbar relative h-full overflow-y-scroll bg-contain bg-no-repeat bg-center",
           props.role === 1 && 'bg-[url("../public/nobody_role_1_bg.png")]',
           props.role === 2 && 'bg-[url("../public/nobody_role_2_bg.png")]',
           props.role === 3 && 'bg-[url("../public/nobody_role_3_bg.png")]',

@@ -41,6 +41,7 @@
     "talk_to_me": "TALK TO ME",
     "nobody_content_1": "Nobody NFT blends the world of web3 with AI-powered interactive story telling.",
     "nobody_content_2": "Each Nobody NFT is a living character. ",
-    "nobody_content_3": "Talk to your beloved characters and learn about their unique stories."
+    "nobody_content_3": "Talk to your beloved characters and learn about their unique stories.",
+    "count_down": "{day}d:{hour}h:{minute}m:{second}s"
   }
 }

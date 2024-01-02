@@ -21,8 +21,6 @@ export default function Home() {
 
   const mediaSize = useSize(document.querySelector("body"));
 
-  const chatListBottomRef = useRef<HTMLEmbedElement>(null);
-
   const [role, setRole] = useState<string>("role1");
 
   const [video, setVideo] = useState<string>("");
@@ -31,12 +29,38 @@ export default function Home() {
 
   const locale = useLocale();
 
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
   useEffect(() => {
-    chatListBottomRef.current?.scrollTo({
-      top: chatListBottomRef.current?.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [chatListBottomRef.current?.scrollHeight]);
+    const targetDate = new Date("2024-02-01T08:00:00+08:00");
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance < 0) {
+        clearInterval(interval);
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        setCountdown({ days, hours, minutes, seconds });
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className=" bg-gray-600">
@@ -56,7 +80,7 @@ export default function Home() {
       </Head>
 
       {/* PC UI */}
-      {(mediaSize?.width || 0) > 1024 && <Footer />}
+      {(mediaSize?.width || 0) > 1024 && <Footer countdown={countdown} />}
 
       {(mediaSize?.width || 0) > 1024 && isShowVideo && (
         <div className="absolute z-[200] h-screen w-full bg-black/80 backdrop-blur">
@@ -183,7 +207,7 @@ export default function Home() {
                         className="grid h-full w-full grid-rows-[100px,auto]"
                         onValueChange={setRole}
                       >
-                        <TabsList className="grid h-[100px] grid-cols-5">
+                        <TabsList className="grid h-[100px] grid-cols-5 bg-[#FFD600]">
                           <TabsTrigger
                             value="role1"
                             className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
@@ -386,7 +410,7 @@ export default function Home() {
               priority
               className="object-cover"
             />
-            <div className="absolute bottom-[45px] z-10 flex w-full flex-col px-[15px]">
+            <div className="absolute bottom-[100px] z-10 flex w-full flex-col px-[15px]">
               <div
                 className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                 onClick={() => {
@@ -506,7 +530,7 @@ export default function Home() {
               className="z-10 mt-[40px] w-full object-cover"
             />
           </div>
-          <div className="flex w-full flex-col bg-[#FFD600] py-[40px]">
+          <div className="flex w-full flex-col bg-[#FFD600] pt-[40px] pb-[60px]">
             <span className="w-full text-center text-[48px] font-black leading-[48px] text-black">
               {t("talk_to_me")}
             </span>

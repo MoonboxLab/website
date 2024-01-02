@@ -29,7 +29,7 @@ const Header:React.FC = () => {
       <header className='absolute z-[100] top-0 flex items-start justify-between w-full px-[20px] mt-[20px] 4xl:px-[30px] 4xl:mt-[30px] sm:z-[200]'>
         <a href='/'>
           <div className='relative w-[56px] h-[56px] lg:w-[72px] lg:h-[72px] 4xl:w-[96px] 4xl:h-[96px]'>
-            <Image src="/nobody_logo_black.png" alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
+            <Image src="/nobody_logo_yellow.png" alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
           </div>
         </a>
 

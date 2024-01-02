@@ -41,6 +41,7 @@
     "talk_to_me": "和我聊天吧",
     "nobody_content_1": "Nobody NFT將Web3和AI驅動的交互式敘事融為一體。",
     "nobody_content_2": "每個Nobody NFT都是一個鮮活角色。",
-    "nobody_content_3": "和你喜愛的角色聊天，並了解他們的獨特故事。"
+    "nobody_content_3": "和你喜愛的角色聊天，並了解他們的獨特故事。",
+    "count_down": "{day}天{hour}时{minute}分{second}秒"
   }
 }

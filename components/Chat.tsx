@@ -45,7 +45,7 @@ const Chat = (props: ChatProps) => {
           props.role === 3 && 'bg-[url("../public/nobody_role_3_bg.png")]',
           props.role === 4 && 'bg-[url("../public/nobody_role_4_bg.png")]',
           props.role === 5 && 'bg-[url("../public/nobody_role_5_bg.png")]',
-          
+
         )}
         ref={chatListBottomRef}
       >
@@ -73,7 +73,7 @@ const Chat = (props: ChatProps) => {
       >
         <Input
           placeholder={t("chat_with_me")}
-          className="h-[40px] w-full flex-none  rounded-[28px] border-[2px] border-black bg-[#FFD600] px-[20px] text-[16px] font-normal leading-[16px] outline-none placeholder:text-[16px] placeholder:font-normal placeholder:text-black focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-[28px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
+          className="h-[48px] w-full flex-none  rounded-[28px] border-[2px] border-black bg-[#FFD600] px-[20px] text-[16px] font-normal leading-[16px] outline-none placeholder:text-[16px] placeholder:font-normal placeholder:text-black focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-[28px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
           value={input}
           onChange={(e) => {
             handleInputChange(e);

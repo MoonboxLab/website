@@ -1,7 +1,11 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-const Footer = () => {
+type FooterProps = {
+  countdown: { days: number; hours: number; minutes: number; seconds: number };
+};
+
+const Footer = (props: FooterProps) => {
   const t = useTranslations("Home");
 
   return (
@@ -64,15 +68,23 @@ const Footer = () => {
       </div>
 
       <div className="ml-auto flex">
-        <div className="hover-btn-shadow flex h-[48px] w-[180px] items-center justify-center rounded-[12px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:h-[64px] 4xl:w-[260px]">
-          <span className="text-[18px] font-semibold text-black 4xl:text-[21px]">
+        <div className="hover-btn-shadow flex h-[64px] w-[200px] items-center justify-center rounded-[12px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:h-[72px] 4xl:w-[260px]">
+          <span className="text-[21px] font-semibold leading-[21px] text-black 4xl:text-[24px] 4xl:leading-[24px]">
             {t("join_waitlist")}
           </span>
         </div>
 
-        <div className="hover-btn-shadow ml-[20px] flex h-[48px] w-[160px] items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:ml-[30px] 4xl:h-[64px] 4xl:w-[260px]">
-          <span className="text-[18px] font-semibold text-black 4xl:text-[21px]">
+        <div className="hover-btn-shadow ml-[20px] flex h-[64px] w-[180px] flex-col items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:ml-[30px] 4xl:h-[72px] 4xl:w-[260px]">
+          <span className="text-[21px] font-semibold leading-[21px] text-black 4xl:text-[24px] 4xl:leading-[24px]">
             {t("mint")}
+          </span>
+          <span className="mt-[5px] text-[16px] font-semibold leading-[16px] text-black 4xl:text-[18px] 4xl:leading-[18px]">
+            {t("count_down", {
+              day: props.countdown.days,
+              hour: props.countdown.hours,
+              minute: props.countdown.minutes,
+              second: props.countdown.seconds,
+            })}
           </span>
         </div>
       </div>

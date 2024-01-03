@@ -342,17 +342,17 @@ export default function Home() {
                       </span>
                       <div className="flex h-full flex-col items-start">
                         <div className="mt-[40px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:mt-[40px] 4xl:p-[30px] 5xl:mt-[80px]">
-                          <span className="w-full text-center text-[24px] font-bold leading-[36px] text-black 3xl:text-[30px] 4xl:text-[40px] 4xl:leading-[48px]">
+                          <span className="w-full text-center text-[24px] font-bold  leading-[30px] text-black 3xl:text-[30px] 3xl:leading-[36px] 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_1")}
                           </span>
                         </div>
                         <div className="mt-[20px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 3xl:mt-[30px] 4xl:mt-[40px] 4xl:p-[30px]">
-                          <span className="w-full text-center text-[24px] font-bold leading-[36px] text-black 3xl:text-[30px] 4xl:text-[40px] 4xl:leading-[48px]">
+                          <span className="w-full text-center text-[24px] font-bold  leading-[30px] text-black 3xl:text-[30px] 3xl:leading-[36px] 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_2")}
                           </span>
                         </div>
                         <div className="mt-[20px] flex w-full items-center justify-center rounded-[24px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 3xl:mt-[30px] 4xl:mt-[40px] 4xl:p-[30px]">
-                          <span className="w-full text-center text-[24px] font-bold leading-[36px] text-black 3xl:text-[30px] 4xl:text-[40px] 4xl:leading-[48px]">
+                          <span className="w-full text-center text-[24px] font-bold  leading-[30px] text-black 3xl:text-[30px] 3xl:leading-[36px] 4xl:text-[40px] 4xl:leading-[48px]">
                             {t("nobody_content_3")}
                           </span>
                         </div>

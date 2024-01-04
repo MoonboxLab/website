@@ -336,7 +336,7 @@ export default function Home() {
                         </TabsContent>
                       </Tabs>
                     </div>
-                    <div className="flex h-full flex-col items-center justify-start">
+                    <div className="flex h-full flex-col items-center justify-center">
                       {locale == "en" ? (
                         <Image
                           src="/talk_to_me_en.png"
@@ -344,7 +344,7 @@ export default function Home() {
                           width={2721}
                           alt="friend"
                           priority
-                          className="w-full object-cover mt-[80px]"
+                          className="w-full object-cover"
                         />
                       ) : (
                         <Image
@@ -353,7 +353,7 @@ export default function Home() {
                           width={2571}
                           alt="friend"
                           priority
-                          className="w-full object-cover mt-[80px]"
+                          className="w-full object-cover"
                         />
                       )}
                     </div>

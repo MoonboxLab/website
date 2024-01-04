@@ -37,7 +37,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const targetDate = new Date("2024-02-01T08:00:00+08:00");
+    const targetDate = new Date("2024-02-01T20:00:00+08:00");
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -65,17 +65,17 @@ export default function Home() {
   return (
     <div className=" bg-gray-600">
       <Head>
-        <title>Moonbox</title>
+        <title>Nobody</title>
         <meta name="description" content="Bring life to NFTs" />
-        <meta property="og:title" content="Moonbox" />
+        <meta property="og:title" content="Nobody" />
         <meta property="og:description" content="Bring life to NFTs" />
         <meta property="og:image" content="/open-graph.png" />
-        <meta property="og:url" content="https://moonbox.com" />
+        <meta property="og:url" content="https://nobody.xyz" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content="https://moonbox.com/open-graph.jpg"
+          content="https://nobody.xyz/open-graph.jpg"
         ></meta>
       </Head>
 
@@ -433,22 +433,27 @@ export default function Home() {
                 <span className="text-[21px] font-semibold text-black">
                   {t("mint")}
                 </span>
-                <span className="ml-[10px] text-[18px] font-semibold text-black">
-                  {t("count_down", {
-                    day: countdown.days,
-                    hour: countdown.hours,
-                    minute: countdown.minutes,
-                    second: countdown.seconds,
-                  })}
-                </span>
+                {(countdown.days !== 0 ||
+                  countdown.hours !== 0 ||
+                  countdown.minutes !== 0 ||
+                  countdown.seconds !== 0) && (
+                  <span className="ml-[10px] text-[18px] font-semibold text-black">
+                    {t("count_down", {
+                      day: countdown.days,
+                      hour: countdown.hours,
+                      minute: countdown.minutes,
+                      second: countdown.seconds,
+                    })}
+                  </span>
+                )}
               </div>
             </div>
           </div>
           <div className="flex w-full justify-center bg-black py-[40px]">
             <div className="flex flex-col items-start">
-              <div className="flex h-[108px]">
+              <div className="flex">
                 <Image
-                  src="/mint_progress_now_long.png"
+                  src="/mint_progress_now.png"
                   height={108}
                   width={20}
                   alt="now"
@@ -461,11 +466,11 @@ export default function Home() {
                   <span className="text-[16px] font-semibold leading-[21px] text-[#FFD600]">
                     {t("presale_time")}
                   </span>
-                  <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                  {/* <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                     <span className="text-[16px] font-semibold text-black">
                       {t("join_waitlist")}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="mt-[40px] flex">

@@ -7,8 +7,9 @@ import { useRouter, usePathname } from 'next-intl/client'
 import { useTransition } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useDisconnect } from "wagmi";
-import { X } from "lucide-react";
+import { Power, X } from "lucide-react";
 import Link from "next/link";
+import CustomConnectButton from "./CustomConnectWallet";
 
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector('body'));
@@ -103,9 +104,9 @@ const Header: React.FC = () => {
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <span className="h-[30px] w-full text-center text-[18px] leading-[30px] font-semibold">
+                {/* <span className="h-[30px] w-full text-center text-[18px] leading-[30px] font-semibold">
                   Connect Wallet
-                </span>
+                </span> */}
               </DropdownMenuItem>
               <Link href={"/declaration"} >
                 <DropdownMenuItem>
@@ -114,7 +115,9 @@ const Header: React.FC = () => {
                   </span>
                 </DropdownMenuItem>
               </Link>
+              <CustomConnectButton />
             </DropdownMenuContent>
+
           </DropdownMenu>
         )}
 
@@ -189,14 +192,7 @@ const Header: React.FC = () => {
                             className="w-full p-[20px]"
                             onClick={() => disconnect()}
                           >
-                            <Image
-                              className="mr-[5px]"
-                              src={"/wallet_disconnect.png"}
-                              alt="disconnect"
-                              width={20}
-                              height={20}
-                              priority
-                            />
+                            <Power className=' mr-3 text-black' />
                             <span className="w-full text-center text-[18px] font-medium leading-[18px]">
                               {t("disconnect")}
                             </span>

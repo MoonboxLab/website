@@ -90,7 +90,7 @@
   }
 
   .activeAnchor {
-    @apply text-[rgba(255,214,0,1)] relative after:absolute after:top-[67px] after:right-[-212px] after:border-t-[6px] after:border-transparent after:border-[6px] after:border-l-white;
+    @apply text-[rgba(255,214,0,1)] relative after:absolute after:top-[45px] after:right-[-32px] after:border-t-[6px] after:border-transparent after:border-[6px] after:border-l-white;
   }
 }
 

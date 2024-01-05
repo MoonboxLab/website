@@ -1,7 +1,14 @@
 "use client"
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useTranslations } from 'next-intl';
+import { useDisconnect } from 'wagmi';
+import { Power } from 'lucide-react';
+
 
 const CustomConnectButton = () => {
+  const { disconnect } = useDisconnect();
+  const t = useTranslations('Home');
+
   return (
     <ConnectButton.Custom>
       {({
@@ -36,54 +43,19 @@ const CustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <button onClick={openConnectModal} type="button">
-                    Connect Wallet
-                  </button>
-                );
-              }
-              if (chain.unsupported) {
-                return (
-                  <button onClick={openChainModal} type="button">
-                    Wrong network
+                  <button className='hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)] font-semibold' onClick={openConnectModal} type="button">
+                    {t("header_connect_wallet")}
                   </button>
                 );
               }
               return (
-                <div style={{ display: 'flex', gap: 12 }}>
-                  <button
-                    onClick={openChainModal}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                    type="button"
-                  >
-                    {chain.hasIcon && (
-                      <div
-                        style={{
-                          background: chain.iconBackground,
-                          width: 12,
-                          height: 12,
-                          borderRadius: 999,
-                          overflow: 'hidden',
-                          marginRight: 4,
-                        }}
-                      >
-                        {chain.iconUrl && (
-                          <img
-                            alt={chain.name ?? 'Chain icon'}
-                            src={chain.iconUrl}
-                            style={{ width: 12, height: 12 }}
-                          />
-                        )}
-                      </div>
-                    )}
-                    {chain.name}
-                  </button>
-                  <button onClick={openAccountModal} type="button">
-                    {account.displayName}
-                    {account.displayBalance
-                      ? ` (${account.displayBalance})`
-                      : ''}
-                  </button>
-                </div>
+                <button
+                  className='hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)] font-semibold'
+                  onClick={() => disconnect()}
+                  type="button"
+                >
+                  <Power className=' mr-3 text-black' /> {t("disconnect")}
+                </button>
               );
             })()}
           </div>

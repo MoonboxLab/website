@@ -88,6 +88,10 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none; /* 隐藏Chrome和Safari浏览器上的滚动条 */
   }
+
+  .activeAnchor {
+    @apply text-[rgba(255,214,0,1)] relative after:absolute after:top-[45px] after:right-[-32px] after:border-t-[6px] after:border-transparent after:border-[6px] after:border-l-white;
+  }
 }
 
 .fp-watermark {

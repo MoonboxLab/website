@@ -5,6 +5,7 @@
     "header_language": "En",
     "header_connect_wallet": "Connect Wallet",
     "header_wrong_network": "Wrong Network",
+    "header_declaration": "Manifesto",
     "disconnect": "Disconnect",
     "email_modal_title": "Subscribe to our newsletter and be the first to know about our whitelist release.",
     "email_modal_subscribe": "Subscribe",
@@ -43,5 +44,19 @@
     "nobody_content_2": "Each Nobody NFT is a living character. ",
     "nobody_content_3": "Talk to your beloved characters and learn about their unique stories.",
     "count_down": "{day}d:{hour}h:{minute}m:{second}s"
+  },
+  "Declaration": {
+    "spirit": "SPIRIT",
+    "mission": "MISSION",
+    "nft": "NFT",
+    "community": "COMMUNITY",
+    "title1": "Nobody Spirit",
+    "subtitle1": "Adhering to the community spirit defined by Mr. Stephen Chow, the First Creator of Nobody, we firmly believe in the idea that \"Every nobody is somebody.\"<br></br><br></br>We encourage everyone not to be limited by their identity, status, or any other labels. No matter what role you play in the real life, as long as you are willing to keep working hard and fight relentlessly, you will eventually leave a dent in the universe.<br></br><br></br>We all deserve respect and attention, and equally possess irreplaceable value. Wh",
+    "title2": "Nobody Mission",
+    "subtitle2": "\"Set a stage for everyone and their talents to shine.\"<br></br><br></br>Behind every great Web3 project is a strong community, and we aim to follow this excellent tradition to build the best community ever! We are committed to providing opportunities and support for every nobody, allowing them to fully utilize their talents to achieve greatness.<br></br><br></br>We are creating a promised land where everyone can find their place by providing resources and opportunities to make personal growth and prosperity possible. In doing so, everyone could be drivers of value creation.",
+    "title3": "Nobody NFT",
+    "subtitle3": "Nobody is a NFT collection launched jointly by Nobody and Mr. Stephen Chow, Nobody First Creator, with 10K in total. Owning a Nobody NFT grants you the chance to become part of Nobody. You will participate in the project's development, and enjoy many privileges, including but not limited to proposing, co-creating, voting, and creating with Nobody IP.<br></br><br></br>What makes Nobody NFT special is that each Nobody NFT represents a vivid character with its own story. Holders can interact with these characters through the Nobody App, understanding their personalities, hobbies, backgrounds and shaping their future. <br></br><br></br>We also strive to build the Nobody IP, combining Mr. Stephen Chow's previous experience and new mechanisms. Through various forms of works, we aim to bring Nobody IP to the public eye, breaking through the barriers that have previously prevented Web3 native IPs from entering the mainstream Web2 market.",
+    "title4": "Nobody Community",
+    "subtitle4": "Centered on \"laughter\", \"creation\", and \"sharing\", the Nobody community will exhibit openness and inclusivity, striving to break traditional boundaries. We encourage everyone to display their talents to create diverse and vibrant works.<br></br><br></br>For 2024, we will be focusing on providing resources and opportunities for the community to join the film and short video creation, including but not limited to co-creating movie clips from Mr. Stephen Chow's \"The Mermaid 2\", \"Shaolin Women's Soccer\" and casting for future works. We will also actively build on the Nobody IP in various forms. What’s more, Nobody will seek to expand into more fields, such as fashion, art, music, etc., to call upon every nobody and co-create quality content for both Web2 and Web3."
   }
 }

@@ -1,12 +1,14 @@
 import { useSize } from "ahooks"
 import clsx from "clsx"
-import { useState } from "react"
 import { MintPeriod } from "./page";
 import Image from "next/image";
 
-export default function MintSchedule() {
+interface MintScheduleProps{
+  currentPeriod: MintPeriod
+}
+export default function MintSchedule(props: MintScheduleProps) {
+  const { currentPeriod } = props
   const screenSize = useSize(document.querySelector("body"))
-  const [currentStage, setCurrentStage] = useState<MintPeriod>(MintPeriod.Ready);
 
   return <div className=" w-full mt-[20px] xl:w-[420px] h-[302px] sm:bg-white sm:p-[30px] sm:rounded-[24px] sm:border-black sm:border-[3px] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
     <h3 className=" text-white sm:text-black text-[21px] sm:text-[24px] font-bold leading-6 mb-[20px] mt-[30px] sm:mt-0">Mint Schedule</h3>
@@ -16,12 +18,12 @@ export default function MintSchedule() {
       <div>
         <div className="flex justify-start mb-[15px]">
           <div className=" relative w-[16px] h-[52px] ">
-             <Image src={currentStage === MintPeriod.Presale ? "/mint_stage_active.png" : "/mint_stage_no_active.png"} fill alt="stage label" />
+             <Image src={currentPeriod === MintPeriod.Presale ? "/mint_stage_active.png" : "/mint_stage_no_active.png"} fill alt="stage label" />
           </div>
           <div className={clsx(
-            " ml-5 text-[18px] font-semibold leading-[24px] text-black/30",
+            " ml-5 text-[18px] font-semibold leading-[24px] text-black/100",
             {
-              " text-black/100": currentStage === MintPeriod.Presale
+              "opacity-30": currentPeriod != MintPeriod.Presale
             }
           )}>
             <p>Presale</p>
@@ -30,12 +32,12 @@ export default function MintSchedule() {
         </div>
         <div className="flex justify-start mb-[15px]">
           <div className=" relative w-[16px] h-[52px] ">
-             <Image src={currentStage === MintPeriod.Public ? "/mint_stage_active.png" : "/mint_stage_no_active.png"} fill alt="stage label" />
+             <Image src={currentPeriod === MintPeriod.Public ? "/mint_stage_active.png" : "/mint_stage_no_active.png"} fill alt="stage label" />
           </div>
           <div className={clsx(
-            " ml-5 text-[18px] font-semibold leading-[24px] text-black/30",
+            " ml-5 text-[18px] font-semibold leading-[24px] text-black/100",
             {
-              " text-black/100": currentStage === MintPeriod.Public
+              " opacity-30": currentPeriod != MintPeriod.Public
             }
           )}>
             <p>Public sale</p>
@@ -44,12 +46,12 @@ export default function MintSchedule() {
         </div>
         <div className="flex justify-start">
           <div className=" relative w-[16px] h-[52px] ">
-             <Image src={currentStage === MintPeriod.Refund ? "/mint_stage_active.png" : "/mint_stage_no_active.png"} fill alt="stage label" />
+             <Image src={currentPeriod === MintPeriod.Refund ? "/mint_stage_active.png" : "/mint_stage_no_active.png"} fill alt="stage label" />
           </div>
           <div className={clsx(
-            " ml-5 text-[18px] font-semibold leading-[24px] text-black/30",
+            " ml-5 text-[18px] font-semibold leading-[24px] text-black/100",
             {
-              " text-black/100": currentStage === MintPeriod.Refund
+              " opacity-30": currentPeriod != MintPeriod.Refund
             }
           )}>
             <p>Refund</p>

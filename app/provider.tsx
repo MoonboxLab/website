@@ -19,7 +19,7 @@ import {
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+    ...(process.env.NEXT_PUBLIC_TEST_ENV === "true"
       ? [goerli]
       : [mainnet]),
   ],

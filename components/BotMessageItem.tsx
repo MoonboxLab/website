@@ -30,14 +30,14 @@ export default function BotMessageItem(props: BotMessageItemProps) {
         <div className="flex flex-col items-start">
           <div
             ref={messageRef}
-            className="messageBox max-w-[700px] whitespace-pre-wrap rounded-[12px] bg-black/80 p-[12px] text-[16px] font-medium leading-[21px] text-white
-    sm:px-[26px] sm:py-[18px] sm:text-[18px] sm:font-normal sm:leading-[24px] 4xl:max-w-[800px]"
+            className="messageBox max-w-[700px] whitespace-pre-wrap rounded-[12px] bg-black/80 px-[14px] py-[8px] text-[16px] font-medium leading-[21px] text-white
+    sm:px-[14px] sm:py-[10px] sm:font-normal sm:leading-[24px] 4xl:max-w-[800px] 4xl:text-[18px]"
           ></div>
           <Image
-            className="ml-[8px] h-[15px]"
+            className="ml-[8px] h-[8px]"
             src="/bot_message_bg.png"
-            width={30}
-            height={15}
+            width={15}
+            height={8}
             alt="message"
             priority
           />
@@ -45,17 +45,16 @@ export default function BotMessageItem(props: BotMessageItemProps) {
       ) : (
         <div className="flex flex-col items-start">
           <div
-            className="messageBox max-w-[700px]  whitespace-pre-wrap rounded-[12px] bg-black/80 p-[12px] text-[16px] font-medium leading-[21px] text-white
-    sm:px-[26px] sm:py-[18px] sm:text-[18px] sm:font-normal sm:leading-[24px]
-    4xl:max-w-[800px]"
+            className="messageBox max-w-[700px]  whitespace-pre-wrap rounded-[12px] bg-black/80 px-[14px] py-[8px] text-[16px] font-medium leading-[21px] text-white
+    sm:px-[14px] sm:py-[10px] sm:font-normal sm:leading-[24px] 4xl:max-w-[800px] 4xl:text-[18px]"
           >
             <Markdown rehypePlugins={[rehypeRaw]}>{message}</Markdown>
           </div>
           <Image
-            className="ml-[8px] h-[15px]"
+            className="ml-[8px] h-[8px]"
             src="/bot_message_bg.png"
-            width={30}
-            height={15}
+            width={15}
+            height={8}
             alt="message"
             priority
           />

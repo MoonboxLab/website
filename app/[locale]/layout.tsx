@@ -56,19 +56,19 @@ export default async function LocaleLayout({
 }
 
 export const metadata: Metadata = {
-  title: 'Moonbox',
+  title: 'Nobody',
   description: 'Bring life to NFTs',
   openGraph: {
-    title: 'Moonbox',
+    title: 'Nobody',
     description: 'Bring life to NFTs',
     type: "website",
     images: '/open-graph.jpg',
-    url: "https://moonbox.com"
+    url: "https://nobody.xyz"
   },
   twitter: {
     card: "summary_large_image",
-    title: 'Moonbox',
+    title: 'Nobody',
     description: 'Bring life to NFTs',
-    images: ['https://moonbox.com/open-graph.jpg'],
+    images: ['https://nobody.xyz/open-graph.jpg'],
   },
 }

@@ -28,10 +28,20 @@
     "nobody_nft_mv": "NOBODY NFT MV",
     "nobody_story": "ORIGIN STORY OF NOBODY",
     "nobody_story_content": "It unfolds across the Trilogy: Spacebus, Accident, and Arrival. The passengers find themselves compelled to land on Earth due to a mechanical failure of the Spacebus. In an effort to protect themselves and their home planet, these extraterrestrial beings clandestinely merged with Earthlings, relinquishing their true identities.</br></br> Thus, they transformed into Nobody: an enigmatic presence with an unknown identity.Dive into the Nobody universe with Moonbox, an AI powered app for Nobody collection. Beyond beautiful images, Moonbox adds a new dimension, letting you chat with any Nobody NFT character for an immersive journey into their unique stories.</br></br>Uncover the mysteries of Nobody NFT firsthand with the Moonbox app. Unveil the untold yourself.",
-    "chat_with_me": "Chat with me...",
-    "presale": "Presale",
-    "public_sale": "Public sale",
+    "chat_with_me": "Chat...",
+    "presale": "Mint",
+    "public_sale": "Airdrop",
     "refund": "Refund",
-    "receive_waitlist": "Receive Waitlist"
+    "presale_time": "Feb 1 8:00 PM - Feb 3 8:00 PM (UTC+8)",
+    "public_sale_time": "Feb 3 8:00 PM - Feb 4 8:00 PM (UTC+8)",
+    "refund_time": "Start at Feb 4 8:00 PM (UTC+8)",
+    "join_waitlist": "Join the waitlist",
+    "mint": "Mint",
+    "mint_time": "Feb 1-4 08:00 (UTC+8)",
+    "talk_to_me": "TALK TO ME",
+    "nobody_content_1": "Nobody NFT blends the world of web3 with AI-powered interactive story telling.",
+    "nobody_content_2": "Each Nobody NFT is a living character. ",
+    "nobody_content_3": "Talk to your beloved characters and learn about their unique stories.",
+    "count_down": "{day}d:{hour}h:{minute}m:{second}s"
   }
 }

@@ -29,9 +29,19 @@
     "nobody_story": "NOBODY的起源故事",
     "nobody_story_content": "它貫穿三部曲：《太空巴士》、《意外》和《降臨》。 由於太空巴士的機械故障，乘客發現自己被迫降落在地球上。 為了保護自己和他們的家園星球，這些外星生物秘密地與地球人融合，放棄了他們的真實身份。</br></br>因此，他們變成了Nobody：一個身份未知的神秘存在。 Moonbox 是Nobody 宇宙，Moonbox 是一款由人工智慧驅動的Nobody 收藏應用程式。 除了精美的圖像之外，Moonbox 還增加了一個新的維度，讓您可以與任何Nobody NFT 角色聊天，進入他們獨特故事的沉浸式旅程。</br></br>透過Moonbox 應用程式直接揭開Nobody NFT 的神秘面紗。 揭開不為人知的自己。",
     "chat_with_me": "等你与我聊聊天…",
-    "presale": "預售",
-    "public_sale": "公開販售",
+    "presale": "鑄造",
+    "public_sale": "空投",
     "refund": "退款",
-    "receive_waitlist": "接收候補名單"
+    "presale_time": "2月1日 下午8:00 - 2月3日 下午8:00 (UTC+8)",
+    "public_sale_time": "2月3日 下午8:00 - 2月4日 下午8:00 (UTC+8)",
+    "refund_time": "2月4日 下午8:00開始 (UTC+8)",
+    "join_waitlist": "加入候補名單",
+    "mint": "鑄造",
+    "mint_time": "2月1日-4日 08:00 (UTC+8)",
+    "talk_to_me": "和我聊天吧",
+    "nobody_content_1": "Nobody NFT將Web3和AI驅動的交互式敘事融為一體。",
+    "nobody_content_2": "每個Nobody NFT都是一個鮮活角色。",
+    "nobody_content_3": "和你喜愛的角色聊天，並了解他們的獨特故事。",
+    "count_down": "{day}天{hour}时{minute}分{second}秒"
   }
 }

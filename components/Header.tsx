@@ -21,21 +21,14 @@ const Header:React.FC = () => {
 
   const handleLocaleChange = (locale: String) => {
     startTransition(() => {
-      router.replace(pathname, { locale: locale })
-    })
-  }
-  
-  return <>
-      <header className='absolute z-[100] top-0 flex items-center justify-between w-full px-[16px] mt-[20px] lg:px-[20px] lg:mt-[20px] sm:z-[200]'>
-        <a href='/'>
-          <div className='relative w-[36px] h-[36px] sm:w-[177px] sm:h-[36px] lg:w-[196px] lg:h-[40px] 3xl:w-[236px] 3xl:h-[48px]'>
-            <Image src={(mediaSize?.width || 0) > 640
-              ? "/moonbox_logo_black.png"
-              : "/moonbox_logo_black_mobile.png"} alt='logo' priority={true} fill style={{ objectFit: 'contain' }} />
-          </div>
-        </a>
+      router.replace(pathname, { locale: locale });
+    });
+  };
 
-        <div className=' flex items-center'>
+  return (
+    <>
+      <header className="absolute top-0 z-[100] mt-[20px] flex w-full justify-end px-[20px] sm:z-[200] 4xl:mt-[30px] 4xl:px-[30px]">
+        <div className="flex items-center">
           {/* {(mediaSize?.width || 0) > 640 &&
             <div className=' inline-flex items-end justify-center h-[36px] w-[108px] lg:h-[48px] lg:w-[136px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 hover-btn-shadow'
               onClick={() => {
@@ -216,8 +209,20 @@ const Header:React.FC = () => {
           )}
         </div>
       </header>
-      <div className='hidden sm:block absolute z-[120] w-full h-[100px] bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply'></div>
-  </>
-}
+      <a href="/">
+        <div className="absolute z-[220] ml-[10px] mt-[10px] h-[56px] w-[56px] sm:ml-[20px] sm:mt-[5px] lg:h-[96px] lg:w-[96px] 4xl:mt-[10px]">
+          <Image
+            src="/nobody_logo_yellow.png"
+            alt="logo"
+            priority={true}
+            fill
+            style={{ objectFit: "contain" }}
+          />
+        </div>
+      </a>
+      <div className="absolute top-0 z-[120] hidden h-[120px] w-full bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-white bg-blend-multiply mix-blend-multiply sm:block"></div>
+    </>
+  );
+};
 
-export default Header
+export default Header;

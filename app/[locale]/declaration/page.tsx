@@ -80,10 +80,10 @@ export default function Declaration() {
 
     <div className=" hidden lg:flex fixed left-[40px]  2xl:left-[120px] top-[17%] h-[66%] text-[24px] font-semibold leading-[24px] w-[200px] border-red-500 items-center">
       <div className=" text-white flex-col mr-[20px]">
-        <a href="#nav1" className="anchorItem activeAnchor "><div className="anchor text-right h-[100px] leading-[100px] w-[180px]">{t("spirit")}</div></a>
-        <a href="#nav2" className="anchorItem "><div className="anchor text-right h-[100px] leading-[100px] w-[180px]">{t("mission")}</div></a>
-        <a href="#nav3" className="anchorItem "><div className="anchor text-right h-[100px] leading-[100px] w-[180px]">{t("nft")}</div></a>
-        <a href="#nav4" className="anchorItem "><div className="anchor text-right h-[100px] leading-[100px] w-[180px]">{t("community")}</div></a>
+        <div className="anchor text-right h-[100px] leading-[100px] w-[180px]"><a href="#nav1" className="anchorItem activeAnchor ">{t("spirit")}</a></div>
+        <div className="anchor text-right h-[100px] leading-[100px] w-[180px]"><a href="#nav2" className="anchorItem ">{t("mission")}</a></div>
+        <div className="anchor text-right h-[100px] leading-[100px] w-[180px]"><a href="#nav3" className="anchorItem ">{t("nft")}</a></div>
+        <div className="anchor text-right h-[100px] leading-[100px] w-[180px]"><a href="#nav4" className="anchorItem ">{t("community")}</a></div>
       </div>
       <div className=" border-l border-dashed border-white h-full"></div>
     </div>

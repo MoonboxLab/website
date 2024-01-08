@@ -21,7 +21,7 @@ export default function Home() {
 
   const mediaSize = useSize(document.querySelector("body"));
 
-  const [role, setRole] = useState<string>("role1");
+  const [role, setRole] = useState<string>("role2");
 
   const [video, setVideo] = useState<string>("");
 
@@ -203,7 +203,7 @@ export default function Home() {
                   <div className="grid h-full grid-cols-[46%,auto] gap-[88px] 4xl:gap-[120px] 5xl:gap-[150px]">
                     <div className="flex h-full justify-center">
                       <Tabs
-                        defaultValue="role1"
+                        defaultValue="role2"
                         className="grid h-full w-full grid-rows-[100px,auto]"
                         onValueChange={setRole}
                       >
@@ -564,7 +564,7 @@ export default function Home() {
               </div>
             </div>
             <Tabs
-              defaultValue="role1"
+              defaultValue="role2"
               className="grid h-[550px] w-full grid-rows-[100px,auto]"
               onValueChange={setRole}
             >

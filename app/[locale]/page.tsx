@@ -161,9 +161,9 @@ export default function Home() {
                   />
                   <div className="relative h-full w-full">
                     <Image
-                      src="/nobody_dao.png"
-                      height={820}
-                      width={820}
+                      src="/nobody_community.webp"
+                      height={2463}
+                      width={2463}
                       alt="dao"
                       priority
                       className="absolute right-[6%] top-[50%] w-[42%] translate-y-[-50%] object-cover"
@@ -386,7 +386,7 @@ export default function Home() {
                 <div className="relative w-full pb-[56.25%]">
                   <iframe
                     className="absolute left-0 top-0 h-full w-full rounded-xl"
-                    src="https://www.youtube.com/embed/4oixai0Fgvg?rel=0"
+                    src="https://www.youtube.com/embed/K7KDMH6tyfk?rel=0"
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
@@ -409,7 +409,7 @@ export default function Home() {
               priority
               className="object-cover"
             />
-            <div className="absolute bottom-[100px] z-10 flex w-full flex-col px-[15px]">
+            <div className="absolute bottom-[120px] z-10 flex w-full flex-col px-[15px]">
               <div
                 className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                 onClick={() => {
@@ -531,7 +531,7 @@ export default function Home() {
               />
             )}
             <Image
-              src="/nobody_dao.png"
+              src="/nobody_community.webp"
               height={360}
               width={360}
               alt="dao"

@@ -409,7 +409,7 @@ export default function Home() {
               priority
               className="object-cover"
             />
-            <div className="absolute bottom-[120px] z-10 flex w-full flex-col px-[15px]">
+            <div className="absolute bottom-[20%] z-10 flex w-full flex-col px-[15px]">
               <div
                 className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                 onClick={() => {

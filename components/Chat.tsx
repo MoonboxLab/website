@@ -71,6 +71,7 @@ const Chat = (props: ChatProps) => {
         }}
       >
         <Input
+          enterKeyHint="send"
           placeholder={t("chat_with_me")}
           className="h-[48px] w-full flex-none  rounded-[28px] border-[2px] border-black bg-[#FFD600] px-[20px] text-[16px] font-normal leading-[16px] outline-none placeholder:text-[16px] placeholder:font-normal placeholder:text-black focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 active:outline-none active:ring-0 4xl:h-[56px] 4xl:rounded-[28px] 4xl:text-[18px] 4xl:leading-[18px] 4xl:placeholder:text-[18px] 5xl:h-[64px]"
           value={input}

@@ -400,16 +400,19 @@ export default function Home() {
 
       {(mediaSize?.width || 0) <= 1024 && (
         <div className="w-full bg-white">
-          <div className="relative h-screen w-full">
-            <Header />
+          <div className="relative h-auto w-full">
+            <div className="absolute top-0 w-full">
+              <Header />
+            </div>
             <Image
               src="/home_bg_mint_mobile_1.jpg"
-              fill
+              width={1080}
+              height={1920}
               alt="mint"
               priority
-              className="object-cover"
+              className="w-full object-contain"
             />
-            <div className="absolute bottom-[20%] z-10 flex w-full flex-col px-[15px]">
+            <div className="absolute bottom-[15%] z-10 flex w-full flex-col px-[15px]">
               <div
                 className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                 onClick={() => {

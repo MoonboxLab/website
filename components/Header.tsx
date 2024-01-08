@@ -28,9 +28,9 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="relative z-[100] py-[15px] flex w-full justify-between px-[20px] sm:z-[200] 4xl:py-[20px]">
+    <header className="relative z-[100] py-[8px] flex w-full justify-between px-[20px] sm:z-[200]">
       <Link href={"/"} >
-        <div className=" relative ml-[10px]  h-[56px] w-[56px] sm:ml-[20px] lg:h-[80px] lg:w-[80px]">
+        <div className=" relative ml-[0px]  h-[56px] w-[56px] sm:ml-[0px] lg:h-[80px] lg:w-[80px]">
           <Image
             src="/nobody_logo_yellow.png"
             alt="logo"

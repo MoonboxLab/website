@@ -103,17 +103,12 @@ const Header: React.FC = () => {
                   </div>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                {/* <span className="h-[30px] w-full text-center text-[18px] leading-[30px] font-semibold">
-                  Connect Wallet
-                </span> */}
-              </DropdownMenuItem>
               <Link href={"/declaration"} >
-                <DropdownMenuItem>
-                  <span className="h-[30px] w-full text-center text-[18px] leading-[30px] font-semibold">
+                {/* <DropdownMenuItem> */}
+                  <span className="text-center text-[18px] leading-[30px] hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] font-semibold">
                     {t('header_declaration')}
                   </span>
-                </DropdownMenuItem>
+                {/* </DropdownMenuItem> */}
               </Link>
               <CustomConnectButton />
             </DropdownMenuContent>

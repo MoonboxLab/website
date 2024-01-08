@@ -1,12 +1,14 @@
 "use client"
 import Header from "@/components/Header";
+import { useSize } from "ahooks";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect } from "react";
 
 export default function Declaration() {
   const t = useTranslations('Declaration');
-
+  const mediaSize = useSize(document.querySelector("body"));
+  
   useEffect(() => {
     // 获取导航菜单项
     const navItems = document.querySelectorAll('.anchorItem');
@@ -21,7 +23,7 @@ export default function Declaration() {
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
-          const offset = 250; // 自定义的偏移量
+          const offset = (mediaSize?.width || 0) > 1500 ? 250 : 180; // 自定义的偏移量
 
           // 计算目标元素的距离页面顶部的偏移量，并滚动到相应位置
           const targetOffsetTop = targetElement.offsetTop - offset;
@@ -35,13 +37,15 @@ export default function Declaration() {
 
     // 监听滚动事件
     window.addEventListener('scroll', () => {
+      const offset = (mediaSize?.width || 0) > 1500 ? 250 : 180; // 自定义的偏移量
+ 
       var isChange = false;
       // 遍历目标部分，检查当前滚动位置与目标部分的位置关系
       document.querySelectorAll('h1').forEach((section) => {
         const rect = section.getBoundingClientRect();
 
         // 如果目标部分在可视区域内，则更新对应导航项的样式
-        if (rect.top <= window.innerHeight && rect.bottom > 250) {
+        if (rect.top <= window.innerHeight && rect.bottom > offset) {
           const targetId = section.getAttribute('id');
 
           if (isChange) {
@@ -70,7 +74,7 @@ export default function Declaration() {
       <Header />
     </div>
 
-    <div className=" fixed right-[24px] bottom-[10px] w-[300px] opacity-30 sm:w-0 2xl:opacity-100 2xl:right-[142px] xl:bottom-[50px] 3xl:bottom-[80px]  2xl:w-[300px] 3xl:w-[400px] 4xl:w-[500px] h-[700px]">
+    <div className=" fixed right-[24px] bottom-[2px] w-[300px] opacity-30 sm:w-0 2xl:opacity-100 2xl:right-[142px] xl:bottom-[30px] 3xl:bottom-[80px]  2xl:w-[300px] 3xl:w-[400px] 4xl:w-[450px] h-[500px]">
       <Image src={"/declaration_ill.webp"} alt="ill" fill style={{ objectFit: 'contain' }} />
     </div>
 
@@ -88,7 +92,7 @@ export default function Declaration() {
       <div className=" border-l border-dashed border-white h-full"></div>
     </div>
 
-    <div className=" relative z-10 max-w-[720px] mx-auto lg:ml-[298px] 2xl:ml-[398px] px-4 sm:px-3 pt-[140px] lg:pt-[250px] pb-12 sm:pb-[100px] lg:pb-[200px] h-auto ">
+    <div className=" relative z-10 max-w-[720px] mx-auto lg:ml-[298px] 2xl:ml-[398px] px-4 sm:px-3 pt-[140px] lg:pt-[180px] 3xl:pt-[250px] pb-12 sm:pb-[100px] lg:pb-[200px] h-auto ">
       <h1 id="nav1" className="title mb-[40px] lg:mb-[60px] text-[44px] lg:text-[60px] 3xl:text-[72px] font-semibold leading-[36px] lg:leading-[60px] text-white">{t("title1")}</h1>
       <p className=" text-[18px] lg:text-[22px] 3xl:text-[24px] font-medium leading-[30px] lg:leading-[44px] 3xl:leading-[48px] text-white">{t.rich('subtitle1', { br: () => <br /> })}
       </p>

@@ -1,55 +1,39 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
+
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { mainnet, goerli } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 import {
   RainbowKitProvider,
-  getDefaultWallets,
   connectorsForWallets,
-} from '@rainbow-me/rainbowkit';
+} from "@rainbow-me/rainbowkit";
 import {
-  argentWallet,
-  trustWallet,
-  ledgerWallet,
   coinbaseWallet,
   walletConnectWallet,
   okxWallet,
   metaMaskWallet,
-} from '@rainbow-me/rainbowkit/wallets';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  goerli,
-} from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
-import CustomAvatar from '@/components/CustomAvatar';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
+} from "@rainbow-me/rainbowkit/wallets";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
-    goerli,
-    // mainnet,
-    // polygon,
-    // optimism,
-    // arbitrum,
-    // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+      ? [goerli]
+      : [mainnet]),
   ],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID as string }),
-    publicProvider()]
+    publicProvider(),
+  ],
 );
 
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string;
 
-const demoAppInfo = {
-  appName: 'Connect Wallet',
-};
-
 const connectors = connectorsForWallets([
   {
-    groupName: 'Recommended',
+    groupName: "Recommended",
     wallets: [
       metaMaskWallet({ projectId, chains }),
       okxWallet({ projectId, chains }),
@@ -58,10 +42,8 @@ const connectors = connectorsForWallets([
   },
   {
     groupName: "More",
-    wallets: [
-      walletConnectWallet({ projectId, chains })
-    ]
-  }
+    wallets: [walletConnectWallet({ projectId, chains })],
+  },
 ]);
 
 const wagmiConfig = createConfig({
@@ -78,9 +60,7 @@ export function WagmiProviders({ children }: { children: React.ReactNode }) {
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider
         chains={chains}
-        appInfo={demoAppInfo}
         modalSize="compact"
-        avatar={CustomAvatar}
       >
         {mounted && children}
       </RainbowKitProvider>

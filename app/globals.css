@@ -88,6 +88,10 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none; /* 隐藏Chrome和Safari浏览器上的滚动条 */
   }
+
+  .activeAnchor {
+    @apply text-[rgba(255,214,0,1)] relative after:absolute after:top-[8px] after:right-[-32px] after:border-t-[6px] after:border-transparent after:border-[6px] after:border-l-white;
+  }
 }
 
 .fp-watermark {
@@ -114,3 +118,12 @@ video {
 .Toastify {
   --toastify-text-color-light: #000;
 }
+
+.grid-rows-10 {
+  grid-template-rows: repeat(10, minmax(0, 1fr));
+}
+
+.row-span-9 {
+  grid-row: span 9 / span 9;
+}
+

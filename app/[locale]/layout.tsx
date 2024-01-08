@@ -7,7 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { ToastContainer } from 'react-toastify';
 
 import { Inter } from 'next/font/google'
-import { WagmiProviders } from '../wagmiProvider'
+import { WagmiProviders } from '../provider'
 import Header from '@/components/Header_Backup';
 import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
@@ -56,19 +56,19 @@ export default async function LocaleLayout({
 }
 
 export const metadata: Metadata = {
-  title: 'Moonbox',
+  title: 'Nobody',
   description: 'Bring life to NFTs',
   openGraph: {
-    title: 'Moonbox',
+    title: 'Nobody',
     description: 'Bring life to NFTs',
     type: "website",
     images: '/open-graph.jpg',
-    url: "https://moonbox.com"
+    url: "https://nobody.xyz"
   },
   twitter: {
     card: "summary_large_image",
-    title: 'Moonbox',
+    title: 'Nobody',
     description: 'Bring life to NFTs',
-    images: ['https://moonbox.com/open-graph.jpg'],
+    images: ['https://nobody.xyz/open-graph.jpg'],
   },
 }

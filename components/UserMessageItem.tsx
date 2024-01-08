@@ -1,19 +1,25 @@
-import Image from "next/image"
+import Image from "next/image";
 
 type UserMessageItemProps = {
-  message: String
-}
+  message: String;
+};
 
-export default function UserMessageItem(props:UserMessageItemProps) {
-  const { message } = props
+export default function UserMessageItem(props: UserMessageItemProps) {
+  const { message } = props;
 
-  return <div className="flex mb-[30px] justify-end">
-    <div className=" rounded-[12px] bg-[#FFE65AFF] sm:px-[18px] sm:py-[18px] sm:text-[18px] sm:leading-[24px] sm:font-normal max-w-[700px] 4xl:max-w-[800px] text-[16px] leading-[21px] font-medium p-[12px]">
-      {message}
+  return (
+    <div className="mb-[30px] flex flex-col items-end">
+      <div className="max-w-[700px] rounded-[12px] bg-white/80 px-[14px] py-[8px] text-[16px] font-medium leading-[21px] text-black sm:px-[14px] sm:py-[10px] sm:font-normal sm:leading-[24px] 4xl:max-w-[800px] 4xl:text-[18px]">
+        {message}
+      </div>
+      <Image
+        className="mr-[8px] h-[8px]"
+        src="/user_message_bg.png"
+        width={15}
+        height={8}
+        alt="message"
+        priority
+      />
     </div>
-
-    <div className="w-[32px] h-[32px] ml-[6px] sm:ml-[10px] sm:w-[56px] sm:h-[56px] rounded-full relative shrink-0 ">
-      <Image src="/user_message_avatar.png" alt="chat avatar" width={56} height={56} priority />
-    </div>
-  </div>
+  );
 }

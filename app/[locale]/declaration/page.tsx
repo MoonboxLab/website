@@ -74,7 +74,7 @@ export default function Declaration() {
       <Header />
     </div>
 
-    <div className=" fixed right-[24px] bottom-[2px] w-[300px] opacity-30 sm:w-0 2xl:opacity-100 2xl:right-[142px] xl:bottom-[30px] 3xl:bottom-[80px]  2xl:w-[300px] 3xl:w-[400px] 4xl:w-[450px] h-[500px]">
+    <div className=" fixed right-[24px] bottom-[2px] w-[300px] opacity-30 sm:w-0 2xl:opacity-100 2xl:right-[142px] xl:bottom-[30px] 3xl:bottom-[80px]  2xl:w-[300px] 3xl:w-[420px] 4xl:w-[500px] 4xl:h-[640px] h-[500px]">
       <Image src={"/declaration_ill.webp"} alt="ill" fill style={{ objectFit: 'contain' }} />
     </div>
 

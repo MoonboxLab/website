@@ -37,8 +37,9 @@ const Chat = (props: ChatProps) => {
   }, [chatListBottomRef.current?.scrollHeight, messages]);
 
   return (
-    <div className="relative flex h-full flex-col px-[16px] sm:px-0 sm:pt-[40px] 4xl:pt-[60px]" onWheel={(event) => {
+    <div className="relative flex h-full flex-col px-[16px] sm:px-0 sm:pt-[40px] 4xl:pt-[60px]" onWheelCapture={(event) => {
       event.stopPropagation();
+      props.fullpageApi?.setAllowScrolling(false, "up, down")
     }}>
       <div
         className={clsx(
@@ -50,9 +51,13 @@ const Chat = (props: ChatProps) => {
           props.role === 5 && 'bg-[url("../public/nobody_role_5_bg.png")]',
         )}
         ref={chatListBottomRef}
-        onScroll={(event) => {
-          event.stopPropagation();
-          props.fullpageApi?.setAllowScrolling(false, "up, down")
+        onScroll={() => {
+          // props.fullpageApi?.setAllowScrolling(false, "up, down")
+        }}
+        onWheel={(event) => {
+          // props.fullpageApi?.setAllowScrolling(false, "up, down")
+          // event.stopPropagation();
+          // return false;
         }}
       >
         <div className="absolute top-0 w-full">

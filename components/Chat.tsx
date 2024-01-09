@@ -11,6 +11,7 @@ import clsx from "clsx";
 type ChatProps = {
   role: number;
   character: string;
+  fullpageApi?: any
 };
 
 const Chat = (props: ChatProps) => {
@@ -36,7 +37,10 @@ const Chat = (props: ChatProps) => {
   }, [chatListBottomRef.current?.scrollHeight, messages]);
 
   return (
-    <div className="relative flex h-full flex-col px-[16px] sm:px-0 sm:pt-[40px] 4xl:pt-[60px]">
+    <div className="relative flex h-full flex-col px-[16px] sm:px-0 sm:pt-[40px] 4xl:pt-[60px]" onWheelCapture={(event) => {
+      event.stopPropagation();
+      props.fullpageApi?.setAllowScrolling(false, "up, down")
+    }}>
       <div
         className={clsx(
           "hide-scrollbar relative h-full overflow-y-scroll bg-contain bg-center bg-no-repeat",
@@ -47,6 +51,14 @@ const Chat = (props: ChatProps) => {
           props.role === 5 && 'bg-[url("../public/nobody_role_5_bg.png")]',
         )}
         ref={chatListBottomRef}
+        onScroll={() => {
+          // props.fullpageApi?.setAllowScrolling(false, "up, down")
+        }}
+        onWheel={(event) => {
+          // props.fullpageApi?.setAllowScrolling(false, "up, down")
+          // event.stopPropagation();
+          // return false;
+        }}
       >
         <div className="absolute top-0 w-full">
           {messages.map((item) => {

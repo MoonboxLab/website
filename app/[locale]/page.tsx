@@ -115,9 +115,12 @@ export default function Home() {
           navigation
           scrollHorizontally={false}
           credits={{ enabled: false }}
-          render={() => (
+          scrollOverflow={true}
+          render={({ fullpageApi }) => (
             <ReactFullpage.Wrapper>
-              <div className="section h-screen w-screen">
+              <div className="section h-screen w-screen" onWheel={() => {
+                fullpageApi.setAllowScrolling(true)
+              }}>
                 <div className="relative h-screen w-full bg-white">
                   <Header />
                   <Image
@@ -150,7 +153,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="section h-screen w-screen">
+              <div className="section h-screen w-screen" onWheel={() => {
+                fullpageApi.setAllowScrolling(true)
+              }}>
                 <div className="relative h-screen w-full bg-white pb-[88px] 4xl:pb-[120px]">
                   <Image
                     src="/home_bg_mint_2.png"
@@ -198,7 +203,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="section h-screen w-screen">
+              <div className="section h-screen w-screen" onWheel={() => {
+                fullpageApi.setAllowScrolling(true)
+              }}>
                 <div className="flex h-screen w-full items-center justify-center bg-[#FFD600] px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
                   <div className="grid h-full grid-cols-[46%,auto] gap-[88px] 4xl:gap-[120px] 5xl:gap-[150px]">
                     <div className="flex h-full justify-center">
@@ -320,19 +327,19 @@ export default function Home() {
                           </TabsTrigger>
                         </TabsList>
                         <TabsContent value="role1">
-                          <Chat role={1} character="liupiaopiao" />
+                          <Chat role={1} character="liupiaopiao" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role2">
-                          <Chat role={2} character="yintianchou" />
+                          <Chat role={2} character="yintianchou" fullpageApi={fullpageApi}  />
                         </TabsContent>
                         <TabsContent value="role3">
-                          <Chat role={3} character="cook" />
+                          <Chat role={3} character="cook" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role4">
-                          <Chat role={4} character="tang" />
+                          <Chat role={4} character="tang" fullpageApi={fullpageApi}  />
                         </TabsContent>
                         <TabsContent value="role5">
-                          <Chat role={5} character="wukong" />
+                          <Chat role={5} character="wukong" fullpageApi={fullpageApi}  />
                         </TabsContent>
                       </Tabs>
                     </div>

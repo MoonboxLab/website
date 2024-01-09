@@ -11,7 +11,7 @@ import clsx from "clsx";
 type ChatProps = {
   role: number;
   character: string;
-  fullpageApi: any
+  fullpageApi?: any
 };
 
 const Chat = (props: ChatProps) => {
@@ -51,7 +51,8 @@ const Chat = (props: ChatProps) => {
         )}
         ref={chatListBottomRef}
         onScroll={(event) => {
-          props.fullpageApi.setAllowScrolling(false, "up")
+          event.stopPropagation();
+          props.fullpageApi?.setAllowScrolling(false, "up, down")
         }}
       >
         <div className="absolute top-0 w-full">

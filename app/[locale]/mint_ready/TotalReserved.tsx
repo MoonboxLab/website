@@ -1,10 +1,12 @@
 import { MAX_NFT_COUNT } from "@/constants/nobody_contract"
 import { useSize } from "ahooks"
 import clsx from "clsx"
+import { useTranslations } from "next-intl"
 import { useContractReads } from "wagmi"
 
 export default function TotalReserved() {
   const screenSize = useSize(document.querySelector("body"))
+  const t = useTranslations("Mint")
 
   const mintedCount = 2234
 
@@ -17,7 +19,7 @@ export default function TotalReserved() {
   })
 
   return <div className=" w-full xl:w-[420px] sm:h-[268px] sm:p-[30px] sm:rounded-[24px] sm:border-black sm:border-[3px] sm:bg-white sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-    <h3 className=" text-white sm:text-black text-[21px] sm:text-[24px] font-bold leading-6 mb-[20px] mt-[30px] sm:mt-0">Total Reserved</h3>
+    <h3 className=" text-white sm:text-black text-[21px] sm:text-[24px] font-bold leading-6 mb-[20px] mt-[30px] sm:mt-0">{t('TotalReserve.title')}</h3>
 
     <div className={clsx(
       { "rounded-[16px] border-black border-[2px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] px-[16px] py-[30px]": (screenSize?.width || 0) <= 640 }
@@ -25,7 +27,7 @@ export default function TotalReserved() {
       <div>
         <p className="text-[36px] sm:mt-[40px] sm:text-[36px] font-bold leading-[30px]">0 ETH</p>
         <p className=" mt-[20px] flex justify-between text-[18px] font-semibold leading-[18px]">
-          <span>10% minted</span>
+          <span>10% {t("TotalReserve.minted")}</span>
           <span>1000/{MAX_NFT_COUNT}</span>
         </p>
         <div className=" relative mt-[12px]">
@@ -41,7 +43,7 @@ export default function TotalReserved() {
           }
 
         </div>
-        <p className=" mt-[40px] text-[14px] font-semibold leading-[18px]">Nobody minting remains open over 100% cap. The actual airdrop order follows whitelist tiers.</p>
+        <p className=" mt-[40px] text-[14px] font-semibold leading-[18px]">{t('TotalReserve.desc')}</p>
       </div>
     </div>
   </div>

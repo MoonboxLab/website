@@ -58,5 +58,56 @@
     "subtitle3": "Nobody NFT是由 Nobody 携手 First Creator 周星馳先生共同推出的NFT系列，總量為一萬個。Nobody NFT 是一張社區憑證，持有者將可以成為 Nobody 的一份子，共同參與項目的發展，並想有許多特殊權益：包括但不限於提案、共創、投票、Nobody IP 創作。<br></br><br></br>Nobody NFT 的特別之處在於，每個Nobody NFT都各自是鮮活、有故事的角色。持有者可以通過 Nobody App 與這些角色聊天，瞭解他們的性格、愛好、背景故事，在互動過程中這些角色的形象也將更為豐富、立體。<br></br><br></br>我們也將致力於打造 Nobody IP，結合 Nobody First Creator 周星驰先生过往成功經驗並融入新的機制，透過好的作品將 Nobody IP 帶入大眾視野，破除過往 Web3 原生 IP 無法和 Web2 主流市場共存共榮的障礙和壁壘。",
     "title4": "Nobody 社區",
     "subtitle4": "以「歡笑」、「創造」、「分享」作為核心，Nobody社區將會展現開放性和共融性，追求突破傳統界線，鼓勵大家融合不同元素，創造出豐富多彩的作品。<br></br><br></br>2024年，我們已經替大家準備了非常豐富的共創場景，目前仍以影視為主：包括但不限於周星馳先生《美人魚2》和《少林女足》的電影片段共創、未來其他作品的選角、Nobody IP的影視作品內容⋯⋯。而我們目前也積極尋求向更多領域擴展，像是潮牌、藝術、音樂⋯⋯，匯聚大家的想法共創出優質的內容！"
+  },
+  "Mint": {
+    "sectionTitle": "Nobody 集合鑄造",
+    "mintUserTitle": "鑄造用户",
+    "mintRuleTitle": "鑄幣規則",
+    "Rule": {
+      "title1": "一、鑄造",
+      "content1": "1. 鑄造時間：<br></br>2024年2月1日20:00（UTC+8）至2月3日20:00（UTC+8）。<br></br><br></br>2. 鑄造價格：<br></br>0.19527E + 手續費<br></br><br></br>3. NFT總量：<br></br>10,000 個 Nobody NFT<br></br><br></br>4. 可供鑄造的 Nobody NFT數量和白名單數量：<br></br>均為9,500 個。<br></br><br></br>剩餘500個NFT將按以下方式進行分配：<br></br>投資人：350個<br></br>Nobody團隊：50個<br></br>星爺親友：50個<br></br>社區發展基金：50個。<br></br><br></br>鑄造結束後，任何未鑄造的 Nobody NFT 都將被歸入國庫。<br></br><br></br>5. 誰具有鑄造資格？<br></br>所有人都能參與 Nobody NFT 鑄造，請先登錄 nobody.xyz/mint 後，通過連接錢包來查驗自己是否具有白名單資格。<br></br><br></br>• 白名單持有者：優先級最高，只要在鑄造時間內打款成功，將可以保證獲得Nobody NFT。為了避免 GAS WAR，請合理安排打款時間。<br></br><br></br>• 非白單持有者：可以參與鑄造，但優先級低於白名單持有者。非白名單持有者打款成功後，即參與抽獎；鑄造開始後第一小時打款，抽獎享有9.527倍中獎概率加成。獎池內的 NFT 數量由白名單持有者的實際打款數量而定。舉例：假如鑄造結束後，共有4,500個白名單持有者打款和10,000個非白名單持有者打款，則10,000個非白名單持有者可抽獎的 NFT 數量為 5,000個（9,500-4,500）。抽獎結果將在「抽獎與空投」階段公布。<br></br><br></br>6. 每個錢包可以鑄造多少個 Nobody NFT？<br></br>每個錢包地址最多僅能鑄造 1 個 Nobody NFT。<br></br><br></br>7. 我要用哪個錢包地址鑄造？<br></br>如果你擁有白名單，請使用具備白名單資格的地址進行鑄造。如果你未持有白名單，可使用任意 ERC-20 錢包地址進行鑄造。<br></br><br></br>8. 開圖時間：<br></br>2024年2月7日。<br></br><br></br>9. 創作費用（版稅）是多少，將如何使用？<br></br>5%。我們將把資金用於聘請更多全職團隊成員，資助運營，並為我們的社區提供更多價值。<br></br><br></br>",
+      "title2": "二、抽獎與空投",
+      "content2": "1. 抽獎與空投時間：<br></br>2024年2月3日20:00（UTC+8）至2月4日20:00（UTC+8）。<br></br><br></br>2. 抽獎與空投詳情：<br></br>白名單持有者：只要你在鑄造期間成功打款，無須更多操作，我們會在鑄造結束後24小時內，將 NFT 以盲盒形式空投至你的錢包。<br></br><br></br>非白名單持有者：如果你參與了打款抽獎，在鑄造結束後24小時內，你可以在個人鑄造頁面連接錢包查詢是否中獎（鑄造頁面：nobody.xyz/mint）。<br></br>中獎者無須更多操作，我們會在鑄造結束後24小時內，將 NFT 以盲盒形式空投至你的錢包。<br></br><br></br>屆時我們也會在 Nobody 的社群媒體上發佈鑄造成功的名單，只要你的錢包地址出現在名單上，就保證能夠收到 NFT 的空投。<br></br><br></br>",
+      "title3": "三、退款",
+      "content3": "1. 退款時間：<br></br>2024年2月4日20:00（UTC+8）開始。<br></br><br></br>2. 退款詳情：<br></br>如果連接錢包後，在個人鑄造頁面顯示狀態為未中獎，則表示你未能成功鑄造Nobody NFT。<br></br><br></br>在鑄造結束後48小時內，用戶將可以領取退款（退款頁面：nobody.xyz/mint）。"
+    },
+    "MainSection": {
+      "title": "鑄造你的NFT",
+      "supply": "供應",
+      "price": "供應",
+      "maxAddressCount": "每個地址的最大鑄造量",
+      "mintFinish": "每個地址的最大鑄造量",
+      "mintReady": "",
+      "contractInfo": "預售智能合約資訊：",
+      "firsthourTip": "第1小时打款中奖概率高达9.527倍，<span>还剩{minutes}分钟</span>",
+
+      "connect&check": "請連結錢包查看您的地址是否有whitelist權限",
+      "connect&MintEnd": "Mint已結束，請連結錢包查看您的NFT Mint結果",
+      "whitelist&mint": "Mint火爆進行中，你在Whitelist名單中，立即Mint鎖定你的Nobody",
+      "nowhitelist&mint": "Mint火爆進行中，立即參與Mint進行抽獎，好運等著你",
+      "nowhitelist&mintstop": "Mint太火爆了，非Whitelist用戶的抽獎已停止，請關註二級市場",
+      "whitelist&mintdone": "恭喜成為Nobody成員，Mint結束後透過Airdrop傳送NFT",
+      "nowhitelist&mintdone": "感謝參與，Mint結束後將進行抽獎與公示，你可以在這裡查看是否中獎",
+
+      "raflle&select": "恭喜獲得Nobody，Mint結束後透過Airdrop向你的地址發送NFT",
+      "raffle&noselect": "很遺憾沒有抽中Nobody，你可以在退款時間開啟後領取退款",
+      "raffle&nojoin": "Nobody NFT Mint已結束，請在二級市場中關注Nobody",
+
+      "refund&noselect": "很遺憾你未抽中Nobody，請進行退費操作"
+    },
+    "TotalReserve": {
+      "title": "預留總額",
+      "minted": "鑄造的",
+      "desc": "NFT 繼續鑄造超過 100% 的上限。 實際空投順序遵循白名單等級。"
+    },
+    "Schedule": {
+      "title": "鑄造時間表",
+      "refund": "退款",
+      "refundTime": "Start from Feb 4, 8 PM (UTC+8)",
+      "raffle": "抽獎與空投",
+      "raffleTime": "Feb 3, 8 PM - Feb 4, 8 PM (UTC+8)",
+      "mint": "鑄造",
+      "mintTime": "Feb 1, 8 PM - Feb 3, 8 PM (UTC+8)"
+    }
   }
 }

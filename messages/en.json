@@ -78,9 +78,11 @@
       "maxAddressCount": "Max mint per address",
       "mintFinish": "Mint finish",
       "mintReady": "",
-      "contractInfo": "Smart Contract Info",
+      "contractInfo": "Smart Contract Info: ",
       "firsthourTip": "The probability of winning in the first hour is as high as 9.527 times, <span>25 minutes left</span>",
 
+      "ready&whitelist": "你在Whitelist名單中，在Mint時間準時參與，鎖定你的Nobody",
+      "ready&nowhitelist": "請在Mint時間參與，在第一小時Mint有9.527倍機會獲得Nobody",
       "connect&check": "Please connect the wallet and check whitelist permissions.",
       "connect&MintEnd": "Mint已結束，請連結錢包查看您的NFT Mint結果",
       "whitelist&mint": "Mint火爆進行中，你在Whitelist名單中，立即Mint鎖定你的Nobody",
@@ -93,7 +95,11 @@
       "raffle&noselect": "很遺憾沒有抽中Nobody，你可以在退款時間開啟後領取退款",
       "raffle&nojoin": "Nobody NFT Mint已結束，請在二級市場中關注Nobody",
 
-      "refund&noselect": "很遺憾你未抽中Nobody，請進行退費操作"
+      "refund&noselect": "很遺憾你未抽中Nobody，請進行退費操作",
+
+      "connectwallet": "Connect Wallet",
+      "mint": "Mint",
+      "refund": "Claim"
     },
     "TotalReserve": {
       "title": "Total Reserved",
@@ -103,7 +109,7 @@
     "Schedule": {
       "title": "Mint Schedule",
       "refund": "Refund",
-      "refundTime": "Start from Feb 4, 8 PM (UTC+8)",
+      "refundTime": "Start on Feb 4, 8 PM (UTC+8)",
       "raffle": "Raffle and Airdrop",
       "raffleTime": "Feb 3, 8 PM - Feb 4, 8 PM (UTC+8)",
       "mint": "Mint",

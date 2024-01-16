@@ -2,13 +2,14 @@ import { MAX_NFT_COUNT } from "@/constants/nobody_contract"
 import { useSize } from "ahooks"
 import clsx from "clsx"
 import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 import { useContractReads } from "wagmi"
 
 export default function TotalReserved() {
   const screenSize = useSize(document.querySelector("body"))
   const t = useTranslations("Mint")
 
-  const mintedCount = 2234
+  const [mintedCount, setMintedCount] = useState<number>(0)
 
   // TODO: 持续读取合约相关数据
   const { data: contractData } = useContractReads({
@@ -17,6 +18,10 @@ export default function TotalReserved() {
     ],
     watch: true,
   })
+
+  useEffect(() => {
+
+  }, [contractData])
 
   return <div className=" w-full xl:w-[420px] sm:h-[268px] sm:p-[30px] sm:rounded-[24px] sm:border-black sm:border-[3px] sm:bg-white sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
     <h3 className=" text-white sm:text-black text-[21px] sm:text-[24px] font-bold leading-6 mb-[20px] mt-[30px] sm:mt-0">{t('TotalReserve.title')}</h3>

@@ -81,6 +81,8 @@
       "contractInfo": "預售智能合約資訊：",
       "firsthourTip": "第1小时打款中奖概率高达9.527倍，<span>还剩{minutes}分钟</span>",
 
+      "ready&whitelist": "你在Whitelist名單中，在Mint時間準時參與，鎖定你的Nobody",
+      "ready&nowhitelist": "請在Mint時間參與，在第一小時Mint有9.527倍機會獲得Nobody",
       "connect&check": "請連結錢包查看您的地址是否有whitelist權限",
       "connect&MintEnd": "Mint已結束，請連結錢包查看您的NFT Mint結果",
       "whitelist&mint": "Mint火爆進行中，你在Whitelist名單中，立即Mint鎖定你的Nobody",
@@ -93,7 +95,12 @@
       "raffle&noselect": "很遺憾沒有抽中Nobody，你可以在退款時間開啟後領取退款",
       "raffle&nojoin": "Nobody NFT Mint已結束，請在二級市場中關注Nobody",
 
-      "refund&noselect": "很遺憾你未抽中Nobody，請進行退費操作"
+      "refund&noselect": "很遺憾你未抽中Nobody，請進行退費操作",
+      
+      "connectwallet": "連接錢包",
+      "mint": "鑄造",
+      "refund": "退款"
+
     },
     "TotalReserve": {
       "title": "預留總額",
@@ -103,7 +110,7 @@
     "Schedule": {
       "title": "鑄造時間表",
       "refund": "退款",
-      "refundTime": "Start from Feb 4, 8 PM (UTC+8)",
+      "refundTime": "Start on Feb 4, 8 PM (UTC+8)",
       "raffle": "抽獎與空投",
       "raffleTime": "Feb 3, 8 PM - Feb 4, 8 PM (UTC+8)",
       "mint": "鑄造",

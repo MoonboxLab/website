@@ -10,7 +10,7 @@ import { useAccount, useContractReads, useContractWrite, usePrepareContractWrite
 import { useConnectModal } from "@rainbow-me/rainbowkit"
 import { useEffect, useMemo, useState } from "react"
 import { useCountDown } from "ahooks"
-import { ADDRESS, MAX_AMOUNT_PRE_ADDRESS, MAX_NFT_COUNT, MINT_END_TIME, MINT_FIRST_HOUR, MINT_START_TIME, MintPeriod, NFT_SALE_PRICE, NOBODY_CONTRACT_ADDRESS, NOBODY_CONTRACT_INFO, NO_WHITELIST_STOP_MINT, RAFFLE_END_TIME, RAFFLE_START_TIME, REFUND_END_TIME, REFUND_START_TIME } from "@/constants/nobody_contract"
+import { ADDRESS, MAX_AMOUNT_PRE_ADDRESS, MAX_NFT_COUNT, MINT_END_TIME, MINT_FIRST_HOUR, MINT_START_TIME, MintPeriod, NFT_SALE_PRICE, NOBODY_CONTRACT_ADDRESS, NOBODY_CONTRACT_INFO, RAFFLE_END_TIME, RAFFLE_START_TIME, REFUND_END_TIME, REFUND_START_TIME } from "@/constants/nobody_contract"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import { formatEther } from "viem"
@@ -29,6 +29,7 @@ export default function MintPage() {
 
   const [isClaimed, setClaimed] = useState<boolean>(false);
 
+  const [isPublicReserveStop, setPublicReserveStop] = useState<boolean>(true);
 
   const { data: addressContractInfo } = useContractReads({
     contracts: [
@@ -51,6 +52,10 @@ export default function MintPage() {
         ...NOBODY_CONTRACT_INFO,
         functionName: "refunded",
         args: [address as ADDRESS]
+      },
+      {
+        ...NOBODY_CONTRACT_INFO,
+        functionName: "isPublicReserveActive",
       }
     ],
     watch: true
@@ -60,17 +65,22 @@ export default function MintPage() {
   useEffect(() => {
     console.log(addressContractInfo)
     if (address && addressContractInfo) {
-      // 检查地址状态
+      /// 检查地址状态
       // 1. 是否是白名单地址
       // 2. 是否提交过 Mint 转款
 
-      // TODO: 对接获取抽奖数据，用户 Deposit 参与地址数据
+      /// 抽奖结果是否产生
       // 3. 判断是否参与
       // 4. 参与抽奖结果
 
       // 5. 可退款地址是否已执行退款操作
-
-      const [whitelistResult, reservedResult, raffleWonResult, refundResult] = addressContractInfo as { error?: any, result?: any, status: any }[]
+      const [
+        whitelistResult,
+        reservedResult,
+        raffleWonResult,
+        refundResult,
+        publicReserveResult
+      ] = addressContractInfo as { error?: any, result?: any, status: any }[]
 
       if (whitelistResult.status == "success") {
         setWhitelist(whitelistResult.result || false)
@@ -86,6 +96,10 @@ export default function MintPage() {
 
       if (refundResult.status == 'success') {
         setClaimed(refundResult.result || false)
+      }
+
+      if (publicReserveResult.status == 'success') {
+        setPublicReserveStop(!publicReserveResult.result)
       }
     }
   }, [address, addressContractInfo])
@@ -124,12 +138,12 @@ export default function MintPage() {
       if (isWhitelist && !isDeposited) {
         return true
       }
-      if (!isWhitelist && !isDeposited && !NO_WHITELIST_STOP_MINT) {
+      if (!isWhitelist && !isDeposited && !isPublicReserveStop) {
         return true
       }
     }
     return false
-  }, [address, currentPeriod, isWhitelist, isDeposited, NO_WHITELIST_STOP_MINT])
+  }, [address, currentPeriod, isWhitelist, isDeposited, isPublicReserveStop])
 
   const [countDay, countHour, countMinute, countSecond] = useMemo(() => {
     let countdown
@@ -157,12 +171,13 @@ export default function MintPage() {
   })
 
   // Public mint
-  const { data: publicMintTxResult, isLoading: publicMintLoading, writeAsync: publicSaleMintCall } = useContractWrite({
+  const { data: publicMintTxResult, writeAsync: publicSaleMintCall } = useContractWrite({
     ...publicSaleConfig,
     onError: (err) => {
       toast.error(err.message, {
         closeOnClick: false
       })
+      setIsLoading(false)
     }
   })
 
@@ -171,10 +186,11 @@ export default function MintPage() {
     hash: publicMintTxResult?.hash,
     onSettled(data, err) {
       console.log(data, err)
+      setIsLoading(false)
     },
     onSuccess() {
       toast.dismiss()
-      toast.success("Mint Successfully")
+      toast.success(t("MainSection.mintSuccess"))
     },
     onError(err) {
       toast.dismiss()
@@ -211,15 +227,13 @@ export default function MintPage() {
     },
     onSuccess() {
       toast.dismiss()
-      toast.success("Mint Successfully")
+      toast.success(t("MainSection.mintSuccess"))
     },
     onError(err) {
       toast.dismiss()
       toast.error(err.message)
     }
   })
-
-
 
   const handleMintNFT = async () => {
     if (isLoading) return
@@ -232,13 +246,10 @@ export default function MintPage() {
       }
       if (!isWhitelist && !isDeposited) {
         // public user could mint
-        if (!NO_WHITELIST_STOP_MINT) {
-
+        if (!isPublicReserveStop) {
           await publicMint()
         }
       }
-
-      setIsLoading(false)
     }
   }
 
@@ -246,36 +257,42 @@ export default function MintPage() {
     if (presalePrepareError) {
       console.log(presalePrepareError)
       toast.error(presalePrepareError.message);
+      setIsLoading(false)
       return
     }
 
     if (whitelistMintCall) {
       try {
         await whitelistMintCall()
-        toast.loading("The transaction is pending to be confirmed by the blockchain.")
+        toast.loading(t("MainSection.txPendding"))
 
       } catch (err) {
         console.log(err)
+        setIsLoading(false)
       }
+    } else {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   const publicMint = async () => {
     if (publicPrepareError) {
       console.log(publicPrepareError.cause, publicPrepareError.name, publicPrepareError.stack)
       toast.error(publicPrepareError.message);
+      setIsLoading(false)
       return
     }
     if (publicSaleMintCall) {
       try {
         await publicSaleMintCall()
-        toast.loading("The transaction is pending to be confirmed by the blockchain.")
+        toast.loading(t("MainSection.txPendding"))
       } catch (err) {
         console.log(err)
+        setIsLoading(false)
       }
+    } else {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   const handleRefund = async () => {
@@ -296,9 +313,10 @@ export default function MintPage() {
       if (refundCall) {
         try {
           await refundCall()
-          toast.loading("The transaction is pending to be confirmed by the blockchain.")
+          toast.loading(t("MainSection.txPendding"))
         } catch (err) {
           console.log(err)
+          setIsLoading(false)
         }
       }
     }
@@ -334,7 +352,7 @@ export default function MintPage() {
     },
     onSuccess() {
       toast.dismiss()
-      toast.success("Refund Successfully")
+      toast.success(t("MainSection.refundSuccess"))
     },
     onError(err) {
       toast.dismiss()
@@ -342,14 +360,13 @@ export default function MintPage() {
     }
   })
 
-
   const handleMintStageInfo = () => {
     if (!address) {
       return t("MainSection.connect&minting")
     }
 
     // None whitelist stop deposit if they not deposit yet
-    if (NO_WHITELIST_STOP_MINT && !isDeposited) {
+    if (isPublicReserveStop && !isDeposited && !isWhitelist) {
       return t("MainSection.nowhitelist&mintstop")
     }
 
@@ -546,7 +563,7 @@ export default function MintPage() {
 
               {/* Mint Period */}
               {
-                [MintPeriod.Mint].includes(currentPeriod) && <div className=" w-full mt-[20px] xl:my-[30px] py-[30px] px-[12px] xl:h-[124px] bg-[rgba(255,214,0,0.2)] rounded-[12px] xl:rounded-[16px] flex flex-col lg:flex-row items-center">
+                [MintPeriod.Mint].includes(currentPeriod) && <div className=" w-full mt-[20px] xl:my-[30px] py-[30px] px-[12px] xl:h-[124px] bg-[rgba(255,214,0,0.2)] rounded-[12px] xl:rounded-[16px] flex flex-col lg:flex-row lg:justify-between items-center">
                   <div className=" text-[18px] leading-[24px] font-medium text-left xl:text-left mb-[20px] lg:mb-0 mx-[20px]">
                     {handleMintStageInfo()}
                   </div>

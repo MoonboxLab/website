@@ -103,8 +103,11 @@
       "connectwallet": "連接錢包",
       "mint": "鑄造",
       "refund": "退款",
-      "refunded": "已退款"
+      "refunded": "已退款",
 
+      "mintSuccess": "鑄造成功",
+      "txPendding": "交易正在等待區塊鏈確認",
+      "refundSuccess": "退款成功"
     },
     "TotalReserve": {
       "title": "預留總額",

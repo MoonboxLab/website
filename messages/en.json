@@ -103,7 +103,11 @@
       "connectwallet": "Connect Wallet",
       "mint": "Mint",
       "refund": "Claim",
-      "refunded": "Claimed"
+      "refunded": "Claimed",
+
+      "mintSuccess": "Mint Successfully",
+      "txPendding": "The transaction is pending to be confirmed by the blockchain.",
+      "refundSuccess": "Refund Successfully"
     },
     "TotalReserve": {
       "title": "Total Reserved",

@@ -12,17 +12,27 @@ export const NFT_SALE_PRICE = process.env.NEXT_PUBLIC_TEST_ENV === "true" ? pars
 export const MAX_NFT_COUNT = 10000;
 export const MAX_AMOUNT_PRE_ADDRESS = 1;
 
-export const NO_WHITELIST_STOP_MINT = false;
+export const NO_WHITELIST_STOP_MINT = true;
+
+export enum MintPeriod {
+  Ready,
+  Mint,
+  MintEnd,
+  Raffle,
+  Refund,
+  End,
+}
 
 export const MINT_START_TIME = "2024-02-01 20:00:00";
 export const MINT_END_TIME = "2024-02-03 20:00:00";
-export const MINT_FIRST_HOUR = "2024-02-01 21:00:00"
+
+export const MINT_FIRST_HOUR = "2024-01-01 21:00:00"
 
 export const RAFFLE_START_TIME = "2024-02-03 20:00:00";
 export const RAFFLE_END_TIME = "2024-02-04 20:00:00"
 
 export const REFUND_START_TIME = "2024-02-04 20:00:00";
-export const REFUND_END_TIME = "2024-02-08 20:00:00";
+export const REFUND_END_TIME = "2024-02-18 20:00:00";
 
 
 

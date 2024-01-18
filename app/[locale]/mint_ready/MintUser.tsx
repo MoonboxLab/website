@@ -1,4 +1,4 @@
-import { NFT_SALE_PRICE, NOBODY_CONTRACT_INFO } from "@/constants/nobody_contract"
+import { MintPeriod, NFT_SALE_PRICE, NOBODY_CONTRACT_INFO } from "@/constants/nobody_contract"
 import { formatAddress } from "@/lib/utils"
 import { useLocalStorageState, useSize } from "ahooks"
 import clsx from "clsx"
@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { formatEther } from "viem"
 import { useContractEvent } from "wagmi"
-import { MintPeriod } from "./page"
 import { Search } from "lucide-react"
 
 const ORIGIN_ADDRESS = [
@@ -110,7 +109,7 @@ export default function MintUser(props: MintUserProps) {
     <h3 className="text-white sm:text-black text-[21px] sm:text-[24px] font-bold leading-6 mb-[20px] mt-[30px] sm:mt-0"
     >{t("mintUserTitle")}</h3>
     <div className={clsx(
-      { "rounded-[16px] border-black border-[2px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] px-[16px] py-[20px] max-h-[300px] min-h-[150px]": (screenSize?.width || 0) <= 640 }
+      { "rounded-[16px] border-black border-[2px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] px-[16px] py-[20px] max-h-[330px] min-h-[150px]": (screenSize?.width || 0) <= 640 }
     )}>
       <div className=" text-[18px] font-medium leading-[36px]">
         {

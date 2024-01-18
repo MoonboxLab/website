@@ -8,24 +8,15 @@ import MintSchedule from "./MintSchedule"
 import TotalReserved from "./TotalReserved"
 import { useAccount, useContractReads, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi"
 import { useConnectModal } from "@rainbow-me/rainbowkit"
-import { use, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useCountDown } from "ahooks"
-import { ADDRESS, MAX_AMOUNT_PRE_ADDRESS, MAX_NFT_COUNT, MINT_END_TIME, MINT_FIRST_HOUR, MINT_START_TIME, NFT_SALE_PRICE, NOBODY_CONTRACT_ADDRESS, NOBODY_CONTRACT_INFO, NO_WHITELIST_STOP_MINT, RAFFLE_END_TIME, RAFFLE_START_TIME, REFUND_END_TIME, REFUND_START_TIME } from "@/constants/nobody_contract"
+import { ADDRESS, MAX_AMOUNT_PRE_ADDRESS, MAX_NFT_COUNT, MINT_END_TIME, MINT_FIRST_HOUR, MINT_START_TIME, MintPeriod, NFT_SALE_PRICE, NOBODY_CONTRACT_ADDRESS, NOBODY_CONTRACT_INFO, NO_WHITELIST_STOP_MINT, RAFFLE_END_TIME, RAFFLE_START_TIME, REFUND_END_TIME, REFUND_START_TIME } from "@/constants/nobody_contract"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import { formatEther } from "viem"
 import clsx from "clsx"
 import { toast } from "react-toastify"
 import { Loader2 } from "lucide-react"
-
-export enum MintPeriod {
-  Ready,
-  Mint,
-  MintEnd,
-  Raffle,
-  Refund,
-  End,
-}
 
 export default function MintPage() {
   const { address } = useAccount()
@@ -67,7 +58,6 @@ export default function MintPage() {
 
 
   useEffect(() => {
-
     console.log(addressContractInfo)
     if (address && addressContractInfo) {
       // 检查地址状态
@@ -97,8 +87,6 @@ export default function MintPage() {
       if (refundResult.status == 'success') {
         setClaimed(refundResult.result || false)
       }
-
-      console.log(isDeposited)
     }
   }, [address, addressContractInfo])
 
@@ -115,14 +103,14 @@ export default function MintPage() {
   const [firstHour, firstHourCountdown] = useCountDown({ targetDate: MINT_FIRST_HOUR })
 
   const currentPeriod: MintPeriod = useMemo(() => {
-    const now = moment("2024-02-01 21:00:00")
+    const now = moment("2024-02-01 20:00:00")
     if (now.isBefore(moment(MINT_START_TIME))) {
       return MintPeriod.Ready;
     } else if (now.isBefore(moment(MINT_END_TIME)) && now.isSameOrAfter(moment(MINT_START_TIME))) {
       return MintPeriod.Mint;
     } else if (now.isBefore(moment(RAFFLE_END_TIME)) && now.isSameOrAfter(RAFFLE_START_TIME)) {
       return MintPeriod.Raffle;
-    } else if (now.isAfter(moment(REFUND_START_TIME))) {
+    } else if (now.isBefore(moment(REFUND_END_TIME)) && now.isSameOrAfter(REFUND_START_TIME)) {
       return MintPeriod.Refund;
     } else if (now.isAfter(moment(REFUND_END_TIME))) {
       return MintPeriod.End
@@ -313,7 +301,6 @@ export default function MintPage() {
           console.log(err)
         }
       }
-      setIsLoading(false)
     }
   }
 
@@ -335,6 +322,7 @@ export default function MintPage() {
       toast.error(err.message, {
         closeOnClick: false
       })
+      setIsLoading(false)
     }
   })
 
@@ -342,6 +330,7 @@ export default function MintPage() {
     hash: refundTxResult?.hash,
     onSettled(data, err) {
       console.log(data, err)
+      setIsLoading(false)
     },
     onSuccess() {
       toast.dismiss()
@@ -356,7 +345,7 @@ export default function MintPage() {
 
   const handleMintStageInfo = () => {
     if (!address) {
-      return t("MainSection.connect&check")
+      return t("MainSection.connect&minting")
     }
 
     // None whitelist stop deposit if they not deposit yet
@@ -409,8 +398,17 @@ export default function MintPage() {
     if (!address) {
       return t("MainSection.connect&MintEnd")
     }
-    if (isDeposited && !isWhitelist && !isSelected && !isClaimed) {
-      return t("MainSection.refund&noselect");
+    if (isDeposited) {
+      if (isWhitelist || (!isWhitelist && isSelected)) {
+        return t("MainSection.raflle&select")
+      }
+      if (!isWhitelist && !isSelected) {
+        if (isClaimed) {
+          return t("MainSection.refund&noselect&&refunded");
+        } else {
+          return t("MainSection.refund&noselect");
+        }
+      }
     } else {
       return t("MainSection.raffle&nojoin")
     }
@@ -437,7 +435,7 @@ export default function MintPage() {
           <div className="flex flex-col xl:flex-row">
             <div className="w-full xl:w-[760px] xl:h-[590px] py-[20px] px-[12px] xl:p-[30px] rounded-[24px] border-black border-[3px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
               <div className=" flex relative">
-                <div className=" relative w-[120px] h-[120px] lg:w-[200px] lg:h-[200px] xl:w-[320px] xl:h-[320px] rounded-[16px] overflow-hidden">
+                <div className=" relative w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] lg:w-[250px] lg:h-[250px] xl:w-[320px] xl:h-[320px] rounded-[16px] overflow-hidden">
                   <Image src={"/alien_nft_cover.svg"} alt="nft-cover" fill />
                 </div>
                 <div className=" items-stretch h-full ml-[20px] py-[6px] xl:ml-[30px] xl:py-[10px] flex-col justify-between">
@@ -451,7 +449,7 @@ export default function MintPage() {
                   {
                     currentPeriod == MintPeriod.Mint &&
                     <div className="absolute bottom-0">
-                      <div className=" hidden lg:block mb-[17px]">
+                      <div className=" hidden lg:block  lg:mb-[10px] xl:mb-[17px]">
                         {/* Show Countdown only in mint stage */}
                         <h4 className=" text-[16px] xl:text-[18px] font-semibold leading-[18px]">{t("MainSection.mintFinish")}
                         </h4>
@@ -461,16 +459,24 @@ export default function MintPage() {
                         </div>
                       </div>
                       <div className=" hidden lg:block">
-                        <div className=" relative h-[12px] rounded-[24px] bg-black border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
-                          <Image src={"/progress-star.png"} alt="star" width={36} height={34} className=" absolute left-[-11px] top-[-13px]" />
-                          <span className={clsx(
-                            " rounded-[9px] bg-gradient-to-r from-[rgba(255,0,0,1)] to-[rgba(255,247,32,1)] block h-[8px] mt-[2px]",
-                          )} style={{ width: `${(60 - firstHourCountdown.minutes) / 0.6}%` }}></span>
-                        </div>
+                        {
+                          firstHour > 0 ?
+                            <div className=" relative h-[12px] rounded-[24px] bg-black border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
+                              <Image src={"/progress-star.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
+                              <span className={clsx(
+                                " rounded-[9px] bg-gradient-to-r from-[rgba(255,0,0,1)] to-[rgba(255,247,32,1)] block h-[8px] mt-[2px]",
+                              )} style={{ width: `${(60 - firstHourCountdown.minutes) / 0.6}%` }}></span>
+                            </div>
+                            :
+                            <div className=" relative h-[12px] rounded-[24px] bg-[rgba(224,224,224,1)] border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
+                              <Image src={"/progress-star-grey.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
+                            </div>
+                        }
+
                         <p className=" text-[14px] font-semibold leading-[18px] text-black">
                           {t.rich("MainSection.firsthourTip", {
                             minutes: firstHourCountdown.minutes,
-                            span: (val) => <span className=" text-[rgba(255,0,0,1)]">{val}</span>
+                            span: (val) => <span className=" text-[rgba(255,0,0,1)]">{firstHourCountdown.minutes > 0 ? val : t("MainSection.firstHourEnd")}</span>
                           })}
                         </p>
                       </div>
@@ -478,6 +484,43 @@ export default function MintPage() {
                   }
                 </div>
               </div>
+
+              {/* Mobile layout */}
+              {
+                currentPeriod == MintPeriod.Mint &&
+                <div className=" mt-[25px]">
+                  <div className=" block lg:hidden  mb-[10px] ">
+                    {/* Show Countdown only in mint stage */}
+                    <h4 className=" text-[16px] xl:text-[18px] font-semibold leading-[18px]">{t("MainSection.mintFinish")}
+                    </h4>
+                    <div className=" text-[30px] xl:text-[36px] font-bold">
+                      {/* @ts-ignore */}
+                      <span className=" ">{(countHour + 24 * countDay) || '00'}</span>h:<span className=" ">{countMinute || "00"}</span>m:<span className="countdown "><span style={{ "--value": countSecond }}></span></span>s
+                    </div>
+                  </div>
+                  <div className=" block lg:hidden">
+                    {
+                      firstHour > 0 ?
+                        <div className=" relative h-[12px] rounded-[24px] bg-black border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
+                          <Image src={"/progress-star.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
+                          <span className={clsx(
+                            " rounded-[9px] bg-gradient-to-r from-[rgba(255,0,0,1)] to-[rgba(255,247,32,1)] block h-[8px] mt-[2px]",
+                          )} style={{ width: `${(60 - firstHourCountdown.minutes) / 0.6}%` }}></span>
+                        </div>
+                        :
+                        <div className=" relative h-[12px] rounded-[24px] bg-[rgba(224,224,224,1)] border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
+                          <Image src={"/progress-star-grey.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
+                        </div>
+                    }
+                    <p className=" text-[14px] font-semibold leading-[18px] text-black">
+                      {t.rich("MainSection.firsthourTip", {
+                        minutes: firstHourCountdown.minutes,
+                        span: (val) => <span className=" text-[rgba(255,0,0,1)]">{firstHourCountdown.minutes > 0 ? val : t("MainSection.firstHourEnd")}</span>
+                      })}
+                    </p>
+                  </div>
+                </div>
+              }
 
               {/* 未开始或已结束 */}
               {
@@ -489,8 +532,13 @@ export default function MintPage() {
                   </div>
                   <div className=" shrink-0">
                     {
-                      currentPeriod == MintPeriod.Ready && !address &&
-                      <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
+                      currentPeriod == MintPeriod.Ready && (
+                        address ?
+                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >
+                            {t("MainSection.mint")}
+                          </div> :
+                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
+                      )
                     }
                   </div>
                 </div>
@@ -529,7 +577,10 @@ export default function MintPage() {
                   <div className=" shrink-0">
                     {
                       address ?
-                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >{t("MainSection.mint")}</div>
+                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >
+                          {isDeposited && !isSelected && !isWhitelist && JSON.parse(process.env.NEXT_PUBLIC_RAFFLE_RESULT_DONE as string)
+                            ? t("MainSection.refund") : t("MainSection.mint")}
+                        </div>
                         :
                         <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
                     }
@@ -539,18 +590,24 @@ export default function MintPage() {
 
               {/* Refund */}
               {
-                currentPeriod == MintPeriod.Refund && <div className=" w-full mt-[20px] xl:my-[30px] py-[30px] px-[12px] xl:h-[124px] bg-[rgba(255,214,0,0.2)] rounded-[12px] xl:rounded-[16px] flex flex-col lg:flex-row items-center">
+                currentPeriod == MintPeriod.Refund && <div className=" w-full mt-[20px] xl:my-[30px] py-[30px] px-[12px] xl:h-[124px] bg-[rgba(255,214,0,0.2)] rounded-[12px] xl:rounded-[16px] flex flex-col lg:flex-row lg:justify-between items-center">
                   <div className=" text-[18px] leading-[24px] font-medium text-left xl:text-left mb-[20px] lg:mb-0 mx-[20px]">
                     {handleRefundStageInfo()}
                   </div>
                   <div className=" shrink-0">
                     {
                       address ?
-                        (isDeposited && !isSelected && !isClaimed && !isWhitelist &&
-                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={handleRefund} >
-                            {t("MainSection.refund")}
-                            {isLoading && <Loader2 className="ml-2 h-8 w-8 animate-spin" />}
-                          </div>)
+                        (isDeposited && !isSelected && !isWhitelist && (
+                          !isClaimed ?
+                            <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={handleRefund} >
+                              {t("MainSection.refund")}
+                              {isLoading && <Loader2 className="ml-2 h-8 w-8 animate-spin" />}
+                            </div>
+                            :
+                            <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >
+                              {t("MainSection.refunded")}
+                            </div>)
+                        )
                         :
                         <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
                     }

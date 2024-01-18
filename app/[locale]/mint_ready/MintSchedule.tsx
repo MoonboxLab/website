@@ -1,8 +1,8 @@
 import { useSize } from "ahooks"
 import clsx from "clsx"
-import { MintPeriod } from "./page";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { MintPeriod } from "@/constants/nobody_contract";
 
 interface MintScheduleProps{
   currentPeriod: MintPeriod

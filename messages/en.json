@@ -79,7 +79,7 @@
       "mintFinish": "Mint finish",
       "mintReady": "",
       "contractInfo": "Smart Contract Info: ",
-      "firsthourTip": "The probability of winning in the first hour is as high as 9.527 times, <span>25 minutes left</span>",
+      "firsthourTip": "The probability of winning in the first hour is as high as 9.527 times, <span>{minutes} minutes left</span>",
       "firstHourEnd": "Acceleration has ended",
 
       "ready&whitelist": "You have been whitelisted! See you on the mint day.",

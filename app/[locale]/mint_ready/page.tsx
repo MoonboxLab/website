@@ -662,7 +662,7 @@ export default function MintPage() {
               <MintSchedule currentPeriod={currentPeriod} />
             </div>
           </div>
-          <div className="flex flex-col-reverse xl:flex-row justify-between sm:mt-[20px]">
+          <div className="flex flex-col-reverse xl:flex-row justify-between mt-[30px] sm:mt-[20px]">
             <MintRule />
             <MintUser currentPeriod={currentPeriod} />
           </div>

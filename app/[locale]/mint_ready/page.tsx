@@ -383,7 +383,7 @@ export default function MintPage() {
     }
 
     // None whitelist stop deposit if they not deposit yet
-    if (isPublicReserveStop && !isDeposited && !isWhitelist) {
+    if (isPublicReserveStop && !isDeposited && !isWhitelist && isWhitelistMintOpen) {
       return t("MainSection.nowhitelist&mintstop")
     }
 

@@ -52,7 +52,7 @@ export default function TotalReserved() {
       { "rounded-[16px] border-black border-[2px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] px-[16px] py-[30px]": (screenSize?.width || 0) <= 640 }
     )}>
       <div>
-        <p className="text-[36px] sm:mt-[40px] sm:text-[36px] font-bold leading-[30px]">{mintedCount * Number(formatEther(NFT_SALE_PRICE))} ETH</p>
+        <p className="text-[36px] sm:mt-[40px] sm:text-[36px] font-bold leading-[30px]">{(mintedCount * Number(formatEther(NFT_SALE_PRICE))).toFixed(4)} ETH</p>
         <p className=" mt-[20px] flex justify-between text-[18px] font-semibold leading-[18px]">
           <span>{((mintedCount * 100) / MAX_NFT_COUNT).toFixed(2)}% {t("TotalReserve.minted")}</span>
           <span>{mintedCount}/{MAX_NFT_COUNT}</span>

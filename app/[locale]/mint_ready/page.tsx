@@ -117,7 +117,8 @@ export default function MintPage() {
   const [firstHour, firstHourCountdown] = useCountDown({ targetDate: MINT_FIRST_HOUR })
 
   const currentPeriod: MintPeriod = useMemo(() => {
-    const now = moment("2024-02-01 20:00:00")
+    // const now = moment("2024-01-22 16:00:00")
+    const now = moment()
     if (now.isBefore(moment(MINT_START_TIME))) {
       return MintPeriod.Ready;
     } else if (now.isBefore(moment(MINT_END_TIME)) && now.isSameOrAfter(moment(MINT_START_TIME))) {

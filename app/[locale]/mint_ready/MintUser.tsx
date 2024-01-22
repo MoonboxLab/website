@@ -105,7 +105,7 @@ export default function MintUser(props: MintUserProps) {
     }
   })
 
-  return <div className="w-full xl:w-[420px] sm:h-[390px] sm:p-[30px] sm:rounded-[24px] sm:border-black sm:border-[3px] sm:bg-white sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ">
+  return <div className="w-full xl:w-[420px] sm:h-[390px] sm:p-[30px] sm:rounded-[24px] sm:border-black sm:border-[3px] sm:bg-white sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] mt-[20px] sm:mt-0 ">
     <h3 className="text-white sm:text-black text-[21px] sm:text-[24px] font-bold leading-6 mb-[20px] mt-[30px] sm:mt-0"
     >{t("mintUserTitle")}</h3>
     <div className={clsx(

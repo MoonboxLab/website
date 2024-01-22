@@ -74,13 +74,13 @@
     "MainSection": {
       "title": "鑄造你的NFT",
       "supply": "供應",
-      "price": "供應",
+      "price": "價格",
       "maxAddressCount": "每個地址的最大鑄造量",
       "mintFinish": "鑄造结束：",
       "mintReady": "",
       "contractInfo": "預售智能合約資訊：",
-      "firsthourTip": "第1小时打款中奖概率高达9.527倍，<span>还剩{minutes}分钟</span>",
-      "firstHourEnd": "加速已结束",
+      "firsthourTip": "第一個小時打款中獎機率高達9.527倍，<span>還剩{minutes}分鐘</span>",
+      "firstHourEnd": "加速已結束",
 
       "ready&whitelist": "您已獲得白名單，請在鑄造開始後準時參與",
       "ready&nowhitelist": "您並沒有獲得白名單，在鑄造開始後第一小時打款，將在抽獎環節時享有9.527倍加成",

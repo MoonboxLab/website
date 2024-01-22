@@ -85,6 +85,7 @@
       "ready&whitelist": "您已獲得白名單，請在鑄造開始後準時參與",
       "ready&nowhitelist": "您並沒有獲得白名單，在鑄造開始後第一小時打款，將在抽獎環節時享有9.527倍加成",
       "connect&check": "請連結錢包查看您的地址是否已獲得白名單",
+      "mint&noopen": "鑄造馬上開始",
       "connect&minting": "鑄造火爆進行中，請連結錢包參與",
       "connect&MintEnd": "鑄造已結束，請連結錢包查看您的鑄造結果",
       "whitelist&mint": "鑄造進行中，您已獲得白名單，現在就能鑄造您的Nobody NFT",

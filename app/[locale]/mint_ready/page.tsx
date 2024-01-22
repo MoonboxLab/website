@@ -31,6 +31,8 @@ export default function MintPage() {
 
   const [isPublicReserveStop, setPublicReserveStop] = useState<boolean>(true);
 
+  const [isWhitelistMintOpen, setWhitelistMintOpen] = useState<boolean>(false);
+
   const { data: addressContractInfo } = useContractReads({
     contracts: [
       {
@@ -56,11 +58,14 @@ export default function MintPage() {
       {
         ...NOBODY_CONTRACT_INFO,
         functionName: "isPublicReserveActive",
+      },
+      {
+        ...NOBODY_CONTRACT_INFO, 
+        functionName: "isWhitelistReserveActive"
       }
     ],
     watch: true
   })
-
 
   useEffect(() => {
     console.log(addressContractInfo)
@@ -79,7 +84,8 @@ export default function MintPage() {
         reservedResult,
         raffleWonResult,
         refundResult,
-        publicReserveResult
+        publicReserveResult,
+        whitelistReserveOpenResult
       ] = addressContractInfo as { error?: any, result?: any, status: any }[]
 
       if (whitelistResult.status == "success") {
@@ -101,6 +107,10 @@ export default function MintPage() {
       if (publicReserveResult.status == 'success') {
         setPublicReserveStop(!publicReserveResult.result)
       }
+
+      if (whitelistReserveOpenResult.status == 'success') {
+        setWhitelistMintOpen(whitelistReserveOpenResult.result || false)
+      }
     }
   }, [address, addressContractInfo])
 
@@ -117,7 +127,7 @@ export default function MintPage() {
   const [firstHour, firstHourCountdown] = useCountDown({ targetDate: MINT_FIRST_HOUR })
 
   const currentPeriod: MintPeriod = useMemo(() => {
-    // const now = moment("2024-01-22 16:00:00")
+    // const now = moment("2024-01-22 14:00:00")
     const now = moment()
     if (now.isBefore(moment(MINT_START_TIME))) {
       return MintPeriod.Ready;
@@ -240,6 +250,12 @@ export default function MintPage() {
     if (isLoading) return
 
     if (currentPeriod == MintPeriod.Mint) {
+
+      if (!isWhitelistMintOpen) {
+        toast.info(t("MainSection.mint&noopen"))
+        return
+      }
+
       setIsLoading(true)
 
       if (isWhitelist && !isDeposited) {

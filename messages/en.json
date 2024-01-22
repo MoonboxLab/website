@@ -85,6 +85,7 @@
       "ready&whitelist": "You have been whitelisted! See you on the mint day.",
       "ready&nowhitelist": "You haven't been whitelisted. You still have a 9.527x boost of getting a Nobody NFT in the raffle if you make deposit in the first hour after the mint starts.",
       "connect&check": "Please connect your wallet to check Whitelist eligibility.",
+      "mint&noopen": "Minting will start immediately",
       "connect&minting": "Please connect your wallet to start Nobody NFT mint",
       "connect&MintEnd": "The mint is over now. Please connect your wallet to check if you have successfully minted the Nobody NFT.",
       "whitelist&mint": "You are on the Whitelist. Mint your Nobody NFT now.",

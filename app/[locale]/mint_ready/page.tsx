@@ -152,6 +152,9 @@ export default function MintPage() {
       if (!isWhitelist && !isDeposited && !isPublicReserveStop) {
         return true
       }
+      if (!isWhitelist && !isDeposited && !isWhitelistMintOpen) {
+        return true
+      }
     }
     return false
   }, [address, currentPeriod, isWhitelist, isDeposited, isPublicReserveStop])

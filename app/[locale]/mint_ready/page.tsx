@@ -474,7 +474,8 @@ export default function MintPage() {
             <div className="w-full xl:w-[760px] xl:h-[590px] py-[20px] px-[12px] xl:p-[30px] rounded-[24px] border-black border-[3px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
               <div className=" flex relative">
                 <div className=" relative w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] lg:w-[250px] lg:h-[250px] xl:w-[320px] xl:h-[320px] rounded-[16px] overflow-hidden">
-                  <Image src={"/nft_mint_cover.gif"} alt="nft-cover" fill />
+                  <Image src={"/nft_mint_cover_static.webp"} alt="nft-cover" fill /> 
+                  <Image src={"/nft_mint_cover.webp"} alt="nft-cover" fill />
                 </div>
                 <div className=" items-stretch h-full ml-[20px] py-[6px] xl:ml-[30px] xl:py-[10px] flex-col justify-between">
                   <div>
@@ -572,10 +573,10 @@ export default function MintPage() {
                     {
                       currentPeriod == MintPeriod.Ready && (
                         address ?
-                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >
+                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" >
                             {t("MainSection.mint")}
                           </div> :
-                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
+                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
                       )
                     }
                   </div>
@@ -592,15 +593,15 @@ export default function MintPage() {
                     {
                       address ?
                         (couldMint ?
-                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={handleMintNFT}>
+                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" onClick={handleMintNFT}>
                             {t("MainSection.mint")}
                             {isLoading && <Loader2 className="ml-2 h-8 w-8 animate-spin" />}
                           </div> :
-                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >
+                          <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" >
                             {t("MainSection.mint")}
                           </div>)
                         :
-                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
+                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
                     }
                   </div>
                 </div>
@@ -615,12 +616,12 @@ export default function MintPage() {
                   <div className=" shrink-0">
                     {
                       address ?
-                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >
+                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" >
                           {isDeposited && !isSelected && !isWhitelist && JSON.parse(process.env.NEXT_PUBLIC_RAFFLE_RESULT_DONE as string)
                             ? t("MainSection.refund") : t("MainSection.mint")}
                         </div>
                         :
-                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
+                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
                     }
                   </div>
                 </div>
@@ -637,17 +638,17 @@ export default function MintPage() {
                       address ?
                         (isDeposited && !isSelected && !isWhitelist && (
                           !isClaimed ?
-                            <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={handleRefund} >
+                            <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" onClick={handleRefund} >
                               {t("MainSection.refund")}
                               {isLoading && <Loader2 className="ml-2 h-8 w-8 animate-spin" />}
                             </div>
                             :
-                            <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" >
+                            <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-white/30 border-[2px] border-black/30 shadow-[4px_4px_0px_rgba(0,0,0,0.1)] text-black/30 flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" >
                               {t("MainSection.refunded")}
                             </div>)
                         )
                         :
-                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[280px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
+                        <div className=" h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold min-w-[240px] xl:min-w-[260px]" onClick={openConnectModal}>{t("MainSection.connectwallet")}</div>
                     }
                   </div>
                 </div>

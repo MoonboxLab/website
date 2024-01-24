@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from "react"
 import { formatEther } from "viem"
 import { useContractEvent } from "wagmi"
 import { Search } from "lucide-react"
+import Image from "next/image"
 
 const ORIGIN_ADDRESS = [
   "0x135DD71D05c775036a3a96d85b611c7E04103C3D",
@@ -119,8 +120,8 @@ export default function MintUser(props: MintUserProps) {
 
       </div>
       {
-        currentPeriod == MintPeriod.Ready && <div className=" h-full">
-          <Search className=" mx-auto mt-[40px] opacity-75 sm:mt-[130px]" />
+        currentPeriod == MintPeriod.Ready && <div className=" relative h-full min-h-[260px] flex items-center justify-center">
+          <Image src={"/empty_icon.png"} alt="empty" width={90} height={88} />
         </div> 
       }
     </div>

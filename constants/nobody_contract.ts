@@ -4,7 +4,7 @@ import { parseEther } from "viem"
 export type ADDRESS = `0x${string}`
 
 // Production Contract Address
-const CONTRACT_ADDRESS_PRODUCTION = "0x"
+const CONTRACT_ADDRESS_PRODUCTION = "0x129d453253dbCE5CF6997DB8Fb461B2A20Fd275F"
 // Development Contract Address
 const CONTRACT_ADDRESS_TEST = "0x833e32D61A4a64413583DA854bE86C5206A64df8"
 export const NOBODY_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_TEST_ENV === "true" ? CONTRACT_ADDRESS_TEST as `0x${string}` : CONTRACT_ADDRESS_PRODUCTION as `0x${string}`;
@@ -13,6 +13,7 @@ export const NFT_SALE_PRICE = process.env.NEXT_PUBLIC_TEST_ENV === "true" ? pars
 
 export const MAX_NFT_COUNT = 10000;
 export const MAX_AMOUNT_PRE_ADDRESS = 1;
+export const MAX_MINTABLE_COUNT = 9500;
 
 export enum MintPeriod {
   Ready,

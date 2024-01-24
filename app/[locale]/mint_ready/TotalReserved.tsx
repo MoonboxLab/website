@@ -1,16 +1,18 @@
-import { MAX_NFT_COUNT, NFT_SALE_PRICE, NOBODY_CONTRACT_INFO } from "@/constants/nobody_contract"
+import { MAX_MINTABLE_COUNT, NFT_SALE_PRICE, NOBODY_CONTRACT_INFO } from "@/constants/nobody_contract"
 import { useSize } from "ahooks"
 import clsx from "clsx"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { formatEther } from "viem"
 import { useContractReads } from "wagmi"
 
-const extendMax1 = 100000
+const extendMax1 = 80000
 
 export default function TotalReserved() {
   const screenSize = useSize(document.querySelector("body"))
   const t = useTranslations("Mint")
+  const locale = useLocale();
+  console.log(locale)
 
   const [mintedCount, setMintedCount] = useState<number>(0)
 
@@ -36,13 +38,13 @@ export default function TotalReserved() {
   }, [contractData])
 
   const handleProgress = () => {
-    if (mintedCount <= MAX_NFT_COUNT) {
+    if (mintedCount <= MAX_MINTABLE_COUNT) {
       return 0
-    } else if (mintedCount > MAX_NFT_COUNT && mintedCount <= extendMax1) {
-       return (mintedCount * 100 / extendMax1)
-    } else if (mintedCount > extendMax1 ) {
-      return 100 
-    } 
+    } else if (mintedCount > MAX_MINTABLE_COUNT && mintedCount <= extendMax1) {
+      return (mintedCount * 100 / extendMax1)
+    } else if (mintedCount > extendMax1) {
+      return 100
+    }
   }
 
   return <div className=" w-full xl:w-[420px] sm:h-[268px] sm:p-[30px] sm:rounded-[24px] sm:border-black sm:border-[3px] sm:bg-white sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
@@ -54,22 +56,27 @@ export default function TotalReserved() {
       <div>
         <p className="text-[36px] sm:mt-[40px] sm:text-[36px] font-bold leading-[30px]">{(mintedCount * Number(formatEther(NFT_SALE_PRICE))).toFixed(4)} ETH</p>
         <p className=" mt-[20px] flex justify-between text-[18px] font-semibold leading-[18px]">
-          <span>{((mintedCount * 100) / MAX_NFT_COUNT).toFixed(2)}% {t("TotalReserve.minted")}</span>
-          <span>{mintedCount}/{MAX_NFT_COUNT}</span>
+          <span>{((mintedCount * 100) / MAX_MINTABLE_COUNT).toFixed(2)}%
+            {/* {t("TotalReserve.minted")} */}
+          </span>
+          <span>{mintedCount}/{MAX_MINTABLE_COUNT}</span>
         </p>
         <div className=" relative mt-[12px]">
           <p className=" absolute w-[calc(100%-14px)] left-[7px] h-[8px] rounded-[6px] bg-black/10"></p>
           <p className=" absolute h-[8px] max-w-[calc(100%-14px)] rounded-[6px] bg-[rgba(255,214,0,1)] transition-all duration-500 after:absolute after:right-[-14px] after:top-[-3.5px] after:rounded-[50%] after:w-[14px] after:h-[14px] after:bg-[rgba(255,214,0,1)] after:shadow-progress-node" style={{
-            width: `${(mintedCount <= MAX_NFT_COUNT) ? mintedCount / 100 : 100}%`
+            width: `${(mintedCount <= MAX_MINTABLE_COUNT) ? mintedCount / 100 : 100}%`
           }}></p>
           {
-            mintedCount > MAX_NFT_COUNT &&
+            mintedCount > MAX_MINTABLE_COUNT &&
             <p className=" absolute left-0 h-[8px] rounded-[6px] bg-red-600 transition-all duration-500 after:absolute after:right-[0] after:top-[-3.5px] after:rounded-[50%] after:w-[14px] after:h-[14px] after:bg-[rgba(220,38,38,1)] after:shadow-progress-node-warn" style={{
               width: `${handleProgress()}%`
             }}></p>
           }
         </div>
-        <p className=" mt-[40px] text-[14px] font-semibold leading-[18px]">{t('TotalReserve.desc')}</p>
+        <p className={clsx(
+          locale == 'en' && "leading-[14px]", locale == 'zh' && "leading-[18px]",
+          "mt-[35px] text-[12px] font-semibold ",
+        )}>{t('TotalReserve.desc')}</p>
       </div>
     </div>
   </div>

@@ -468,8 +468,7 @@ export default function MintPage() {
     <Header />
     <div className=" relative z-20 h-screen w-screen pt-[20px] pb-[180px] overflow-y-auto">
       <div className="w-full px-[12px] sm:px-0 sm:w-[80%] lg:w-[65%] xl:w-[1200px] mx-auto ">
-        <h3 className=" hidden sm:block text-[32px] font-bold leading-9 text-white mb-[30px]">{t("sectionTitle")}</h3>
-        <div className="">
+        <div className="lg:mt-4">
           <div className="flex flex-col xl:flex-row">
             <div className="w-full xl:w-[760px] xl:h-[590px] py-[20px] px-[12px] xl:p-[30px] rounded-[24px] border-black border-[3px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
               <div className=" flex relative">
@@ -654,9 +653,8 @@ export default function MintPage() {
                 </div>
               }
 
-
               <div className=" hidden lg:block mt-[20px] xl:mt-0">
-                <p>{t("MainSection.contractInfo")}<a href={`https://etherscan.io/token/${NOBODY_CONTRACT_ADDRESS}`} target="__blank" className=" text-[rgba(59,132,255,1)] underline">{NOBODY_CONTRACT_ADDRESS}</a></p>
+                <p>{t("MainSection.contractInfo")}<a href={`https://etherscan.io/address/${NOBODY_CONTRACT_ADDRESS}`} target="__blank" className=" text-[rgba(59,132,255,1)] underline">{NOBODY_CONTRACT_ADDRESS}</a></p>
               </div>
             </div>
             <div className="sm:mt-[20px] xl:mt-0 xl:ml-[20px] flex-col-reverse sm:flex-col">

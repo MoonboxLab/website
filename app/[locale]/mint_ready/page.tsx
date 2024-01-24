@@ -464,8 +464,9 @@ export default function MintPage() {
 
   return <div className=" relative h-screen w-screen overflow-hidden">
     <Image src="/home_bg_mint_1.png" alt="background" fill className=" object-cover" />
+    <div className=" absolute h-screen w-screen backdrop-blur z-10"></div>
     <Header />
-    <div className=" relative h-screen w-screen pt-[20px] pb-[180px] overflow-y-auto">
+    <div className=" relative z-20 h-screen w-screen pt-[20px] pb-[180px] overflow-y-auto">
       <div className="w-full px-[12px] sm:px-0 sm:w-[80%] lg:w-[65%] xl:w-[1200px] mx-auto ">
         <h3 className=" hidden sm:block text-[32px] font-bold leading-9 text-white mb-[30px]">{t("sectionTitle")}</h3>
         <div className="">
@@ -473,7 +474,7 @@ export default function MintPage() {
             <div className="w-full xl:w-[760px] xl:h-[590px] py-[20px] px-[12px] xl:p-[30px] rounded-[24px] border-black border-[3px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
               <div className=" flex relative">
                 <div className=" relative w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] lg:w-[250px] lg:h-[250px] xl:w-[320px] xl:h-[320px] rounded-[16px] overflow-hidden">
-                  <Image src={"/alien_nft_cover.svg"} alt="nft-cover" fill />
+                  <Image src={"/nft_mint_cover.gif"} alt="nft-cover" fill />
                 </div>
                 <div className=" items-stretch h-full ml-[20px] py-[6px] xl:ml-[30px] xl:py-[10px] flex-col justify-between">
                   <div>

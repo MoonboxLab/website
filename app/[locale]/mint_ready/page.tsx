@@ -472,11 +472,11 @@ export default function MintPage() {
           <div className="flex flex-col xl:flex-row">
             <div className="w-full xl:w-[760px] xl:h-[590px] py-[20px] px-[12px] xl:p-[30px] rounded-[24px] border-black border-[3px] bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)]">
               <div className=" flex relative">
-                <div className=" relative w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] lg:w-[250px] lg:h-[250px] xl:w-[320px] xl:h-[320px] rounded-[16px] overflow-hidden">
-                  <Image src={"/nft_mint_cover_static.webp"} alt="nft-cover" fill /> 
+                <div className=" shrink-0 relative w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] lg:w-[250px] lg:h-[250px] xl:w-[320px] xl:h-[320px] rounded-[16px] overflow-hidden">
+                  <Image src={"/nft_mint_cover_static.webp"} alt="nft-cover" fill />
                   <Image src={"/nft_mint_cover.webp"} alt="nft-cover" fill />
                 </div>
-                <div className=" items-stretch h-full ml-[20px] py-[6px] xl:ml-[30px] xl:py-[10px] flex-col justify-between">
+                <div className=" flex-grow  h-full ml-[20px] py-[6px] xl:ml-[30px] xl:py-[10px] flex-col justify-between">
                   <div>
                     <h3 className=" text-[21px] leading-[21px] xl:text-[24px] font-bold xl:leading-[24px] mb-2">{t("MainSection.title")}</h3>
                     <p className=" text-[16px] xl:text-[18px] font-medium xl:font-semibold leading-[24px] xl:leading-[30px]">{t("MainSection.supply")}: {MAX_NFT_COUNT}</p>
@@ -485,8 +485,31 @@ export default function MintPage() {
                   </div>
 
                   {
+                    currentPeriod == MintPeriod.Ready &&
+                    <div className="absolute bottom-0 lg:min-w-[340px]">
+                      <div className=" hidden lg:block  lg:mb-[10px] xl:mb-[17px]">
+                        {/* Show Countdown in ready stage */}
+                        <h4 className=" text-[16px] xl:text-[18px] font-semibold leading-[18px]">{t("MainSection.mintReady")}
+                        </h4>
+                        <div className=" text-[30px] xl:text-[36px] font-bold">
+                          {/* @ts-ignore */}
+                          <span className=" ">{(countHour + 24 * countDay) || '00'}</span>h:<span className=" ">{countMinute || "00"}</span>m:<span className="countdown "><span style={{ "--value": countSecond }}></span></span>s
+                        </div>
+                      </div>
+                      <div className=" hidden lg:block">
+                        <div className=" relative h-[12px] rounded-[24px] bg-[rgba(224,224,224,1)] border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
+                          <Image src={"/progress-star-grey.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
+                        </div>
+                        <p className=" text-[14px] font-semibold leading-[18px] text-black">
+                          {t("MainSection.firsthourTipReady")}
+                        </p>
+                      </div>
+                    </div>
+                  }
+
+                  {
                     currentPeriod == MintPeriod.Mint &&
-                    <div className="absolute bottom-0">
+                    <div className="absolute bottom-0 lg:min-w-[340px]">
                       <div className=" hidden lg:block  lg:mb-[10px] xl:mb-[17px]">
                         {/* Show Countdown only in mint stage */}
                         <h4 className=" text-[16px] xl:text-[18px] font-semibold leading-[18px]">{t("MainSection.mintFinish")}

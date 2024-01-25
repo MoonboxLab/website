@@ -77,9 +77,10 @@
       "price": "Price",
       "maxAddressCount": "Max mint per address",
       "mintFinish": "Mint finish",
-      "mintReady": "",
+      "mintReady": "Mint",
       "contractInfo": "Nobody NFT Smart Contract: ",
       "firsthourTip": "The probability of winning in the first hour is as high as 9.527 times, <span>{minutes} minutes left</span>",
+      "firsthourTipReady": "The probability of winning in the first hour is as high as 9.527 times",
       "firstHourEnd": "Acceleration has ended",
 
       "ready&whitelist": "You have been whitelisted! See you on the mint day.",

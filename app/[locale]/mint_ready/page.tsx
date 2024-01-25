@@ -12,7 +12,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useCountDown } from "ahooks"
 import { ADDRESS, MAX_AMOUNT_PRE_ADDRESS, MAX_NFT_COUNT, MINT_END_TIME, MINT_FIRST_HOUR, MINT_START_TIME, MintPeriod, NFT_SALE_PRICE, NOBODY_CONTRACT_ADDRESS, NOBODY_CONTRACT_INFO, RAFFLE_END_TIME, RAFFLE_START_TIME, REFUND_END_TIME, REFUND_START_TIME } from "@/constants/nobody_contract"
 import moment from "moment"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { formatEther } from "viem"
 import clsx from "clsx"
 import { toast } from "react-toastify"
@@ -21,6 +21,7 @@ import { Loader2 } from "lucide-react"
 export default function MintPage() {
   const { address } = useAccount()
   const t = useTranslations('Mint');
+  const locale = useLocale();
 
   const [isWhitelist, setWhitelist] = useState<boolean>(false)
   const [isDeposited, setDeposited] = useState<boolean>(false);
@@ -60,7 +61,7 @@ export default function MintPage() {
         functionName: "isPublicReserveActive",
       },
       {
-        ...NOBODY_CONTRACT_INFO, 
+        ...NOBODY_CONTRACT_INFO,
         functionName: "isWhitelistReserveActive"
       }
     ],
@@ -500,7 +501,7 @@ export default function MintPage() {
                         <div className=" relative h-[12px] rounded-[24px] bg-[rgba(224,224,224,1)] border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
                           <Image src={"/progress-star-grey.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
                         </div>
-                        <p className=" text-[14px] font-semibold leading-[18px] text-black">
+                        <p className={clsx(locale == 'en' && "text-[12px] leading-[16px]", locale == 'zh' && 'text-[14px] leading-[18px]', "font-semibold text-black")}>
                           {t("MainSection.firsthourTipReady")}
                         </p>
                       </div>

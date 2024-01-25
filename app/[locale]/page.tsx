@@ -75,7 +75,7 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content="https://nobody.xyz/twitter_cover.jpg"
+          content="/twitter_cover.jpg"
         ></meta>
       </Head>
 

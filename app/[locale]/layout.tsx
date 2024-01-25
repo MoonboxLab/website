@@ -69,6 +69,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: 'Nobody',
     description: 'Bring life to NFTs',
-    images: ['https://nobody.xyz/twitter_cover.jpg'],
+    images: ['/twitter_cover.jpg'],
   },
 }

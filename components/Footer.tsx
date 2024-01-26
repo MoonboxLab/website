@@ -69,7 +69,7 @@ const Footer = (props: FooterProps) => {
       </div>
 
       <div className="ml-auto flex">
-        <Link href={"/mint_ready"} >
+        <Link href={"/mint"} >
           <div className="hover-btn-shadow flex h-[64px] w-[200px] items-center justify-center rounded-[12px] border-2 border-black bg-white pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)] 4xl:h-[72px] 4xl:w-[260px]">
             <span className="text-[21px] font-semibold leading-[21px] text-black 4xl:text-[24px] 4xl:leading-[24px]">
               {t("check_whitelist")}

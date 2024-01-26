@@ -440,7 +440,7 @@ export default function Home() {
                   {t("nobody_nft_mv")}
                 </span>
               </div> */}
-              <Link href={"/mint_ready"} >
+              <Link href={"/mint"} >
                 <div
                   className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                 >

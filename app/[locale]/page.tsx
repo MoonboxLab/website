@@ -69,13 +69,13 @@ export default function Home() {
         <meta name="description" content="Bring life to NFTs" />
         <meta property="og:title" content="Nobody" />
         <meta property="og:description" content="Bring life to NFTs" />
-        <meta property="og:image" content="/open-graph.png" />
+        <meta property="og:image" content="/twitter_cover.jpg" />
         <meta property="og:url" content="https://nobody.xyz" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content="https://nobody.xyz/open-graph.jpg"
+          content="/twitter_cover.jpg"
         ></meta>
       </Head>
 

@@ -58,5 +58,72 @@
     "subtitle3": "Nobody is a NFT collection launched jointly by Nobody and Mr. Stephen Chow, Nobody First Creator, with 10K in total. Owning a Nobody NFT grants you the chance to become part of Nobody. You will participate in the project's development, and enjoy many privileges, including but not limited to proposing, co-creating, voting, and creating with Nobody IP.<br></br><br></br>What makes Nobody NFT special is that each Nobody NFT represents a vivid character with its own story. Holders can interact with these characters through the Nobody App, understanding their personalities, hobbies, backgrounds and shaping their future. <br></br><br></br>We also strive to build the Nobody IP, combining Mr. Stephen Chow's previous experience and new mechanisms. Through various forms of works, we aim to bring Nobody IP to the public eye, breaking through the barriers that have previously prevented Web3 native IPs from entering the mainstream Web2 market.",
     "title4": "Nobody Community",
     "subtitle4": "Centered on \"laughter\", \"creation\", and \"sharing\", the Nobody community will exhibit openness and inclusivity, striving to break traditional boundaries. We encourage everyone to display their talents to create diverse and vibrant works.<br></br><br></br>For 2024, we will be focusing on providing resources and opportunities for the community to join the film and short video creation, including but not limited to co-creating movie clips from Mr. Stephen Chow's \"The Mermaid 2\", \"Shaolin Women's Soccer\" and casting for future works. We will also actively build on the Nobody IP in various forms. What’s more, Nobody will seek to expand into more fields, such as fashion, art, music, etc., to call upon every nobody and co-create quality content for both Web2 and Web3."
+  },
+  "Mint": {
+    "sectionTitle": "Nobody Collection Mint",
+    "mintUserTitle": "Deposited User",
+    "mintRuleTitle": "Mint 101",
+    "Rule": {
+      "title1": "PART I: Minting",
+      "content1": "1. Minting time:<br></br>Feb 1, 2024, 8:00 PM (UTC+8) to Feb 3, 2024, 8:00 PM (UTC+8).<br></br><br></br>2. Minting price:<br></br>0.19527E + gas fee<br></br><br></br>3. Nobody NFT collection size:<br></br>10,000 Nobody NFTs<br></br><br></br>4. Number of available Nobody NFTs for minting and Whitelists:<br></br>Both are 9,500. <br></br><br></br>The rest 500 will be allocated as follows:<br></br>Investors: 350<br></br>Nobody Team: 50<br></br>Friends and family: 50<br></br>Community Development Fund: 50<br></br><br></br>Any unminted Nobody NFTs will go to the Treasury after the minting period ends.<br></br><br></br>5. Who is eligible to mint?<br></br>Anyone can participate in the minting of Nobody NFTs.<br></br><br></br>Whitelist holders have the highest priority and are guaranteed to mint a Nobody NFT during the minting period. You do not need to rush. <br></br><br></br>Check your eligibility: visit nobody.xyz/mint; connect wallet.<br></br><br></br>Non-whitelist holders still have a chance to mint an NFT through raffle. If a non-whitelist holder makes the deposit within one hour after the minting starts, he/she will receive a 9.527x boost in the raffle. A successful deposit would imply that the user joins the raffle. <br></br><br></br>The allocation of NFTs for the raffle depends on the number of whitelist holders who make the deposit. For example, if there are 4,500 Whitelist holders and 10,000 non-whitelist holders who make the deposit by the end of the Minting period, there will be 5,000 NFTs for the raffle (9,500-4,500). The results of the raffle will be announced within 24 hours after the minting period ends.<br></br><br></br>6. How many Nobody NFTs can be minted per wallet?<br></br>Each wallet address can only mint one Nobody NFT.<br></br><br></br>7. Which wallet address should I use for minting?<br></br>If you have a Whitelist, the minting wallet is the wallet address that you directly submitted to us or indirectly through our launching partners. If you are a non-whitelist holder, feel free to mint with any of your ERC20 wallet address.<br></br><br></br>8. When will the reveals take place?<br></br>Feb 7, 2024.<br></br><br></br>9. What is the royalty and how will it be used?<br></br>5%. We will use the funds to hire more full-time team members, fund operations, and provide more value to the Nobody community.<br></br><br></br>",
+      "title2": "PART II: Raffle and Airdrop",
+      "content2": "1. Raffle and Airdrop Time:<br></br>Feb 3, 2024, 8:00 PM (UTC+8) to Feb 4, 2024, 8 PM (UTC+8).<br></br><br></br>2. Raffle and Airdrop Details:<br></br>If you have a Whitelist and successfully mint an Nobody NFT, we will airdrop it to your minting wallet within 24 hours after the minting ends in the form of a Mystery Box. No further action is required.<br></br><br></br>If you are a non-whitelist holder and join the raffle, you could check the status of the raffle on the minting page in 24 hours after the minting ends (Mint page: nobody.xyz/mint).<br></br><br></br>We will also release the list of successful mints on Nobody's social media. As long as your wallet address appears on the list, you will be guaranteed to receive the NFT airdrop. No further action is required.<br></br><br></br>",
+      "title3": "PART III: Refund",
+      "content3": "1. Refund time:<br></br>Feb 4, 2024, 8:00 PM (UTC+8) to Jul 4, 2024, 8 PM (UTC+8).<br></br><br></br>2. Refund details:<br></br>If you don’t win the raffle when you check the status after connecting the wallet, it means you do not mint the Nobody NFT successfully.<br></br><br></br>Refund will be claimable within 48 hours after the end of minting (Claim refund page: nobody.xyz/mint)."
+    },
+    "MainSection": {
+      "title": "Mint Your NFT",
+      "supply": "Total offering",
+      "price": "Price",
+      "maxAddressCount": "Max mint per address",
+      "mintFinish": "Mint finish",
+      "mintReady": "Mint",
+      "contractInfo": "Nobody NFT Smart Contract: ",
+      "firsthourTip": "The probability of winning in the first hour is as high as 9.527 times, <span>{minutes} minutes left</span>",
+      "firsthourTipReady": "Making the deposit within the first hour grants you a 9.527x chance of winning the raffle once the minting starts",
+      "firstHourEnd": "Acceleration has ended",
+
+      "ready&whitelist": "You have been whitelisted! See you on the mint day.",
+      "ready&nowhitelist": "You haven't been whitelisted. You still have a 9.527x boost of getting a Nobody NFT in the raffle if you make deposit in the first hour after the mint starts.",
+      "connect&check": "Please connect your wallet to check Whitelist eligibility.",
+      "mint&noopen": "Minting will start immediately",
+      "connect&minting": "Please connect your wallet to start Nobody NFT mint",
+      "connect&MintEnd": "The mint is over now. Please connect your wallet to check if you have successfully minted the Nobody NFT.",
+      "whitelist&mint": "You are on the Whitelist. Mint your Nobody NFT now.",
+      "nowhitelist&mint": "Join the Nobody NFT Mint Raffle now. Good luck!",
+      "nowhitelist&mintstop": "The mint for non-Whitelist users is over now.",
+      "whitelist&mintdone": "Congrats! Your Nobody NFT will be airdropped after the mint ends.",
+      "nowhitelist&mintdone": "Thanks for participation in the Mint Raffle. Check your Mint Raffle result after the mint ends.",
+
+      "raflle&select": "Congrats! Your Nobody NFT will be airdropped within 24 hours after the mint ends.",
+      "raffle&noselect": "Sorry, you didn't win in the Mint Raffle. The refund starts on Feb 4 at 8PM, 2024 (UTC+8) and ends on Jul 4 at 8PM, 2024 (UTC+8).",
+      "raffle&nojoin": "The mint is over now. You could still acquire an Nobody NFT on the market.",
+
+      "refund&noselect": "Sorry, you didn't mint the Nobody NFT successfully. Please claim your refund before Jul 4 at 8PM, 2024 (UTC+8).",
+      "refund&noselect&&refunded": "You have successfully claimed your refund. Thank you for participating in the Nobody NFT Mint.",
+
+      "connectwallet": "Connect Wallet",
+      "mint": "Mint",
+      "refund": "Claim",
+      "refunded": "Claimed",
+
+      "mintSuccess": "Mint Successfully",
+      "txPendding": "The transaction is pending to be confirmed by the blockchain.",
+      "refundSuccess": "Refund Successfully"
+    },
+    "TotalReserve": {
+      "title": "Total Deposits",
+      "minted": "deposited",
+      "desc": "Deposit remains open over 100% cap. After the deposit, non-whitelisted holders need to participate in a raffle, while whitelisted holders are guaranteed to receive Nobody NFTs."
+    },
+    "Schedule": {
+      "title": "Mint Schedule",
+      "refund": "Refund",
+      "refundTime": "Feb 4, 8 PM - Jul 4, 8 PM (UTC+8)",
+      "raffle": "Raffle and Airdrop",
+      "raffleTime": "Feb 3, 8 PM - Feb 4, 8 PM (UTC+8)",
+      "mint": "Mint",
+      "mintTime": "Feb 1, 8 PM - Feb 3, 8 PM (UTC+8)"
+    }
   }
 }

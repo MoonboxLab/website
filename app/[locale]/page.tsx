@@ -15,6 +15,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -330,16 +331,16 @@ export default function Home() {
                           <Chat role={1} character="liupiaopiao" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role2">
-                          <Chat role={2} character="yintianchou" fullpageApi={fullpageApi}  />
+                          <Chat role={2} character="yintianchou" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role3">
                           <Chat role={3} character="cook" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role4">
-                          <Chat role={4} character="tang" fullpageApi={fullpageApi}  />
+                          <Chat role={4} character="tang" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role5">
-                          <Chat role={5} character="wukong" fullpageApi={fullpageApi}  />
+                          <Chat role={5} character="wukong" fullpageApi={fullpageApi} />
                         </TabsContent>
                       </Tabs>
                     </div>
@@ -420,7 +421,7 @@ export default function Home() {
               className="w-full object-contain"
             />
             <div className="absolute bottom-[15%] z-10 flex w-full flex-col px-[15px]">
-              <div
+              {/* <div
                 className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                 onClick={() => {
                   setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
@@ -438,7 +439,16 @@ export default function Home() {
                 <span className="text-[21px] font-semibold text-black">
                   {t("nobody_nft_mv")}
                 </span>
-              </div>
+              </div> */}
+              <Link href={"/mint"} >
+                <div
+                  className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                >
+                  <span className="text-[21px] font-semibold text-black">
+                    {t("check_whitelist")}
+                  </span>
+                </div>
+              </Link>
               <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                 <span className="text-[21px] font-semibold text-black">
                   {t("mint")}
@@ -447,15 +457,15 @@ export default function Home() {
                   countdown.hours !== 0 ||
                   countdown.minutes !== 0 ||
                   countdown.seconds !== 0) && (
-                  <span className="ml-[10px] text-[18px] font-semibold text-black">
-                    {t("count_down", {
-                      day: countdown.days,
-                      hour: countdown.hours,
-                      minute: countdown.minutes,
-                      second: countdown.seconds,
-                    })}
-                  </span>
-                )}
+                    <span className="ml-[10px] text-[18px] font-semibold text-black">
+                      {t("count_down", {
+                        day: countdown.days,
+                        hour: countdown.hours,
+                        minute: countdown.minutes,
+                        second: countdown.seconds,
+                      })}
+                    </span>
+                  )}
               </div>
             </div>
           </div>

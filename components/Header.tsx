@@ -10,6 +10,7 @@ import { useDisconnect } from "wagmi";
 import { Power, X } from "lucide-react";
 import Link from "next/link";
 import CustomConnectButton from "./CustomConnectWallet";
+import { formatAddress } from "@/lib/utils";
 
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector('body'));
@@ -178,7 +179,8 @@ const Header: React.FC = () => {
                         <DropdownMenuTrigger asChild>
                           <div className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px]  lg:w-[160px] 3xl:h-[48px] 3xl:w-[180px]">
                             <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
-                              {account.displayName}
+                              {/* {account.displayName} */}
+                              {formatAddress(account.address, 4)}
                             </span>
                           </div>
                         </DropdownMenuTrigger>

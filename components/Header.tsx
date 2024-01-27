@@ -6,7 +6,7 @@ import { track } from '@vercel/analytics';
 import { useRouter, usePathname } from 'next-intl/client'
 import { useTransition } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useDisconnect } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { Power, X } from "lucide-react";
 import Link from "next/link";
 import CustomConnectButton from "./CustomConnectWallet";
@@ -21,6 +21,7 @@ const Header: React.FC = () => {
   const pathname = usePathname();
 
   const { disconnect } = useDisconnect();
+  const { address } = useAccount()
 
   const handleLocaleChange = (locale: String) => {
     startTransition(() => {
@@ -104,11 +105,12 @@ const Header: React.FC = () => {
                   </div>
                 </div>
               </DropdownMenuItem>
+              <div className="text-[18px] leading-[30px] font-semibold">{formatAddress(address, 4)}</div>
               <Link href={"/declaration"} >
                 {/* <DropdownMenuItem> */}
-                  <span className="text-center text-[18px] leading-[30px] hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] font-semibold">
-                    {t('header_declaration')}
-                  </span>
+                <span className="text-center text-[18px] leading-[30px] hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] font-semibold">
+                  {t('header_declaration')}
+                </span>
                 {/* </DropdownMenuItem> */}
               </Link>
               <CustomConnectButton />

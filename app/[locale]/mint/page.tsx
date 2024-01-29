@@ -549,6 +549,28 @@ export default function MintPage() {
 
               {/* Mobile layout */}
               {
+                currentPeriod == MintPeriod.Ready &&
+                <div className=" mt-[25px] block lg:hidden">
+                  <div className="mb-[10px]">
+                    {/* Show Countdown in ready stage */}
+                    <h4 className=" text-[16px] xl:text-[18px] font-semibold leading-[18px]">{t("MainSection.mintReady")}
+                    </h4>
+                    <div className=" text-[30px] xl:text-[36px] font-bold">
+                      {/* @ts-ignore */}
+                      <span className=" ">{(countHour + 24 * countDay) || '00'}</span>h:<span className=" ">{countMinute || "00"}</span>m:<span className="countdown "><span style={{ "--value": countSecond }}></span></span>s
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className=" relative h-[12px] rounded-[24px] bg-[rgba(224,224,224,1)] border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">
+                      <Image src={"/progress-star-grey.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
+                    </div>
+                    <p className={clsx(locale == 'en' && "text-[12px] leading-[16px]", locale == 'zh' && 'text-[14px] leading-[18px]', "font-semibold text-black")}>
+                      {t("MainSection.firsthourTipReady")}
+                    </p>
+                  </div>
+                </div>
+              }
+              {
                 currentPeriod == MintPeriod.Mint &&
                 <div className=" mt-[25px]">
                   <div className=" block lg:hidden  mb-[10px] ">

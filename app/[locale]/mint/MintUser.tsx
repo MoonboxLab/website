@@ -120,7 +120,7 @@ export default function MintUser(props: MintUserProps) {
 
       </div>
       {
-        currentPeriod == MintPeriod.Ready && <div className=" relative h-full min-h-[260px] flex items-center justify-center">
+        currentPeriod == MintPeriod.Ready && <div className=" relative h-full min-h-[320px] flex items-center justify-center">
           <Image src={"/empty_icon.png"} alt="empty" width={90} height={88} />
         </div> 
       }

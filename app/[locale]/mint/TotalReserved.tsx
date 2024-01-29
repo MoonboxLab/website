@@ -12,7 +12,6 @@ export default function TotalReserved() {
   const screenSize = useSize(document.querySelector("body"))
   const t = useTranslations("Mint")
   const locale = useLocale();
-  console.log(locale)
 
   const [mintedCount, setMintedCount] = useState<number>(0)
 

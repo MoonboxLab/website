@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
-import { useSize } from "ahooks";
+import { useCountDown, useSize } from "ahooks";
 import "core-js/features/object/has-own";
 import ReactFullpage from "@fullpage/react-fullpage";
 
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
+import { MINT_START_TIME } from "@/constants/nobody_contract";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -29,6 +30,9 @@ export default function Home() {
   const [isShowVideo, setIsShowVideo] = useState<boolean>(false);
 
   const locale = useLocale();
+
+  const [mintStartCountdown] = useCountDown({ targetDate: MINT_START_TIME })
+
 
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -440,33 +444,52 @@ export default function Home() {
                   {t("nobody_nft_mv")}
                 </span>
               </div> */}
-              <Link href={"/mint"} >
-                <div
-                  className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
-                >
-                  <span className="text-[21px] font-semibold text-black">
-                    {t("check_whitelist")}
-                  </span>
-                </div>
-              </Link>
-              <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                <span className="text-[21px] font-semibold text-black">
-                  {t("mint")}
-                </span>
-                {(countdown.days !== 0 ||
-                  countdown.hours !== 0 ||
-                  countdown.minutes !== 0 ||
-                  countdown.seconds !== 0) && (
-                    <span className="ml-[10px] text-[18px] font-semibold text-black">
-                      {t("count_down", {
-                        day: countdown.days,
-                        hour: countdown.hours,
-                        minute: countdown.minutes,
-                        second: countdown.seconds,
-                      })}
+              {
+                mintStartCountdown > 0 &&
+                <Link href={"/mint"} >
+                  <div
+                    className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                  >
+                    <span className="text-[21px] font-semibold text-black">
+                      {t("check_whitelist")}
                     </span>
-                  )}
-              </div>
+                  </div>
+                </Link>
+              }
+
+              {
+                mintStartCountdown > 0 &&
+                <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                  <span className="text-[21px] font-semibold text-black">
+                    {t("mint")}
+                  </span>
+                  {(countdown.days !== 0 ||
+                    countdown.hours !== 0 ||
+                    countdown.minutes !== 0 ||
+                    countdown.seconds !== 0) && (
+                      <span className="ml-[10px] text-[18px] font-semibold text-black">
+                        {t("count_down", {
+                          day: countdown.days,
+                          hour: countdown.hours,
+                          minute: countdown.minutes,
+                          second: countdown.seconds,
+                        })}
+                      </span>
+                    )}
+                </div>
+              }
+
+              {
+                mintStartCountdown <= 0 &&
+                <Link href={"/mint"}>
+                  <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <span className="text-[21px] font-semibold text-black">
+                      {t("mint")}
+                    </span>
+                  </div>
+                </Link>
+              }
+
             </div>
           </div>
           <div className="flex w-full justify-center bg-black py-[40px]">

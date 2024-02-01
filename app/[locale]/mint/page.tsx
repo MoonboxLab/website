@@ -589,7 +589,7 @@ export default function MintPage() {
                           <Image src={"/progress-star.png"} alt="star" width={38} height={36} className=" absolute left-[-11px] top-[-13px]" />
                           <span className={clsx(
                             " rounded-[9px] bg-gradient-to-r from-[rgba(255,0,0,1)] to-[rgba(255,247,32,1)] block h-[8px] mt-[2px]",
-                          )} style={{ width: `${(60 - firstHourCountdown.minutes) / 0.6}%` }}></span>
+                          )} style={{ width: `${(firstHourCountdown.minutes) / 0.6}%` }}></span>
                         </div>
                         :
                         <div className=" relative h-[12px] rounded-[24px] bg-[rgba(224,224,224,1)] border-[1px] border-[rgba(185,185,185,1)] mb-[17px] box-content pl-[20px] pr-[2px]">

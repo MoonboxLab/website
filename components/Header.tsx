@@ -67,7 +67,7 @@ const Header: React.FC = () => {
             <a href="https://www.okx.com/web3/marketplace/nft/collection/eth/nobody" target="_blank">
               <DropdownMenuItem >
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
-                  <Image src={"/OKX.png"} alt="OKX NFT" width={32} height={32} />
+                  <Image src={"/OKX.png"} priority={true} quality={100} alt="OKX NFT" width={32} height={32} />
                   <span className=' text-[18px] leading-[18px] font-medium ml-[10px]'>OKX NFT</span>
                 </div>
               </DropdownMenuItem>
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
             <a href="https://opensea.io/collection/real-nobody-xyz" target="_blank">
               <DropdownMenuItem className=' mt-2'>
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
-                  <Image src={"/OpenSea.png"} alt="OKX NFT" width={32} height={32} />
+                  <Image src={"/OpenSea.png"} priority={true} quality={100} alt="OKX NFT" width={32} height={32} />
                   <span className=' text-[18px] leading-[18px] font-medium  ml-[10px]'>OpenSea</span>
                 </div>
               </DropdownMenuItem>
@@ -85,7 +85,7 @@ const Header: React.FC = () => {
             <a href="https://element.market/collections/nobody" target="_blank">
               <DropdownMenuItem className=' mt-2'>
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
-                  <Image src={"/Element.png"} alt="OKX NFT" width={32} height={32} />
+                  <Image src={"/Element.png"}  priority={true} quality={100} alt="OKX NFT" width={32} height={32} />
                   <span className=' text-[18px] leading-[18px] font-medium ml-[10px]'>Element</span>
                 </div>
               </DropdownMenuItem>
@@ -154,7 +154,7 @@ const Header: React.FC = () => {
           </div>
           <div className="drawer-side">
             <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-            <ul className="menu w-full h-full px-4 bg-base-200 text-base-content">
+            <ul className="menu w-full h-full px-4 bg-white">
               {/* Sidebar content here */}
 
               <div className=" flex justify-between items-center mt-2">

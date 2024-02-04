@@ -16,7 +16,8 @@ import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
-import { MINT_START_TIME } from "@/constants/nobody_contract";
+import { MINT_START_TIME, RAFFLE_END_TIME, REFUND_END_TIME } from "@/constants/nobody_contract";
+import clsx from "clsx";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -32,7 +33,8 @@ export default function Home() {
   const locale = useLocale();
 
   const [mintStartCountdown] = useCountDown({ targetDate: MINT_START_TIME })
-
+  const [raffleEndTime] = useCountDown({ targetDate: RAFFLE_END_TIME})
+  const [refundEndTime] = useCountDown( {targetDate: REFUND_END_TIME})
 
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -496,56 +498,51 @@ export default function Home() {
             <div className="flex flex-col items-start">
               <div className="flex">
                 <Image
-                  src="/mint_progress_now.png"
+                  src="/mint_progress_next.png"
                   height={108}
                   width={20}
                   alt="now"
                   priority
                 />
                 <div className="ml-[15px] flex flex-col justify-center">
-                  <span className="text-[21px] font-semibold leading-[21px] text-[#FFD600]">
+                  <span className="text-[21px] font-semibold leading-[21px] text-white">
                     {t("presale")}
                   </span>
-                  <span className="text-[16px] font-semibold leading-[21px] text-[#FFD600]">
+                  <span className="text-[16px] font-semibold leading-[21px] text-white">
                     {t("presale_time")}
                   </span>
-                  {/* <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                    <span className="text-[16px] font-semibold text-black">
-                      {t("join_waitlist")}
-                    </span>
-                  </div> */}
                 </div>
               </div>
               <div className="mt-[40px] flex">
                 <Image
-                  src="/mint_progress_next.png"
+                  src={raffleEndTime > 0 ? "/mint_progress_now.png" :  "/mint_progress_next.png"}
                   height={48}
                   width={20}
                   alt="next"
                   priority
                 />
-                <div className="ml-[15px] flex flex-col justify-center">
-                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                <div className={clsx("ml-[15px] flex flex-col justify-center", raffleEndTime > 0 ? "text-[#FFD600]" : "text-white")}>
+                  <span className="text-[21px] font-semibold leading-[21px] ">
                     {t("public_sale")}
                   </span>
-                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                  <span className="text-[16px] font-semibold leading-[21px] ">
                     {t("public_sale_time")}
                   </span>
                 </div>
               </div>
               <div className="mt-[40px] flex">
                 <Image
-                  src="/mint_progress_next.png"
+                  src={(raffleEndTime == 0 && refundEndTime > 0) ? "/mint_progress_now.png" :  "/mint_progress_next.png"}
                   height={48}
                   width={20}
                   alt="next"
                   priority
                 />
-                <div className="ml-[15px] flex flex-col justify-center">
-                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                <div className={clsx("ml-[15px] flex flex-col justify-center", (raffleEndTime == 0 && refundEndTime > 0) ? "text-[#FFD600]" : "text-white")}>
+                  <span className="text-[21px] font-semibold leading-[21px] ">
                     {t("refund")}
                   </span>
-                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                  <span className="text-[16px] font-semibold leading-[21px] ">
                     {t("refund_time")}
                   </span>
                 </div>

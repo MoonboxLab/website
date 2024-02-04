@@ -43,6 +43,7 @@ const Header: React.FC = () => {
         </div>
       </Link>
       <div className="flex items-center">
+
         <Link href={"/declaration"} className=" hidden lg:block" >
           <div className=' inline-flex items-center justify-center h-[36px] min-w-[84px] lg:h-[40px] lg:min-w-[80px] 3xl:h-[48px] 3xl:min-w-[96px] px-[24px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
             <span className=' text-[16px] leading-[16px]  sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px] font-semibold text-black ml-[6px]'>{t('header_declaration')}</span>
@@ -51,24 +52,37 @@ const Header: React.FC = () => {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className=' inline-flex items-center justify-center h-[36px] w-[84px] lg:h-[40px] lg:w-[80px] 3xl:h-[48px] 3xl:w-[96px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
-              <svg className='w-[24px] h-[24px] lg:w-[30px] lg:h-[30px]' viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4000" width="64" height="64"><path d="M697.984 598.016l144 0q11.989333-56.021333 11.989333-86.016t-11.989333-86.016l-144 0q6.016 41.984 6.016 86.016t-6.016 86.016zM621.994667 834.005333q121.984-40.021333 185.984-152.021333l-125.994667 0q-20.010667 80-59.989333 152.021333zM612.010667 598.016q6.016-41.984 6.016-86.016t-6.016-86.016l-200.021333 0q-6.016 41.984-6.016 86.016t6.016 86.016l200.021333 0zM512 852.010667q56.021333-82.005333 82.005333-169.984l-164.010667 0q25.984 88.021333 82.005333 169.984zM342.016 342.016q20.010667-80 59.989333-152.021333-121.984 40.021333-185.984 152.021333l125.994667 0zM216.021333 681.984q64 112 185.984 152.021333-40.021333-72.021333-59.989333-152.021333l-125.994667 0zM182.016 598.016l144 0q-6.016-41.984-6.016-86.016t6.016-86.016l-144 0q-11.989333 56.021333-11.989333 86.016t11.989333 86.016zM512 171.989333q-56.021333 82.005333-82.005333 169.984l164.010667 0q-25.984-88.021333-82.005333-169.984zM808.021333 342.016q-64-112-185.984-152.021333 40.021333 72.021333 59.989333 152.021333l125.994667 0zM512 86.016q176 0 301.013333 125.013333t125.013333 301.013333-125.013333 301.013333-301.013333 125.013333-301.013333-125.013333-125.013333-301.013333 125.013333-301.013333 301.013333-125.013333z" fill="#000000" p-id="4001"></path></svg>
-              <span className=' text-[16px] leading-[16px]  sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px] font-semibold text-black ml-[6px]'>{t('header_language')}</span>
+            <div className=' inline-flex items-center justify-center h-[36px] w-[105px] lg:h-[40px] lg:w-[105px] 3xl:h-[48px] 3xl:w-[135px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
+              <span className=' text-[16px] leading-[16px]  sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px] font-semibold text-black ml-[6px]'>OXK NFT</span>
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className='mt-2 w-[160px] h-[110px] rounded-[12px] py-[14px]'>
-            <DropdownMenuItem onClick={() => handleLocaleChange('en')} >
-              <div className=' h-[25px] inline-flex items-center justify-between px-3'>
-                <span className=' text-[21px] font-semibold mr-[10px]'>En</span>
-                <span className=' text-[18px] leading-[18px] font-medium'>English</span>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleLocaleChange('zh')} className=' mt-2'>
-              <div className=' h-[25px] inline-flex items-center justify-between px-3'>
-                <span className=' text-[21px] font-semibold mr-[10px]'>Zh</span>
-                <span className=' text-[18px] leading-[18px] font-medium'>繁體中文</span>
-              </div>
-            </DropdownMenuItem>
+          <DropdownMenuContent className='mt-2 w-[165px] rounded-[12px] py-[14px]'>
+            <a href="" target="_blank">
+              <DropdownMenuItem >
+                <div className=' h-[25px] inline-flex items-center justify-between px-1'>
+                  <Image src={"/OKX.png"} alt="OKX NFT" width={32} height={32} />
+                  <span className=' text-[18px] leading-[18px] font-medium ml-[10px]'>OKX NFT</span>
+                </div>
+              </DropdownMenuItem>
+            </a>
+
+            <a href="" target="_blank">
+              <DropdownMenuItem className=' mt-2'>
+                <div className=' h-[25px] inline-flex items-center justify-between px-1'>
+                  <Image src={"/OpenSea.png"} alt="OKX NFT" width={32} height={32} />
+                  <span className=' text-[18px] leading-[18px] font-medium  ml-[10px]'>OpenSea</span>
+                </div>
+              </DropdownMenuItem>
+            </a>
+
+            <a href="" target="_blank">
+              <DropdownMenuItem className=' mt-2'>
+                <div className=' h-[25px] inline-flex items-center justify-between px-1'>
+                  <Image src={"/Element.png"} alt="OKX NFT" width={32} height={32} />
+                  <span className=' text-[18px] leading-[18px] font-medium ml-[10px]'>Element</span>
+                </div>
+              </DropdownMenuItem>
+            </a>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -89,6 +103,29 @@ const Header: React.FC = () => {
             <svg className='w-[24px] h-[24px] lg:w-[30px] lg:h-[30px]' viewBox="0 0 1280 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5511"><path d="M1049.062 139.672a3 3 0 0 0-1.528-1.4A970.13 970.13 0 0 0 808.162 64.06a3.632 3.632 0 0 0-3.846 1.82 674.922 674.922 0 0 0-29.8 61.2 895.696 895.696 0 0 0-268.852 0 619.082 619.082 0 0 0-30.27-61.2 3.78 3.78 0 0 0-3.848-1.82 967.378 967.378 0 0 0-239.376 74.214 3.424 3.424 0 0 0-1.576 1.352C78.136 367.302 36.372 589.38 56.86 808.708a4.032 4.032 0 0 0 1.53 2.75 975.332 975.332 0 0 0 293.65 148.378 3.8 3.8 0 0 0 4.126-1.352A696.4 696.4 0 0 0 416.24 860.8a3.72 3.72 0 0 0-2.038-5.176 642.346 642.346 0 0 1-91.736-43.706 3.77 3.77 0 0 1-0.37-6.252 502.094 502.094 0 0 0 18.218-14.274 3.638 3.638 0 0 1 3.8-0.512c192.458 87.834 400.82 87.834 591 0a3.624 3.624 0 0 1 3.848 0.466 469.066 469.066 0 0 0 18.264 14.32 3.768 3.768 0 0 1-0.324 6.252 602.814 602.814 0 0 1-91.78 43.66 3.75 3.75 0 0 0-2 5.222 782.11 782.11 0 0 0 60.028 97.63 3.728 3.728 0 0 0 4.126 1.4A972.096 972.096 0 0 0 1221.4 811.458a3.764 3.764 0 0 0 1.53-2.704c24.528-253.566-41.064-473.824-173.868-669.082zM444.982 675.16c-57.944 0-105.688-53.174-105.688-118.478s46.818-118.482 105.688-118.482c59.33 0 106.612 53.64 105.686 118.478 0 65.308-46.82 118.482-105.686 118.482z m390.76 0c-57.942 0-105.686-53.174-105.686-118.478s46.818-118.482 105.686-118.482c59.334 0 106.614 53.64 105.688 118.478 0 65.308-46.354 118.482-105.688 118.482z" p-id="5512" fill="#000000"></path></svg>
           </div>
         </a>
+
+        <DropdownMenu >
+          <DropdownMenuTrigger asChild className=" hidden lg:flex">
+            <div className=' inline-flex items-center justify-center h-[36px] w-[84px] lg:h-[40px] lg:w-[80px] 3xl:h-[48px] 3xl:w-[96px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
+              <svg className='w-[24px] h-[24px] lg:w-[30px] lg:h-[30px]' viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4000" width="64" height="64"><path d="M697.984 598.016l144 0q11.989333-56.021333 11.989333-86.016t-11.989333-86.016l-144 0q6.016 41.984 6.016 86.016t-6.016 86.016zM621.994667 834.005333q121.984-40.021333 185.984-152.021333l-125.994667 0q-20.010667 80-59.989333 152.021333zM612.010667 598.016q6.016-41.984 6.016-86.016t-6.016-86.016l-200.021333 0q-6.016 41.984-6.016 86.016t6.016 86.016l200.021333 0zM512 852.010667q56.021333-82.005333 82.005333-169.984l-164.010667 0q25.984 88.021333 82.005333 169.984zM342.016 342.016q20.010667-80 59.989333-152.021333-121.984 40.021333-185.984 152.021333l125.994667 0zM216.021333 681.984q64 112 185.984 152.021333-40.021333-72.021333-59.989333-152.021333l-125.994667 0zM182.016 598.016l144 0q-6.016-41.984-6.016-86.016t6.016-86.016l-144 0q-11.989333 56.021333-11.989333 86.016t11.989333 86.016zM512 171.989333q-56.021333 82.005333-82.005333 169.984l164.010667 0q-25.984-88.021333-82.005333-169.984zM808.021333 342.016q-64-112-185.984-152.021333 40.021333 72.021333 59.989333 152.021333l125.994667 0zM512 86.016q176 0 301.013333 125.013333t125.013333 301.013333-125.013333 301.013333-301.013333 125.013333-301.013333-125.013333-125.013333-301.013333 125.013333-301.013333 301.013333-125.013333z" fill="#000000" p-id="4001"></path></svg>
+              <span className=' text-[16px] leading-[16px]  sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px] font-semibold text-black ml-[6px]'>{t('header_language')}</span>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='mt-2 w-[160px] h-[110px] rounded-[12px] py-[14px]'>
+            <DropdownMenuItem onClick={() => handleLocaleChange('en')} >
+              <div className=' h-[25px] inline-flex items-center justify-between px-3'>
+                <span className=' text-[21px] font-semibold mr-[10px]'>En</span>
+                <span className=' text-[18px] leading-[18px] font-medium'>English</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleLocaleChange('zh')} className=' mt-2'>
+              <div className=' h-[25px] inline-flex items-center justify-between px-3'>
+                <span className=' text-[21px] font-semibold mr-[10px]'>Zh</span>
+                <span className=' text-[18px] leading-[18px] font-medium'>繁體中文</span>
+              </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {(mediaSize?.width || 0) < 1024 && (
           <DropdownMenu>

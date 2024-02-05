@@ -275,10 +275,10 @@ const Header: React.FC = () => {
                     if (!connected) {
                       return (
                         <div
-                          className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px]  lg:w-[160px] 3xl:h-[48px] 3xl:w-[180px]"
+                          className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px]  lg:w-[160px] 3xl:h-[48px] 3xl:w-[190px]"
                           onClick={openConnectModal}
                         >
-                          <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
+                          <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px] 3xl:text-[21px]">
                             {t("header_connect_wallet")}
                           </span>
                         </div>
@@ -288,10 +288,10 @@ const Header: React.FC = () => {
                     if (chain.unsupported) {
                       return (
                         <div
-                          className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px]  lg:w-[160px] 3xl:h-[48px] 3xl:w-[180px]"
+                          className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px]  lg:w-[160px] 3xl:h-[48px] 3xl:w-[190px]"
                           onClick={openChainModal}
                         >
-                          <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
+                          <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px] 3xl:text-[21px]">
                             {t("header_wrong_network")}
                           </span>
                         </div>
@@ -301,20 +301,19 @@ const Header: React.FC = () => {
                     return (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <div className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px]  lg:w-[160px] 3xl:h-[48px] 3xl:w-[180px]">
-                            <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px]">
-                              {/* {account.displayName} */}
+                          <div className="hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white pr-[8px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px]  lg:w-[160px] 3xl:h-[48px] 3xl:w-[190px]">
+                            <span className="ml-[6px] whitespace-nowrap text-[16px] font-semibold text-black sm:text-[18px] lg:ml-[10px] 3xl:text-[21px]">
                               {formatAddress(account.address, 4)}
                             </span>
                           </div>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="mt-[10px] flex h-[60px] w-[180px] items-center rounded-[12px]">
+                        <DropdownMenuContent className="mt-[10px] flex h-[60px] lg:w-[160px] 3xl:w-[190px] items-center rounded-[12px]">
                           <DropdownMenuItem
-                            className="w-full p-[20px]"
+                            className="w-full p-[10px] 3xl:p-[20px]"
                             onClick={() => disconnect()}
                           >
-                            <Power className=' mr-3 text-black' />
-                            <span className="w-full text-center text-[18px] font-medium leading-[18px]">
+                            <Power className=' mr-2 text-black' />
+                            <span className="w-full text-center text-[16px] 3xl:text-[18px] font-medium leading-[18px]">
                               {t("disconnect")}
                             </span>
                           </DropdownMenuItem>

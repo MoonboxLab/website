@@ -46,7 +46,8 @@
     "nobody_content_1": "Nobody NFT將Web3和AI驅動的交互式敘事融為一體。",
     "nobody_content_2": "每個Nobody NFT都是一個鮮活角色。",
     "nobody_content_3": "和你喜愛的角色聊天，並了解他們的獨特故事。",
-    "count_down": "{day}天{hour}时{minute}分{second}秒"
+    "count_down": "{day}天{hour}时{minute}分{second}秒",
+    "goldcardRaffle": "金卡開獎"
   },
   "Declaration": {
     "spirit": "精神",
@@ -127,6 +128,35 @@
       "raffleTime": "Feb 3, 8 PM - Feb 4, 8 PM (UTC+8)",
       "mint": "鑄造",
       "mintTime": "Feb 1, 8 PM - Feb 3, 8 PM (UTC+8)"
+    }
+  },
+  "GoldCard": {
+
+    "Result": {
+      "title": "你已成功提交郵寄地址",
+      "formName": "姓名",
+      "formPhone": "聯絡電話",
+      "formAddress": "收件地址",
+      "formEmail": "電子信箱",
+      "formIdNumber": "身份證號",
+      "btnModify": "修改"
+    },
+    "Form": {
+      "title": "恭喜你抽中金卡",
+      "subTitle": "請填寫收件訊息，我們將統一郵寄簽名金卡",
+      "formName": "姓名",
+      "formPhone": "聯絡電話",
+      "formAddress": "收件地址",
+      "formEmail": "電子信箱",
+      "formIdNumber": "身份證號",
+      "idTip": "重要提示: 因寄件要求，台灣地址請填寫身份證號碼。非台湾地址可不填写。",
+      "btnSubmit": "簽名並提交"
+    },
+    "Ready": {
+      "title": "抽獎驗證",
+      "subTitle": "連接錢包查看你是否抽中金卡",
+      "noneSelected": "很遺憾！ 未被抽中金卡，期待你参与下次活動",
+      "btnConnectWallet": "連接錢包"
     }
   }
 }

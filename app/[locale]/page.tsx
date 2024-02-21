@@ -33,8 +33,8 @@ export default function Home() {
   const locale = useLocale();
 
   const [mintStartCountdown] = useCountDown({ targetDate: MINT_START_TIME })
-  const [raffleEndTime] = useCountDown({ targetDate: RAFFLE_END_TIME})
-  const [refundEndTime] = useCountDown( {targetDate: REFUND_END_TIME})
+  const [raffleEndTime] = useCountDown({ targetDate: RAFFLE_END_TIME })
+  const [refundEndTime] = useCountDown({ targetDate: REFUND_END_TIME })
 
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -137,6 +137,16 @@ export default function Home() {
                     priority
                     className="object-cover"
                   />
+                  <div className="hover-btn-shadow absolute bottom-[108px] right-[20px] w-[200px] h-[250px] 4xl:bottom-[140px] 4xl:right-[30px] rounded-[16px] border-2 border-black bg-[rgba(219,53,57,1)] pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)]" onClick={() => {
+                    window.open("/goldcard", "_blank")
+                  }}>
+                    <Image src={"/card-back.png"} alt="card back" quality={100} width={90} height={119} className=" absolute top-[23px] left-[29px]" />
+                    <Image src={"/card-front.png"} alt="card front" quality={100} width={106} height={128} className=" absolute top-[46px] right-[25px]" />
+
+                    <Image src={"/form_icon1.png"} alt="icon1" width={122} height={130} className=" absolute top-[-12px] left-[-26px]" />
+                    <Image src={"/form_icon2.png"} alt="icon2" width={117} height={130} className=" absolute top-[-12px] right-[-28px]" />
+                    <div className=" absolute left-0 right-0 m-auto bottom-[20px] w-[160px] h-[40px] rounded-[8px] bg-white text-[16px] font-semibold leading-[40px] text-center">{t("goldcardRaffle")}</div>
+                  </div>
                   <div
                     onClick={() => {
                       setVideo(
@@ -446,40 +456,16 @@ export default function Home() {
                   {t("nobody_nft_mv")}
                 </span>
               </div> */}
-              {
-                mintStartCountdown > 0 &&
-                <Link href={"/mint"} >
-                  <div
-                    className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
-                  >
-                    <span className="text-[21px] font-semibold text-black">
-                      {t("check_whitelist")}
-                    </span>
-                  </div>
-                </Link>
-              }
 
-              {
-                mintStartCountdown > 0 &&
-                <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                  <span className="text-[21px] font-semibold text-black">
-                    {t("mint")}
+              <Link href={"/goldcard"}>
+                <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] relative">
+                  <span className="text-[21px] font-semibold text-[rgba(219,53,57,1)] underline">
+                    {t("goldcardRaffle")}
                   </span>
-                  {(countdown.days !== 0 ||
-                    countdown.hours !== 0 ||
-                    countdown.minutes !== 0 ||
-                    countdown.seconds !== 0) && (
-                      <span className="ml-[10px] text-[18px] font-semibold text-black">
-                        {t("count_down", {
-                          day: countdown.days,
-                          hour: countdown.hours,
-                          minute: countdown.minutes,
-                          second: countdown.seconds,
-                        })}
-                      </span>
-                    )}
+                  <Image src="/mobile_goldcard_btn_icon1.png" alt="icon1" width={40} height={26} className=" absolute left-[58px] top-[16px]" />
+                  <Image src="/mobile_goldcard_btn_icon2.png" alt="icon1" width={86} height={28} className=" absolute right-[18px] top-[14px]" />
                 </div>
-              }
+              </Link>
 
               {
                 mintStartCountdown <= 0 &&
@@ -515,7 +501,7 @@ export default function Home() {
               </div>
               <div className="mt-[40px] flex">
                 <Image
-                  src={raffleEndTime > 0 ? "/mint_progress_now.png" :  "/mint_progress_next.png"}
+                  src={raffleEndTime > 0 ? "/mint_progress_now.png" : "/mint_progress_next.png"}
                   height={48}
                   width={20}
                   alt="next"
@@ -532,7 +518,7 @@ export default function Home() {
               </div>
               <div className="mt-[40px] flex">
                 <Image
-                  src={(raffleEndTime == 0 && refundEndTime > 0) ? "/mint_progress_now.png" :  "/mint_progress_next.png"}
+                  src={(raffleEndTime == 0 && refundEndTime > 0) ? "/mint_progress_now.png" : "/mint_progress_next.png"}
                   height={48}
                   width={20}
                   alt="next"

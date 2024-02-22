@@ -4,12 +4,14 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useSignMessage } from "wagmi";
 import AddressForm from "./AddressForm";
-import SubmitResult from "./SubmitResult";
 import Header from "@/components/Header";
 import { useSize } from "ahooks";
 import clsx from "clsx";
+import { CheckRaffleResult, GetFormInfo, GetSignNonce } from "@/service/goldcard";
+import { toast } from "react-toastify";
+import { Loader2 } from "lucide-react";
 
 export enum FormStage {
   Ready,
@@ -19,27 +21,93 @@ export enum FormStage {
 
 export default function GoldCard() {
   const t = useTranslations('GoldCard.Ready');
+  const tR = useTranslations('GoldCard.Result');
+
   const locale = useLocale()
 
   const { address } = useAccount()
   const { openConnectModal } = useConnectModal()
+
   const [isRaffleWin, setRaffleWin] = useState<boolean>(false)
   const [isSubmitForm, setSubmitForm] = useState<boolean>(false)
+  const [currentStage, setCurrentStage] = useState<FormStage>(FormStage.Ready)
+
+  const [addressNonce, setAddressNonce] = useState<string>("")
+  
+  const { signMessageAsync } = useSignMessage({ message: addressNonce})
+  const [viewLoading, setViewLoading] = useState<boolean>(false)
+  const [checkLoading, setCheckLoading] = useState<boolean>(false)
+
+  const [defaultFormValues, setDefaultFormValues] = useState<Record<string, any>>({ prefix: "86" })
+
   const mediaSize = useSize(document.querySelector('body'));
-
-  const [currentStage, setCurrentStage] = useState<FormStage>(FormStage.Form)
-
-  useEffect(() => {
-
-  }, [isRaffleWin, isSubmitForm])
 
   useEffect(() => {
     if (address) {
       // 判断当前地址是否中奖
-
       // 判断当前地址是否已经提交过表单
+      handleCheckAddress(address)
+
+      // get sign nonce
+      querySignNonce(address)
     }
   }, [address])
+
+  const handleCheckAddress = async (address: string) => {
+    const result = await CheckRaffleResult(address)
+    if (result['success']) {
+      const { edited, reward } = result['data'] || {}
+      setRaffleWin(reward)
+      setSubmitForm(edited)
+
+      if (edited == true) {
+        setCurrentStage(FormStage.End)
+      } else {
+        setCurrentStage(reward ? FormStage.Form : FormStage.Ready)
+      }
+    } else {
+      toast.error(result['msg'])
+    }
+  }
+
+  const querySignNonce = async (address: string) => {
+    const result = await GetSignNonce(address);
+    if (result['success']) {
+      console.log(result)
+      setAddressNonce(result["data"])
+    } else {
+      if (result['code'] != 430) { // address not reward
+        toast.error(result['msg'])
+      }
+    }
+  }
+
+  const handleViewInfo = async () => {
+    setViewLoading(true)
+    const signStr = await signMessageAsync()
+
+    const result = await GetFormInfo({ sign: signStr, userAddress: address})
+    if (result['success']) {
+      const { addressee, deliverAddress, email, idNumber, telNumber} = result['data']
+
+      const matches = telNumber.match(/\((.*?)\)/);
+
+      setDefaultFormValues({
+        username: addressee,
+        address: deliverAddress,
+        email: email,
+        userid: idNumber,
+        phone: (telNumber as string).split(' ')[1],
+        prefix: matches && matches.length > 1 ? matches[1] : ''
+      })
+
+      querySignNonce(address as `0x${string}`)
+    } else {
+      toast.error(result['msg'])
+    }
+
+    setViewLoading(false)
+  }
 
   return <div className=" relative h-screen w-screen ">
     <Image src={"/goldcard_bg.webp"} alt="background-image" fill style={{ objectFit: 'cover' }} />
@@ -75,6 +143,7 @@ export default function GoldCard() {
             {
               address ?
                 <div className=" m-auto h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold max-w-[240px] xl:max-w-[280px]">
+                  { checkLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                   {formatAddress(address, 4)}
                 </div> :
                 <div className=" m-auto h-[56px] w-full rounded-[12px] xl:h-[64px] xl:rounded-[12px] bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[21px] xl:text-[24px] leading-[21px] xl:leading-[24px] font-semibold max-w-[240px] xl:max-w-[280px]" onClick={openConnectModal}>
@@ -84,17 +153,65 @@ export default function GoldCard() {
 
             {/* Not Raffle Win */}
             {
-              address && !isRaffleWin &&
+              address && !isRaffleWin && !checkLoading &&
               <p className="mx-[20px] md:mx-[100px] text-[16px] md:text-[18px] font-medium leading-[18px] text-center mt-[20px] md:mt-[30px] ">{t("noneSelected")}</p>
             }
           </div>}
 
         {
-          currentStage == FormStage.Form && <AddressForm />
+          currentStage == FormStage.Form &&
+          <AddressForm
+            nonce={addressNonce}
+            setCurrentStage={setCurrentStage}
+            defaultFormValues={defaultFormValues}
+            setDefaultFormValues={setDefaultFormValues}
+            querySignNonce={querySignNonce}
+          />
         }
 
         {
-          currentStage == FormStage.End && <SubmitResult />
+          currentStage == FormStage.End &&
+          <div className=" mt-[50px] md:mt-[120px]">
+            <h3 className=" mb-[50px] md:mb-[60px] text-[26px] md:text-[30px] font-semibold leading-[30px] text-center md:mx-[90px]">{tR("title")}</h3>
+            <div className=" m-auto px-[15px] md:p-[60px] w-full md:w-[550px] h-auto md:min-h-[330px] rounded-[12px] md:bg-black/5">
+              <div className="flex mb-[30px]">
+                <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR('formName')}</div>
+                <div className=" text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues["username"] || "-"}</div>
+              </div>
+              <div className="flex mb-[30px]">
+                <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formPhone")}</div>
+                <div className=" text-[16px]  md:text-[18px] font-medium leading-[18px]">
+                  {Boolean(defaultFormValues['phone']) ? `+${defaultFormValues['prefix']} ${defaultFormValues['phone']}` : '-'}
+                </div>
+              </div>
+              <div className="flex mb-[30px]">
+                <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formAddress")}</div>
+                <div className=" text-[16px]  md:text-[18px] font-medium leading-[24px]">{defaultFormValues['address'] || '-'}</div>
+              </div>
+              <div className="flex mb-[30px]">
+                <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formEmail")}</div>
+                <div className="  text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues['email'] || '-'}</div>
+              </div>
+              <div className="flex mb-[30px]">
+                <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formIdNumber")}</div>
+                <div className="  text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues['userid'] || '-'}</div>
+              </div>
+            </div>
+
+            {
+              defaultFormValues["username"] ?
+                <div className=" m-auto mb-[40px] md:mb-0 mt-[60px] md:mt-[40px] h-[48px] w-[160px] rounded-[12px] bg-white border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[18px]  leading-[21px] font-semibold select-none " onClick={() => {
+                  setCurrentStage(FormStage.Form)
+                }} >
+                  {tR("btnModify")}
+                </div>
+                :
+                <div className=" m-auto mb-[40px] md:mb-0 mt-[60px] md:mt-[40px] h-[48px] w-[160px] rounded-[12px] bg-white border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[18px]  leading-[21px] font-semibold select-none " onClick={handleViewInfo} >
+                  { viewLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+                  {tR("btnView")}
+                </div>
+            }
+          </div>
         }
 
       </div>

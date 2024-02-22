@@ -1,15 +1,16 @@
 
 "use client"
 
-import { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Form, Input, InputNumber, Select, } from "antd"
 import { useSize } from "ahooks"
 import { useLocale, useTranslations } from "next-intl"
 import clsx from "clsx"
-
+import { useAccount, useSignMessage } from "wagmi"
+import { Loader2 } from "lucide-react"
+import { PostFormInfo } from "@/service/goldcard"
+import { toast } from "react-toastify"
+import { FormStage } from "./page"
 
 const prefixSelector = (
   <Form.Item name="prefix" noStyle>
@@ -20,25 +21,65 @@ const prefixSelector = (
   </Form.Item>
 );
 
-export default function AddressForm() {
+interface AddressFormParams {
+  nonce: string
+  setCurrentStage: Dispatch<SetStateAction<FormStage>>
+  setDefaultFormValues: Dispatch<SetStateAction<Record<string, any>>>
+  defaultFormValues: Record<string, any>
+  querySignNonce: (address: string) => Promise<void>
+}
+export default function AddressForm(props: AddressFormParams) {
+  const { nonce, setCurrentStage, setDefaultFormValues, defaultFormValues, querySignNonce } = props
   const t = useTranslations('GoldCard.Form');
   const locale = useLocale()
+
+  const {address} = useAccount()
 
   const [readySubmit, setReadySubmit] = useState<boolean>(false)
   const [form] = Form.useForm();
 
+  const [formLoading, setFormLoading] = useState<boolean>(false)
+
   const mediaSize = useSize(document.querySelector('body'));
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-  };
+  const { signMessageAsync } = useSignMessage({ message: nonce})
 
-  const handlePreCheck = async () => {
+  const handleSubmitForm = async () => {
     await form.validateFields()
 
-    // 签名
+    try {
+      setFormLoading(true)
+      console.log(form.getFieldsValue())
+      // 签名
+      const signStr =  await signMessageAsync();
+      // 提交表单
 
+      const {address: deliverAddress, email, phone, prefix, userid, username}  = form.getFieldsValue()
 
+      const formParams = {
+        addressee: username,
+        deliverAddress,
+        email,
+        idNumber: userid || "",
+        sign: signStr,
+        telNumber: `(${prefix}) ${phone}`,
+        userAddress: address
+      }
+
+      const result = await PostFormInfo(formParams)
+      if (result['success']) {
+        setDefaultFormValues(form.getFieldsValue())
+        setCurrentStage(FormStage.End)
+
+        querySignNonce(address as `0x${string}`)
+      } else {
+        toast.error(result['msg'])
+      }
+    } catch (err) {
+
+    }
+
+    setFormLoading(false)
   }
 
   const handleValueChange = (changedVal: any, allVals: any) => {
@@ -61,16 +102,14 @@ export default function AddressForm() {
 
     <Form
       form={form}
-      onFinish={onFinish}
       layout={(mediaSize?.width || 0) < 768 ? "vertical" : "horizontal"}
       onValuesChange={handleValueChange}
       name="addressform"
       labelCol={(mediaSize?.width || 0) < 768 ? {} : { flex: '100px', }}
       labelAlign="left"
-      // wrapperCol={{ flex: 1 }}
       colon={false}
       style={{ maxWidth: 580, margin: "auto", fontSize: '18px' }}
-      initialValues={{ prefix: "86" }}
+      initialValues={defaultFormValues}
       size={(mediaSize?.width || 0) < 768 ? "middle" : "large"}
     >
       <Form.Item label={<span className=" text-[16px] font-medium md:text-[18px] md:font-semibold leading-[18px]">{t("formName")}</span>} name="username" rules={[{ required: true }]} className=" ">
@@ -98,7 +137,10 @@ export default function AddressForm() {
     <br className=" hidden md:block" />
     {
       readySubmit ?
-        <div className=" mb-[40px] md:mb-0 md:ml-[160px] w-full h-[48px] md:w-[180px] rounded-[12px]  bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[18px] xl:text-[18px] leading-[18px] xl:leading-[18px] font-semibold select-none" onClick={handlePreCheck} >
+        <div className={clsx(
+          " mb-[40px] md:mb-0 md:ml-[160px] w-full h-[48px] rounded-[12px]  bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[18px] xl:text-[18px] leading-[18px] xl:leading-[18px] font-semibold select-none", locale == 'en' ? "md:w-[200px]" : "md:w-[180px]"
+        )} onClick={handleSubmitForm} >
+          { formLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
           {t("btnSubmit")}
         </div>
         :

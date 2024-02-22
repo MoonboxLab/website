@@ -139,7 +139,8 @@
       "formAddress": "收件地址",
       "formEmail": "電子信箱",
       "formIdNumber": "身份證號",
-      "btnModify": "修改"
+      "btnModify": "修改",
+      "btnView": "簽名並查看"
     },
     "Form": {
       "title": "恭喜你抽中金卡",

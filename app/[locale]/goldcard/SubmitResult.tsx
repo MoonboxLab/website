@@ -1,8 +1,8 @@
 "use client"
 
+import { FormStage } from "@/constants/stage";
 import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
-import { FormStage } from "./page";
 
 interface SubmitResultProps {
   nonce: string

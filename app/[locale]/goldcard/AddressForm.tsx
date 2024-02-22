@@ -10,7 +10,7 @@ import { useAccount, useSignMessage } from "wagmi"
 import { Loader2 } from "lucide-react"
 import { PostFormInfo } from "@/service/goldcard"
 import { toast } from "react-toastify"
-import { FormStage } from "./page"
+import { FormStage } from "@/constants/stage"
 
 const prefixSelector = (
   <Form.Item name="prefix" noStyle>

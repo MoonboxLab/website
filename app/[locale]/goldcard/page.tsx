@@ -12,12 +12,8 @@ import clsx from "clsx";
 import { CheckRaffleResult, GetFormInfo, GetSignNonce } from "@/service/goldcard";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
+import { FormStage } from "@/constants/stage";
 
-export enum FormStage {
-  Ready,
-  Form,
-  End
-}
 
 export default function GoldCard() {
   const t = useTranslations('GoldCard.Ready');

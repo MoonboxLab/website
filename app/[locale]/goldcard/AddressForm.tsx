@@ -11,12 +11,16 @@ import { Loader2 } from "lucide-react"
 import { PostFormInfo } from "@/service/goldcard"
 import { toast } from "react-toastify"
 import { FormStage } from "@/constants/stage"
+import { INTERNATIONAL_PHONE_PREFIX } from "@/constants/contract"
 
 const prefixSelector = (
   <Form.Item name="prefix" noStyle>
     <Select className=" h-[40px] md:h-[48px]" style={{ width: 100 }}>
-      <Select.Option value="86">+86</Select.Option>
-      <Select.Option value="87">+87</Select.Option>
+      {
+        INTERNATIONAL_PHONE_PREFIX.map((item, index) =>
+          <Select.Option value={item} key={index}>+ {item}</Select.Option>
+        )
+      }
     </Select>
   </Form.Item>
 );
@@ -33,7 +37,7 @@ export default function AddressForm(props: AddressFormParams) {
   const t = useTranslations('GoldCard.Form');
   const locale = useLocale()
 
-  const {address} = useAccount()
+  const { address } = useAccount()
 
   const [readySubmit, setReadySubmit] = useState<boolean>(false)
   const [form] = Form.useForm();
@@ -42,7 +46,7 @@ export default function AddressForm(props: AddressFormParams) {
 
   const mediaSize = useSize(document.querySelector('body'));
 
-  const { signMessageAsync } = useSignMessage({ message: nonce})
+  const { signMessageAsync } = useSignMessage({ message: nonce })
 
   const handleSubmitForm = async () => {
     await form.validateFields()
@@ -51,10 +55,10 @@ export default function AddressForm(props: AddressFormParams) {
       setFormLoading(true)
       console.log(form.getFieldsValue())
       // 签名
-      const signStr =  await signMessageAsync();
+      const signStr = await signMessageAsync();
       // 提交表单
 
-      const {address: deliverAddress, email, phone, prefix, userid, username}  = form.getFieldsValue()
+      const { address: deliverAddress, email, phone, prefix, userid, username } = form.getFieldsValue()
 
       const formParams = {
         addressee: username,
@@ -140,7 +144,7 @@ export default function AddressForm(props: AddressFormParams) {
         <div className={clsx(
           " mb-[40px] md:mb-0 md:ml-[160px] w-full h-[48px] rounded-[12px]  bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[18px] xl:text-[18px] leading-[18px] xl:leading-[18px] font-semibold select-none", locale == 'en' ? "md:w-[200px]" : "md:w-[180px]"
         )} onClick={handleSubmitForm} >
-          { formLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+          {formLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
           {t("btnSubmit")}
         </div>
         :

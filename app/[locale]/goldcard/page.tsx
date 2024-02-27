@@ -46,6 +46,8 @@ export default function GoldCard() {
 
       // get sign nonce
       querySignNonce(address)
+    } else {
+      setCurrentStage(FormStage.Ready)
     }
   }, [address])
 
@@ -80,7 +82,13 @@ export default function GoldCard() {
 
   const handleViewInfo = async () => {
     setViewLoading(true)
-    const signStr = await signMessageAsync()
+    let signStr 
+    try {
+      signStr = await signMessageAsync()
+    } catch (err) {
+      setViewLoading(false)
+      return
+    }
 
     const result = await GetFormInfo({ sign: signStr, userAddress: address})
     if (result['success']) {
@@ -113,7 +121,7 @@ export default function GoldCard() {
     </div>
 
     <div className=" h-screen w-screen  overflow-scroll">
-      <div className=" relative z-10 mt-[122px] md:mt-[140px] mb-[80px] mx-[10px] md:mx-auto w-[calc(100%-20px)]  md:w-[700px] min-h-[500px] h-auto md:min-h-[800px] bg-white rounded-[24px] border-[2px] border-black">
+      <div className=" relative z-10 mt-[122px] md:mt-[140px] mb-[40px] mx-[10px] md:mx-auto w-[calc(100%-20px)]  md:w-[700px] min-h-[500px] h-auto md:min-h-[600px] 3xl:min-h-[700px] bg-white rounded-[24px] border-[2px] border-black">
         <div className=" absolute bottom-0 right-[40px] w-[140px] h-[109px] md:w-[160px] md:h-[124px]">
           {
             !((mediaSize?.width || 0) < 768 && [FormStage.End, FormStage.Form].includes(currentStage)) &&
@@ -131,7 +139,7 @@ export default function GoldCard() {
         {currentStage == FormStage.Ready &&
           <div className={clsx(
             "mt-[120px] flex-col items-center justify-center",
-            locale == 'en' ? "md:mt-[230px]" : "md:mt-[250px]"
+            locale == 'en' ? "md:mt-[150px]" : "md:mt-[180px]"
           )}>
             <h3 className=" text-[36px] md:text-[48px] font-semibold leading-[36px] md:leading-[48px] text-center">{t("title")}</h3>
             <h4 className=" text-[21px] md:text-[30px] font-semibold leading-[21px] md:leading-[30px] md:mx-[80px] mt-[10px] md:mt-[20px] mb-[60px] md:mb-[80px] text-center">{t("subTitle")}</h4>
@@ -167,30 +175,30 @@ export default function GoldCard() {
 
         {
           currentStage == FormStage.End &&
-          <div className=" mt-[50px] md:mt-[120px]">
-            <h3 className=" mb-[50px] md:mb-[60px] text-[26px] md:text-[30px] font-semibold leading-[30px] text-center md:mx-[90px]">{tR("title")}</h3>
-            <div className=" m-auto px-[15px] md:p-[60px] w-full md:w-[550px] h-auto md:min-h-[330px] rounded-[12px] md:bg-black/5">
+          <div className=" mt-[50px] md:mt-[60px] 3xl:mt-[90px]">
+            <h3 className=" mb-[50px] md:mb-[60px] text-[26px] md:text-[30px] font-semibold leading-[30px] text-center md:mx-[90px] relative z-10"> {isSubmitForm ? tR("alreadyTitle") : tR("title")}</h3>
+            <div className=" m-auto px-[15px] md:p-[30px] 3xl:p-[60px] w-full md:w-[550px] h-auto rounded-[12px] md:bg-black/5 relative z-10">
               <div className="flex mb-[30px]">
                 <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR('formName')}</div>
-                <div className=" text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues["username"] || "-"}</div>
+                <div className=" text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues["username"] || "***"}</div>
               </div>
               <div className="flex mb-[30px]">
                 <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formPhone")}</div>
                 <div className=" text-[16px]  md:text-[18px] font-medium leading-[18px]">
-                  {Boolean(defaultFormValues['phone']) ? `+${defaultFormValues['prefix']} ${defaultFormValues['phone']}` : '-'}
+                  {Boolean(defaultFormValues['phone']) ? `+${defaultFormValues['prefix']} ${defaultFormValues['phone']}` : '***'}
                 </div>
               </div>
               <div className="flex mb-[30px]">
                 <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formAddress")}</div>
-                <div className=" text-[16px]  md:text-[18px] font-medium leading-[24px]">{defaultFormValues['address'] || '-'}</div>
+                <div className=" text-[16px]  md:text-[18px] font-medium leading-[24px]">{defaultFormValues['address'] || '***'}</div>
               </div>
               <div className="flex mb-[30px]">
                 <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formEmail")}</div>
-                <div className="  text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues['email'] || '-'}</div>
+                <div className="  text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues['email'] || '***'}</div>
               </div>
-              <div className="flex mb-[30px]">
+              <div className="flex">
                 <div className=" shrink-0 w-[100px] text-[18px] font-semibold leading-[18px]">{tR("formIdNumber")}</div>
-                <div className="  text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues['userid'] || '-'}</div>
+                <div className="  text-[16px]  md:text-[18px] font-medium leading-[18px]">{defaultFormValues['userid'] || '***'}</div>
               </div>
             </div>
 

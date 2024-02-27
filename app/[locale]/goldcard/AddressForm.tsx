@@ -97,11 +97,13 @@ export default function AddressForm(props: AddressFormParams) {
     }
   }
 
-  return <div className=" px-[20px] md:px-0">
-    <h3 className=" text-[30px] leading-[36px] md:text-[40px] font-semibold md:leading-[40px] text-center mt-[30px] md:mt-[80px]" dangerouslySetInnerHTML={{ __html: t.raw("title") }}></h3>
+  return <div className=" px-[20px] md:px-0 relative z-10">
+    <h3 className={clsx(
+      " text-[30px] leading-[36px] md:text-[40px] font-semibold md:leading-[40px] text-center ", locale == 'en' ? " mt-[30px] 3xl:mt-[50px]" : "mt-[30px] md:mt-[45px] 3xl:mt-[60px]"
+    )} dangerouslySetInnerHTML={{ __html: t.raw("title") }}></h3>
     <p className={clsx(
-      " md:text-[24px] font-semibold leading-[24px] text-center  md:mx-[60px] mt-[10px] md:mt-[20px] mb-[40px] md:mb-[80px]",
-      locale == 'en' ? "mx-[0px] text-[18px]" : "text-[21px] mx-[30px]"
+      " md:text-[24px] font-semibold leading-[24px] text-center  md:mx-[60px] mt-[10px] md:mt-[20px] mb-[30px] ",
+      locale == 'en' ? "mx-[0px] text-[18px] md:mb-[30px] 3xl:mb-[50px]" : "text-[21px] mx-[30px] md:mb-[50px] 3xl:mb-[80px]"
     )}>{t("subTitle")}</p>
 
     <Form
@@ -112,6 +114,7 @@ export default function AddressForm(props: AddressFormParams) {
       labelCol={(mediaSize?.width || 0) < 768 ? {} : { flex: '100px', }}
       labelAlign="left"
       colon={false}
+      validateTrigger="onSubmit"
       style={{ maxWidth: 580, margin: "auto", fontSize: '18px' }}
       initialValues={defaultFormValues}
       size={(mediaSize?.width || 0) < 768 ? "middle" : "large"}
@@ -137,18 +140,18 @@ export default function AddressForm(props: AddressFormParams) {
       </Form.Item>
     </Form>
     <br />
-    <br />
+    {/* <br /> */}
     <br className=" hidden md:block" />
     {
       readySubmit ?
         <div className={clsx(
-          " mb-[40px] md:mb-0 md:ml-[160px] w-full h-[48px] rounded-[12px]  bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[18px] xl:text-[18px] leading-[18px] xl:leading-[18px] font-semibold select-none", locale == 'en' ? "md:w-[200px]" : "md:w-[180px]"
+          " mb-[40px] md:mb-[30px] md:ml-[160px] w-full h-[48px] rounded-[12px]  bg-[rgba(255,214,0,1)] border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover-btn-shadow flex justify-center items-center text-[18px] xl:text-[18px] leading-[18px] xl:leading-[18px] font-semibold select-none", locale == 'en' ? "md:w-[200px]" : "md:w-[180px]"
         )} onClick={handleSubmitForm} >
           {formLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
           {t("btnSubmit")}
         </div>
         :
-        <div className=" mb-[40px] md:mb-0 md:ml-[160px] w-full h-[48px] md:w-[180px] rounded-[12px]  bg-white border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] flex justify-center items-center text-[18px] xl:text-[18px] leading-[18px] xl:leading-[18px] font-semibold select-none opacity-30" >
+        <div className=" mb-[40px] md:mb-[30px] md:ml-[160px] w-full h-[48px] md:w-[180px] rounded-[12px]  bg-white border-[2px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] flex justify-center items-center text-[18px] xl:text-[18px] leading-[18px] xl:leading-[18px] font-semibold select-none opacity-30" >
           {t("btnSubmit")}
         </div>
     }

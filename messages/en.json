@@ -134,13 +134,14 @@
 
     "Result": {
       "title": "You have successfully submitted your mailing address",
+      "alreadyTitle": "You have already submitted your mailing address",
       "formName": "Name",
       "formPhone": "Tel",
       "formAddress": "Address",
       "formEmail": "E-mail",
       "formIdNumber": "Identity ID",
       "btnModify": "Revise",
-      "btnView": "Sign&View"
+      "btnView": "Sign & View"
     },
     "Form": {
       "title": "Congratulations!<br/>Gold card winner!",

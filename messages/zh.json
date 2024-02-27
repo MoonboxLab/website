@@ -134,6 +134,7 @@
 
     "Result": {
       "title": "你已成功提交郵寄地址",
+      "alreadyTitle": "你已提交过郵寄地址",
       "formName": "姓名",
       "formPhone": "聯絡電話",
       "formAddress": "收件地址",

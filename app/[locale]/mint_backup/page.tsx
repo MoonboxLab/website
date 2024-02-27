@@ -11,6 +11,7 @@ import { CONTRACT_ABI, NFT_CONTRACT_ADDRESS, ContractInfo } from "@/constants/co
 import { useMemo } from "react";
 import moment from "moment";
 import { useCountDown } from "ahooks";
+import Header from "@/components/Header";
 
 export default function Mint() {
 
@@ -50,6 +51,7 @@ export default function Mint() {
 
 
   return <div className=" min-h-[calc(100vh-88px)]">
+    <Header />
     <div className="h-[6px] lg:h-[10px] 4xl:h-[12px] bg-[#f3f3f3]"></div>
     <div className=" 2xl:max-w-[1200px] 4xl:max-w-[1200px] bg-white m-auto lg:pb-[140px] flex flex-col items-center">
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
-import { useSize } from "ahooks";
+import { useCountDown, useSize } from "ahooks";
 import "core-js/features/object/has-own";
 import ReactFullpage from "@fullpage/react-fullpage";
 
@@ -15,6 +15,9 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
+import { MINT_START_TIME, RAFFLE_END_TIME, REFUND_END_TIME } from "@/constants/nobody_contract";
+import clsx from "clsx";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -28,6 +31,10 @@ export default function Home() {
   const [isShowVideo, setIsShowVideo] = useState<boolean>(false);
 
   const locale = useLocale();
+
+  const [mintStartCountdown] = useCountDown({ targetDate: MINT_START_TIME })
+  const [raffleEndTime] = useCountDown({ targetDate: RAFFLE_END_TIME })
+  const [refundEndTime] = useCountDown({ targetDate: REFUND_END_TIME })
 
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -69,13 +76,13 @@ export default function Home() {
         <meta name="description" content="Bring life to NFTs" />
         <meta property="og:title" content="Nobody" />
         <meta property="og:description" content="Bring life to NFTs" />
-        <meta property="og:image" content="/open-graph.png" />
+        <meta property="og:image" content="/twitter_cover.jpg" />
         <meta property="og:url" content="https://nobody.xyz" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content="https://nobody.xyz/open-graph.jpg"
+          content="/twitter_cover.jpg"
         ></meta>
       </Head>
 
@@ -130,6 +137,16 @@ export default function Home() {
                     priority
                     className="object-cover"
                   />
+                  <Link href={"/goldcard"}>
+                    <div className="hover-btn-shadow absolute bottom-[108px] right-[20px] w-[200px] h-[250px] 4xl:bottom-[140px] 4xl:right-[30px] rounded-[16px] border-2 border-black bg-[rgba(219,53,57,1)] pl-[5px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                      <Image src={"/card-back.png"} alt="card back" quality={100} width={90} height={119} className=" absolute top-[23px] left-[29px]" />
+                      <Image src={"/card-front.png"} alt="card front" quality={100} width={106} height={128} className=" absolute top-[46px] right-[25px]" />
+
+                      <Image src={"/form_icon1.png"} alt="icon1" width={122} height={130} className=" absolute top-[-12px] left-[-26px]" />
+                      <Image src={"/form_icon2.png"} alt="icon2" width={117} height={130} className=" absolute top-[-12px] right-[-28px]" />
+                      <div className=" absolute left-0 right-0 m-auto bottom-[20px] w-[160px] h-[40px] rounded-[8px] bg-white text-[16px] font-semibold leading-[40px] text-center">{t("goldcardRaffle")}</div>
+                    </div>
+                  </Link>
                   <div
                     onClick={() => {
                       setVideo(
@@ -330,16 +347,16 @@ export default function Home() {
                           <Chat role={1} character="liupiaopiao" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role2">
-                          <Chat role={2} character="yintianchou" fullpageApi={fullpageApi}  />
+                          <Chat role={2} character="yintianchou" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role3">
                           <Chat role={3} character="cook" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role4">
-                          <Chat role={4} character="tang" fullpageApi={fullpageApi}  />
+                          <Chat role={4} character="tang" fullpageApi={fullpageApi} />
                         </TabsContent>
                         <TabsContent value="role5">
-                          <Chat role={5} character="wukong" fullpageApi={fullpageApi}  />
+                          <Chat role={5} character="wukong" fullpageApi={fullpageApi} />
                         </TabsContent>
                       </Tabs>
                     </div>
@@ -420,7 +437,7 @@ export default function Home() {
               className="w-full object-contain"
             />
             <div className="absolute bottom-[15%] z-10 flex w-full flex-col px-[15px]">
-              <div
+              {/* <div
                 className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                 onClick={() => {
                   setVideo("https://www.youtube.com/embed/K7KDMH6tyfk?rel=0");
@@ -438,81 +455,80 @@ export default function Home() {
                 <span className="text-[21px] font-semibold text-black">
                   {t("nobody_nft_mv")}
                 </span>
-              </div>
-              <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                <span className="text-[21px] font-semibold text-black">
-                  {t("mint")}
-                </span>
-                {(countdown.days !== 0 ||
-                  countdown.hours !== 0 ||
-                  countdown.minutes !== 0 ||
-                  countdown.seconds !== 0) && (
-                  <span className="ml-[10px] text-[18px] font-semibold text-black">
-                    {t("count_down", {
-                      day: countdown.days,
-                      hour: countdown.hours,
-                      minute: countdown.minutes,
-                      second: countdown.seconds,
-                    })}
+              </div> */}
+
+              <Link href={"/goldcard"}>
+                <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] relative">
+                  <span className="text-[21px] font-semibold text-[rgba(219,53,57,1)] underline">
+                    {t("goldcardRaffle")}
                   </span>
-                )}
-              </div>
+                  <Image src="/mobile_goldcard_btn_icon1.png" alt="icon1" width={40} height={26} className=" absolute left-[58px] top-[16px]" />
+                  <Image src="/mobile_goldcard_btn_icon2.png" alt="icon1" width={86} height={28} className=" absolute right-[18px] top-[14px]" />
+                </div>
+              </Link>
+
+              {
+                mintStartCountdown <= 0 &&
+                <Link href={"/mint"}>
+                  <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <span className="text-[21px] font-semibold text-black">
+                      {t("mint")}
+                    </span>
+                  </div>
+                </Link>
+              }
+
             </div>
           </div>
           <div className="flex w-full justify-center bg-black py-[40px]">
             <div className="flex flex-col items-start">
               <div className="flex">
                 <Image
-                  src="/mint_progress_now.png"
+                  src="/mint_progress_next.png"
                   height={108}
                   width={20}
                   alt="now"
                   priority
                 />
                 <div className="ml-[15px] flex flex-col justify-center">
-                  <span className="text-[21px] font-semibold leading-[21px] text-[#FFD600]">
+                  <span className="text-[21px] font-semibold leading-[21px] text-white">
                     {t("presale")}
                   </span>
-                  <span className="text-[16px] font-semibold leading-[21px] text-[#FFD600]">
+                  <span className="text-[16px] font-semibold leading-[21px] text-white">
                     {t("presale_time")}
                   </span>
-                  {/* <div className="hover-btn-shadow mt-[20px] flex h-[40px]  w-[160px] items-center justify-center rounded-[18px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                    <span className="text-[16px] font-semibold text-black">
-                      {t("join_waitlist")}
-                    </span>
-                  </div> */}
                 </div>
               </div>
               <div className="mt-[40px] flex">
                 <Image
-                  src="/mint_progress_next.png"
+                  src={raffleEndTime > 0 ? "/mint_progress_now.png" : "/mint_progress_next.png"}
                   height={48}
                   width={20}
                   alt="next"
                   priority
                 />
-                <div className="ml-[15px] flex flex-col justify-center">
-                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                <div className={clsx("ml-[15px] flex flex-col justify-center", raffleEndTime > 0 ? "text-[#FFD600]" : "text-white")}>
+                  <span className="text-[21px] font-semibold leading-[21px] ">
                     {t("public_sale")}
                   </span>
-                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                  <span className="text-[16px] font-semibold leading-[21px] ">
                     {t("public_sale_time")}
                   </span>
                 </div>
               </div>
               <div className="mt-[40px] flex">
                 <Image
-                  src="/mint_progress_next.png"
+                  src={(raffleEndTime == 0 && refundEndTime > 0) ? "/mint_progress_now.png" : "/mint_progress_next.png"}
                   height={48}
                   width={20}
                   alt="next"
                   priority
                 />
-                <div className="ml-[15px] flex flex-col justify-center">
-                  <span className="text-[21px] font-semibold leading-[21px] text-white">
+                <div className={clsx("ml-[15px] flex flex-col justify-center", (raffleEndTime == 0 && refundEndTime > 0) ? "text-[#FFD600]" : "text-white")}>
+                  <span className="text-[21px] font-semibold leading-[21px] ">
                     {t("refund")}
                   </span>
-                  <span className="text-[16px] font-semibold leading-[21px] text-white">
+                  <span className="text-[16px] font-semibold leading-[21px] ">
                     {t("refund_time")}
                   </span>
                 </div>

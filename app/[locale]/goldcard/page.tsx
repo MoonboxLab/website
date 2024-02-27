@@ -42,6 +42,7 @@ export default function GoldCard() {
     if (address) {
       // 判断当前地址是否中奖
       // 判断当前地址是否已经提交过表单
+      setCheckLoading(true)
       handleCheckAddress(address)
 
       // get sign nonce
@@ -66,6 +67,7 @@ export default function GoldCard() {
     } else {
       toast.error(result['msg'])
     }
+    setCheckLoading(false)
   }
 
   const querySignNonce = async (address: string) => {

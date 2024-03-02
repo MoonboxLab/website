@@ -154,7 +154,7 @@ const Header: React.FC = () => {
           </div>
           <div className="drawer-side">
             <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-            <ul className="menu w-full h-full px-4 bg-white">
+            <ul className="menu w-full min-h-full px-4 bg-white overflow-y-scroll">
               {/* Sidebar content here */}
 
               <div className=" flex justify-between items-center mt-2">

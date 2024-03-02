@@ -46,7 +46,8 @@
     "nobody_content_1": "Nobody NFT blends the world of web3 with AI-powered interactive story telling.",
     "nobody_content_2": "Each Nobody NFT is a living character. ",
     "nobody_content_3": "Talk to your beloved characters and learn about their unique stories.",
-    "count_down": "{day}d:{hour}h:{minute}m:{second}s"
+    "count_down": "{day}d:{hour}h:{minute}m:{second}s",
+    "goldcardRaffle": "Lottery Draw"
   },
   "Declaration": {
     "spirit": "SPIRIT",
@@ -127,6 +128,37 @@
       "raffleTime": "Feb 3, 8 PM - Feb 4, 8 PM (UTC+8)",
       "mint": "Mint",
       "mintTime": "Feb 1, 8 PM - Feb 3, 8 PM (UTC+8)"
+    }
+  },
+  "GoldCard": {
+
+    "Result": {
+      "title": "You have successfully submitted your mailing address",
+      "alreadyTitle": "You have already submitted your mailing address",
+      "formName": "Name",
+      "formPhone": "Tel",
+      "formAddress": "Address",
+      "formEmail": "E-mail",
+      "formIdNumber": "Identity ID",
+      "btnModify": "Revise",
+      "btnView": "Sign & View"
+    },
+    "Form": {
+      "title": "Congratulations!<br/>Gold card winner!",
+      "subTitle": "Please fill in the receiving information and we will mail the signature gold card later.",
+      "formName": "Name",
+      "formPhone": "Tel",
+      "formAddress": "Address",
+      "formEmail": "E-mail",
+      "formIdNumber": "Identity ID",
+      "idTip": "Important note: Due to shipping requirements, please fill in the ID number for the Taiwan address. ",
+      "btnSubmit": "Sign and Submit"
+    },
+    "Ready": {
+      "title": "Lottery Verification",
+      "subTitle": "Connect your wallet to see if you have won a gold card",
+      "noneSelected": "Unfortunately, you didn't win the gold card. We look forward to your participation in the next event!",
+      "btnConnectWallet": "Connect Wallet"
     }
   }
 }

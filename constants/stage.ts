@@ -1,4 +1,10 @@
 
+export const enum FormStage {
+  Ready,
+  Form,
+  End
+}
+
 export enum StageType {
   WhitelistPhase,
   Presale,

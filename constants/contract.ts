@@ -41,3 +41,36 @@ export const ContractInfo = {
   address: NFT_CONTRACT_ADDRESS,
   abi: CONTRACT_ABI,
 }
+
+
+
+export const INTERNATIONAL_PHONE_PREFIX = [
+  "86",
+  "852",
+  "886",
+  "853",
+  "65",
+  "1",
+  "7",
+  "55",
+  "91",
+  "61",
+  "33",
+  "49",
+  "44",
+  "81",
+  "39",
+  "52",
+  "82",
+  "34",
+  "62",
+  "66",
+  "60",
+  "81",
+  "30",
+  "43",
+  "48",
+  "972",
+  "27",
+  "47",
+]

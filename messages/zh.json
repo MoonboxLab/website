@@ -151,13 +151,13 @@
       "formAddress": "收件地址",
       "formEmail": "電子信箱",
       "formIdNumber": "身份證號",
-      "idTip": "重要提示: 因寄件要求，台灣地址請填寫身份證號碼。非台湾地址可不填写。",
+      "idTip": "重要提示: 因寄件要求，台灣地址請填寫身份證號碼。非台灣地址可不填写。",
       "btnSubmit": "簽名並提交"
     },
     "Ready": {
       "title": "抽獎驗證",
       "subTitle": "連接錢包查看你是否抽中金卡",
-      "noneSelected": "很遺憾！ 未被抽中金卡，期待你参与下次活動",
+      "noneSelected": "很遺憾！ 未被抽中金卡，期待你參與下次活動",
       "btnConnectWallet": "連接錢包"
     }
   }

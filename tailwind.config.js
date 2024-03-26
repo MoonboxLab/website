@@ -15,6 +15,9 @@ module.exports = {
       // },
     },
     extend: {
+      fontFamily: {
+        'impact': ['var(--font-impact)', 'sans-serif'],
+      },
       screens: {
         "2xl": "1200px",
         "3xl": "1440px",

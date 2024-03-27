@@ -58,7 +58,7 @@ const Header: React.FC = () => {
 
       <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className=' inline-flex items-center justify-center h-[36px] w-[120px] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
+            <div className='hidden sm:inline-flex items-center justify-center h-[36px] w-[120px] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
               <span className=' text-[16px] leading-[16px]  sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px] font-semibold text-black ml-[6px]'>{t("event")}</span>
               <ChevronDown />
             </div>

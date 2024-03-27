@@ -8,7 +8,7 @@
     "header_declaration": "宣言",
     "header_nft_market": "購買 Nobody NFT",
     "header_languageNav": "語言",
-    "disconnect": "斷開連結",
+    "disconnect": "斷開連接",
     "email_modal_title": "訂閱我們的電子報，第一時間瞭解我們的白名單發布資訊",
     "email_modal_subscribe": "訂閱",
     "email_modal_input_placeholder": "輸入您的電子郵件地址",
@@ -47,7 +47,10 @@
     "nobody_content_2": "每個Nobody NFT都是一個鮮活角色。",
     "nobody_content_3": "和你喜愛的角色聊天，並了解他們的獨特故事。",
     "count_down": "{day}天{hour}时{minute}分{second}秒",
-    "goldcardRaffle": "金卡開獎"
+    "goldcardRaffle": "金卡開獎",
+    "event": "活動",
+    "show": "模仿秀決選",
+    "goldenCard": "金卡驗證"
   },
   "Declaration": {
     "spirit": "精神",
@@ -105,7 +108,7 @@
 
       "refund&noselect": "很遺憾您没有獲得Nobody NFT，請在2024年7月4日20:00（UTC+8）之前進行退費操作",
       "refund&noselect&&refunded": "您已經成功領取退款，感謝參與鑄造",
-      
+
       "connectwallet": "連接錢包",
       "mint": "鑄造",
       "refund": "退款",
@@ -131,7 +134,6 @@
     }
   },
   "GoldCard": {
-
     "Result": {
       "title": "你已成功提交郵寄地址",
       "alreadyTitle": "你已提交过郵寄地址",
@@ -160,5 +162,42 @@
       "noneSelected": "很遺憾！ 未被抽中金卡，期待你參與下次活動",
       "btnConnectWallet": "連接錢包"
     }
+  },
+  "Show": {
+    "serial": "編號9527",
+    "title": "《Nobody模仿秀》最終決選",
+    "organizer": "發起者：Nobody",
+    "topic": "創作主題：模仿或改編周星馳先生經典作品橋段，盡情展示你的創作和表演能力！Nobody團隊先按照作品質量選出30個入圍作品，再由 Nobody NFT持有者投票選出前5名的優勝者。",
+    "encourage": "獲得獎勵：前5名的優勝者將收到神秘禮物，除了有機會參演周星馳先生末來的影視作品之外，並有機會和周星馳先生線下見面！所有參與的錢包地址，將可以按照所投票數平分 Nobody NFT 2月20日 - 3月26日的版稅收入。",
+    "rule": "投票規則",
+    "rule1": "投票時間為3月27日 8PM - 3月30日 8PM。",
+    "rule2": "錢包地址持有 Nobody NFT 超過72小時，即可投票。",
+    "rule3": "一個符合條件的Nobody NFT等同於一票。",
+    "rule4": "己投出的票不可修改和收回，請謹慎投票。",
+    "rule5": "持有者可以根據個人意願，自由將多張選票投給不同作品。",
+    "prize": "我的獎勵",
+    "voting": "投票進行中…",
+    "votingDescription": "投票結束後將進行獎勵分配",
+    "author": "作者: {author}",
+    "voted": "已投票: {voteCount}",
+    "vote": "給他投票",
+    "votes": "票",
+    "address": "錢包地址",
+    "available": "可用票數",
+    "availableDescription": "當前票數=總可用票數-已投票數<br></br>依據3.27 19:00 快照時持有NFT數量計算",
+    "voteCount": "投票數量",
+    "confirmVote": "確定投票",
+    "complete": "投票完成!",
+    "completeDescription": "你已投 <blue>{voteCount}</blue> 票給 <blue>{author}</blue> 的作品",
+    "connect": "連接錢包",
+    "connectTips": "連接錢包才可以參加哦",
+    "submissions": "入圍作品 (30)",
+    "understand": "我已明白《模仿秀》投票規則",
+    "confirm": "確定",
+    "loginFail": "登入失敗",
+    "loginSuccess": "登入成功",
+    "sorry": "很抱歉！你沒有Nobody NFT，無法參與活動",
+    "event": "活動主題：《Nobody模仿秀》最終決選",
+    "eventPrize": "活動獎金：總獎金 <blue>7.712205</blue> ETH ，參與投票數量 <blue>{votes}</blue> 票"
   }
 }

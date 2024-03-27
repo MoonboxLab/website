@@ -50,11 +50,36 @@ const Header: React.FC = () => {
       </Link>
       <div className="flex items-center">
 
-        <Link href={"/declaration"} className=" hidden lg:block" >
+      <Link href={"/declaration"} className=" hidden lg:block" >
           <div className=' inline-flex items-center justify-center h-[36px] min-w-[84px] lg:h-[40px] lg:min-w-[80px] 3xl:h-[48px] 3xl:min-w-[96px] px-[24px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
             <span className=' text-[16px] leading-[16px]  sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px] font-semibold text-black ml-[6px]'>{t('header_declaration')}</span>
           </div>
-        </Link>
+      </Link>
+
+      <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className=' inline-flex items-center justify-center h-[36px] w-[120px] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px] rounded-[10px] border-black border-2 bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] ml-[10px] sm:ml-4 sm:hover-btn-shadow'>
+              <span className=' text-[16px] leading-[16px]  sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px] font-semibold text-black ml-[6px]'>{t("event")}</span>
+              <ChevronDown />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='mt-2 w-[165px] rounded-[12px] py-[14px]'>
+            <Link href={"/show"} className="hidden lg:block" >
+              <DropdownMenuItem >
+                <div className=' h-[25px] inline-flex items-center justify-between px-1'>
+                  <span className=' text-[16px] leading-[16px] font-medium'>{t("show")}</span>
+                </div>
+              </DropdownMenuItem>
+            </Link>
+            <Link href={"/goldcard"} className="hidden lg:block" >
+              <DropdownMenuItem className='mt-2'>
+                <div className=' h-[25px] inline-flex items-center justify-between px-1'>
+                  <span className=' text-[16px] leading-[16px] font-medium'>{t("goldenCard")}</span>
+                </div>
+              </DropdownMenuItem>
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -68,7 +93,7 @@ const Header: React.FC = () => {
               <DropdownMenuItem >
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
                   <Image src={"/OKX.png"} priority={true} quality={100} alt="OKX NFT" width={32} height={32} />
-                  <span className=' text-[18px] leading-[18px] font-medium ml-[10px]'>OKX NFT</span>
+                  <span className='text-[16px] leading-[16px] font-medium ml-[10px]'>OKX NFT</span>
                 </div>
               </DropdownMenuItem>
             </a>
@@ -77,7 +102,7 @@ const Header: React.FC = () => {
               <DropdownMenuItem className=' mt-2'>
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
                   <Image src={"/OpenSea.png"} priority={true} quality={100} alt="OKX NFT" width={32} height={32} />
-                  <span className=' text-[18px] leading-[18px] font-medium  ml-[10px]'>OpenSea</span>
+                  <span className='text-[16px] leading-[16px] font-medium  ml-[10px]'>OpenSea</span>
                 </div>
               </DropdownMenuItem>
             </a>
@@ -86,7 +111,7 @@ const Header: React.FC = () => {
               <DropdownMenuItem className=' mt-2'>
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
                   <Image src={"/Element.png"} priority={true} quality={100} alt="OKX NFT" width={32} height={32} />
-                  <span className=' text-[18px] leading-[18px] font-medium ml-[10px]'>Element</span>
+                  <span className='text-[16px] leading-[16px] font-medium ml-[10px]'>Element</span>
                 </div>
               </DropdownMenuItem>
             </a>
@@ -131,13 +156,13 @@ const Header: React.FC = () => {
             <DropdownMenuItem onClick={() => handleLocaleChange('en')} >
               <div className=' h-[25px] inline-flex items-center justify-between px-3'>
                 <span className=' text-[21px] font-semibold mr-[10px]'>En</span>
-                <span className=' text-[18px] leading-[18px] font-medium'>English</span>
+                <span className='text-[16px] leading-[16px] font-medium'>English</span>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleLocaleChange('zh')} className=' mt-2'>
               <div className=' h-[25px] inline-flex items-center justify-between px-3'>
                 <span className=' text-[21px] font-semibold mr-[10px]'>Zh</span>
-                <span className=' text-[18px] leading-[18px] font-medium'>繁體中文</span>
+                <span className='text-[16px] leading-[16px] font-medium'>繁體中文</span>
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>

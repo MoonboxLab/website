@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 
 import clsx from "clsx";
 import Cookies from "js-cookie";
+import { useSize } from "ahooks";
 import { SiweMessage } from "siwe";
 import { toast } from "react-toastify";
 import { useAccount, useDisconnect, useSignMessage } from "wagmi";
@@ -32,6 +33,8 @@ export default function Show() {
 
   const t = useTranslations("Show");
   const locale = useLocale();
+
+  const mediaSize = useSize(document.querySelector("body"));
 
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
@@ -63,6 +66,7 @@ export default function Show() {
   const [prizeDialog, setPrizeDialog] = useState<boolean>(false);
   const [connectDialog, setConnectDialog] = useState<boolean>(false);
   const [noNFTDialog, setNoNFTDialog] = useState<boolean>(false);
+  const [pcDialog, setPcDialog] = useState<boolean>(true);
 
   const [checkedRules, setCheckedRules] = useState<boolean>(true);
   const [acceptedRules, setAcceptedRules] = useState(
@@ -293,8 +297,23 @@ export default function Show() {
         </DialogContent>
       </Dialog>
 
+      {/* PC Dialog */}
+      <Dialog
+        open={(mediaSize?.width || 0) <= 640 && pcDialog}
+        onOpenChange={setPcDialog}
+      >
+        <DialogContent className="flex h-[320px] max-h-[320px] w-[320px] max-w-[320px] items-center justify-center rounded-[16px] bg-white p-0">
+          <span className="text-center text-[18px] font-medium leading-[18px] text-black">
+            {t("pc")}
+          </span>
+        </DialogContent>
+      </Dialog>
+
       {/* rule Dialog */}
-      <Dialog open={ruleDialog} onOpenChange={setRuleDialog}>
+      <Dialog
+        open={(mediaSize?.width || 0) > 640 && ruleDialog}
+        onOpenChange={setRuleDialog}
+      >
         <DialogContent
           onInteractOutside={(event) => {
             event.preventDefault();
@@ -364,7 +383,7 @@ export default function Show() {
 
       {/* prize Dialog */}
       <Dialog open={prizeDialog} onOpenChange={setPrizeDialog}>
-        <DialogContent className="flex min-w-[740px] flex-col gap-0 bg-white p-0 rounded-[16px]">
+        <DialogContent className="flex min-w-[740px] flex-col gap-0 rounded-[16px] bg-white p-0">
           <span className="ml-[20px] mt-[20px] text-[24px] font-medium text-black">
             {t("prize")}
           </span>
@@ -376,7 +395,7 @@ export default function Show() {
               {t("votingDescription")}
             </span>
           </div>
-          <div className="flex flex-col bg-gray-100 px-[20px] py-[30px] rounded-[16px]">
+          <div className="flex flex-col rounded-[16px] bg-gray-100 px-[20px] py-[30px]">
             <div className="flex flex-nowrap space-x-[10px] overflow-scroll">
               {VoteDetails.map((item, index) => (
                 <VoteItem

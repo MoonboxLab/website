@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
@@ -160,114 +161,135 @@ export default function Show() {
 
   return (
     <div className="relative">
-      <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">
-        <div className="absolute left-0 right-0 top-0 z-20 w-full">
-          <Header />
-        </div>
-        <Image
-          src={"/show_bg.jpg"}
-          alt="background-image"
-          height={340}
-          width={1920}
-          style={{ objectFit: "cover" }}
-          className="w-full"
-        />
-        <div className="mx-[60px] mt-[30px] rounded-[16px] bg-white 4xl:mx-[160px]">
-          <div className="flex h-[40px] w-[130px] items-center justify-center">
-            <Image
-              className="absolute"
-              src={"/show_tag.svg"}
-              width={130}
-              height={40}
-              alt="show tag"
-            />
-            <span className="z-10 h-[18px] text-[18px] leading-[18px] text-[#FFD600]">
-              {t("serial")}
-            </span>
+      {(mediaSize?.width || 0) > 1024 && (
+        <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">
+          <div className="absolute left-0 right-0 top-0 z-20 w-full">
+            <Header />
           </div>
-          <div className="flex items-start justify-between px-[30px] pb-[30px]">
-            <div className="flex flex-col">
-              <span className="mt-[30px] text-[36px] font-bold">
-                {t("title")}
-              </span>
-              <div className="mt-[20px] flex items-center">
-                <span className="text-[18px] font-normal text-black">
-                  {t("organizer")}
-                </span>
-                <Image
-                  src={"/show_arrow.svg"}
-                  width={20}
-                  height={20}
-                  alt="arrow"
-                />
-              </div>
-              <span className="mt-[6px] text-[18px] font-normal text-black">
-                {t("topic")}
-              </span>
-              <span className="mt-[6px] text-[18px] font-normal text-black">
-                {t("encourage")}
-              </span>
-              <span
-                className="mt-[30px] cursor-pointer text-[18px] font-medium text-black underline"
-                onClick={() => {
-                  setRuleDialog(true);
-                }}
-              >
-                {t("rule")}
+          <Image
+            src={"/show_bg.jpg"}
+            alt="background-image"
+            height={340}
+            width={1920}
+            style={{ objectFit: "cover" }}
+            className="w-full"
+          />
+          <div className="mx-[60px] mt-[30px] rounded-[16px] bg-white 4xl:mx-[160px]">
+            <div className="flex h-[40px] w-[130px] items-center justify-center">
+              <Image
+                className="absolute"
+                src={"/show_tag.svg"}
+                width={130}
+                height={40}
+                alt="show tag"
+              />
+              <span className="z-10 h-[18px] text-[18px] leading-[18px] text-[#FFD600]">
+                {t("serial")}
               </span>
             </div>
-            <Button
-              className={clsx(
-                "mt-[30px] flex h-[48px] flex-shrink-0 items-center whitespace-nowrap rounded-[12px]  bg-black px-[12px] text-[18px] text-white hover:bg-black 4xl:mt-[25px] 4xl:h-[64px] 4xl:text-[24px]",
-                locale == "en"
-                  ? "w-[178px] 4xl:w-[228px]"
-                  : "w-[160px] 4xl:w-[180px]",
-              )}
-              onClick={() => {
-                if (address) {
-                  const jwt = Cookies.get(`${address}_jwt`) as string;
-                  if (jwt) {
-                    requestVoteSum();
-                    requestVoteDetails(jwt);
-                    setPrizeDialog(true);
+            <div className="flex items-start justify-between px-[30px] pb-[30px]">
+              <div className="flex flex-col">
+                <span className="mt-[30px] text-[36px] font-bold">
+                  {t("title")}
+                </span>
+                <div className="mt-[20px] flex items-center">
+                  <span className="text-[18px] font-normal text-black">
+                    {t("organizer")}
+                  </span>
+                  <Image
+                    src={"/show_arrow.svg"}
+                    width={20}
+                    height={20}
+                    alt="arrow"
+                  />
+                </div>
+                <span className="mt-[6px] text-[18px] font-normal text-black">
+                  {t("topic")}
+                </span>
+                <span className="mt-[6px] text-[18px] font-normal text-black">
+                  {t("encourage")}
+                </span>
+                <span
+                  className="mt-[30px] cursor-pointer text-[18px] font-medium text-black underline"
+                  onClick={() => {
+                    setRuleDialog(true);
+                  }}
+                >
+                  {t("rule")}
+                </span>
+              </div>
+              <Button
+                className={clsx(
+                  "mt-[30px] flex h-[48px] flex-shrink-0 items-center whitespace-nowrap rounded-[12px]  bg-black px-[12px] text-[18px] text-white hover:bg-black 4xl:mt-[25px] 4xl:h-[64px] 4xl:text-[24px]",
+                  locale == "en"
+                    ? "w-[178px] 4xl:w-[228px]"
+                    : "w-[160px] 4xl:w-[180px]",
+                )}
+                onClick={() => {
+                  if (address) {
+                    const jwt = Cookies.get(`${address}_jwt`) as string;
+                    if (jwt) {
+                      requestVoteSum();
+                      requestVoteDetails(jwt);
+                      setPrizeDialog(true);
+                    } else {
+                      setNoNFTDialog(true);
+                    }
                   } else {
-                    setNoNFTDialog(true);
+                    setConnectDialog(true);
                   }
-                } else {
-                  setConnectDialog(true);
-                }
-              }}
-            >
-              <Image
-                className="mr-[8px] w-[40px] 4xl:w-[49px]"
-                src={"/show_confetti.svg"}
-                width={49}
-                height={41}
-                alt="show confetti"
-              />
-              {t("prize")}
-            </Button>
+                }}
+              >
+                <Image
+                  className="mr-[8px] w-[40px] 4xl:w-[49px]"
+                  src={"/show_confetti.svg"}
+                  width={49}
+                  height={41}
+                  alt="show confetti"
+                />
+                {t("prize")}
+              </Button>
+            </div>
           </div>
-        </div>
 
-        <div className="mx-[60px] mt-[50px] 4xl:mx-[160px]">
-          <h2 className="text-[24px] font-bold">{t("submissions")}</h2>
-          <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
-            {submissions.map((item, index) => (
-              <ShowItem
-                key={index}
-                id={item.id}
-                image={item.image}
-                author={item.author}
-                description={item.description}
-                duration={item.duration}
-                embed={item.embed}
-                voteCount={item.vote_count}
-              />
-            ))}
+          <div className="mx-[60px] mt-[50px] 4xl:mx-[160px]">
+            <h2 className="text-[24px] font-bold">{t("submissions")}</h2>
+            <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
+              {submissions.map((item, index) => (
+                <ShowItem
+                  key={index}
+                  id={item.id}
+                  image={item.image}
+                  author={item.author}
+                  description={item.description}
+                  duration={item.duration}
+                  embed={item.embed}
+                  voteCount={item.vote_count}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {(mediaSize?.width || 0) <= 1024 && (
+        <div className="flex h-screen w-screen justify-center">
+          <div className="flex flex-col items-center justify-center">
+          <Image src={"/show_pc.png"} width={120} height={120} alt="pc" />
+          <span className="mt-[20px] text-center text-[24px] font-medium leading-[24px] text-black">
+            {t("title")}
+          </span>
+          <span className="mt-[10px] text-center text-[24px] font-medium leading-[24px] text-black">
+            {t("pc")}
+          </span>
+          <Link href={"/"}>
+            <div className="hover-btn-shadow mt-[80px] flex h-[48px] w-[160px] items-center justify-center rounded-[8px] border-[2px] border-black bg-white text-[18px] font-medium leading-[18px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+              HOME
+            </div>
+          </Link>
+          </div>
+        </div>
+      )}
 
       {/* connect Dialog */}
       <Dialog open={connectDialog} onOpenChange={setConnectDialog}>
@@ -293,18 +315,6 @@ export default function Show() {
           <Image src={"/show_sorry.jpg"} width={120} height={120} alt="sorry" />
           <span className="mt-[30px] text-center text-[30px] font-medium leading-[40px] text-black">
             {t("sorry")}
-          </span>
-        </DialogContent>
-      </Dialog>
-
-      {/* PC Dialog */}
-      <Dialog
-        open={(mediaSize?.width || 0) <= 640 && pcDialog}
-        onOpenChange={setPcDialog}
-      >
-        <DialogContent className="flex h-[320px] max-h-[320px] w-[320px] max-w-[320px] items-center justify-center rounded-[16px] bg-white p-0">
-          <span className="text-center text-[18px] font-medium leading-[18px] text-black">
-            {t("pc")}
           </span>
         </DialogContent>
       </Dialog>

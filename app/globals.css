@@ -127,3 +127,9 @@ video {
   grid-row: span 9 / span 9;
 }
 
+*{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

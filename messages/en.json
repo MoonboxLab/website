@@ -47,7 +47,10 @@
     "nobody_content_2": "Each Nobody NFT is a living character. ",
     "nobody_content_3": "Talk to your beloved characters and learn about their unique stories.",
     "count_down": "{day}d:{hour}h:{minute}m:{second}s",
-    "goldcardRaffle": "Lottery Draw"
+    "goldcardRaffle": "Lottery Draw",
+    "event": "Event",
+    "show": "Imitation Show",
+    "goldenCard": "Gold card lottery"
   },
   "Declaration": {
     "spirit": "SPIRIT",
@@ -131,7 +134,6 @@
     }
   },
   "GoldCard": {
-
     "Result": {
       "title": "You have successfully submitted your mailing address",
       "alreadyTitle": "You have already submitted your mailing address",
@@ -160,5 +162,42 @@
       "noneSelected": "Unfortunately, you didn't win the gold card. We look forward to your participation in the next event!",
       "btnConnectWallet": "Connect Wallet"
     }
+  },
+  "Show": {
+    "serial": "NO.9527",
+    "title": "“Nobody Imitation Show” Finals",
+    "organizer": "Organizer: Nobody",
+    "topic": "Theme: Imitate or adapt classic scenes from Stephen Chow’s works, and showcase your creativity and acting skills! The Nobody team will first select 30 finalists based on the quality of works, then the top 5 winners will be chosen by votes from Nobody NFT holders.",
+    "encourage": "Rewards: The top 5 winners will receive a mystery gift, in addition to the opportunity to participate in Stephen Chow’s future works, and the chance to meet Stephen Chow in person! All participants who vote will be eligible to share the royalties of Nobody NFT from Feb 20 to Mar 26 equally according to the number of votes.",
+    "rule": "Voting Rules",
+    "rule1": "Voting lasts from 8PM, Mar 27th to 8PM, Mar 30th.",
+    "rule2": "Wallet addresses that have held a Nobody NFT for more than 72 hours are eligible to vote.",
+    "rule3": "One eligible Nobody NFT equals one vote.",
+    "rule4": "Votes cannot be modified or retracted. Please vote at your discretion.",
+    "rule5": "Holders may distribute multiple votes to different works.",
+    "prize": "My Reward",
+    "voting": "Voting in progress",
+    "votingDescription": "Rewards will be distributed after the voting ends",
+    "author": "Creator: {author}",
+    "voted": "Voted: {voteCount}",
+    "vote": "Vote",
+    "votes": "votes",
+    "address": "Wallet Address",
+    "available": "Available Votes",
+    "availableDescription": "Available = Total Available - Voted<br></br>*based on the number of NFTs on  3.27 19:00",
+    "voteCount": "Vote",
+    "confirmVote": "Confirm",
+    "complete": "Voting complete!",
+    "completeDescription": "You have cast <blue>{voteCount}</blue> votes for the work of <blue>{author}</blue>",
+    "connect": "Connect",
+    "connectTips": "Connect to your wallet to join",
+    "submissions": "Finalist (30)",
+    "understand": "I understand the voting rules for The Imitation Show.",
+    "confirm": "Confirm",
+    "loginFail": "Login failed",
+    "loginSuccess": "Login successful",
+    "sorry": "Sorry! You need Nobody NFTs to participate in",
+    "event": "Event：“Nobody Imitation Show” Finals",
+    "eventPrize": "Event Prize: Total prize <blue>7.712205</blue> ETH, Total votes cast <blue>{votes}</blue>"
   }
 }

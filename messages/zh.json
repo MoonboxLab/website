@@ -198,6 +198,7 @@
     "loginSuccess": "登入成功",
     "sorry": "很抱歉！你沒有Nobody NFT，無法參與活動",
     "event": "活動主題：《Nobody模仿秀》最終決選",
-    "eventPrize": "活動獎金：總獎金 <blue>7.712205</blue> ETH ，參與投票數量 <blue>{votes}</blue> 票"
+    "eventPrize": "活動獎金：總獎金 <blue>7.712205</blue> ETH ，參與投票數量 <blue>{votes}</blue> 票",
+    "pc": "請打開PC查看此頁面"
   }
 }

@@ -198,6 +198,7 @@
     "loginSuccess": "Login successful",
     "sorry": "Sorry! You need Nobody NFTs to participate in",
     "event": "Event：“Nobody Imitation Show” Finals",
-    "eventPrize": "Event Prize: Total prize <blue>7.712205</blue> ETH, Total votes cast <blue>{votes}</blue>"
+    "eventPrize": "Event Prize: Total prize <blue>7.712205</blue> ETH, Total votes cast <blue>{votes}</blue>",
+    "pc": "Please use PC to visit this page."
   }
 }

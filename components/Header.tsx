@@ -64,17 +64,17 @@ const Header: React.FC = () => {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='mt-2 w-[165px] rounded-[12px] py-[14px]'>
-            <Link href={"/show"} className="hidden lg:block" >
+            <Link href={"/show"}>
               <DropdownMenuItem >
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
-                  <span className=' text-[16px] leading-[16px] font-medium'>{t("show")}</span>
+                  <span className='text-[16px] leading-[16px] font-medium'>{t("show")}</span>
                 </div>
               </DropdownMenuItem>
             </Link>
-            <Link href={"/goldcard"} className="hidden lg:block" >
+            <Link href={"/goldcard"}>
               <DropdownMenuItem className='mt-2'>
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
-                  <span className=' text-[16px] leading-[16px] font-medium'>{t("goldenCard")}</span>
+                  <span className='text-[16px] leading-[16px] font-medium'>{t("goldenCard")}</span>
                 </div>
               </DropdownMenuItem>
             </Link>

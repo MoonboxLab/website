@@ -69,7 +69,7 @@ export default function ShowItem(props: ShowItemProps) {
   };
 
   return (
-    <div className="flex flex-col rounded-lg bg-white p-[20px] shadow">
+    <div className="flex flex-col rounded-lg bg-white p-[10px] sm:p-[20px] shadow">
       <Dialog>
         <DialogTrigger className="flex items-start">
           <div className="relative w-full">
@@ -121,7 +121,7 @@ export default function ShowItem(props: ShowItemProps) {
       </p>
       <div className="mt-[30px] flex h-[40px] items-center justify-between">
         <Button
-          className="h-[40px] w-[120px] bg-[#FFD600] text-[16px] text-black hover:bg-[#FFD600]"
+          className="flex-shrink-0 h-[30px] w-[100px] bg-[#FFD600] text-[16px] text-black hover:bg-[#FFD600] sm:h-[40px] sm:w-[120px]"
           onClick={() => {
             if (address) {
               const jwt = Cookies.get(`${address}_jwt`) as string;
@@ -140,7 +140,7 @@ export default function ShowItem(props: ShowItemProps) {
           {t("vote")}
         </Button>
         <div>
-          <span className="text-[24px] font-medium 4xl:text-[36px]">
+          <span className="text-[18px] font-medium sm:text-[24px] 4xl:text-[36px]">
             {currentVoteCount}
           </span>
           <span className="ml-[5px] text-[16px] font-medium 4xl:text-[18px]">

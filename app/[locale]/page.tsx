@@ -225,16 +225,22 @@ export default function Home() {
                 fullpageApi.setAllowScrolling(true)
               }}>
                 <div className="flex h-screen w-full items-center justify-center bg-[#FFD600] px-[0px] pb-[128px] pt-[60px] 4xl:px-[10px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
-                    <div className=" grow w-auto h-auto my-auto mx-[110px] 4xl:mx-[120px]  border-[2px] border-black rounded-[32px] shadow-[4px_4px_0px_rgba(0,0,0,1)] flex pb-[67px] items-center">
-                      <div className=" relative lg:w-[450px] lg:h-[450px] 2xl:w-[550px] 2xl:h-[550px] 3xl:w-[603px] 3xl:h-[600px] 4xl:w-[703px] 4xl:h-[700px]">
-                        <Image src={"/phone_example_ui.png"} alt="" fill quality={100} />
-                      </div>
-                      <div className=" ml-[-130px] mt-[100px] relative z-30">
-                        <h2 className=" font-impact text-[48px] font-normal leading-[48px] 2xl:text-[56px] 2xl:leading-[56px] 3xl:text-[96px] 3xl:leading-[90px]" >{t("appTitle")}</h2>
-                        <p className="  lg:text-[20px] lg:leading-[24px] 2xl:text-[26px] 2xl:leading-[32px] font-bold 3xl:text-[30px] 3xl:leading-[40px] max-w-[547px] mb-[45px] mt-[30px] 4xl:mb-[60px] 4xl:mt-[40px]">
-                          {t.rich("appSubtitle", { br: () => <br /> })}
-                        </p>
-                        <div className=" text-white flex ">
+                  <div className=" grow w-auto h-auto my-auto mx-[110px] 4xl:mx-[120px]  border-[2px] border-black rounded-[32px] shadow-[4px_4px_0px_rgba(0,0,0,1)] flex pb-[67px] items-center">
+                    <div className=" relative lg:w-[450px] lg:h-[450px] 2xl:w-[550px] 2xl:h-[550px] 3xl:w-[603px] 3xl:h-[600px] 4xl:w-[703px] 4xl:h-[700px]">
+                      <Image src={"/phone_example_ui.png"} alt="" fill quality={100} />
+                    </div>
+                    <div className=" ml-[-130px] mt-[100px] relative z-30">
+                      <h2 className={clsx(
+                      {"text-[48px] font-bold leading-[48px] 2xl:text-[56px] 2xl:leading-[56px] 3xl:text-[80px] 3xl:leading-[90px]": locale == 'zh'},
+                      {"font-impact  text-[48px] font-normal leading-[48px] 2xl:text-[56px] 2xl:leading-[56px] 3xl:text-[96px] 3xl:leading-[90px]": locale == 'en'}
+                      )} >
+                        {t("appTitle")}
+                      </h2>
+                      <p className="  lg:text-[20px] lg:leading-[24px] 2xl:text-[26px] 2xl:leading-[32px] font-bold 3xl:text-[30px] 3xl:leading-[40px] max-w-[547px] mb-[45px] mt-[30px] 4xl:mb-[60px] 4xl:mt-[40px]">
+                        {t.rich("appSubtitle", { br: () => <br /> })}
+                      </p>
+                      <div className=" text-white flex ">
+                        <a href="https://apps.apple.com/us/app/nobody-ai/id6473243933?platform=iphone" target="_blank">
                           <div className=" flex min-w-fit bg-black h-[80px] rounded-[12px] px-[20px] py-[16px] cursor-pointer" >
                             <Image src={"/app_store_logo.png"} alt="app store logo" width={39} height={48} quality={100} />
                             <div className=" ml-[14px]" >
@@ -242,6 +248,8 @@ export default function Home() {
                               <p className=" text-[24px] font-bold leading-[24px] mt-[6px]">App Store</p>
                             </div>
                           </div>
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=com.moonbox.app" target="_blank">
                           <div className=" flex min-w-fit bg-black h-[80px] rounded-[12px] px-[20px] py-[16px] cursor-pointer ml-[20px]" >
                             <Image src={"/google_play_logo.png"} alt="app store logo" width={43} height={48} quality={100} />
                             <div className=" ml-[12px]" >
@@ -249,14 +257,15 @@ export default function Home() {
                               <p className=" text-[24px] font-bold leading-[24px] mt-[6px]">Google Play</p>
                             </div>
                           </div>
-                        </div>
+                        </a>
                       </div>
                     </div>
-                    <div className=" absolute w-0 h-0 3xl:w-[515px] 3xl:h-[640px] 4xl:w-[731px] 4xl:h-[885px] right-0 bottom-[78px] 4xl:bottom-[110px]">
-                      <Image src={"/sun.png"} alt="" fill style={{ objectFit: 'contain' }} />
-                    </div>
+                  </div>
+                  <div className=" absolute w-0 h-0 3xl:w-[515px] 3xl:h-[640px] 4xl:w-[731px] 4xl:h-[885px] right-0 bottom-[78px] 4xl:bottom-[110px]">
+                    <Image src={"/sun.png"} alt="" fill style={{ objectFit: 'contain' }} />
                   </div>
                 </div>
+              </div>
             </ReactFullpage.Wrapper>
           )}
         />
@@ -450,38 +459,47 @@ export default function Home() {
             {
               (mediaSize?.width || 0) <= 410 ?
                 <div className=" text-white mx-[30px] mt-[60px] mb-[40px]">
-                  <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer w-[200px] mx-auto" >
-                    <Image src={"/app_store_logo.png"} alt="app store logo" width={30} height={36} quality={100} />
-                    <div className=" ml-[14px]" >
-                      <p className=" text-[14px] font-medium leading-[14px]">Download on the</p>
-                      <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">App Store</p>
+                  <a href="https://apps.apple.com/us/app/nobody-ai/id6473243933?platform=iphone" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer w-[200px] mx-auto" >
+                      <Image src={"/app_store_logo.png"} alt="app store logo" width={30} height={36} quality={100} />
+
+                      <div className=" ml-[14px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Download on the</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">App Store</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer mt-[20px] w-[200px] mx-auto" >
-                    <Image src={"/google_play_logo.png"} alt="app store logo" width={33} height={36} quality={100} />
-                    <div className=" ml-[10px]" >
-                      <p className=" text-[14px] font-medium leading-[14px]">Get it on</p>
-                      <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">Google Play</p>
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.moonbox.app" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer mt-[20px] w-[200px] mx-auto" >
+                      <Image src={"/google_play_logo.png"} alt="app store logo" width={33} height={36} quality={100} />
+                      <div className=" ml-[10px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Get it on</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">Google Play</p>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 </div> :
                 <div className={clsx(
                   "text-white flex  mt-[60px] mb-[40px] mx-[22px] justify-center",
                 )}>
-                  <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer" >
-                    <Image src={"/app_store_logo.png"} alt="app store logo" width={30} height={36} quality={100} />
-                    <div className=" ml-[14px]" >
-                      <p className=" text-[14px] font-medium leading-[14px]">Download on the</p>
-                      <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">App Store</p>
+                  <a href="https://apps.apple.com/us/app/nobody-ai/id6473243933?platform=iphone" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer" >
+                      <Image src={"/app_store_logo.png"} alt="app store logo" width={30} height={36} quality={100} />
+                      <div className=" ml-[14px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Download on the</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">App Store</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer ml-[20px]" >
-                    <Image src={"/google_play_logo.png"} alt="app store logo" width={33} height={36} quality={100} />
-                    <div className=" ml-[10px]" >
-                      <p className=" text-[14px] font-medium leading-[14px]">Get it on</p>
-                      <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">Google Play</p>
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.moonbox.app" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer ml-[20px]" >
+                      <Image src={"/google_play_logo.png"} alt="app store logo" width={33} height={36} quality={100} />
+                      <div className=" ml-[10px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Get it on</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">Google Play</p>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 </div>
             }
           </div>

@@ -11,6 +11,14 @@ import { WagmiProviders } from '../provider'
 import Header from '@/components/Header_Backup';
 import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
+import localFont  from 'next/font/local'
+
+const impact = localFont({
+  src: '../../public/fonts/impact.ttf',
+  display: 'swap',
+  weight: "400",
+  variable: '--font-impact',
+});
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,7 +42,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${inter.className}`}>
+      <body className={` ${impact.variable} ${inter.className}`}>
         <ToastContainer />
         <WagmiProviders>
           <NextIntlClientProvider locale={locale} messages={messages}>

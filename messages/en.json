@@ -176,8 +176,8 @@
     "rule4": "Votes cannot be modified or retracted. Please vote at your discretion.",
     "rule5": "Holders may distribute multiple votes to different works.",
     "prize": "My Reward",
-    "voting": "Voting in progress",
-    "votingDescription": "Rewards will be distributed after the voting ends",
+    "voting": "Calculating Rewards",
+    "votingDescription": "ETH will go to your wallet once calculation is completed",
     "author": "Creator: {author}",
     "voted": "Voted: {voteCount}",
     "vote": "Vote",
@@ -199,6 +199,8 @@
     "sorry": "Sorry! You need Nobody NFTs to participate in",
     "event": "Event：“Nobody Imitation Show” Finals",
     "eventPrize": "Event Prize: Total prize <blue>13.953855</blue> ETH, Total votes cast <blue>{votes}</blue>",
-    "pc": "Please use PC to visit this page."
+    "pc": "Please use PC to visit this page.",
+    "winner": "Winner (5)",
+    "voteEnd": "Vote End"
   }
 }

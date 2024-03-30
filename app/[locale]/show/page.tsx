@@ -252,6 +252,25 @@ export default function Show() {
         </div>
 
         <div className="mx-[15px] mt-[50px] sm:mx-[60px] 4xl:mx-[160px]">
+          <h2 className="text-[24px] font-bold">{t("winner")}</h2>
+          <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
+            {submissions.slice(0, 5).map((item, index) => (
+              <ShowItem
+                key={index}
+                id={item.id}
+                image={item.image}
+                author={item.author}
+                description={item.description}
+                duration={item.duration}
+                embed={item.embed}
+                voteCount={item.vote_count}
+                winner={true}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-[15px] mt-[50px] sm:mx-[60px] 4xl:mx-[160px]">
           <h2 className="text-[24px] font-bold">{t("submissions")}</h2>
           <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
             {submissions.map((item, index) => (
@@ -264,6 +283,7 @@ export default function Show() {
                 duration={item.duration}
                 embed={item.embed}
                 voteCount={item.vote_count}
+                winner={false}
               />
             ))}
           </div>
@@ -388,7 +408,7 @@ export default function Show() {
 
       {/* prize Dialog */}
       <Dialog open={prizeDialog} onOpenChange={setPrizeDialog}>
-        <DialogContent className="flex sm:min-w-[740px] flex-col gap-0 rounded-[16px] bg-white p-0">
+        <DialogContent className="flex flex-col gap-0 rounded-[16px] bg-white p-0 sm:min-w-[740px]">
           <span className="ml-[20px] mt-[20px] text-[24px] font-medium text-black">
             {t("prize")}
           </span>

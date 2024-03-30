@@ -25,10 +25,12 @@ type ShowItemProps = {
   duration: string;
   embed: string;
   voteCount: number;
+  winner: boolean;
 };
 
 export default function ShowItem(props: ShowItemProps) {
-  const { id, image, author, description, duration, embed, voteCount } = props;
+  const { id, image, author, description, duration, embed, voteCount, winner } =
+    props;
 
   const t = useTranslations("Show");
 
@@ -69,7 +71,7 @@ export default function ShowItem(props: ShowItemProps) {
   };
 
   return (
-    <div className="flex flex-col rounded-lg bg-white p-[10px] sm:p-[20px] shadow">
+    <div className="flex flex-col rounded-lg bg-white p-[10px] shadow sm:p-[20px]">
       <Dialog>
         <DialogTrigger className="flex items-start">
           <div className="relative w-full">
@@ -87,9 +89,18 @@ export default function ShowItem(props: ShowItemProps) {
             <span className="absolute bottom-[10px] left-[10px] z-10 text-[14px] text-white">
               {duration}
             </span>
+            {winner && (
+              <Image
+                alt="winner"
+                className="absolute  -top-[3px] right-[5px] w-[40px]"
+                height="44"
+                width="40"
+                src="/show_winner.svg"
+              />
+            )}
           </div>
         </DialogTrigger>
-        <DialogContent className="flex min-w-[960px] flex-col gap-0 rounded-[16px] bg-white p-[30px]">
+        <DialogContent className="flex flex-col gap-0 rounded-[16px] bg-white p-[30px] sm:min-w-[960px]">
           <div className="flex">
             <span className="text-[18px] font-medium text-black">
               {t("author", { author })}
@@ -102,7 +113,7 @@ export default function ShowItem(props: ShowItemProps) {
             </span>
           </div>
           <iframe
-            className="mt-[20px] h-[506px] w-[900px] rounded-xl"
+            className="mt-[20px] h-[506px] w-full rounded-xl sm:w-[900px]"
             src={embed}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -120,24 +131,8 @@ export default function ShowItem(props: ShowItemProps) {
         {description}
       </p>
       <div className="mt-[30px] flex h-[40px] items-center justify-between">
-        <Button
-          className="flex-shrink-0 h-[30px] w-[100px] bg-[#FFD600] text-[16px] text-black hover:bg-[#FFD600] sm:h-[40px] sm:w-[120px]"
-          onClick={() => {
-            if (address) {
-              const jwt = Cookies.get(`${address}_jwt`) as string;
-              if (jwt) {
-                setVotes(1);
-                getAvaliableVotes(jwt);
-                setVotingDialog(true);
-              } else {
-                setNoNFTDialog(true);
-              }
-            } else {
-              setConnectDialog(true);
-            }
-          }}
-        >
-          {t("vote")}
+        <Button className="h-[30px] w-[100px] flex-shrink-0 bg-gray-200 text-[16px] text-black/20 hover:bg-gray-200 sm:h-[40px] sm:w-[120px]">
+          {t("voteEnd")}
         </Button>
         <div>
           <span className="text-[18px] font-medium sm:text-[24px] 4xl:text-[36px]">

@@ -457,7 +457,7 @@ export default function Home() {
             <p className=" text-[24px] font-bold leading-[36px] mx-[20px] text-center">{t.rich("appSubtitle", { br: () => <br /> })}</p>
 
             {
-              (mediaSize?.width || 0) <= 410 ?
+              (mediaSize?.width || 0) <= 420 ?
                 <div className=" text-white mx-[30px] mt-[60px] mb-[40px]">
                   <a href="https://apps.apple.com/us/app/nobody-ai/id6473243933?platform=iphone" target="_blank">
                     <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer w-[200px] mx-auto" >

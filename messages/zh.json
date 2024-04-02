@@ -203,6 +203,9 @@
     "eventPrize": "活動獎金：總獎金 <blue>13.953855</blue> ETH ，參與投票數量 <blue>{votes}</blue> 票",
     "pc": "請打開PC查看此頁面",
     "winner": "得獎作品 (5)",
-    "voteEnd": "投票已結束"
+    "voteEnd": "投票已結束",
+    "congratulation": "恭喜你賺取",
+    "eth": "{prize}ETH",
+    "record": "獎勵已打款到錢包地址，可以通過哈希地址查看打款記錄"
   }
 }

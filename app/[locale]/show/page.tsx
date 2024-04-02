@@ -60,6 +60,7 @@ export default function Show() {
   };
 
   const [voteSum, setVoteSum] = useState<number>(0);
+  const [prize, setPrize] = useState<number>(0);
   const [submissions, setSubmission] = useState<Submission[]>([]);
   const [VoteDetails, setVoteDetails] = useState<VoteDetail[]>([]);
 
@@ -67,7 +68,6 @@ export default function Show() {
   const [prizeDialog, setPrizeDialog] = useState<boolean>(false);
   const [connectDialog, setConnectDialog] = useState<boolean>(false);
   const [noNFTDialog, setNoNFTDialog] = useState<boolean>(false);
-  const [pcDialog, setPcDialog] = useState<boolean>(true);
 
   const [checkedRules, setCheckedRules] = useState<boolean>(true);
   const [acceptedRules, setAcceptedRules] = useState(
@@ -109,6 +109,12 @@ export default function Show() {
       toast.error(result["message"]);
     } else {
       setVoteDetails(result["data"]);
+      let voteCount = 0;
+      for (let i = 0; i < VoteDetails.length; i++) {
+        voteCount += VoteDetails[i].vote_count;
+      }
+      const prize = voteCount * 0.00380629;
+      setPrize(prize);
     }
   };
 
@@ -413,12 +419,22 @@ export default function Show() {
             {t("prize")}
           </span>
           <div className="flex flex-col items-center pb-[80px] pt-[80px]">
-            <span className="text-[30px] font-medium leading-[30px] text-black">
-              {t("voting")}
+            <span className="text-[30px] font-normal leading-[30px] text-black">
+              {t("congratulation")}
             </span>
-            <span className="mt-[20px] text-[16px] font-medium leading-[16px] text-black">
-              {t("votingDescription")}
+            <span className="mt-[15px] text-[48px] font-bold leading-[48px] text-black">
+              {t("eth", { prize: prize })}
             </span>
+            <span className="mt-[15px] text-[16px] font-normal leading-[16px] text-black">
+              {t("record")}
+            </span>
+            <a
+              className="mt-[10px] text-[14px] font-normal leading-[14px] text-blue-700 underline"
+              href="https://etherscan.io/tx/0xca4bfb4bb9599c2601827b382f600e3bc0a75c484a3fd466f9a8c1769e10ef5d"
+              target="_blank"
+            >
+              0xca4bfb4bb9599c2601827b382f600e3bc0a75c484a3fd466f9a8c1769e10ef5d
+            </a>
           </div>
           <div className="flex flex-col rounded-[16px] bg-gray-100 px-[20px] py-[30px]">
             <div className="flex flex-nowrap space-x-[10px] overflow-scroll">

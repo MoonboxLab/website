@@ -203,6 +203,9 @@
     "eventPrize": "Event Prize: Total prize <blue>13.953855</blue> ETH, Total votes cast <blue>{votes}</blue>",
     "pc": "Please use PC to visit this page.",
     "winner": "Winner (5)",
-    "voteEnd": "Vote End"
+    "voteEnd": "Vote End",
+    "congratulation": "Congratulations on earning",
+    "eth": "{prize}ETH",
+    "record": "Reward has been transferred to your address.  You can check it by clicking"
   }
 }

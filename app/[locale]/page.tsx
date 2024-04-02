@@ -137,7 +137,7 @@ export default function Home() {
                     priority
                     className="object-cover"
                   />
-                  <div className="absolute bottom-[108px] right-[20px] w-[200px] h-[250px] 4xl:bottom-[140px] 4xl:right-[30px] rounded-[16px] border-2 border-black bg-[rgba(219,53,57,1)] pl-[5px] ">
+                  {/* <div className="absolute bottom-[108px] right-[20px] w-[200px] h-[250px] 4xl:bottom-[140px] 4xl:right-[30px] rounded-[16px] border-2 border-black bg-[rgba(219,53,57,1)] pl-[5px] ">
                     <Image src={"/card-back.png"} alt="card back" quality={100} width={90} height={119} className=" absolute top-[23px] left-[29px]" />
                     <Image src={"/card-front.png"} alt="card front" quality={100} width={106} height={128} className=" absolute top-[46px] right-[25px]" />
 
@@ -147,7 +147,7 @@ export default function Home() {
                     <Link href={"/goldcard"}>
                       <div className=" absolute left-0 right-0 m-auto bottom-[20px] w-[160px] h-[40px] rounded-[8px] bg-white text-[16px] font-semibold leading-[40px] text-center">{t("goldcardRaffle")}</div>
                     </Link>
-                  </div>
+                  </div> */}
                   <div
                     onClick={() => {
                       setVideo(
@@ -338,7 +338,7 @@ export default function Home() {
                   {t("nobody_nft_mv")}
                 </span>
               </div> */}
-
+{/* 
               <Link href={"/goldcard"}>
                 <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] relative">
                   <span className="text-[21px] font-semibold text-[rgba(219,53,57,1)] underline">
@@ -347,7 +347,7 @@ export default function Home() {
                   <Image src="/mobile_goldcard_btn_icon1.png" alt="icon1" width={40} height={26} className=" absolute left-[58px] top-[16px]" />
                   <Image src="/mobile_goldcard_btn_icon2.png" alt="icon1" width={86} height={28} className=" absolute right-[18px] top-[14px]" />
                 </div>
-              </Link>
+              </Link> */}
 
               {
                 mintStartCountdown <= 0 &&

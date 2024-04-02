@@ -11,9 +11,6 @@ import { Power, X, ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import CustomConnectButton from "./CustomConnectWallet";
 import { formatAddress } from "@/lib/utils";
-import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "./ui/drawer";
-import { Button } from "./ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 
 const Header: React.FC = () => {
@@ -71,13 +68,13 @@ const Header: React.FC = () => {
                 </div>
               </DropdownMenuItem>
             </Link>
-            <Link href={"/goldcard"}>
+            {/* <Link href={"/goldcard"}>
               <DropdownMenuItem className='mt-2'>
                 <div className=' h-[25px] inline-flex items-center justify-between px-1'>
                   <span className='text-[16px] leading-[16px] font-medium'>{t("goldenCard")}</span>
                 </div>
               </DropdownMenuItem>
-            </Link>
+            </Link> */}
           </DropdownMenuContent>
         </DropdownMenu>
 

@@ -108,10 +108,11 @@ export default function Show() {
     if (result["code"] !== 0) {
       toast.error(result["message"]);
     } else {
-      setVoteDetails(result["data"]);
+      const details = result["data"]
+      setVoteDetails(details);
       let voteCount = 0;
-      for (let i = 0; i < VoteDetails.length; i++) {
-        voteCount += VoteDetails[i].vote_count;
+      for (let i = 0; i < details.length; i++) {
+        voteCount += details[i].vote_count;
       }
       const prize = voteCount * 0.00380629;
       setPrize(prize);

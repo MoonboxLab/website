@@ -208,11 +208,21 @@ const Header: React.FC = () => {
 
               <div className=" border-b-[1px] border-gray-200 my-4 mt-8" ></div>
               <Link href={"/declaration"}>
-                <div className=" flex justify-between my-4 mt-1 text-[18px] font-semibold leading-[18px]  ">
+                <div className=" flex justify-between items-center my-4 mt-1 text-[18px] font-semibold leading-[18px]  ">
                   {t('header_declaration')}
                   <ChevronRight width={18} height={18} />
                 </div>
               </Link>
+
+              <div className=" border-b-[1px] border-gray-200 my-4 mt-0" ></div>
+
+              <a href="https:://blog.nobody.xyz" target="_blank">
+                <div className=" flex justify-between my-4 mt-1 text-[18px] font-semibold leading-[18px]  ">
+                  {t('header_blog')}
+                  <ChevronRight width={18} height={18} />
+                </div>
+              </a>
+
               <div className=" border-b-[1px] border-gray-200 my-1" ></div>
 
               <Accordion type="multiple" value={accordionList} onValueChange={(list) => setAccordionList(list)} className="w-full">

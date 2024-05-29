@@ -216,7 +216,7 @@ const Header: React.FC = () => {
 
               <div className=" border-b-[1px] border-gray-200 my-4 mt-0" ></div>
 
-              <a href="https:://blog.nobody.xyz" target="_blank">
+              <a href="https://blog.nobody.xyz" target="_blank">
                 <div className=" flex justify-between my-4 mt-1 text-[18px] font-semibold leading-[18px]  ">
                   {t('header_blog')}
                   <ChevronRight width={18} height={18} />

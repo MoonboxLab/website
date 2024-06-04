@@ -15,7 +15,7 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 import Header from "@/components/Header";
 import VoteItem from "@/components/voteItem";
-import ShowItem from "@/components/showItem";
+import ShowItem from "@/components/talkShowItem";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent } from "@/components/ui/dialog";

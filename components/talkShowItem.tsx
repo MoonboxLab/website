@@ -30,7 +30,7 @@ type ShowItemProps = {
 export default function ShowItem(props: ShowItemProps) {
   const { id, image, author, description, duration, embed, voteCount } = props;
 
-  const t = useTranslations("Show");
+  const t = useTranslations("TalkShow");
 
   const { address } = useAccount();
   const { openConnectModal } = useConnectModal();

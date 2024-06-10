@@ -6,6 +6,7 @@
     "header_connect_wallet": "連接錢包",
     "header_wrong_network": "網路錯誤",
     "header_declaration": "宣言",
+    "header_blog": "Blog",
     "header_nft_market": "購買 Nobody NFT",
     "header_languageNav": "語言",
     "disconnect": "斷開連接",
@@ -51,7 +52,9 @@
     "event": "活動",
     "show": "模仿秀決選",
     "talkshow": "脫口秀決選",
-    "goldenCard": "金卡驗證"
+    "goldenCard": "金卡驗證",
+    "appTitle": "来聊天吧!",
+    "appSubtitle": "每個 Nobody NFT 都是鮮活的；<br></br>NFT 持有者可以客製化自己的 AI 角色；和你喜愛的角色互動，打造你們的獨特故事。"
   },
   "Declaration": {
     "spirit": "精神",
@@ -177,8 +180,8 @@
     "rule4": "己投出的票不可修改和收回，請謹慎投票。",
     "rule5": "持有者可以根據個人意願，自由將多張選票投給不同作品。",
     "prize": "我的獎勵",
-    "voting": "投票進行中…",
-    "votingDescription": "投票結束後將進行獎勵分配",
+    "voting": "獎勵計算中…",
+    "votingDescription": "計算完成后將统一打款到對應的錢包地址",
     "author": "作者: {author}",
     "voted": "已投票: {voteCount}",
     "vote": "給他投票",
@@ -200,7 +203,12 @@
     "sorry": "很抱歉！你沒有Nobody NFT，無法參與活動",
     "event": "活動主題：《Nobody模仿秀》最終決選",
     "eventPrize": "活動獎金：總獎金 <blue>13.953855</blue> ETH ，參與投票數量 <blue>{votes}</blue> 票",
-    "pc": "請打開PC查看此頁面"
+    "pc": "請打開PC查看此頁面",
+    "winner": "得獎作品 (5)",
+    "voteEnd": "投票已結束",
+    "congratulation": "恭喜你賺取",
+    "eth": "{prize}ETH",
+    "record": "獎勵已打款到錢包地址，可以通過哈希地址查看打款記錄"
   },
   "TalkShow": {
     "serial": "編號9527",
@@ -238,6 +246,11 @@
     "sorry": "很抱歉！你沒有Nobody NFT，無法參與活動",
     "event": "活動主題：“Nobody脫口秀”最終決選",
     "eventPrize": "活動獎金：總獎金 <blue>2.1243</blue> ETH ，參與投票數量 <blue>{votes}</blue> 票",
-    "pc": "請打開PC查看此頁面"
+    "pc": "請打開PC查看此頁面",
+    "winner": "得獎作品 (5)",
+    "voteEnd": "投票已結束",
+    "congratulation": "恭喜你賺取",
+    "eth": "{prize}ETH",
+    "record": "獎勵已打款到錢包地址，可以通過哈希地址查看打款記錄"
   }
 }

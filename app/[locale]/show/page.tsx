@@ -60,6 +60,7 @@ export default function Show() {
   };
 
   const [voteSum, setVoteSum] = useState<number>(0);
+  const [prize, setPrize] = useState<number>(0);
   const [submissions, setSubmission] = useState<Submission[]>([]);
   const [VoteDetails, setVoteDetails] = useState<VoteDetail[]>([]);
 
@@ -67,7 +68,6 @@ export default function Show() {
   const [prizeDialog, setPrizeDialog] = useState<boolean>(false);
   const [connectDialog, setConnectDialog] = useState<boolean>(false);
   const [noNFTDialog, setNoNFTDialog] = useState<boolean>(false);
-  const [pcDialog, setPcDialog] = useState<boolean>(true);
 
   const [checkedRules, setCheckedRules] = useState<boolean>(true);
   const [acceptedRules, setAcceptedRules] = useState(
@@ -108,7 +108,14 @@ export default function Show() {
     if (result["code"] !== 0) {
       toast.error(result["message"]);
     } else {
-      setVoteDetails(result["data"]);
+      const details = result["data"]
+      setVoteDetails(details);
+      let voteCount = 0;
+      for (let i = 0; i < details.length; i++) {
+        voteCount += details[i].vote_count;
+      }
+      const prize = voteCount * 0.00380629;
+      setPrize(prize);
     }
   };
 
@@ -252,6 +259,25 @@ export default function Show() {
         </div>
 
         <div className="mx-[15px] mt-[50px] sm:mx-[60px] 4xl:mx-[160px]">
+          <h2 className="text-[24px] font-bold">{t("winner")}</h2>
+          <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
+            {submissions.slice(0, 5).map((item, index) => (
+              <ShowItem
+                key={index}
+                id={item.id}
+                image={item.image}
+                author={item.author}
+                description={item.description}
+                duration={item.duration}
+                embed={item.embed}
+                voteCount={item.vote_count}
+                winner={true}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-[15px] mt-[50px] sm:mx-[60px] 4xl:mx-[160px]">
           <h2 className="text-[24px] font-bold">{t("submissions")}</h2>
           <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
             {submissions.map((item, index) => (
@@ -264,6 +290,7 @@ export default function Show() {
                 duration={item.duration}
                 embed={item.embed}
                 voteCount={item.vote_count}
+                winner={false}
               />
             ))}
           </div>
@@ -388,17 +415,27 @@ export default function Show() {
 
       {/* prize Dialog */}
       <Dialog open={prizeDialog} onOpenChange={setPrizeDialog}>
-        <DialogContent className="flex sm:min-w-[740px] flex-col gap-0 rounded-[16px] bg-white p-0">
+        <DialogContent className="flex flex-col gap-0 rounded-[16px] bg-white p-0 sm:min-w-[740px]">
           <span className="ml-[20px] mt-[20px] text-[24px] font-medium text-black">
             {t("prize")}
           </span>
           <div className="flex flex-col items-center pb-[80px] pt-[80px]">
-            <span className="text-[30px] font-medium leading-[30px] text-black">
-              {t("voting")}
+            <span className="text-[30px] font-normal leading-[30px] text-black">
+              {t("congratulation")}
             </span>
-            <span className="mt-[20px] text-[16px] font-medium leading-[16px] text-black">
-              {t("votingDescription")}
+            <span className="mt-[15px] text-[48px] font-bold leading-[48px] text-black">
+              {t("eth", { prize: prize })}
             </span>
+            <span className="mt-[15px] text-[16px] font-normal leading-[16px] text-black">
+              {t("record")}
+            </span>
+            <a
+              className="mt-[10px] text-[14px] font-normal leading-[14px] text-blue-700 underline"
+              href="https://etherscan.io/tx/0xca4bfb4bb9599c2601827b382f600e3bc0a75c484a3fd466f9a8c1769e10ef5d"
+              target="_blank"
+            >
+              0xca4bfb4bb9599c2601827b382f600e3bc0a75c484a3fd466f9a8c1769e10ef5d
+            </a>
           </div>
           <div className="flex flex-col rounded-[16px] bg-gray-100 px-[20px] py-[30px]">
             <div className="flex flex-nowrap space-x-[10px] overflow-scroll">

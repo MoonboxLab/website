@@ -137,7 +137,7 @@ export default function Home() {
                     priority
                     className="object-cover"
                   />
-                  <div className="absolute bottom-[108px] right-[20px] w-[200px] h-[250px] 4xl:bottom-[140px] 4xl:right-[30px] rounded-[16px] border-2 border-black bg-[rgba(219,53,57,1)] pl-[5px] ">
+                  {/* <div className="absolute bottom-[108px] right-[20px] w-[200px] h-[250px] 4xl:bottom-[140px] 4xl:right-[30px] rounded-[16px] border-2 border-black bg-[rgba(219,53,57,1)] pl-[5px] ">
                     <Image src={"/card-back.png"} alt="card back" quality={100} width={90} height={119} className=" absolute top-[23px] left-[29px]" />
                     <Image src={"/card-front.png"} alt="card front" quality={100} width={106} height={128} className=" absolute top-[46px] right-[25px]" />
 
@@ -147,7 +147,7 @@ export default function Home() {
                     <Link href={"/goldcard"}>
                       <div className=" absolute left-0 right-0 m-auto bottom-[20px] w-[160px] h-[40px] rounded-[8px] bg-white text-[16px] font-semibold leading-[40px] text-center">{t("goldcardRaffle")}</div>
                     </Link>
-                  </div>
+                  </div> */}
                   <div
                     onClick={() => {
                       setVideo(
@@ -224,164 +224,45 @@ export default function Home() {
               <div className="section h-screen w-screen" onWheel={() => {
                 fullpageApi.setAllowScrolling(true)
               }}>
-                <div className="flex h-screen w-full items-center justify-center bg-[#FFD600] px-[50px] pb-[128px] pt-[60px] 4xl:px-[100px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
-                  <div className="grid h-full grid-cols-[46%,auto] gap-[88px] 4xl:gap-[120px] 5xl:gap-[150px]">
-                    <div className="flex h-full justify-center">
-                      <Tabs
-                        defaultValue="role2"
-                        className="grid h-full w-full grid-rows-[100px,auto]"
-                        onValueChange={setRole}
-                      >
-                        <TabsList className="grid h-[100px] grid-cols-5 bg-[#FFD600]">
-                          <TabsTrigger
-                            value="role1"
-                            className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                          >
-                            <Image
-                              src="/nobody_role_1.png"
-                              height={100}
-                              width={100}
-                              alt="role1"
-                              priority
-                            />
-                            {role === "role1" && (
-                              <Image
-                                className="z-10 w-full"
-                                src="/nobody_role_indicator.png"
-                                height={10}
-                                width={100}
-                                alt="indicator"
-                                priority
-                              />
-                            )}
-                          </TabsTrigger>
-                          <TabsTrigger
-                            value="role2"
-                            className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                          >
-                            <Image
-                              src="/nobody_role_2.png"
-                              height={100}
-                              width={100}
-                              alt="role2"
-                              priority
-                            />
-                            {role === "role2" && (
-                              <Image
-                                className="z-10 w-full"
-                                src="/nobody_role_indicator.png"
-                                height={10}
-                                width={100}
-                                alt="indicator"
-                                priority
-                              />
-                            )}
-                          </TabsTrigger>
-                          <TabsTrigger
-                            value="role3"
-                            className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                          >
-                            <Image
-                              src="/nobody_role_3.png"
-                              height={100}
-                              width={100}
-                              alt="role3"
-                              priority
-                            />
-                            {role === "role3" && (
-                              <Image
-                                className="z-10 w-full"
-                                src="/nobody_role_indicator.png"
-                                height={10}
-                                width={100}
-                                alt="indicator"
-                                priority
-                              />
-                            )}
-                          </TabsTrigger>
-                          <TabsTrigger
-                            value="role4"
-                            className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                          >
-                            <Image
-                              src="/nobody_role_4.png"
-                              height={100}
-                              width={100}
-                              alt="role4"
-                              priority
-                            />
-                            {role === "role4" && (
-                              <Image
-                                className="z-10 w-full"
-                                src="/nobody_role_indicator.png"
-                                height={10}
-                                width={100}
-                                alt="indicator"
-                                priority
-                              />
-                            )}
-                          </TabsTrigger>
-                          <TabsTrigger
-                            value="role5"
-                            className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                          >
-                            <Image
-                              src="/nobody_role_5.png"
-                              height={100}
-                              width={100}
-                              alt="role5"
-                              priority
-                            />
-                            {role === "role5" && (
-                              <Image
-                                className="z-10 w-full"
-                                src="/nobody_role_indicator.png"
-                                height={10}
-                                width={100}
-                                alt="indicator"
-                                priority
-                              />
-                            )}
-                          </TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="role1">
-                          <Chat role={1} character="liupiaopiao" fullpageApi={fullpageApi} />
-                        </TabsContent>
-                        <TabsContent value="role2">
-                          <Chat role={2} character="yintianchou" fullpageApi={fullpageApi} />
-                        </TabsContent>
-                        <TabsContent value="role3">
-                          <Chat role={3} character="cook" fullpageApi={fullpageApi} />
-                        </TabsContent>
-                        <TabsContent value="role4">
-                          <Chat role={4} character="tang" fullpageApi={fullpageApi} />
-                        </TabsContent>
-                        <TabsContent value="role5">
-                          <Chat role={5} character="wukong" fullpageApi={fullpageApi} />
-                        </TabsContent>
-                      </Tabs>
+                <div className="flex h-screen w-full items-center justify-center bg-[#FFD600] px-[0px] pb-[128px] pt-[60px] 4xl:px-[10px] 4xl:pb-[175px] 4xl:pt-[50px] 5xl:pt-[100px]">
+                  <div className=" grow w-auto h-auto my-auto mx-[110px] 4xl:mx-[120px]  border-[2px] border-black rounded-[32px] shadow-[4px_4px_0px_rgba(0,0,0,1)] flex pb-[67px] items-center">
+                    <div className=" relative lg:w-[450px] lg:h-[450px] 2xl:w-[550px] 2xl:h-[550px] 3xl:w-[603px] 3xl:h-[600px] 4xl:w-[703px] 4xl:h-[700px]">
+                      <Image src={"/phone_example_ui.png"} alt="" fill quality={100} />
                     </div>
-                    <div className="flex h-full flex-col items-center justify-center">
-                      {locale == "en" ? (
-                        <Image
-                          src="/talk_to_me_en.png"
-                          height={1986}
-                          width={2721}
-                          alt="friend"
-                          priority
-                          className="w-full object-cover"
-                        />
-                      ) : (
-                        <Image
-                          src="/talk_to_me_cn.png"
-                          height={2007}
-                          width={2571}
-                          alt="friend"
-                          priority
-                          className="w-full object-cover"
-                        />
-                      )}
+                    <div className=" ml-[-130px] mt-[100px] relative z-30">
+                      <h2 className={clsx(
+                      {"text-[48px] font-bold leading-[48px] 2xl:text-[56px] 2xl:leading-[56px] 3xl:text-[80px] 3xl:leading-[90px]": locale == 'zh'},
+                      {"font-impact  text-[48px] font-normal leading-[48px] 2xl:text-[56px] 2xl:leading-[56px] 3xl:text-[96px] 3xl:leading-[90px]": locale == 'en'}
+                      )} >
+                        {t("appTitle")}
+                      </h2>
+                      <p className="  lg:text-[20px] lg:leading-[24px] 2xl:text-[26px] 2xl:leading-[32px] font-bold 3xl:text-[30px] 3xl:leading-[40px] max-w-[547px] mb-[45px] mt-[30px] 4xl:mb-[60px] 4xl:mt-[40px]">
+                        {t.rich("appSubtitle", { br: () => <br /> })}
+                      </p>
+                      <div className=" text-white flex ">
+                        <a href="https://apps.apple.com/us/app/nobody-ai/id6473243933?platform=iphone" target="_blank">
+                          <div className=" flex min-w-fit bg-black h-[80px] rounded-[12px] px-[20px] py-[16px] cursor-pointer" >
+                            <Image src={"/app_store_logo.png"} alt="app store logo" width={39} height={48} quality={100} />
+                            <div className=" ml-[14px]" >
+                              <p className=" text-[18px] font-medium leading-[18px]">Download on the</p>
+                              <p className=" text-[24px] font-bold leading-[24px] mt-[6px]">App Store</p>
+                            </div>
+                          </div>
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=com.moonbox.app" target="_blank">
+                          <div className=" flex min-w-fit bg-black h-[80px] rounded-[12px] px-[20px] py-[16px] cursor-pointer ml-[20px]" >
+                            <Image src={"/google_play_logo.png"} alt="app store logo" width={43} height={48} quality={100} />
+                            <div className=" ml-[12px]" >
+                              <p className=" text-[18px] font-medium leading-[18px]">Get it on</p>
+                              <p className=" text-[24px] font-bold leading-[24px] mt-[6px]">Google Play</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
                     </div>
+                  </div>
+                  <div className=" absolute w-0 h-0 3xl:w-[515px] 3xl:h-[640px] 4xl:w-[731px] 4xl:h-[885px] right-0 bottom-[78px] 4xl:bottom-[110px]">
+                    <Image src={"/sun.png"} alt="" fill style={{ objectFit: 'contain' }} />
                   </div>
                 </div>
               </div>
@@ -457,7 +338,7 @@ export default function Home() {
                   {t("nobody_nft_mv")}
                 </span>
               </div> */}
-
+{/* 
               <Link href={"/goldcard"}>
                 <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] relative">
                   <span className="text-[21px] font-semibold text-[rgba(219,53,57,1)] underline">
@@ -466,7 +347,7 @@ export default function Home() {
                   <Image src="/mobile_goldcard_btn_icon1.png" alt="icon1" width={40} height={26} className=" absolute left-[58px] top-[16px]" />
                   <Image src="/mobile_goldcard_btn_icon2.png" alt="icon1" width={86} height={28} className=" absolute right-[18px] top-[14px]" />
                 </div>
-              </Link>
+              </Link> */}
 
               {
                 mintStartCountdown <= 0 &&
@@ -566,160 +447,61 @@ export default function Home() {
               className="z-10 mt-[40px] w-full object-cover"
             />
           </div>
-          <div className="flex w-full flex-col bg-[#FFD600] pb-[60px] pt-[40px]">
-            <span className="w-full text-center text-[48px] font-black leading-[48px] text-black">
-              {t("talk_to_me")}
-            </span>
-            <div className="flex h-full flex-col items-start px-[16px] py-[30px]">
-              <div className="flex w-full items-center justify-center rounded-[16px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                <span className="w-full text-center text-[24px] font-bold leading-[30px] text-black">
-                  {t("nobody_content_1")}
-                </span>
-              </div>
-              <div className="mt-[20px] flex w-full items-center justify-center rounded-[16px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                <span className="w-full text-center text-[24px] font-bold leading-[30px] text-black">
-                  {t("nobody_content_2")}
-                </span>
-              </div>
-              <div className="mt-[20px] flex w-full items-center justify-center rounded-[16px] border-2 border-black bg-[#FFD600] p-[25px] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                <span className="w-full text-center text-[24px] font-bold leading-[30px] text-black">
-                  {t("nobody_content_3")}
-                </span>
+          <div className=" w-full bg-[#FFD600] pb-[60px] pt-[40px]">
+            <div className="flex justify-center overflow-hidden">
+              <div className=" relative h-[500px] w-[500px] sm:h-[800px] sm:w-[800px] mr-[-80px]">
+                <Image src={"/phone_example_ui.png"} alt="" fill style={{ objectFit: "contain" }} />
               </div>
             </div>
-            <Tabs
-              defaultValue="role2"
-              className="grid h-[550px] w-full grid-rows-[100px,auto]"
-              onValueChange={setRole}
-            >
-              <TabsList className="grid h-[100px] grid-cols-5  bg-[#FFD600]">
-                <TabsTrigger
-                  value="role1"
-                  className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                >
-                  <Image
-                    src="/nobody_role_1.png"
-                    height={100}
-                    width={100}
-                    alt="role1"
-                    priority
-                  />
-                  {role === "role1" && (
-                    <Image
-                      className="z-10 w-full"
-                      src="/nobody_role_indicator.png"
-                      height={10}
-                      width={100}
-                      alt="indicator"
-                      priority
-                    />
-                  )}
-                </TabsTrigger>
-                <TabsTrigger
-                  value="role2"
-                  className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                >
-                  <Image
-                    src="/nobody_role_2.png"
-                    height={100}
-                    width={100}
-                    alt="role2"
-                    priority
-                  />
-                  {role === "role2" && (
-                    <Image
-                      className="z-10 w-full"
-                      src="/nobody_role_indicator.png"
-                      height={10}
-                      width={100}
-                      alt="indicator"
-                      priority
-                    />
-                  )}
-                </TabsTrigger>
-                <TabsTrigger
-                  value="role3"
-                  className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                >
-                  <Image
-                    src="/nobody_role_3.png"
-                    height={100}
-                    width={100}
-                    alt="role3"
-                    priority
-                  />
-                  {role === "role3" && (
-                    <Image
-                      className="z-10 w-full"
-                      src="/nobody_role_indicator.png"
-                      height={10}
-                      width={100}
-                      alt="indicator"
-                      priority
-                    />
-                  )}
-                </TabsTrigger>
-                <TabsTrigger
-                  value="role4"
-                  className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                >
-                  <Image
-                    src="/nobody_role_4.png"
-                    height={100}
-                    width={100}
-                    alt="role4"
-                    priority
-                  />
-                  {role === "role4" && (
-                    <Image
-                      className="z-10 w-full"
-                      src="/nobody_role_indicator.png"
-                      height={10}
-                      width={100}
-                      alt="indicator"
-                      priority
-                    />
-                  )}
-                </TabsTrigger>
-                <TabsTrigger
-                  value="role5"
-                  className="relative flex h-[100px] flex-col bg-[#FFD600] data-[state=active]:bg-[#FFD600]"
-                >
-                  <Image
-                    src="/nobody_role_5.png"
-                    height={100}
-                    width={100}
-                    alt="role5"
-                    priority
-                  />
-                  {role === "role5" && (
-                    <Image
-                      className="z-10 w-full"
-                      src="/nobody_role_indicator.png"
-                      height={10}
-                      width={100}
-                      alt="indicator"
-                      priority
-                    />
-                  )}
-                </TabsTrigger>
-              </TabsList>
-              <TabsContent value="role1">
-                <Chat role={1} character="liupiaopiao" />
-              </TabsContent>
-              <TabsContent value="role2">
-                <Chat role={2} character="yintianchou" />
-              </TabsContent>
-              <TabsContent value="role3">
-                <Chat role={3} character="cook" />
-              </TabsContent>
-              <TabsContent value="role4">
-                <Chat role={4} character="tang" />
-              </TabsContent>
-              <TabsContent value="role5">
-                <Chat role={5} character="wukong" />
-              </TabsContent>
-            </Tabs>
+            <h2 className=" font-impact text-center text-[60px] font-normal leading-[60px] mt-[60px] mb-[20px]">{t("appTitle")}</h2>
+            <p className=" text-[24px] font-bold leading-[36px] mx-[20px] text-center">{t.rich("appSubtitle", { br: () => <br /> })}</p>
+
+            {
+              (mediaSize?.width || 0) <= 420 ?
+                <div className=" text-white mx-[30px] mt-[60px] mb-[40px]">
+                  <a href="https://apps.apple.com/us/app/nobody-ai/id6473243933?platform=iphone" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer w-[200px] mx-auto" >
+                      <Image src={"/app_store_logo.png"} alt="app store logo" width={30} height={36} quality={100} />
+
+                      <div className=" ml-[14px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Download on the</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">App Store</p>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.moonbox.app" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer mt-[20px] w-[200px] mx-auto" >
+                      <Image src={"/google_play_logo.png"} alt="app store logo" width={33} height={36} quality={100} />
+                      <div className=" ml-[10px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Get it on</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">Google Play</p>
+                      </div>
+                    </div>
+                  </a>
+                </div> :
+                <div className={clsx(
+                  "text-white flex  mt-[60px] mb-[40px] mx-[22px] justify-center",
+                )}>
+                  <a href="https://apps.apple.com/us/app/nobody-ai/id6473243933?platform=iphone" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer" >
+                      <Image src={"/app_store_logo.png"} alt="app store logo" width={30} height={36} quality={100} />
+                      <div className=" ml-[14px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Download on the</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">App Store</p>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.moonbox.app" target="_blank">
+                    <div className=" flex min-w-fit bg-black h-[64px] rounded-[12px] px-[12px] py-[12px] cursor-pointer ml-[20px]" >
+                      <Image src={"/google_play_logo.png"} alt="app store logo" width={33} height={36} quality={100} />
+                      <div className=" ml-[10px]" >
+                        <p className=" text-[14px] font-medium leading-[14px]">Get it on</p>
+                        <p className=" text-[18px] font-bold leading-[18px] mt-[6px]">Google Play</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+            }
           </div>
         </div>
       )}

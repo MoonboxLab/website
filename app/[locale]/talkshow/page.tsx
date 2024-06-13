@@ -252,6 +252,25 @@ export default function Show() {
         </div>
 
         <div className="mx-[15px] mt-[50px] sm:mx-[60px] 4xl:mx-[160px]">
+          <h2 className="text-[24px] font-bold">{t("winner")}</h2>
+          <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
+            {submissions.slice(0, 2).map((item, index) => (
+              <ShowItem
+                key={index}
+                id={item.id}
+                image={item.image}
+                author={item.author}
+                description={item.description}
+                duration={item.duration}
+                embed={item.embed}
+                voteCount={item.vote_count}
+                winner={true}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-[15px] mt-[50px] sm:mx-[60px] 4xl:mx-[160px]">
           <h2 className="text-[24px] font-bold">{t("submissions")}</h2>
           <div className="mt-[30px] grid w-full grid-cols-2 gap-[12px] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 xl:gap-[16px] 3xl:grid-cols-4 3xl:gap-[25px] 4xl:grid-cols-5 4xl:gap-[30px] 5xl:grid-cols-5 5xl:gap-[30px]">
             {submissions.map((item, index) => (
@@ -264,6 +283,7 @@ export default function Show() {
                 duration={item.duration}
                 embed={item.embed}
                 voteCount={item.vote_count}
+                winner={false}
               />
             ))}
           </div>
@@ -394,7 +414,7 @@ export default function Show() {
           </span>
           <div className="flex flex-col items-center pb-[80px] pt-[80px]">
             <span className="text-[30px] font-medium leading-[30px] text-black">
-              {t("voting")}
+              {t("voteEnd")}
             </span>
             <span className="mt-[20px] text-[16px] font-medium leading-[16px] text-black">
               {t("votingDescription")}

@@ -60,6 +60,7 @@ export default function Show() {
   };
 
   const [voteSum, setVoteSum] = useState<number>(0);
+  const [prize, setPrize] = useState<number>(0);
   const [submissions, setSubmission] = useState<Submission[]>([]);
   const [VoteDetails, setVoteDetails] = useState<VoteDetail[]>([]);
 
@@ -108,7 +109,14 @@ export default function Show() {
     if (result["code"] !== 0) {
       toast.error(result["message"]);
     } else {
-      setVoteDetails(result["data"]);
+      const details = result["data"]
+      setVoteDetails(details);
+      let voteCount = 0;
+      for (let i = 0; i < details.length; i++) {
+        voteCount += details[i].vote_count;
+      }
+      const prize = voteCount * 0.00065911;
+      setPrize(prize);
     }
   };
 
@@ -413,12 +421,22 @@ export default function Show() {
             {t("prize")}
           </span>
           <div className="flex flex-col items-center pb-[80px] pt-[80px]">
-            <span className="text-[30px] font-medium leading-[30px] text-black">
-              {t("voteEnd")}
+            <span className="text-[30px] font-normal leading-[30px] text-black">
+              {t("congratulation")}
             </span>
-            <span className="mt-[20px] text-[16px] font-medium leading-[16px] text-black">
-              {t("votingDescription")}
+            <span className="mt-[15px] text-[48px] font-bold leading-[48px] text-black">
+              {t("eth", { prize: prize })}
             </span>
+            <span className="mt-[15px] text-[16px] font-normal leading-[16px] text-black">
+              {t("record")}
+            </span>
+            <a
+              className="mt-[10px] text-[14px] font-normal leading-[14px] text-blue-700 underline"
+              href="https://etherscan.io/tx/0xbd262cbc71d65d6af8a30aef6648e4ec33503d88d01ab5acc79a56049ca4e706"
+              target="_blank"
+            >
+              0xbd262cbc71d65d6af8a30aef6648e4ec33503d88d01ab5acc79a56049ca4e706
+            </a>
           </div>
           <div className="flex flex-col rounded-[16px] bg-gray-100 px-[20px] py-[30px]">
             <div className="flex flex-nowrap space-x-[10px] overflow-scroll">

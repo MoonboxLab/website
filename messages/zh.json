@@ -54,7 +54,8 @@
     "talkshow": "脫口秀決選",
     "goldenCard": "金卡驗證",
     "appTitle": "来聊天吧!",
-    "appSubtitle": "每個 Nobody NFT 都是鮮活的；<br></br>NFT 持有者可以客製化自己的 AI 角色；和你喜愛的角色互動，打造你們的獨特故事。"
+    "appSubtitle": "每個 Nobody NFT 都是鮮活的；<br></br>NFT 持有者可以客製化自己的 AI 角色；和你喜愛的角色互動，打造你們的獨特故事。",
+    "point": "積分"
   },
   "Declaration": {
     "spirit": "精神",
@@ -93,7 +94,6 @@
       "firsthourTip": "第一個小時打款中獎機率高達9.527倍，<span>還剩{minutes}分鐘</span>",
       "firsthourTipReady": "鑄造開始後第一小時打款，抽獎享有9.527倍中獎概率",
       "firstHourEnd": "加速已結束",
-
       "ready&whitelist": "您已獲得白名單，請在鑄造開始後準時參與",
       "ready&nowhitelist": "您並沒有獲得白名單，在鑄造開始後第一小時打款，將在抽獎環節時享有9.527倍加成",
       "connect&check": "請連結錢包查看您的地址是否已獲得白名單",
@@ -105,19 +105,15 @@
       "nowhitelist&mintstop": "非白名單用戶的打款渠道已關閉",
       "whitelist&mintdone": "恭喜鑄造成功，我們將在鑄造階段結束後空投您的Nobody NFT",
       "nowhitelist&mintdone": "感謝參與，鑄造結束後我們將進行抽獎並公告，您屆時可以查看自己是否中獎",
-
       "raflle&select": "恭喜鑄造成功，我們將在鑄造階段結束後24小時內空投您的Nobody NFT",
       "raffle&noselect": "很遺憾您沒有抽中Nobody NFT，您可以在2024年2月4日20:00（UTC+8）到2024年7月4日20:00（UTC+8）的期間內領取退款",
       "raffle&nojoin": "鑄造已結束，您仍然可以通過NFT市場來獲得Nobody NFT",
-
       "refund&noselect": "很遺憾您没有獲得Nobody NFT，請在2024年7月4日20:00（UTC+8）之前進行退費操作",
       "refund&noselect&&refunded": "您已經成功領取退款，感謝參與鑄造",
-
       "connectwallet": "連接錢包",
       "mint": "鑄造",
       "refund": "退款",
       "refunded": "已退款",
-
       "mintSuccess": "鑄造成功",
       "txPendding": "交易正在等待區塊鏈確認",
       "refundSuccess": "退款成功"

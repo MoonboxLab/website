@@ -54,7 +54,8 @@
     "talkshow": "Talk Show",
     "goldenCard": "Gold card lottery",
     "appTitle": "Let's chat!",
-    "appSubtitle": "Every Nobody NFT is alive. <br></br>NFT holders can customize their own AI characters. Play with your favorite characters to create your own unique story."
+    "appSubtitle": "Every Nobody NFT is alive. <br></br>NFT holders can customize their own AI characters. Play with your favorite characters to create your own unique story.",
+    "point": "Point"
   },
   "Declaration": {
     "spirit": "SPIRIT",
@@ -93,7 +94,6 @@
       "firsthourTip": "The probability of winning in the first hour is as high as 9.527 times, <span>{minutes} minutes left</span>",
       "firsthourTipReady": "Making the deposit within the first hour grants you a 9.527x chance of winning the raffle once the minting starts",
       "firstHourEnd": "Acceleration has ended",
-
       "ready&whitelist": "You have been whitelisted! See you on the mint day.",
       "ready&nowhitelist": "You haven't been whitelisted. You still have a 9.527x boost of getting a Nobody NFT in the raffle if you make deposit in the first hour after the mint starts.",
       "connect&check": "Please connect your wallet to check Whitelist eligibility.",
@@ -105,19 +105,15 @@
       "nowhitelist&mintstop": "The mint for non-Whitelist users is over now.",
       "whitelist&mintdone": "Congrats! Your Nobody NFT will be airdropped after the mint ends.",
       "nowhitelist&mintdone": "Thanks for participation in the Mint Raffle. Check your Mint Raffle result after the mint ends.",
-
       "raflle&select": "Congrats! Your Nobody NFT will be airdropped within 24 hours after the mint ends.",
       "raffle&noselect": "Sorry, you didn't win in the Mint Raffle. The refund starts on Feb 4 at 8PM, 2024 (UTC+8) and ends on Jul 4 at 8PM, 2024 (UTC+8).",
       "raffle&nojoin": "The mint is over now. You could still acquire an Nobody NFT on the market.",
-
       "refund&noselect": "Sorry, you didn't mint the Nobody NFT successfully. Please claim your refund before Jul 4 at 8PM, 2024 (UTC+8).",
       "refund&noselect&&refunded": "You have successfully claimed your refund. Thank you for participating in the Nobody NFT Mint.",
-
       "connectwallet": "Connect Wallet",
       "mint": "Mint",
       "refund": "Claim",
       "refunded": "Claimed",
-
       "mintSuccess": "Mint Successfully",
       "txPendding": "The transaction is pending to be confirmed by the blockchain.",
       "refundSuccess": "Refund Successfully"

@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function LeaderboardPage() {
   const t = useTranslations("Leaderboard");
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
   return (
     <div className="relative min-h-screen w-screen overflow-hidden">
       <div className="absolute left-0 right-0 top-0">

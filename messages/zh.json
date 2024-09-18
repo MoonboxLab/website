@@ -248,5 +248,9 @@
     "congratulation": "恭喜你賺取",
     "eth": "{prize}ETH",
     "record": "獎勵已打款到錢包地址，可以通過哈希地址查看打款記錄"
+  },
+  "Leaderboard": {
+    "goldCard": "金卡",
+    "NFT": "NFT"
   }
 }

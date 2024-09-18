@@ -248,5 +248,9 @@
     "congratulation": "Congratulations on earning",
     "eth": "{prize}ETH",
     "record": "Reward has been transferred to your address.  You can check it by clicking"
+  },
+  "Leaderboard": {
+    "goldCard": "Gold Card",
+    "NFT": "NFT"
   }
 }

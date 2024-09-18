@@ -21,7 +21,7 @@ const Footer = (props: FooterProps) => {
   const [refundEndTime] = useCountDown({ targetDate: REFUND_END_TIME });
 
   return (
-    <div className="absolute bottom-0 left-0 z-50 flex h-[88px] w-full items-center bg-black/80 px-[20px] 4xl:h-[112px] 4xl:px-[30px]">
+    <div className="absolute bottom-0 left-0 z-50 hidden h-[88px] w-full items-center bg-black/80 px-[20px] 4xl:h-[112px] 4xl:px-[30px]">
       <div className="flex">
         <Image
           className="object-contain"

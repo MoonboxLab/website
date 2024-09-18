@@ -224,7 +224,7 @@ export default function LeaderboardPage() {
                   />
                 </div>
                 <div className="mt-4 text-center text-base font-bold md:text-lg lg:text-2xl">
-                  Jay Chou 周杰輪
+                  Jay Chou 周杰倫
                 </div>
               </div>
               <div className="group lg:col-span-2">
@@ -266,7 +266,7 @@ export default function LeaderboardPage() {
                   />
                 </div>
                 <div className="mt-4 text-center text-base font-bold md:text-lg lg:text-2xl">
-                  Edison 陳冠希
+                  Edison Chen 陳冠希
                 </div>
               </div>
               <div className="group lg:col-span-2">

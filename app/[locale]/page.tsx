@@ -403,7 +403,7 @@ export default function Home() {
                 </div>
               </Link> */}
 
-              {mintStartCountdown <= 0 && (
+              {/* {mintStartCountdown <= 0 && (
                 <Link href={"/mint"}>
                   <div className="hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-[#FFD600] shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                     <span className="text-[21px] font-semibold text-black">
@@ -411,10 +411,10 @@ export default function Home() {
                     </span>
                   </div>
                 </Link>
-              )}
+              )} */}
             </div>
           </div>
-          <div className="flex w-full justify-center bg-black py-[40px]">
+          <div className="hidden w-full justify-center bg-black py-[40px]">
             <div className="flex flex-col items-start">
               <div className="flex">
                 <Image

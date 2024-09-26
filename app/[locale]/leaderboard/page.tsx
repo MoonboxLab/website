@@ -27,6 +27,7 @@ export default function LeaderboardPage() {
               tab === 0 ? "opacity-30" : "opacity-100"
             }`}
             onClick={() => setTab(0)}
+            v-if="false"
           >
             {t("goldCard")}
           </button>

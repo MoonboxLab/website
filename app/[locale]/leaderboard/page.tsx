@@ -35,19 +35,19 @@ export default function LeaderboardPage() {
           {tab === 1 ? (
             <div className="mx-auto mt-4 grid w-full max-w-[1447px] gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-16 py-10 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-3">
               <div className="group place-self-center md:col-span-2 lg:col-span-3">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/stephenchow.webp"
                     alt="stephenchow"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/stephenchow-hover.webp"
                     alt="stephenchow"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -56,19 +56,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/mcjin.webp"
                     alt="mcjin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/mcjin-hover.webp"
                     alt="mcjin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -78,19 +78,19 @@ export default function LeaderboardPage() {
               </div>
 
               <div className="group">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/vannesswu.webp"
                     alt="vannesswu"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/vannesswu-hover.webp"
                     alt="vannesswu"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -99,19 +99,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/memeland.webp"
                     alt="memeland"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/memeland-hover.webp"
                     alt="memeland"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -120,19 +120,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/sklam.webp"
                     alt="sklam"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/sklam-hover.webp"
                     alt="sklam"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -141,19 +141,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/chrischan.webp"
                     alt="chrischan"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/chrischan-hover.webp"
                     alt="chrischan"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -162,19 +162,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/igniousyong.webp"
                     alt="igniousyong"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/igniousyong-hover.webp"
                     alt="igniousyong"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -186,19 +186,19 @@ export default function LeaderboardPage() {
           ) : (
             <div className="mx-auto mt-4 grid w-full max-w-[1447px] gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-16 py-10 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-6">
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/stephenchow.webp"
                     alt="stephenchow"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/stephenchow-nft-hover.webp"
                     alt="stephenchow"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -207,19 +207,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/jay.webp"
                     alt="Jay Chou"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/jay-nft-hover.webp"
                     alt="jay"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -228,19 +228,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/ashin2.webp"
                     alt="ashin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/ashin-nft-hover.webp"
                     alt="ashin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -249,19 +249,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/edisonchen.webp"
                     alt="edisonchen"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/edisonchen-nft-hover.webp"
                     alt="edisonchen"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -270,19 +270,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/jjlin.webp"
                     alt="jjlin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block aspect-square object-cover transition duration-300"
                   />
                   <Image
                     src="/jjlin-nft-hover.webp"
                     alt="jjlin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block aspect-square object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -291,19 +291,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/charlenechoi.webp"
                     alt="charlenechoi"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block object-cover transition duration-300"
                   />
                   <Image
                     src="/charlenechoi-nft-hover.webp"
                     alt="charlenechoi "
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -312,19 +312,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/vannesswu.webp"
                     alt="vannesswu"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block object-cover transition duration-300"
                   />
                   <Image
                     src="/vannesswu-nft-hover.webp"
                     alt="vannesswu"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -333,19 +333,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/mcjin.webp"
                     alt="mcjin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block object-cover transition duration-300"
                   />
                   <Image
                     src="/mcjin-nft-hover.webp"
                     alt="mcjin"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>
@@ -354,19 +354,19 @@ export default function LeaderboardPage() {
                 </div>
               </div>
               <div className="group lg:col-span-2">
-                <div className="relative lg:h-[350px]">
+                <div className="relative lg:h-[280px]">
                   <Image
                     src="/stephenfung.webp"
                     alt="stephenfung"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="mx-auto block object-cover transition duration-300"
                   />
                   <Image
                     src="/stephenfung-nft-hover.webp"
                     alt="stephenfung"
-                    width={350}
-                    height={350}
+                    width={280}
+                    height={280}
                     className="absolute inset-0 mx-auto block object-cover opacity-0 transition duration-300 group-hover:opacity-100"
                   />
                 </div>

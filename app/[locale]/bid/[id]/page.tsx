@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
+import { useState } from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { useTranslations } from "next-intl";
 
 import Header from "@/components/Header";
 import { getBigItem } from "@/service/bid";
-import { useState } from "react";
 import {
   InputOTP,
   InputOTPGroup,
@@ -14,9 +15,11 @@ import {
 
 export default function BidDetailsPage({ params }: { params: { id: string } }) {
   const t = useTranslations("Bid");
+  const homeT = useTranslations("Home");
   const item = getBigItem(Number(params.id));
   const [isCollapse, setIsCollapse] = useState(true);
   const [currentBid, setCurrentBid] = useState(0);
+  const [nftId, setNftId] = useState("");
   const [price, setPrice] = useState("");
   const steps = [5, 10, 20];
   return (
@@ -98,7 +101,11 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                       </div>
                       <div className="mt-3 flex max-w-[300px] items-center gap-2 rounded border border-[#605D5E] p-3 text-sm lg:text-base">
                         <div>Nobody #</div>
-                        <InputOTP maxLength={4}>
+                        <InputOTP
+                          maxLength={4}
+                          value={nftId}
+                          onChange={(value) => setNftId(value)}
+                        >
                           <InputOTPGroup className="gap-2">
                             <InputOTPSlot
                               index={0}
@@ -127,17 +134,45 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                         {t("placeYourBid")}
                       </div>
                       <div className="mt-3 flex flex-col items-center gap-3 text-sm lg:mt-5 lg:flex-row lg:gap-2 lg:text-base">
-                        {steps.map((item) => (
-                          <button
-                            key={item}
-                            className="w-full rounded bg-[#117E8A] px-2 py-3 text-white lg:px-4 lg:py-2"
-                            onClick={() => {
-                              setPrice((currentBid + item).toString());
-                            }}
-                          >
-                            {t("bid")} USDT {currentBid + item}
-                          </button>
-                        ))}
+                        <ConnectButton.Custom>
+                          {({
+                            account,
+                            chain,
+                            authenticationStatus,
+                            mounted,
+                            openConnectModal,
+                          }) => {
+                            const ready =
+                              mounted && authenticationStatus !== "loading";
+                            const connected =
+                              ready &&
+                              account &&
+                              chain &&
+                              (!authenticationStatus ||
+                                authenticationStatus === "authenticated");
+                            if (!connected) {
+                              return (
+                                <button
+                                  className="w-full rounded bg-[#117E8A] px-2 py-3 text-center text-white lg:px-4 lg:py-2"
+                                  onClick={openConnectModal}
+                                >
+                                  {homeT("header_connect_wallet")}
+                                </button>
+                              );
+                            }
+                            return steps.map((item) => (
+                              <button
+                                key={item}
+                                className="w-full rounded bg-[#117E8A] px-2 py-3 text-white lg:px-4 lg:py-2"
+                                onClick={() => {
+                                  setPrice((currentBid + item).toString());
+                                }}
+                              >
+                                {t("bid")} USDT {currentBid + item}
+                              </button>
+                            ));
+                          }}
+                        </ConnectButton.Custom>
                       </div>
                       <div className="mt-2 flex items-center gap-2 text-base uppercase lg:mt-5">
                         <div className="h-px flex-1 bg-[#605D5E]/50"></div>
@@ -196,9 +231,39 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                             value={price.toString()}
                           />
                         </div>
-                        <button className="rounded bg-[#117E8A] px-2 py-3 text-white lg:px-8 lg:py-2">
-                          {t("placeBid")}
-                        </button>
+                        <ConnectButton.Custom>
+                          {({
+                            account,
+                            chain,
+                            authenticationStatus,
+                            mounted,
+                            openConnectModal,
+                          }) => {
+                            const ready =
+                              mounted && authenticationStatus !== "loading";
+                            const connected =
+                              ready &&
+                              account &&
+                              chain &&
+                              (!authenticationStatus ||
+                                authenticationStatus === "authenticated");
+                            if (!connected) {
+                              return (
+                                <button
+                                  className="rounded bg-[#117E8A] px-2 py-3 text-white lg:px-8 lg:py-2"
+                                  onClick={openConnectModal}
+                                >
+                                  {homeT("header_connect_wallet")}
+                                </button>
+                              );
+                            }
+                            return (
+                              <button className="rounded bg-[#117E8A] px-2 py-3 text-white lg:px-8 lg:py-2">
+                                {t("placeBid")}
+                              </button>
+                            );
+                          }}
+                        </ConnectButton.Custom>
                       </div>
                       <div className="mt-2 text-xs text-[#212427] lg:mt-3 lg:text-sm">
                         {t("bidDesc")}

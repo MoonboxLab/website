@@ -6,23 +6,11 @@ import Header from "@/components/Header";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getBigList } from "@/service/bid";
+import { useBigList } from "@/service/bid";
 
 export default function BidPage() {
-  const [list, setList] = useState<
-    {
-      id: number;
-      name: string;
-      img: string;
-      price: number;
-      coin: string;
-    }[]
-  >([]);
   const t = useTranslations("Bid");
-
-  useEffect(() => {
-    setList(getBigList());
-  }, []);
+  const [list, loading] = useBigList();
   return (
     <div className="relative">
       <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">
@@ -56,34 +44,40 @@ export default function BidPage() {
               className="w-full object-cover"
             />
           </div>
-          <div className="mx-auto mt-4 grid w-full gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-3 lg:gap-y-11 lg:px-16 lg:py-10">
-            {list.map((item) => (
-              <div
-                key={item.id}
-                className="group relative border-b border-black/50 pb-5"
-              >
-                <Image
-                  src={item.img}
-                  alt={item.name}
-                  width={250}
-                  height={250}
-                  className="aspect-square object-cover"
-                />
-                <div className="mt-8 text-3xl font-bold">{t(item.name)}</div>
-                <div className="lg:flex-rows mt-3 flex flex-col justify-between gap-2 text-2xl">
-                  <div>
-                    {item.coin} {item.price}
+          {loading ? (
+            <div className="mx-auto mt-4 flex w-full items-center justify-center gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-3 lg:gap-y-11 lg:px-16 lg:py-10">
+              <div className="loading loading-spinner loading-lg"></div>
+            </div>
+          ) : (
+            <div className="mx-auto mt-4 grid w-full gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-3 lg:gap-y-11 lg:px-16 lg:py-10">
+              {list.map((item) => (
+                <div
+                  key={item.id}
+                  className="group relative border-b border-black/50 pb-5"
+                >
+                  <Image
+                    src={item.img}
+                    alt={item.name}
+                    width={250}
+                    height={250}
+                    className="aspect-square object-cover"
+                  />
+                  <div className="mt-8 text-3xl font-bold">{t(item.name)}</div>
+                  <div className="mt-3 flex flex-col justify-between gap-2 text-2xl lg:flex-row">
+                    <div>
+                      {item.coin} {item.price}
+                    </div>
+                    <Link
+                      href={`/bid/${item.id}`}
+                      className="rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white"
+                    >
+                      {t("bidNow")}
+                    </Link>
                   </div>
-                  <Link
-                    href={`/bid/${item.id}`}
-                    className="rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white"
-                  >
-                    {t("bidNow")}
-                  </Link>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

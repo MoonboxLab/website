@@ -1,27 +1,73 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useCountDown } from "ahooks";
+import Big from "big.js";
+import { toast } from "react-toastify";
 
 import { useTranslations } from "next-intl";
 
 import Header from "@/components/Header";
-import { getBigItem } from "@/service/bid";
+import { useBigItem, useApprove, useBidSubmit } from "@/service/bid";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function BidDetailsPage({ params }: { params: { id: string } }) {
   const t = useTranslations("Bid");
   const homeT = useTranslations("Home");
-  const item = getBigItem(Number(params.id));
+  const [item, loading, fetchBigItem] = useBigItem(Number(params.id));
+  const [allowance, approveLoading, approveToken, fetchAllowance] =
+    useApprove();
   const [isCollapse, setIsCollapse] = useState(true);
   const [currentBid, setCurrentBid] = useState(0);
   const [nftId, setNftId] = useState("");
   const [price, setPrice] = useState("");
+  const [confirmDialog, setConfirmDialog] = useState(false);
+  const [bidLoading, bidSubmit] = useBidSubmit();
+
+  const [endDate, setEndDate] = useState(Date.now());
+  const [countdown, formattedRes] = useCountDown({
+    targetDate: endDate,
+  });
+
   const steps = [5, 10, 20];
+
+  const handleBid = useCallback(async () => {
+    if (!price || !nftId || !Number(price)) {
+      if (!nftId) {
+        toast.error(t("requireNFT"));
+      }
+      return;
+    }
+    try {
+      await bidSubmit(item?.id || 0, price, nftId);
+      await fetchBigItem();
+      await fetchAllowance();
+      setConfirmDialog(false);
+      toast.success(t("bidSuccess"));
+    } catch (e) {
+      console.log(e);
+      toast.error(t("bidFail"));
+    }
+  }, [price, nftId, bidSubmit, item, fetchBigItem, fetchAllowance, t]);
+
+  useEffect(() => {
+    setCurrentBid(Number(item?.price || 0));
+    setEndDate(Number(item?.expireTime) * 1000 || Date.now());
+  }, [item]);
   return (
     <div className="relative">
       <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">
@@ -39,11 +85,12 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
 
         <div className="mx-auto mt-8 max-w-[1447px] px-4 lg:px-16">
           <div className="flex items-center justify-center gap-5">
-            <button
+            <Link
+              href="/bid"
               className={`sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[120px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px]`}
             >
               {t("bigTab")}
-            </button>
+            </Link>
           </div>
 
           <div className="mx-auto mt-4 w-full rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:px-16 lg:py-10">
@@ -95,8 +142,17 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                         <div className="text-lg font-bold lg:text-2xl">
                           {t("enterNFT")}
                         </div>
-                        <div className="text-xs font-normal lg:text-base">
-                          2d 1 h 53m | 24 {t("bids")}
+                        <div className="text-xs font-normal tabular-nums lg:text-base">
+                          {countdown <= 0
+                            ? t("end")
+                            : `${formattedRes.days}d ${formattedRes.hours}h ${
+                                formattedRes.minutes
+                              }m ${
+                                formattedRes.seconds === 0
+                                  ? formattedRes.seconds + "s"
+                                  : ""
+                              }`}{" "}
+                          | {item?.count} {t("bids")}
                         </div>
                       </div>
                       <div className="mt-3 flex max-w-[300px] items-center gap-2 rounded border border-[#605D5E] p-3 text-sm lg:text-base">
@@ -160,17 +216,53 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                                 </button>
                               );
                             }
-                            return steps.map((item) => (
-                              <button
-                                key={item}
-                                className="w-full rounded bg-[#117E8A] px-2 py-3 text-white lg:px-4 lg:py-2"
-                                onClick={() => {
-                                  setPrice((currentBid + item).toString());
-                                }}
-                              >
-                                {t("bid")} USDT {currentBid + item}
-                              </button>
-                            ));
+                            return steps.map((item) => {
+                              const newPrice =
+                                item === 5 && currentBid === 0
+                                  ? 10
+                                  : (currentBid || 10) + item;
+                              return (
+                                <button
+                                  key={item}
+                                  className={cn(
+                                    `w-full rounded bg-[#117E8A] px-2 py-3 text-white lg:px-4 lg:py-2 ${
+                                      approveLoading || allowance == null
+                                        ? "animate-pulse cursor-not-allowed opacity-50"
+                                        : ""
+                                    }`,
+                                    {
+                                      "cursor-not-allowed opacity-50":
+                                        countdown === 0 || bidLoading,
+                                    },
+                                  )}
+                                  disabled={
+                                    countdown === 0 ||
+                                    approveLoading ||
+                                    allowance == null
+                                  }
+                                  onClick={async () => {
+                                    if (approveLoading || allowance == null) {
+                                      return;
+                                    }
+                                    setPrice(newPrice.toString());
+                                    if (new Big(allowance).lt(newPrice)) {
+                                      try {
+                                        await approveToken();
+                                        await fetchAllowance();
+                                      } catch (e) {
+                                        console.log(e);
+                                      }
+                                    } else {
+                                      setConfirmDialog(true);
+                                    }
+                                  }}
+                                >
+                                  {new Big(allowance || 0).lt(newPrice)
+                                    ? t("approve")
+                                    : t("bid") + " USDT " + newPrice}
+                                </button>
+                              );
+                            });
                           }}
                         </ConnectButton.Custom>
                       </div>
@@ -224,7 +316,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                                 value =
                                   (value.split(".")[0] || 0) +
                                   "." +
-                                  value.split(".")[1].slice(0, 8);
+                                  value.split(".")[1].slice(0, 6);
                               }
                               setPrice(value);
                             }}
@@ -258,8 +350,36 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                               );
                             }
                             return (
-                              <button className="rounded bg-[#117E8A] px-2 py-3 text-white lg:px-8 lg:py-2">
-                                {t("placeBid")}
+                              <button
+                                className={cn(
+                                  "rounded bg-[#117E8A] px-2 py-3 text-white disabled:cursor-not-allowed disabled:opacity-50 lg:px-8 lg:py-2",
+                                )}
+                                disabled={
+                                  countdown < 0 ||
+                                  bidLoading ||
+                                  allowance == null ||
+                                  !Number(price) ||
+                                  Big(price).lte(currentBid)
+                                }
+                                onClick={async () => {
+                                  if (approveLoading || allowance == null) {
+                                    return;
+                                  }
+                                  if (new Big(allowance).lt(price || 0)) {
+                                    try {
+                                      await approveToken();
+                                      await fetchAllowance();
+                                    } catch (e) {
+                                      console.log(e);
+                                    }
+                                  } else {
+                                    setConfirmDialog(true);
+                                  }
+                                }}
+                              >
+                                {new Big(allowance || 0).lt(price || 0)
+                                  ? t("approve")
+                                  : t("placeBid")}
                               </button>
                             );
                           }}
@@ -278,12 +398,53 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                   <div className="mt-2 text-sm lg:text-base"></div>
                 </div>
               </>
+            ) : loading ? (
+              <div className="flex items-center justify-center">
+                <div className="loading loading-spinner loading-lg"></div>
+              </div>
             ) : (
               <div className="text-2xl font-bold">{t("noItem")}</div>
             )}
           </div>
         </div>
       </div>
+      <Dialog open={confirmDialog} onOpenChange={setConfirmDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("confirmBid")}</DialogTitle>
+            <DialogDescription className="pt-1 text-sm">
+              {countdown <= 0
+                ? t("end")
+                : `${formattedRes.days}d ${formattedRes.hours}h ${
+                    formattedRes.minutes
+                  }m ${
+                    formattedRes.seconds === 0 ? formattedRes.seconds + "s" : ""
+                  }`}{" "}
+              | {item?.count} {t("bids")}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4 border-b border-[#605D5E]/50 px-8 pb-10 text-xl">
+            {t("youToBid")} <span className="font-bold">{price} USDT</span>
+            <div className="mt-4 flex gap-4 lg:mt-8 lg:gap-14">
+              <button className="w-full rounded bg-[#117E8A] px-2 py-3 text-sm text-white lg:px-4 lg:py-2 lg:text-base">
+                {t("cancel")}
+              </button>
+              <button
+                className="w-full rounded bg-[#117E8A] px-2 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50 lg:px-4 lg:py-2 lg:text-base"
+                onClick={handleBid}
+                disabled={countdown < 0 || bidLoading}
+              >
+                {bidLoading ? (
+                  <div className="loading loading-spinner loading-sm"></div>
+                ) : (
+                  t("confirm")
+                )}
+              </button>
+            </div>
+          </div>
+          <div className="mt-4 text-sm text-[#212427]">{t("confirmTips")}</div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

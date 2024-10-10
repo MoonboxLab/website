@@ -59,8 +59,8 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
       setConfirmDialog(false);
       toast.success(t("bidSuccess"));
     } catch (e) {
-      console.log(e);
-      toast.error(t("bidFail"));
+      console.error(e);
+      console.table(e);
     }
   }, [price, nftId, bidSubmit, item, fetchBigItem, fetchAllowance, t]);
 

@@ -290,6 +290,15 @@
     "bid": "出價",
     "end": "已結束",
     "approve": "授權",
-    "requireNFT": "需要NFT"
+    "requireNFT": "需要NFT",
+    "nftNonexistentToken": "NFT不存在",
+    "notOwnerNFT": "你不是NFT的擁有者",
+    "auctionItemNotExists": "拍賣項目不存在",
+    "auctionItemExpired": "拍賣項目已過期",
+    "bidPriceMustBeInteger": "出價價格必須是整數",
+    "startingPriceTenUSDT": "起始價格是10USDT",
+    "minBidIncrementOneUSDT": "最小出價增量是1USDT",
+    "nftBiddenOneRole": "你的NFT已經出價一個角色",
+    "userRejected": "你拒絕了交易"
   }
 }

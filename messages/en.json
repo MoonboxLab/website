@@ -289,6 +289,15 @@
     "confirmTips": "By confirming your bid, you agree that you have read and accepted the terms and conditions. Confirming your bid is a legally binding obligation to purchase and pay for the lot should your bid be successful.",
     "bid": "Bid",
     "end": "Ended",
-    "approve": "Approve"
+    "approve": "Approve",
+    "nftNonexistentToken": "Owner query for nonexistent token",
+    "notOwnerNFT": "You are not the nft owner",
+    "auctionItemNotExists": "Auction item is not exists",
+    "auctionItemExpired": "This auction item was expired",
+    "bidPriceMustBeInteger": "Bid price must be an integer",
+    "startingPriceTenUSDT": "Starting price is 10USDT",
+    "minBidIncrementOneUSDT": "The Min Bid Increment is 1USDT",
+    "nftBiddenOneRole": "Your NFT have bidden one role",
+    "userRejected": "You rejected transaction"
   }
 }

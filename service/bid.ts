@@ -58,6 +58,41 @@ const list = [
   },
 ];
 
+const messageKey = [
+  {
+    find: "owner query for nonexistent token",
+    msgKey: "nftNonexistentToken",
+  },
+  {
+    find: "you are not the nft owner",
+    msgKey: "notOwnerNFT",
+  },
+  {
+    find: "Auction item is not exists",
+    msgKey: "auctionItemNotExists",
+  },
+  {
+    find: "This auction item was expired",
+    msgKey: "auctionItemExpired",
+  },
+  {
+    find: "Bid price must be an integer",
+    msgKey: "bidPriceMustBeInteger",
+  },
+  {
+    find: "Starting price is 10USDT",
+    msgKey: "startingPriceTenUSDT",
+  },
+  {
+    find: "The Min Bid Increment is 1USDT",
+    msgKey: "minBidIncrementOneUSDT",
+  },
+  {
+    find: "your NFT have bidden one role",
+    msgKey: "nftBiddenOneRole",
+  },
+];
+
 export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
   const [dataset, setDataset] = useState<
     {
@@ -341,8 +376,18 @@ export function useBidSubmit(): [boolean, typeof submit] {
         args: [BigInt(id), BigInt(tokenId), parseUnits(price, 6)],
       });
       await waitForTransaction({ hash });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.error(error);
+      console.table(error);
+      const code = error.cause.code;
+      if (code === 4001) {
+        toast.error(t("userRejected"));
+      } else {
+        const msgKey = messageKey.find((item) =>
+          error.message.includes(item.find),
+        );
+        toast.error(t("bidFail") + ": " + t(msgKey?.msgKey));
+      }
       throw error;
     } finally {
       setBidLoading(false);

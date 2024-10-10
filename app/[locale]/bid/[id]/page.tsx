@@ -156,12 +156,14 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                         </div>
                       </div>
                       <div className="mt-3 flex max-w-[300px] items-center gap-2 rounded border border-[#605D5E] p-3 text-sm lg:text-base">
-                        <div>Nobody #</div>
-                        <input
-                          value={nftId}
-                          onChange={(e) => setNftId(e.target.value)}
-                          className="flex-1 border-b-2 border-black bg-transparent outline-none"
-                        />
+                        <div className="whitespace-nowrap">Nobody #</div>
+                        <div className="flex-1">
+                          <input
+                            value={nftId}
+                            onChange={(e) => setNftId(e.target.value)}
+                            className="w-1/2 border-b-2 border-black bg-transparent outline-none"
+                          />
+                        </div>
                       </div>
 
                       <div className="mt-3 text-sm text-[#117E8A] lg:mt-5">

@@ -102,7 +102,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                     alt="bid-card"
                     height={450}
                     width={450}
-                    className="aspect-square w-[450px] object-cover"
+                    className="aspect-square w-[450px] rounded object-cover"
                   />
                   <div className="lg:max-w-[500px]">
                     <div className="text-3xl font-bold">{item?.name}</div>

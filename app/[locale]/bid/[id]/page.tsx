@@ -26,8 +26,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export default function BidDetailsPage({ params }: { params: { id: string } }) {
-  const t = useTranslations("Bid");
   const homeT = useTranslations("Home");
+  const t = useTranslations("Bid");
   const [item, loading, fetchBigItem] = useBigItem(Number(params.id));
   const [allowance, approveLoading, approveToken, fetchAllowance] =
     useApprove();
@@ -105,7 +105,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                     className="aspect-square w-[450px] rounded object-cover"
                   />
                   <div className="lg:max-w-[500px]">
-                    <div className="text-3xl font-bold">{item?.name}</div>
+                    <div className="text-3xl font-bold">{t(item?.name)}</div>
                     <div className="mt-3 text-2xl lg:mt-5">
                       {item?.coin} {item?.price}
                     </div>
@@ -378,7 +378,9 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                   <div className="text-lg font-bold lg:text-2xl">
                     {t("itemSpec")}
                   </div>
-                  <div className="mt-2 text-sm lg:text-base"></div>
+                  <div className="mt-2 text-sm lg:text-base">
+                    {t.rich("itemSpecDesc", { br: () => <br /> })}
+                  </div>
                 </div>
               </>
             ) : loading ? (

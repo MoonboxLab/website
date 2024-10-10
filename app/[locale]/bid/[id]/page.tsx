@@ -157,30 +157,11 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                       </div>
                       <div className="mt-3 flex max-w-[300px] items-center gap-2 rounded border border-[#605D5E] p-3 text-sm lg:text-base">
                         <div>Nobody #</div>
-                        <InputOTP
-                          maxLength={4}
+                        <input
                           value={nftId}
-                          onChange={(value) => setNftId(value)}
-                        >
-                          <InputOTPGroup className="gap-2">
-                            <InputOTPSlot
-                              index={0}
-                              className="h-6 w-3 rounded-none border-0 border-y-0 border-b-2 border-black first:rounded-l-none first:border-l-0 last:rounded-r-none last:border-r-0"
-                            />
-                            <InputOTPSlot
-                              index={1}
-                              className="h-6 w-3 rounded-none border-0 border-y-0 border-b-2 border-black first:rounded-l-none first:border-l-0 last:rounded-r-none last:border-r-0"
-                            />
-                            <InputOTPSlot
-                              index={2}
-                              className="h-6 w-3 rounded-none border-0 border-y-0 border-b-2 border-black first:rounded-l-none first:border-l-0 last:rounded-r-none last:border-r-0"
-                            />
-                            <InputOTPSlot
-                              index={3}
-                              className="h-6 w-3 rounded-none border-0 border-y-0 border-b-2 border-black first:rounded-l-none first:border-l-0 last:rounded-r-none last:border-r-0"
-                            />
-                          </InputOTPGroup>
-                        </InputOTP>
+                          onChange={(e) => setNftId(e.target.value)}
+                          className="flex-1 border-b-2 border-black bg-transparent outline-none"
+                        />
                       </div>
 
                       <div className="mt-3 text-sm text-[#117E8A] lg:mt-5">

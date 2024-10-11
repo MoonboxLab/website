@@ -56,6 +56,38 @@ const list = [
     coin: "USDT",
     desc: "desc5",
   },
+  {
+    id: 6,
+    name: "card6",
+    img: "/bid/bid-card.webp",
+    price: "100",
+    coin: "USDT",
+    desc: "desc6",
+  },
+  {
+    id: 7,
+    name: "card7",
+    img: "/bid/bid-card.webp",
+    price: "100",
+    coin: "USDT",
+    desc: "desc7",
+  },
+  {
+    id: 8,
+    name: "card8",
+    img: "/bid/bid-card.webp",
+    price: "100",
+    coin: "USDT",
+    desc: "desc8",
+  },
+  {
+    id: 9,
+    name: "card9",
+    img: "/bid/bid-card.webp",
+    price: "100",
+    coin: "USDT",
+    desc: "desc9",
+  },
 ];
 
 const messageKey = [

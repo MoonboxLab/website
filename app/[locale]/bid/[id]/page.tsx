@@ -104,7 +104,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                     width={450}
                     className="aspect-square w-[450px] rounded object-cover"
                   />
-                  <div className="lg:max-w-[500px]">
+                  <div className="lg:w-full lg:max-w-[520px]">
                     <div className="text-3xl font-bold">{t(item?.name)}</div>
                     <div className="mt-3 text-2xl lg:mt-5">
                       {item?.coin} {item?.price}
@@ -172,7 +172,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                       <div className="text-lg font-bold lg:text-2xl">
                         {t("placeYourBid")}
                       </div>
-                      <div className="mt-3 flex flex-col items-center gap-3 text-sm lg:mt-5 lg:flex-row lg:gap-2 lg:text-base">
+                      <div className="mt-3 flex flex-col flex-wrap items-center gap-3 text-sm lg:mt-5 lg:flex-row lg:gap-2 lg:text-base">
                         <ConnectButton.Custom>
                           {({
                             account,
@@ -192,14 +192,14 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                             if (!connected) {
                               return (
                                 <button
-                                  className="w-full rounded bg-[#117E8A] px-2 py-3 text-center text-white lg:px-4 lg:py-2"
+                                  className="w-full flex-1 rounded bg-[#117E8A] px-2 py-3 text-center text-white lg:px-4 lg:py-2"
                                   onClick={openConnectModal}
                                 >
                                   {homeT("header_connect_wallet")}
                                 </button>
                               );
                             }
-                            return steps.map((item) => {
+                            return steps.map((item, i) => {
                               const newPrice =
                                 item === 5 && currentBid === 0
                                   ? 10
@@ -208,7 +208,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                                 <button
                                   key={item}
                                   className={cn(
-                                    `w-full rounded bg-[#117E8A] px-2 py-3 text-white lg:px-4 lg:py-2 ${
+                                    `w-full flex-1 basis-[calc(33.3333%-12px)] whitespace-nowrap rounded bg-[#117E8A] px-2 py-3 text-white lg:basis-[calc(33.3333%-8px)] lg:px-4 lg:py-2 ${
                                       approveLoading || allowance == null
                                         ? "animate-pulse cursor-not-allowed opacity-50"
                                         : ""
@@ -338,7 +338,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                                   "rounded bg-[#117E8A] px-2 py-3 text-white disabled:cursor-not-allowed disabled:opacity-50 lg:px-8 lg:py-2",
                                 )}
                                 disabled={
-                                  countdown < 0 ||
+                                  countdown === 0 ||
                                   bidLoading ||
                                   allowance == null ||
                                   !Number(price) ||

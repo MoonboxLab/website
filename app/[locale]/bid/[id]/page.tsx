@@ -26,7 +26,6 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
   const [item, loading, fetchBigItem] = useBigItem(Number(params.id));
   const [allowance, approveLoading, approveToken, fetchAllowance] =
     useApprove();
-  const [isCollapse, setIsCollapse] = useState(true);
   const [currentBid, setCurrentBid] = useState(0);
   const [nftId, setNftId] = useState("");
   const [price, setPrice] = useState("");
@@ -126,16 +125,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                           </div>
 
                           <div className="text-xs font-normal tabular-nums lg:text-base">
-                            {countdown <= 0
-                              ? t("end")
-                              : `${formattedRes.days}d ${formattedRes.hours}h ${
-                                  formattedRes.minutes
-                                }m ${
-                                  formattedRes.seconds === 0
-                                    ? formattedRes.seconds + "s"
-                                    : ""
-                                }`}{" "}
-                            | {item?.count} {t("bids")}
+                            {item?.count} {t("bids")}
                           </div>
                         </div>
                         <div className="mt-2 text-sm">{t("windDesc")}</div>
@@ -155,7 +145,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                               : `${formattedRes.days}d ${formattedRes.hours}h ${
                                   formattedRes.minutes
                                 }m ${
-                                  countdown <= 60
+                                  countdown < 60 * 1000
                                     ? formattedRes.seconds + "s"
                                     : ""
                                 }`}{" "}

@@ -310,7 +310,7 @@ export default function BidPage() {
                 <button
                   className={cn(
                     "text-2xl",
-                    type === "card" ? "text-black" : "text-gray-400",
+                    type === "card" ? "text-[#117E8A]" : "text-gray-400",
                   )}
                   onClick={() => setType("card")}
                 >
@@ -319,7 +319,7 @@ export default function BidPage() {
                 <button
                   className={cn(
                     "text-2xl",
-                    type === "list" ? "text-black" : "text-gray-400",
+                    type === "list" ? "text-[#117E8A]" : "text-gray-400",
                   )}
                   onClick={() => setType("list")}
                 >

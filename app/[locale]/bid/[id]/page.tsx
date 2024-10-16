@@ -137,7 +137,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                           {t("hasBidEnded")}
                         </div>
                         <div className="flex items-baseline justify-between gap-2">
-                          <div className="mt-2 text-lg font-bold leading-10 lg:text-2xl">
+                          <div className="mt-2 text-lg font-bold lg:text-2xl lg:leading-8">
                             {Number(item?.price) > 0 &&
                               t.rich("windMsg", {
                                 nftId: item?.tokenId,

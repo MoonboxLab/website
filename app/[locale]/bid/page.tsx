@@ -32,8 +32,8 @@ function Item({
 }) {
   const t = useTranslations("Bid");
   const timeRange = useCallback(() => {
-    const start = moment(item.startTime * 1000).format("MMMM DD");
-    const end = moment(item.expireTime * 1000).format("MMMM DD YYYY");
+    const start = moment(item.startTime * 1000).format("DD");
+    const end = moment(item.expireTime * 1000).format("DD MMMM YYYY");
     return `${start} - ${end}`;
   }, [item]);
   if (type === "card") {
@@ -52,7 +52,7 @@ function Item({
         <div className="mt-8 text-3xl font-bold">{t(item.name)}</div>
         <div className="mt-3 flex flex-col justify-between gap-2 text-2xl lg:flex-row">
           <div>
-            {item.coin} {item.price}
+            {item.coin} {Math.max(Number(item?.price), 10)}
           </div>
           {ended ? (
             <div className="rounded border border-[#aaa] px-10 py-1 text-center text-base text-[#605D5E]">
@@ -88,7 +88,7 @@ function Item({
           <div className="flex h-full flex-1 flex-col gap-2 lg:gap-4">
             <div className="text-xl font-bold lg:text-3xl">{t(item.name)}</div>
             <div className="text-base lg:text-xl">
-              {item.coin} {item.price}
+              {item.coin} {Math.max(Number(item?.price), 10)}
             </div>
           </div>
           <div className="flex flex-col items-end gap-2 lg:gap-4">
@@ -152,6 +152,8 @@ export default function BidPage() {
         </div>
         <Image
           src={"/show_bg.jpg"}
+          quality={100}
+          unoptimized
           alt="background-image"
           height={340}
           width={1920}
@@ -175,9 +177,9 @@ export default function BidPage() {
                   <Image
                     src="/bid/banner.webp"
                     alt="bid-banner"
-                    width={1447}
-                    height={810}
-                    className="aspect-[1447/810] w-full object-cover"
+                    width={1440}
+                    height={569}
+                    className="aspect-[1440/569] w-full object-cover"
                   />
                 </CarouselItem>
                 <CarouselItem>
@@ -192,7 +194,7 @@ export default function BidPage() {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
-                    className="aspect-[1447/810] w-full"
+                    className="aspect-[1440/569] w-full"
                   ></iframe>
                 </CarouselItem>
               </CarouselContent>
@@ -220,7 +222,7 @@ export default function BidPage() {
                   <div className="mt-2 text-sm lg:text-2xl">
                     {t("producerInfo")}
                   </div>
-                  <div className="mt-2 text-base lg:text-2xl">
+                  <div className="mt-2 text-base lg:text-2xl lg:leading-10">
                     {t.rich("nobodySquareIntro", {
                       br: () => <br />,
                     })}
@@ -272,15 +274,19 @@ export default function BidPage() {
                         <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
                           {t("eventDescriptionTitle")}
                         </div>
-                        <div>{t("eventDescription")}</div>
+                        <div className="mt-2 lg:mt-3">
+                          {t("eventDescription")}
+                        </div>
                       </div>
                       <div className="mt-3 lg:mt-5">
                         <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
                           {t("aboutXianRenYiKun")}
                         </div>
-                        <div>{t("industryLeader")}</div>
+                        <div className="mt-2 lg:mt-3">
+                          {t("industryLeader")}
+                        </div>
                       </div>
-                      <div className="mt-3 text-sm lg:mt-5 lg:text-xl">
+                      <div className="mt-3 text-sm opacity-50 lg:mt-5 lg:text-xl">
                         {t("genderConsistencyWarning")}
                       </div>
                     </div>

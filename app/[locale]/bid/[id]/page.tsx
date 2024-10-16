@@ -104,32 +104,10 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                   <div className="lg:w-full lg:max-w-[520px]">
                     <div className="text-3xl font-bold">{t(item?.name)}</div>
                     <div className="mt-3 text-2xl lg:mt-5">
-                      {item?.coin} {item?.price}
+                      {item?.coin} {Math.max(Number(item?.price), 10)}
                     </div>
                     <div className="mt-2 space-y-2 border-b border-black/50 pb-3 text-sm lg:pb-5">
-                      <div
-                        className={`${
-                          isCollapse ? "line-clamp-2" : "line-clamp-none"
-                        }`}
-                      >
-                        {t(item?.desc)}
-                      </div>
-                      {isCollapse && (
-                        <div
-                          className="cursor-pointer text-right"
-                          onClick={() => setIsCollapse(false)}
-                        >
-                          &gt; {t("readMore")}
-                        </div>
-                      )}
-                      {!isCollapse && (
-                        <div
-                          className="cursor-pointer text-right"
-                          onClick={() => setIsCollapse(true)}
-                        >
-                          &gt; {t("collapse")}
-                        </div>
-                      )}
+                      <div>{t(item?.desc)}</div>
                     </div>
                     {ended ? (
                       <>
@@ -409,7 +387,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                   <div className="text-lg font-bold lg:text-2xl">
                     {t("itemSpec")}
                   </div>
-                  <div className="mt-2 text-sm lg:text-base">
+                  <div className="mt-2 text-base lg:text-lg">
                     {t.rich("itemSpecDesc", { br: () => <br /> })}
                   </div>
                 </div>

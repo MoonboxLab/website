@@ -329,7 +329,7 @@
     "genderConsistencyWarning": "Note: Holders must ensure the gender consistency between their NFT and the character, as any discrepancies may result in disqualification.",
     "pastAuction": "Past Auction",
     "bidEnded": "Bid Ended",
-    "hasBidEnded": "The bidding has ended.",
+    "hasBidEnded": "The bidding has ended",
     "noBid": "No Bid",
     "windMsg": "Winner: Nobody NFT {nftId} <br></br>Final Bid USDT {bid}",
     "windDesc": "The final list of characters will be subject to approval by the Nobody team, who retains the ultimate decision-making authority."

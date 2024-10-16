@@ -86,7 +86,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
               href="/bid"
               className={`sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[120px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px]`}
             >
-              {t("bigTab")}
+              {ended ? t("bidEnded") : t("bigTab")}
             </Link>
           </div>
 

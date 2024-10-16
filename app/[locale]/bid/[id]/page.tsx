@@ -11,11 +11,6 @@ import { useTranslations } from "next-intl";
 import Header from "@/components/Header";
 import { useBigItem, useApprove, useBidSubmit } from "@/service/bid";
 import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
-import {
   Dialog,
   DialogContent,
   DialogDescription,

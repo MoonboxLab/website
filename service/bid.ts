@@ -141,20 +141,21 @@ const messageKey = [
   },
 ];
 
+export type AuctionItem = {
+  id: number;
+  name: string;
+  img: string;
+  price: string;
+  coin: string;
+  desc: string;
+  expireTime: number;
+  startTime: number;
+  count: number;
+  tokenId: number;
+};
+
 export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
-  const [dataset, setDataset] = useState<
-    {
-      id: number;
-      name: string;
-      img: string;
-      price: string;
-      coin: string;
-      desc: string;
-      expireTime: number;
-      count: number;
-      tokenId: number;
-    }[]
-  >([]);
+  const [dataset, setDataset] = useState<AuctionItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function fetchData() {
@@ -238,6 +239,7 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
             expireTime: item.expireTm.toString(),
             tokenId: item.tokenId.toString(),
             count: item.count.toString(),
+            startTime: new Date("2024-10-17T16:00:00.000Z").getTime() / 1000,
           })),
       );
     } catch (error) {

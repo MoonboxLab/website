@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import Header from "@/components/Header";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useBigList } from "@/service/bid";
 import {
@@ -16,7 +16,100 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { AuctionItem } from "@/service/bid";
+import moment from "moment";
+import { LayoutGrid, LayoutList } from "lucide-react";
+import { cn } from "@/lib/utils";
 
+function Item({
+  item,
+  type = "card",
+  ended = false,
+}: {
+  item: AuctionItem;
+  type: "card" | "list";
+  ended: boolean;
+}) {
+  const t = useTranslations("Bid");
+  const timeRange = useCallback(() => {
+    const start = moment(item.startTime * 1000).format("MMMM DD");
+    const end = moment(item.expireTime * 1000).format("MMMM DD YYYY");
+    return `${start} - ${end}`;
+  }, [item]);
+  if (type === "card") {
+    return (
+      <Link
+        className="group relative border-b border-black/50 pb-5"
+        href={`/bid/${item.id}`}
+      >
+        <Image
+          src={item.img}
+          alt={item.name}
+          width={250}
+          height={250}
+          className="aspect-square rounded object-cover"
+        />
+        <div className="mt-8 text-3xl font-bold">{t(item.name)}</div>
+        <div className="mt-3 flex flex-col justify-between gap-2 text-2xl lg:flex-row">
+          <div>
+            {item.coin} {item.price}
+          </div>
+          {ended ? (
+            <div className="rounded border border-[#aaa] px-10 py-1 text-center text-base text-[#605D5E]">
+              {t("bidEnded")}
+            </div>
+          ) : (
+            <div className="rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white">
+              {t("bidNow")}
+            </div>
+          )}
+        </div>
+        <div className="mt-2 text-sm text-[#605D5E]">{timeRange()}</div>
+      </Link>
+    );
+  }
+  return (
+    <Link
+      className="border-b border-black/50 py-6 lg:border-b-0"
+      href={`/bid/${item.id}`}
+    >
+      <div className="text-base lg:hidden">
+        {timeRange()} | {item.count} {t("bids")}
+      </div>
+      <div className="mt-4 flex items-center gap-3 lg:items-start lg:gap-10">
+        <Image
+          src={item.img}
+          alt={item.name}
+          width={100}
+          height={100}
+          className="aspect-square rounded object-cover lg:w-[200px]"
+        />
+        <div className="flex flex-1 border-black/50 lg:border-b lg:pb-6">
+          <div className="flex h-full flex-1 flex-col gap-2 lg:gap-4">
+            <div className="text-xl font-bold lg:text-3xl">{t(item.name)}</div>
+            <div className="text-base lg:text-xl">
+              {item.coin} {item.price}
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-2 lg:gap-4">
+            {ended ? (
+              <div className="rounded border border-[#aaa] px-2 py-0 text-center text-base text-[#605D5E]">
+                {t("bidEnded")}
+              </div>
+            ) : (
+              <div className="rounded bg-[#117E8A] px-2 py-0 text-center text-base text-white">
+                {t("bidNow")}
+              </div>
+            )}
+            <div className="mt-2 hidden text-base lg:block">
+              {timeRange()} | {item.count} {t("bids")}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
 export default function BidPage() {
   const t = useTranslations("Bid");
   const [list, loading] = useBigList();
@@ -26,6 +119,8 @@ export default function BidPage() {
   );
 
   const [isOpen, setIsOpen] = useState(false);
+  const [ended, setEnded] = useState(false);
+  const [type, setType] = useState<"card" | "list">("list");
 
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -39,6 +134,16 @@ export default function BidPage() {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
+
+  useEffect(() => {
+    if (list.length > 0) {
+      if (list[0].expireTime * 1000 < Date.now()) {
+        setEnded(true);
+      } else {
+        setEnded(false);
+      }
+    }
+  }, [list]);
   return (
     <div className="relative">
       <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">
@@ -59,7 +164,7 @@ export default function BidPage() {
             <button
               className={`sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[120px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px]`}
             >
-              {t("bigTab")}
+              {ended ? t("pastAuction") : t("bigTab")}
             </button>
           </div>
 
@@ -189,32 +294,40 @@ export default function BidPage() {
               <div className="loading loading-spinner loading-lg"></div>
             </div>
           ) : (
-            <div className="mx-auto mt-4 grid w-full gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-3 lg:gap-y-11 lg:px-16 lg:py-10">
-              {list.map((item) => (
-                <div
-                  key={item.id}
-                  className="group relative border-b border-black/50 pb-5"
+            <div
+              className={`mx-auto mt-4 grid w-full rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:px-16 lg:py-10 ${
+                type === "list"
+                  ? "grid-cols-1"
+                  : "gap-x-24 gap-y-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-y-11"
+              }`}
+            >
+              <div
+                className={cn(
+                  "flex justify-end gap-3",
+                  type === "list" ? "" : "md:col-span-2 lg:col-span-3",
+                )}
+              >
+                <button
+                  className={cn(
+                    "text-2xl",
+                    type === "card" ? "text-black" : "text-gray-400",
+                  )}
+                  onClick={() => setType("card")}
                 >
-                  <Image
-                    src={item.img}
-                    alt={item.name}
-                    width={250}
-                    height={250}
-                    className="aspect-square object-cover"
-                  />
-                  <div className="mt-8 text-3xl font-bold">{t(item.name)}</div>
-                  <div className="mt-3 flex flex-col justify-between gap-2 text-2xl lg:flex-row">
-                    <div>
-                      {item.coin} {item.price}
-                    </div>
-                    <Link
-                      href={`/bid/${item.id}`}
-                      className="rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white"
-                    >
-                      {t("bidNow")}
-                    </Link>
-                  </div>
-                </div>
+                  <LayoutGrid />
+                </button>
+                <button
+                  className={cn(
+                    "text-2xl",
+                    type === "list" ? "text-black" : "text-gray-400",
+                  )}
+                  onClick={() => setType("list")}
+                >
+                  <LayoutList />
+                </button>
+              </div>
+              {list.map((item) => (
+                <Item key={item.id} item={item} type={type} ended={ended} />
               ))}
             </div>
           )}

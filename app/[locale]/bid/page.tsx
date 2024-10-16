@@ -120,7 +120,7 @@ export default function BidPage() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [ended, setEnded] = useState(false);
-  const [type, setType] = useState<"card" | "list">("list");
+  const [type, setType] = useState<"card" | "list">("card");
 
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);

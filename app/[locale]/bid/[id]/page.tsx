@@ -155,7 +155,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                               : `${formattedRes.days}d ${formattedRes.hours}h ${
                                   formattedRes.minutes
                                 }m ${
-                                  formattedRes.seconds === 0
+                                  countdown <= 60
                                     ? formattedRes.seconds + "s"
                                     : ""
                                 }`}{" "}

@@ -3,14 +3,42 @@
 import Image from "next/image";
 
 import Header from "@/components/Header";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useBigList } from "@/service/bid";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function BidPage() {
   const t = useTranslations("Bid");
   const [list, loading] = useBigList();
+  const locale = useLocale();
+  const plugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true, stopOnLastSnap: true }),
+  );
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
   return (
     <div className="relative">
       <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">
@@ -36,13 +64,125 @@ export default function BidPage() {
           </div>
 
           <div className="mt-8">
-            <Image
-              src="/bid/banner.webp"
-              alt="bid-banner"
-              width={1920}
-              height={340}
-              className="w-full object-cover"
-            />
+            <Carousel plugins={[plugin.current]} setApi={setApi}>
+              <CarouselContent>
+                <CarouselItem>
+                  <Image
+                    src="/bid/banner.webp"
+                    alt="bid-banner"
+                    width={1447}
+                    height={810}
+                    className="aspect-[1447/810] w-full object-cover"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <iframe
+                    src={
+                      locale === "en"
+                        ? "https://www.youtube.com/embed/mDIJ83WgIdg?si=oLAEYqhRpP4F2FIt"
+                        : "https://www.youtube.com/embed/brQquj7pjCo?si=UTeTuODUY3iQtUYI"
+                    }
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="aspect-[1447/810] w-full"
+                  ></iframe>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious className="left-0 h-20 rounded-l-none rounded-r-lg border-0 bg-black/50 text-white" />
+              <CarouselNext className="right-0 h-20 rounded-l-lg rounded-r-none border-0 bg-black/50 text-white" />
+            </Carousel>
+            <div className="relative z-[1]">
+              <div className="border border-t-0 border-black bg-white pt-6 shadow-[3px_3px_0px_rgba(0,0,0,1)]">
+                <div className="flex h-1 justify-center gap-3">
+                  <div
+                    className={`h-1 w-9 rounded-full ${
+                      current === 0 ? "bg-[#605D5E]" : "bg-[#AAAAAA]"
+                    }`}
+                  ></div>
+                  <div
+                    className={`h-1 w-9 rounded-full ${
+                      current === 1 ? "bg-[#605D5E]" : "bg-[#AAAAAA]"
+                    }`}
+                  ></div>
+                </div>
+                <div className="relative mt-8 pb-6 text-center text-[#174172]">
+                  <div className="text-2xl font-bold lg:text-3xl">
+                    {t("nobodySquare")}
+                  </div>
+                  <div className="mt-2 text-sm lg:text-2xl">
+                    {t("producerInfo")}
+                  </div>
+                  <div className="mt-2 text-base lg:text-2xl">
+                    {t.rich("nobodySquareIntro", {
+                      br: () => <br />,
+                    })}
+                  </div>
+
+                  {isOpen ? null : (
+                    <button
+                      className="absolute right-4 top-0 h-6 w-6 rounded-full border-2 border-[#605D5E] lg:top-4 lg:h-12 lg:w-12"
+                      onClick={() => setIsOpen(true)}
+                    >
+                      <div className="absolute left-1/2 top-1/2 h-0.5 w-2 -translate-x-1/2 -translate-y-1/2 bg-[#605D5E] lg:w-5"></div>
+                      <div className="absolute left-1/2 top-1/2 h-0.5 w-2 -translate-x-1/2 -translate-y-1/2 rotate-90 bg-[#605D5E] lg:w-5"></div>
+                    </button>
+                  )}
+                </div>
+              </div>
+              {isOpen ? (
+                <div className="absolute left-0 top-full -mt-px w-full border border-t-0 border-black bg-white px-4 py-6 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:py-12">
+                  <button
+                    className="absolute -top-2  right-4 h-6 w-6 rounded-full border-2 border-[#605D5E] lg:top-4 lg:h-12 lg:w-12"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <div className="absolute left-1/2 top-1/2 h-0.5 w-2 -translate-x-1/2 -translate-y-1/2 bg-[#605D5E] lg:w-5"></div>
+                  </button>
+                  <div className="mx-auto flex w-full max-w-[998px] flex-col gap-x-12 gap-y-3 text-base text-[#174172] lg:flex-row lg:text-2xl">
+                    <div className="flex-1">
+                      <div>{t("nobodySquareDesc")}</div>
+                      <div className="mt-3 flex gap-2 lg:mt-5 ">
+                        <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
+                          {t("eventTimeTitle")}
+                        </div>
+                        <div>{t("eventTime")}</div>
+                      </div>
+                      <div className="flex gap-2">
+                        <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
+                          {t("participationRequirementsTitle")}
+                        </div>
+                        <div>{t("participationRequirements")}</div>
+                      </div>
+                      <div className="flex gap-2">
+                        <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
+                          {t("acceptedCurrencyTitle")}
+                        </div>
+                        <div>{t("acceptedCurrency")}</div>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="">
+                        <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
+                          {t("eventDescriptionTitle")}
+                        </div>
+                        <div>{t("eventDescription")}</div>
+                      </div>
+                      <div className="mt-3 lg:mt-5">
+                        <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
+                          {t("aboutXianRenYiKun")}
+                        </div>
+                        <div>{t("industryLeader")}</div>
+                      </div>
+                      <div className="mt-3 text-sm lg:mt-5 lg:text-xl">
+                        {t("genderConsistencyWarning")}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </div>
           </div>
           {loading ? (
             <div className="mx-auto mt-4 flex w-full items-center justify-center gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-3 lg:gap-y-11 lg:px-16 lg:py-10">

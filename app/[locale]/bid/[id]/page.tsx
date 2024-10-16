@@ -389,6 +389,9 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                   </div>
                   <div className="mt-2 text-base lg:text-lg">
                     {t.rich("itemSpecDesc", { br: () => <br /> })}
+                    <div className="mt-3 text-sm opacity-50 lg:mt-4 lg:text-base">
+                      {t("genderConsistencyWarning")}
+                    </div>
                   </div>
                 </div>
               </>

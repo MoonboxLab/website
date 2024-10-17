@@ -36,10 +36,10 @@ function Item({
     const end = moment(item.expireTime * 1000).format("DD MMMM YYYY");
     return `${start} - ${end}`;
   }, [item]);
-  if (type === "card") {
-    return (
+  return (
+    <>
       <Link
-        className="group relative border-b border-black/50 pb-5"
+        className="group relative hidden border-b border-black/50 pb-5 lg:block"
         href={`/bid/${item.id}`}
       >
         <Image
@@ -66,48 +66,48 @@ function Item({
         </div>
         <div className="mt-2 text-sm text-[#605D5E]">{timeRange()}</div>
       </Link>
-    );
-  }
-  return (
-    <Link
-      className="border-b border-black/50 py-6 lg:border-b-0"
-      href={`/bid/${item.id}`}
-    >
-      <div className="text-base lg:hidden">
-        {timeRange()} | {item.count} {t("bids")}
-      </div>
-      <div className="mt-4 flex items-center gap-3 lg:items-start lg:gap-10">
-        <Image
-          src={item.img}
-          alt={item.name}
-          width={100}
-          height={100}
-          className="aspect-square rounded object-cover lg:w-[200px]"
-        />
-        <div className="flex flex-1 border-black/50 lg:border-b lg:pb-6">
-          <div className="flex h-full flex-1 flex-col gap-2 lg:gap-4">
-            <div className="text-xl font-bold lg:text-3xl">{t(item.name)}</div>
-            <div className="text-base lg:text-xl">
-              {item.coin} {Math.max(Number(item?.price), 10)}
+      <Link
+        className="border-b border-black/50 py-6 lg:hidden lg:border-b-0"
+        href={`/bid/${item.id}`}
+      >
+        <div className="text-base lg:hidden">
+          {timeRange()} | {item.count} {t("bids")}
+        </div>
+        <div className="mt-4 flex items-center gap-3 lg:items-start lg:gap-10">
+          <Image
+            src={item.img}
+            alt={item.name}
+            width={100}
+            height={100}
+            className="aspect-square rounded object-cover lg:w-[200px]"
+          />
+          <div className="flex flex-1 border-black/50 lg:border-b lg:pb-6">
+            <div className="flex h-full flex-1 flex-col gap-2 lg:gap-4">
+              <div className="text-xl font-bold lg:text-3xl">
+                {t(item.name)}
+              </div>
+              <div className="text-base lg:text-xl">
+                {item.coin} {Math.max(Number(item?.price), 10)}
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col items-end gap-2 lg:gap-4">
-            {ended ? (
-              <div className="rounded border border-[#aaa] px-2 py-0 text-center text-base text-[#605D5E]">
-                {t("bidEnded")}
+            <div className="flex flex-col items-end gap-2 lg:gap-4">
+              {ended ? (
+                <div className="rounded border border-[#aaa] px-2 py-0 text-center text-base text-[#605D5E]">
+                  {t("bidEnded")}
+                </div>
+              ) : (
+                <div className="rounded bg-[#117E8A] px-2 py-0 text-center text-base text-white">
+                  {t("bidNow")}
+                </div>
+              )}
+              <div className="mt-2 hidden text-base lg:block">
+                {timeRange()} | {item.count} {t("bids")}
               </div>
-            ) : (
-              <div className="rounded bg-[#117E8A] px-2 py-0 text-center text-base text-white">
-                {t("bidNow")}
-              </div>
-            )}
-            <div className="mt-2 hidden text-base lg:block">
-              {timeRange()} | {item.count} {t("bids")}
             </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </>
   );
 }
 export default function BidPage() {
@@ -307,31 +307,6 @@ export default function BidPage() {
                   : "gap-x-24 gap-y-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-y-11"
               }`}
             >
-              <div
-                className={cn(
-                  "flex justify-end gap-3",
-                  type === "list" ? "" : "md:col-span-2 lg:col-span-3",
-                )}
-              >
-                <button
-                  className={cn(
-                    "text-2xl",
-                    type === "card" ? "text-[#117E8A]" : "text-gray-400",
-                  )}
-                  onClick={() => setType("card")}
-                >
-                  <LayoutGrid />
-                </button>
-                <button
-                  className={cn(
-                    "text-2xl",
-                    type === "list" ? "text-[#117E8A]" : "text-gray-400",
-                  )}
-                  onClick={() => setType("list")}
-                >
-                  <LayoutList />
-                </button>
-              </div>
               {list.map((item) => (
                 <Item key={item.id} item={item} type={type} ended={ended} />
               ))}

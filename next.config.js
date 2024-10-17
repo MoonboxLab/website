@@ -4,17 +4,17 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  webpack: config => {
-    config.resolve.fallback = { fs: false, net: false, tls: false }
-    config.externals.push('pino-pretty', 'lokijs', 'encoding')
-    return config
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false, net: false, tls: false };
+    config.externals.push("pino-pretty", "lokijs", "encoding");
+    return config;
   },
   images: {
     dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
+    contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: ['i.ytimg.com'],
+    domains: ["i.ytimg.com"],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

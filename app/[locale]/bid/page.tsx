@@ -18,8 +18,6 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { AuctionItem } from "@/service/bid";
 import moment from "moment";
-import { LayoutGrid, LayoutList } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 function Item({
   item,
@@ -219,7 +217,7 @@ export default function BidPage() {
                   <div className="text-2xl font-bold lg:text-3xl">
                     {t("nobodySquare")}
                   </div>
-                  <div className="mt-2 text-sm lg:text-2xl">
+                  <div className="mt-2 text-sm font-bold lg:text-2xl">
                     {t("producerInfo")}
                   </div>
                   <div className="mt-2 text-base lg:text-2xl lg:leading-10">

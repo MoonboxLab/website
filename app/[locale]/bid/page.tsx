@@ -47,8 +47,8 @@ function Item({
           height={250}
           className="aspect-square rounded object-cover"
         />
-        <div className="mt-8 text-3xl font-bold">{t(item.name)}</div>
-        <div className="mt-3 flex flex-col justify-between gap-2 text-2xl lg:flex-row">
+        <div className="mt-8 text-2xl font-bold">{t(item.name)}</div>
+        <div className="mt-3 flex flex-col justify-between gap-2 text-lg lg:flex-row">
           <div>
             {item.coin} {Math.max(Number(item?.price), 10)}
           </div>

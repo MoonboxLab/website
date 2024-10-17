@@ -162,6 +162,7 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
     setLoading(true);
     try {
       const { chain } = getNetwork();
+      console.log("chain", chain);
       const data = (await readContract({
         chainId: chain?.id
           ? chain?.id
@@ -169,10 +170,10 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
           ? sepolia.id
           : mainnet.id,
         address:
-          chain?.id === sepolia.id ||
+          chain?.id === sepolia.id &&
           process.env.NEXT_PUBLIC_TEST_ENV === "true"
             ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-            : "0x000",
+            : "0xae65729956b60e0ddc2973db0cc8d04cf947880e",
         abi: [
           {
             inputs: [],
@@ -223,6 +224,7 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
         functionName: "getAllItems",
         args: [],
       })) as any[];
+      console.log(data);
       const idByGroup = list.reduce(
         (acc, item) => {
           acc[item.id] = item;
@@ -239,7 +241,7 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
             expireTime: item.expireTm.toString(),
             tokenId: item.tokenId.toString(),
             count: item.count.toString(),
-            startTime: new Date("2024-10-21T15:59:00.000Z").getTime() / 1000,
+            startTime: new Date("2024-10-10T10:00:00.000Z").getTime() / 1000,
           })),
       );
     } catch (error) {
@@ -309,22 +311,19 @@ export function useApprove(): [
 
     const { chain } = getNetwork();
     const contractAddress =
-      chain?.id === sepolia.id || process.env.NEXT_PUBLIC_TEST_ENV === "true"
+      chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
         ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-        : "0x000";
+        : "0xae65729956b60e0ddc2973db0cc8d04cf947880e";
     const tokenAddress =
-      chain?.id === sepolia.id || process.env.NEXT_PUBLIC_TEST_ENV === "true"
+      chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
         ? "0xe4160b3b50806053fdE6e17a47799674eB56481e"
-        : "0x000";
+        : "0xdAC17F958D2ee523a2206206994597C13D831ec7";
     try {
       const { hash } = await writeContract({
         address: tokenAddress,
         abi: erc20ABI,
         functionName: "approve",
-        args: [
-          contractAddress,
-          BigInt("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"),
-        ],
+        args: [contractAddress, BigInt("100000000")],
       });
       await waitForTransaction({ hash });
     } catch (error) {
@@ -342,13 +341,13 @@ export function useApprove(): [
       return;
     }
     const contractAddress =
-      chain?.id === sepolia.id || process.env.NEXT_PUBLIC_TEST_ENV === "true"
+      chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
         ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-        : "0x000";
+        : "0xae65729956b60e0ddc2973db0cc8d04cf947880e";
     const tokenAddress =
-      chain?.id === sepolia.id || process.env.NEXT_PUBLIC_TEST_ENV === "true"
+      chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
         ? "0xe4160b3b50806053fdE6e17a47799674eB56481e"
-        : "0x000";
+        : "0xdAC17F958D2ee523a2206206994597C13D831ec7";
     const data = await readContract({
       address: tokenAddress,
       abi: erc20ABI,
@@ -390,9 +389,9 @@ export function useBidSubmit(): [boolean, typeof submit] {
     setBidLoading(true);
     const { chain } = getNetwork();
     const contractAddress =
-      chain?.id === sepolia.id || process.env.NEXT_PUBLIC_TEST_ENV === "true"
+      chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
         ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-        : "0x000";
+        : "0xae65729956b60e0ddc2973db0cc8d04cf947880e";
     try {
       const { hash } = await writeContract({
         address: contractAddress,

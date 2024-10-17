@@ -110,7 +110,7 @@ function Item({
 }
 export default function BidPage() {
   const t = useTranslations("Bid");
-  const [list, loading] = useBigList();
+  const [list, loading, refreshList] = useBigList();
   const locale = useLocale();
   const plugin = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true, stopOnLastSnap: true }),
@@ -142,6 +142,13 @@ export default function BidPage() {
       }
     }
   }, [list]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshList(false);
+    }, 30000); // 每30秒调用一次refreshList
+
+    return () => clearInterval(interval); // 清除定时器
+  }, []);
   return (
     <div className="relative">
       <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">

@@ -158,11 +158,13 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
   const [dataset, setDataset] = useState<AuctionItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  async function fetchData() {
-    setLoading(true);
+  async function fetchData(changeLoading = true) {
+    console.log("fetchData", changeLoading);
+    if (changeLoading) {
+      setLoading(true);
+    }
     try {
       const { chain } = getNetwork();
-      console.log("chain", chain);
       const data = (await readContract({
         chainId: chain?.id
           ? chain?.id
@@ -224,7 +226,6 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
         functionName: "getAllItems",
         args: [],
       })) as any[];
-      console.log(data);
       const idByGroup = list.reduce(
         (acc, item) => {
           acc[item.id] = item;
@@ -247,7 +248,9 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      if (changeLoading) {
+        setLoading(false);
+      }
     }
   }
 
@@ -276,10 +279,8 @@ export function useBigItem(
     tokenId: number;
   }>();
 
-  const fetchBidData = async () => {
-    await fetchData();
-    const item = dataset.find((item) => item.id === id);
-    setDetails(item);
+  const fetchBidData = async (changeLoading = true) => {
+    await fetchData(changeLoading);
   };
   const fetchBigItem = useCallback(fetchBidData, [dataset, id]);
 

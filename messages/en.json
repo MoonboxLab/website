@@ -56,7 +56,7 @@
     "appTitle": "Let's chat!",
     "appSubtitle": "Every Nobody NFT is alive. <br></br>NFT holders can customize their own AI characters. Play with your favorite characters to create your own unique story.",
     "point": "Point",
-    "bid": "Producer Nobody, Director Kun"
+    "bid": "\"Nobody Squad\" Bidding"
   },
   "Declaration": {
     "spirit": "SPIRIT",
@@ -293,7 +293,7 @@
     "or": "or",
     "maxBid": "Your max bid",
     "enterMore": "Enter USDT or more",
-    "bidDesc": "When you place a bid, you are committing to purchase this item if you win.",
+    "bidDesc": "When you place a bid, you commit that if you win the auction, your NFT will automatically become a character in the short drama.",
     "itemSpec": "Event Details",
     "itemSpecDesc": "Event Duration: From now until 23:59 on October 21, 2024 (UTC+8)<br></br>Eligibility: Ownership of Nobody NFT required<br></br>Accepted Currency: USDT (ERC20)<br></br>Event Overview: Each role has one slot, and each NFT can be elected for at most one role. Holders need to link their wallets to participate in the bidding. When a successful bid is made, USDT will be directly transferred to the designated wallet for this event. If another holder places a higher bid for the same character, the previous bid will be refunded (gas fee to be borne by the participant). At the end of the event, the NFT of the holder with the highest bid for a character will secure the role. The final list of characters will be approved by the Nobody team, who reserves the right for the ultimate decision.",
     "confirmBid": "Please confirm your bid",

@@ -55,7 +55,8 @@
     "goldenCard": "金卡驗證",
     "appTitle": "来聊天吧!",
     "appSubtitle": "每個 Nobody NFT 都是鮮活的；<br></br>NFT 持有者可以客製化自己的 AI 角色；和你喜愛的角色互動，打造你們的獨特故事。",
-    "point": "積分"
+    "point": "積分",
+    "bid": ""
   },
   "Declaration": {
     "spirit": "精神",

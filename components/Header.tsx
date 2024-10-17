@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSize } from "ahooks";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { track } from "@vercel/analytics";
 import { useRouter, usePathname } from "next-intl/client";
 import { useCallback, useEffect, useState, useTransition } from "react";
@@ -27,6 +27,7 @@ import { getPoint } from "@/service/point";
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector("body"));
   const t = useTranslations("Home");
+  const locale = useLocale();
 
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -91,9 +92,18 @@ const Header: React.FC = () => {
               <ChevronDown />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mt-2 w-[165px] rounded-[12px] py-[14px]">
-            <Link href={"/talkshow"}>
+          <DropdownMenuContent className="mt-2 w-[235px] rounded-[12px] py-[14px]">
+            <Link href={`/${locale}/bid`}>
               <DropdownMenuItem>
+                <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                  <span className="text-[16px] font-medium leading-[16px]">
+                    {t("bid")}
+                  </span>
+                </div>
+              </DropdownMenuItem>
+            </Link>
+            <Link href={"/talkshow"}>
+              <DropdownMenuItem className="mt-2">
                 <div className=" inline-flex h-[25px] items-center justify-between px-1">
                   <span className="text-[16px] font-medium leading-[16px]">
                     {t("talkshow")}

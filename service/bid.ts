@@ -321,9 +321,27 @@ export function useApprove(): [
     try {
       const { hash } = await writeContract({
         address: tokenAddress,
-        abi: erc20ABI,
+        abi: [
+          {
+            type: "function",
+            name: "approve",
+            stateMutability: "payable",
+            inputs: [
+              {
+                name: "spender",
+                type: "address",
+              },
+              {
+                name: "tokenId",
+                type: "uint256",
+              },
+            ],
+            outputs: [],
+          },
+        ],
         functionName: "approve",
-        args: [contractAddress, BigInt("100000000")],
+        args: [contractAddress, BigInt(100000000 * 1e6)],
+        value: BigInt(0),
       });
       await waitForTransaction({ hash });
     } catch (error) {

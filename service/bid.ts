@@ -159,7 +159,6 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
   const [loading, setLoading] = useState(true);
 
   async function fetchData(changeLoading = true) {
-    console.log("fetchData", changeLoading);
     if (changeLoading) {
       setLoading(true);
     }

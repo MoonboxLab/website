@@ -64,6 +64,13 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
     setEndDate(Number(item?.expireTime) * 1000 || Date.now());
     setEnded(Number(item?.expireTime) * 1000 < Date.now());
   }, [item]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchBigItem(false);
+    }, 3000); // 每30秒调用一次fetchBigItem
+
+    return () => clearInterval(interval); // 清除定时器
+  }, []);
   return (
     <div className="relative">
       <div className="w-screen overflow-scroll bg-gray-100 pb-[150px]">

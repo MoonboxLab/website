@@ -45,7 +45,7 @@ function Item({
           alt={item.name}
           width={250}
           height={250}
-          className="aspect-square rounded object-cover"
+          className="aspect-square w-full rounded object-cover"
         />
         <div className="mt-8 text-2xl font-bold">{t(item.name)}</div>
         <div className="mt-3 flex flex-col justify-between gap-2 text-lg lg:flex-row">

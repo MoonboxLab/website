@@ -105,7 +105,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                     <div className="mt-3 text-2xl lg:mt-5">
                       {item?.coin} {Math.max(Number(item?.price), 10)}
                     </div>
-                    <div className="mt-2 space-y-2 border-b border-black/50 pb-3 text-sm lg:pb-5">
+                    <div className="mt-2 space-y-2 border-b border-black/50 pb-3 text-base lg:pb-5 lg:text-lg">
                       <div>{t(item?.desc)}</div>
                     </div>
                     {ended ? (

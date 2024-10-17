@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet, goerli } from "wagmi/chains";
+import { mainnet, sepolia } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import {
@@ -20,7 +20,7 @@ import {
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_TEST_ENV === "true"
-      ? [mainnet]
+      ? [mainnet, sepolia]
       : [mainnet]),
   ],
   [
@@ -58,10 +58,7 @@ export function WagmiProviders({ children }: { children: React.ReactNode }) {
   React.useEffect(() => setMounted(true), []);
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider
-        chains={chains}
-        modalSize="compact"
-      >
+      <RainbowKitProvider chains={chains} modalSize="compact">
         {mounted && children}
       </RainbowKitProvider>
     </WagmiConfig>

@@ -90,7 +90,7 @@
   }
 
   .activeAnchor {
-    @apply text-[rgba(255,214,0,1)] relative after:absolute after:top-[8px] after:right-[-32px] after:border-t-[6px] after:border-transparent after:border-[6px] after:border-l-white;
+    @apply relative text-[rgba(255,214,0,1)] after:absolute after:right-[-32px] after:top-[8px] after:border-[6px] after:border-t-[6px] after:border-transparent after:border-l-white;
   }
 }
 
@@ -127,9 +127,20 @@ video {
   grid-row: span 9 / span 9;
 }
 
-*{
+* {
   -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
   display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
 }

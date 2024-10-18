@@ -102,7 +102,7 @@ const Header: React.FC = () => {
                 </div>
               </DropdownMenuItem>
             </Link>
-            <Link href={"/talkshow"}>
+            <Link href={`/${locale}/talkshow`}>
               <DropdownMenuItem className="mt-2">
                 <div className=" inline-flex h-[25px] items-center justify-between px-1">
                   <span className="text-[16px] font-medium leading-[16px]">
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                 </div>
               </DropdownMenuItem>
             </Link>
-            <Link href={"/show"}>
+            <Link href={`/${locale}/auction`}>
               <DropdownMenuItem className="mt-2">
                 <div className=" inline-flex h-[25px] items-center justify-between px-1">
                   <span className="text-[16px] font-medium leading-[16px]">
@@ -529,13 +529,43 @@ const Header: React.FC = () => {
 
               <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
 
+              <Accordion
+                type="single"
+                collapsible
+                defaultValue={"event"}
+                className="w-full"
+              >
+                <AccordionItem value="event">
+                  <AccordionTrigger className="text-[18px] font-semibold leading-[18px]  no-underline hover:no-underline">
+                    {t("event")}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <Link href={`/${locale}/bid`}>
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("bid")}
+                      </div>
+                    </Link>
+                    <Link href={`/${locale}/talkshow`}>
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("talkshow")}
+                      </div>
+                    </Link>
+                    <Link href={`/${locale}/show`}>
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("show")}
+                      </div>
+                    </Link>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
               <a href="https://blog.nobody.xyz" target="_blank">
                 <div className=" my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]  ">
                   {t("header_blog")}
                   <ChevronRight width={18} height={18} />
                 </div>
               </a>
-
               <ConnectButton.Custom>
                 {({ account, chain, authenticationStatus, mounted }) => {
                   const ready = mounted && authenticationStatus !== "loading";

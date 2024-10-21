@@ -228,7 +228,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 className="section h-screen w-screen"
                 onWheel={() => {
                   fullpageApi.setAllowScrolling(true);
@@ -319,7 +319,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </ReactFullpage.Wrapper>
           )}
         />
@@ -519,7 +519,7 @@ export default function Home() {
               className="z-10 mt-[40px] w-full object-cover"
             />
           </div>
-          <div className=" w-full bg-[#FFD600] pb-[60px] pt-[40px]">
+          {/* <div className=" w-full bg-[#FFD600] pb-[60px] pt-[40px]">
             <div className="flex justify-center overflow-hidden">
               <div className=" relative mr-[-80px] h-[500px] w-[500px] sm:h-[800px] sm:w-[800px]">
                 <Image
@@ -637,7 +637,7 @@ export default function Home() {
                 </a>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       )}
     </div>

@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                 </div>
               </DropdownMenuItem>
             </Link>
-            <Link href={`/${locale}/auction`}>
+            <Link href={`/${locale}/show`}>
               <DropdownMenuItem className="mt-2">
                 <div className=" inline-flex h-[25px] items-center justify-between px-1">
                   <span className="text-[16px] font-medium leading-[16px]">

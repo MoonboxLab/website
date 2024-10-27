@@ -71,9 +71,7 @@ export default function Show() {
   const [pcDialog, setPcDialog] = useState<boolean>(true);
 
   const [checkedRules, setCheckedRules] = useState<boolean>(true);
-  const [acceptedRules, setAcceptedRules] = useState(
-    localStorage.getItem("talkShowAcceptedRules") === "true",
-  );
+  const [acceptedRules, setAcceptedRules] = useState(true);
 
   useEffect(() => {
     requestSubmissions();
@@ -109,7 +107,7 @@ export default function Show() {
     if (result["code"] !== 0) {
       toast.error(result["message"]);
     } else {
-      const details = result["data"]
+      const details = result["data"];
       setVoteDetails(details);
       let voteCount = 0;
       for (let i = 0; i < details.length; i++) {

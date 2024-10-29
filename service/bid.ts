@@ -19,7 +19,7 @@ const list = [
   {
     id: 1,
     name: "card1",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card1.png",
     price: "100",
     coin: "USDT",
     desc: "desc1",
@@ -27,7 +27,7 @@ const list = [
   {
     id: 2,
     name: "card2",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card2.png",
     price: "100",
     coin: "USDT",
     desc: "desc2",
@@ -35,7 +35,7 @@ const list = [
   {
     id: 3,
     name: "card3",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card3.png",
     price: "100",
     coin: "USDT",
     desc: "desc3",
@@ -43,7 +43,7 @@ const list = [
   {
     id: 4,
     name: "card4",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card4.png",
     price: "100",
     coin: "USDT",
     desc: "desc4",
@@ -51,7 +51,7 @@ const list = [
   {
     id: 5,
     name: "card5",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card5.png",
     price: "100",
     coin: "USDT",
     desc: "desc5",
@@ -59,7 +59,7 @@ const list = [
   {
     id: 6,
     name: "card6",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card6.png",
     price: "100",
     coin: "USDT",
     desc: "desc6",
@@ -67,7 +67,7 @@ const list = [
   {
     id: 7,
     name: "card7",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card7.png",
     price: "100",
     coin: "USDT",
     desc: "desc7",
@@ -75,7 +75,7 @@ const list = [
   {
     id: 8,
     name: "card8",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card8.png",
     price: "100",
     coin: "USDT",
     desc: "desc8",
@@ -83,7 +83,7 @@ const list = [
   {
     id: 9,
     name: "card9",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card9.png",
     price: "100",
     coin: "USDT",
     desc: "desc9",
@@ -91,7 +91,7 @@ const list = [
   {
     id: 10,
     name: "card10",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card10.png",
     price: "100",
     coin: "USDT",
     desc: "desc10",
@@ -99,7 +99,7 @@ const list = [
   {
     id: 11,
     name: "card11",
-    img: "/bid/bid-card.webp",
+    img: "/bid/card11.png",
     price: "100",
     coin: "USDT",
     desc: "desc11",

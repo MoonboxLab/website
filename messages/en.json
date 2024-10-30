@@ -252,7 +252,8 @@
   },
   "Leaderboard": {
     "goldCard": "Gold Card",
-    "NFT": "NFT"
+    "NFT": "NFT",
+    "fallOfFame": "Fall of fame"
   },
   "Bid": {
     "bigTab": "Bid Now!",

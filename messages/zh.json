@@ -252,7 +252,8 @@
   },
   "Leaderboard": {
     "goldCard": "金卡",
-    "NFT": "NFT"
+    "NFT": "NFT",
+    "fallOfFame": "名人榜"
   },
   "Bid": {
     "bigTab": "立即拍賣！",

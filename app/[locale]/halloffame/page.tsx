@@ -28,7 +28,7 @@ export default function LeaderboardPage() {
             {t("fallOfFame")}
           </button>
         </div>
-        <div className="px-5 pb-3 text-[#174172]">
+        <div className="px-5 pb-8 text-[#174172]">
           {tab === 1 ? (
             <div className="mx-auto mt-4 grid w-full max-w-[1447px] gap-x-24 gap-y-8 rounded-3xl border border-black bg-[#F3EFE4] px-16 py-10 shadow-[3px_3px_0px_rgba(0,0,0,1)] md:grid-cols-2 lg:grid-cols-3">
               <div className="group place-self-center md:col-span-2 lg:col-span-3">

@@ -130,7 +130,7 @@ const Header: React.FC = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <a
+        {/* <a
           href="https://blog.nobody.xyz"
           target="_blank"
           className=" hidden lg:block"
@@ -140,7 +140,14 @@ const Header: React.FC = () => {
               {t("header_blog")}
             </span>
           </div>
-        </a>
+        </a> */}
+        <Link href={`/${locale}/halloffame`} className="hidden lg:block">
+          <div className=" sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] min-w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-[24px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:min-w-[80px] 3xl:h-[48px] 3xl:min-w-[96px]">
+            <span className=" ml-[6px] text-[16px]  font-semibold leading-[16px] text-black sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px]">
+              {t("halloffame")}
+            </span>
+          </div>
+        </Link>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -560,12 +567,18 @@ const Header: React.FC = () => {
               </Accordion>
 
               <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
-              <a href="https://blog.nobody.xyz" target="_blank">
+              {/* <a href="https://blog.nobody.xyz" target="_blank">
                 <div className=" my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]  ">
                   {t("header_blog")}
                   <ChevronRight width={18} height={18} />
                 </div>
-              </a>
+              </a> */}
+              <Link href={`/${locale}/halloffame`}>
+                <div className=" my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]  ">
+                  {t("halloffame")}
+                  <ChevronRight width={18} height={18} />
+                </div>
+              </Link>
               <ConnectButton.Custom>
                 {({ account, chain, authenticationStatus, mounted }) => {
                   const ready = mounted && authenticationStatus !== "loading";

@@ -35,10 +35,10 @@ function Item({
     const i18n = locale === "en" ? "en" : "zh-hk";
     moment.locale(i18n);
     const start = moment(item.startTime * 1000).format(
-      locale === "en" ? "DD" : "YYYY/MM/DD",
+      locale === "en" ? "MMMM DD" : "YYYY/MM/DD",
     );
     const end = moment(item.expireTime * 1000).format(
-      locale === "en" ? "DD MMMM YYYY" : "DD",
+      locale === "en" ? "DD MMMM YYYY" : "MM/DD",
     );
     return `${start} - ${end}`;
   }, [item]);

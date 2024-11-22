@@ -188,7 +188,11 @@ export default function BidPage() {
               <CarouselContent>
                 <CarouselItem>
                   <Image
-                    src="/impact/banner.jpeg"
+                    src={
+                      locale === "en"
+                        ? "/impact/en-banner.jpg"
+                        : "/impact/banner.jpeg"
+                    }
                     alt="bid-banner"
                     width={1280}
                     height={720}

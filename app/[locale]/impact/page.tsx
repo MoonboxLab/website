@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import Header from "@/components/Header";
-import { useLocale, useTranslations } from "next-intl";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useBigList } from "@/service/bid";
@@ -19,6 +19,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { AuctionItem } from "@/service/bid";
 import moment from "moment";
 import "moment/locale/zh-hk";
+import { start } from "repl";
 
 function Item({
   item,
@@ -31,16 +32,11 @@ function Item({
 }) {
   const t = useTranslations("Impact");
   const locale = useLocale();
+  const format = useFormatter();
   const timeRange = useCallback(() => {
-    const i18n = locale === "en" ? "en" : "zh-hk";
-    moment.locale(i18n);
-    const start = moment(item.startTime * 1000).format(
-      locale === "en" ? "MMMM DD" : "YYYY/MM/DD",
-    );
-    const end = moment(item.expireTime * 1000).format(
-      locale === "en" ? "DD MMMM YYYY" : "MM/DD",
-    );
-    return `${start} - ${end}`;
+    const startTime = new Date(item.startTime * 1000);
+    const endTime = new Date(item.expireTime * 1000);
+    return t("timeRange", { start: startTime, end: endTime });
   }, [item]);
   return (
     <>

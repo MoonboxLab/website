@@ -335,7 +335,8 @@
     "hasBidEnded": "The bidding has ended",
     "noBid": "No Bid",
     "windMsg": "Winner: Nobody NFT {nftId} <br></br>Final Bid USDT {bid}",
-    "windDesc": "The final list of characters will be subject to approval by the Nobody team, who retains the ultimate decision-making authority."
+    "windDesc": "The final list of characters will be subject to approval by the Nobody team, who retains the ultimate decision-making authority.",
+    "timeRange": "{start, date, ::MMMdd} - {end, date, ::yyyyMMMdd}"
   },
   "Impact": {
     "bigTab": "Bid Now!",
@@ -416,6 +417,7 @@
     "hasBidEnded": "The bidding has ended",
     "noBid": "No Bid",
     "windMsg": "Winner: Nobody NFT {nftId} <br></br>Final Bid USDT {bid}",
-    "windDesc": "The final list of characters will be subject to approval by the Nobody team, who retains the ultimate decision-making authority."
+    "windDesc": "The final list of characters will be subject to approval by the Nobody team, who retains the ultimate decision-making authority.",
+    "timeRange": "{start, date, ::MMMdd} - {end, date, ::yyyyMMMdd}"
   }
 }

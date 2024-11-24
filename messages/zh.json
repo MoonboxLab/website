@@ -336,7 +336,8 @@
     "hasBidEnded": "拍賣已結束",
     "noBid": "無出價",
     "windMsg": "獲勝者：Nobody NFT {nftId} <br></br>最終出價 USDT {bid}",
-    "windDesc": "最終角色名單需經Nobody團隊批准，並保留最終決定權。"
+    "windDesc": "最終角色名單需經Nobody團隊批准，並保留最終決定權。",
+    "timeRange": "{start, date, ::yyyyMMdd} - {end, date, ::MMdd}"
   },
   "Impact": {
     "bigTab": "立即拍賣！",
@@ -418,6 +419,7 @@
     "hasBidEnded": "拍賣已結束",
     "noBid": "無出價",
     "windMsg": "獲勝者：Nobody NFT {nftId} <br></br>最終出價 USDT {bid}",
-    "windDesc": "最終角色名單需經Nobody團隊批准，並保留最終決定權。"
+    "windDesc": "最終角色名單需經Nobody團隊批准，並保留最終決定權。",
+    "timeRange": "{start, date, ::yyyyMMdd} - {end, date, ::MMdd}"
   }
 }

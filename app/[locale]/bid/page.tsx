@@ -30,9 +30,12 @@ function Item({
 }) {
   const t = useTranslations("Bid");
   const timeRange = useCallback(() => {
-    const start = moment(item.startTime * 1000).format("DD");
-    const end = moment(item.expireTime * 1000).format("DD MMMM YYYY");
-    return `${start} - ${end}`;
+    const start = new Date(item.startTime * 1000);
+    const end = new Date(item.expireTime * 1000);
+    return t("timeRange", {
+      start,
+      end,
+    });
   }, [item]);
   return (
     <>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import Header from "@/components/Header";
-import { useLocale, useTranslations } from "next-intl";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useBigList } from "@/service/bid";
@@ -17,31 +17,27 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { AuctionItem } from "@/service/bid";
-import moment from "moment";
+import "moment/locale/zh-hk";
 
 function Item({
   item,
   type = "card",
-  ended = false,
 }: {
   item: AuctionItem;
   type: "card" | "list";
-  ended: boolean;
 }) {
-  const t = useTranslations("Bid");
+  const t = useTranslations("Impact");
+  const ended = Number(item?.expireTime) * 1000 < Date.now() || !item?.flag;
   const timeRange = useCallback(() => {
-    const start = new Date(item.startTime * 1000);
-    const end = new Date(item.expireTime * 1000);
-    return t("timeRange", {
-      start,
-      end,
-    });
+    const startTime = new Date(item.startTime * 1000);
+    const endTime = new Date(item.expireTime * 1000);
+    return t("timeRange", { start: startTime, end: endTime });
   }, [item]);
   return (
     <>
       <Link
         className="group relative hidden border-b border-black/50 pb-5 lg:block"
-        href={`/bid/${item.id}`}
+        href={`/impact/${item.id}`}
       >
         <Image
           src={item.img}
@@ -52,26 +48,40 @@ function Item({
         />
         <div className="mt-8 text-2xl font-bold">{t(item.name)}</div>
         <div className="mt-3 flex flex-col justify-between gap-2 text-lg lg:flex-row">
-          <div>
-            {item.coin} {Math.max(Number(item?.price), 10)}
-          </div>
+          {item.flag ? (
+            <div>
+              {item.coin} {Math.max(Number(item?.price), 10)}
+            </div>
+          ) : null}
           {ended ? (
-            <div className="rounded border border-[#aaa] px-10 py-1 text-center text-base text-[#605D5E]">
-              {t("bidEnded")}
+            <div
+              className={`rounded border border-[#aaa] px-10 py-1 text-center text-base ${
+                item.flag ? "" : "flex-1"
+              }`}
+            >
+              {item.flag ? t("bidEnded") : t("enter")}
             </div>
           ) : (
-            <div className="rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white">
+            <div
+              className={`rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white`}
+            >
               {t("bidNow")}
             </div>
           )}
         </div>
-        <div className="mt-2 text-sm text-[#605D5E]">{timeRange()}</div>
+        <div
+          className={`mt-2 text-sm text-[#605D5E] ${
+            item.flag ? "" : "opacity-0"
+          }`}
+        >
+          {timeRange()}
+        </div>
       </Link>
       <Link
         className="border-b border-black/50 py-6 lg:hidden lg:border-b-0"
-        href={`/bid/${item.id}`}
+        href={`/impact/${item.id}`}
       >
-        <div className="text-base lg:hidden">
+        <div className={`text-base lg:hidden ${item.flag ? "" : "opacity-0"}`}>
           {timeRange()} | {item.count} {t("bids")}
         </div>
         <div className="mt-4 flex items-center gap-3 lg:items-start lg:gap-10">
@@ -87,21 +97,33 @@ function Item({
               <div className="text-xl font-bold lg:text-3xl">
                 {t(item.name)}
               </div>
-              <div className="text-base lg:text-xl">
-                {item.coin} {Math.max(Number(item?.price), 10)}
-              </div>
+              {item.flag ? (
+                <div className="text-base lg:text-xl">
+                  {item.coin} {Math.max(Number(item?.price), 10)}
+                </div>
+              ) : null}
             </div>
             <div className="flex flex-col items-end gap-2 lg:gap-4">
               {ended ? (
                 <div className="rounded border border-[#aaa] px-2 py-0 text-center text-base text-[#605D5E]">
-                  {t("bidEnded")}
+                  {item.flag ? t("bidEnded") : t("enter")}
                 </div>
               ) : (
-                <div className="rounded bg-[#117E8A] px-2 py-0 text-center text-base text-white">
+                <div
+                  className={`rounded px-2 py-0 text-center text-base ${
+                    item.flag
+                      ? "bg-[#117E8A] text-white"
+                      : "bg-[#605D5E] text-white"
+                  }`}
+                >
                   {t("bidNow")}
                 </div>
               )}
-              <div className="mt-2 hidden text-base lg:block">
+              <div
+                className={`mt-2 hidden text-base lg:block ${
+                  item.flag ? "" : "opacity-0"
+                }`}
+              >
                 {timeRange()} | {item.count} {t("bids")}
               </div>
             </div>
@@ -112,8 +134,8 @@ function Item({
   );
 }
 export default function BidPage() {
-  const t = useTranslations("Bid");
-  const [list, loading, refreshList] = useBigList();
+  const t = useTranslations("Impact");
+  const [list, loading, refreshList] = useBigList("impact");
   const locale = useLocale();
   const plugin = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true, stopOnLastSnap: true }),
@@ -183,14 +205,18 @@ export default function BidPage() {
               <CarouselContent>
                 <CarouselItem>
                   <Image
-                    src="/bid/banner.webp"
+                    src={
+                      locale === "en"
+                        ? "/impact/en-banner.jpg"
+                        : "/impact/banner.jpeg"
+                    }
                     alt="bid-banner"
-                    width={1440}
-                    height={569}
-                    className="aspect-[1440/569] w-full object-cover"
+                    width={1280}
+                    height={720}
+                    className="aspect-[1280/720] w-full object-cover"
                   />
                 </CarouselItem>
-                <CarouselItem>
+                {/* <CarouselItem>
                   <iframe
                     src={
                       locale === "en"
@@ -204,7 +230,7 @@ export default function BidPage() {
                     allowFullScreen
                     className="aspect-[1440/569] w-full"
                   ></iframe>
-                </CarouselItem>
+                </CarouselItem> */}
               </CarouselContent>
               <CarouselPrevious className="left-0 h-20 rounded-l-none rounded-r-lg border-0 bg-black/50 text-white" />
               <CarouselNext className="right-0 h-20 rounded-l-lg rounded-r-none border-0 bg-black/50 text-white" />
@@ -217,11 +243,11 @@ export default function BidPage() {
                       current === 0 ? "bg-[#605D5E]" : "bg-[#AAAAAA]"
                     }`}
                   ></div>
-                  <div
+                  {/* <div
                     className={`h-1 w-9 rounded-full ${
                       current === 1 ? "bg-[#605D5E]" : "bg-[#AAAAAA]"
                     }`}
-                  ></div>
+                  ></div> */}
                 </div>
                 <div className="relative mt-8 pb-6 text-center text-[#174172]">
                   <div className="text-2xl font-bold lg:text-3xl">
@@ -230,7 +256,7 @@ export default function BidPage() {
                   <div className="mt-2 text-sm font-bold lg:text-2xl">
                     {t("producerInfo")}
                   </div>
-                  <div className="mt-2 text-base lg:text-2xl lg:leading-10">
+                  <div className="mt-2 px-4 text-base lg:px-16 lg:text-2xl lg:leading-10">
                     {t.rich("nobodySquareIntro", {
                       br: () => <br />,
                     })}
@@ -248,7 +274,7 @@ export default function BidPage() {
                 </div>
               </div>
               {isOpen ? (
-                <div className="absolute left-0 top-full -mt-px w-full border border-t-0 border-black bg-white px-4 py-6 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:py-12">
+                <div className="relative -mt-px w-full border border-t-0 border-black bg-white px-4 py-6 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:py-12">
                   <button
                     className="absolute -top-2  right-4 h-6 w-6 rounded-full border-2 border-[#605D5E] lg:top-4 lg:h-12 lg:w-12"
                     onClick={() => setIsOpen(false)}
@@ -257,7 +283,11 @@ export default function BidPage() {
                   </button>
                   <div className="mx-auto flex w-full max-w-[998px] flex-col gap-x-12 gap-y-3 text-base text-[#174172] lg:flex-row lg:text-2xl">
                     <div className="flex-1">
-                      <div>{t("nobodySquareDesc")}</div>
+                      <div>
+                        {t.rich("nobodySquareDesc", {
+                          br: () => <br />,
+                        })}
+                      </div>
                       <div className="mt-3 flex gap-2 lg:mt-5 ">
                         <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
                           {t("eventTimeTitle")}
@@ -291,11 +321,10 @@ export default function BidPage() {
                           {t("aboutXianRenYiKun")}
                         </div>
                         <div className="mt-2 lg:mt-3">
-                          {t("industryLeader")}
+                          {t.rich("industryLeader", {
+                            br: () => <br />,
+                          })}
                         </div>
-                      </div>
-                      <div className="mt-3 text-sm opacity-50 lg:mt-5 lg:text-xl">
-                        {t("genderConsistencyWarning")}
                       </div>
                     </div>
                   </div>
@@ -316,7 +345,7 @@ export default function BidPage() {
               }`}
             >
               {list.map((item) => (
-                <Item key={item.id} item={item} type={type} ended={ended} />
+                <Item key={item.id} item={item} type={type} />
               ))}
             </div>
           )}

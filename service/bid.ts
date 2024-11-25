@@ -15,96 +15,180 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 
-const list = [
-  {
-    id: 1,
-    name: "card1",
-    img: "/bid/card1.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc1",
-  },
-  {
-    id: 2,
-    name: "card2",
-    img: "/bid/card2.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc2",
-  },
-  {
-    id: 3,
-    name: "card3",
-    img: "/bid/card3.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc3",
-  },
-  {
-    id: 4,
-    name: "card4",
-    img: "/bid/card4.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc4",
-  },
-  {
-    id: 5,
-    name: "card5",
-    img: "/bid/card5.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc5",
-  },
-  {
-    id: 6,
-    name: "card6",
-    img: "/bid/card6.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc6",
-  },
-  {
-    id: 7,
-    name: "card7",
-    img: "/bid/card7.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc7",
-  },
-  {
-    id: 8,
-    name: "card8",
-    img: "/bid/card8.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc8",
-  },
-  {
-    id: 9,
-    name: "card9",
-    img: "/bid/card9.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc9",
-  },
-  {
-    id: 10,
-    name: "card10",
-    img: "/bid/card10.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc10",
-  },
-  {
-    id: 11,
-    name: "card11",
-    img: "/bid/card11.png",
-    price: "100",
-    coin: "USDT",
-    desc: "desc11",
-  },
-];
+const list = {
+  bid: [
+    {
+      id: 1,
+      name: "card1",
+      img: "/bid/card1.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc1",
+    },
+    {
+      id: 2,
+      name: "card2",
+      img: "/bid/card2.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc2",
+    },
+    {
+      id: 3,
+      name: "card3",
+      img: "/bid/card3.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc3",
+    },
+    {
+      id: 4,
+      name: "card4",
+      img: "/bid/card4.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc4",
+    },
+    {
+      id: 5,
+      name: "card5",
+      img: "/bid/card5.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc5",
+    },
+    {
+      id: 6,
+      name: "card6",
+      img: "/bid/card6.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc6",
+    },
+    {
+      id: 7,
+      name: "card7",
+      img: "/bid/card7.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc7",
+    },
+    {
+      id: 8,
+      name: "card8",
+      img: "/bid/card8.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc8",
+    },
+    {
+      id: 9,
+      name: "card9",
+      img: "/bid/card9.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc9",
+    },
+    {
+      id: 10,
+      name: "card10",
+      img: "/bid/card10.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc10",
+    },
+    {
+      id: 11,
+      name: "card11",
+      img: "/bid/card11.png",
+      price: "100",
+      coin: "USDT",
+      desc: "desc11",
+    },
+  ],
+  impact: [
+    {
+      id: 1,
+      name: "card1",
+      img: "/impact/card1.webp",
+      price: "100",
+      coin: "USDT",
+      desc: "desc1",
+    },
+    {
+      id: 2,
+      name: "card2",
+      img: "/impact/card2.webp",
+      price: "100",
+      coin: "USDT",
+      desc: "desc2",
+    },
+    {
+      id: 3,
+      name: "card3",
+      img: "/impact/card3.webp",
+      price: "100",
+      coin: "USDT",
+      desc: "desc3",
+    },
+    {
+      id: 4,
+      name: "card4",
+      img: "/impact/card4.webp",
+      price: "100",
+      coin: "USDT",
+      desc: "desc4",
+    },
+    {
+      id: 5,
+      name: "card5",
+      img: "/impact/card5.webp",
+      price: "100",
+      coin: "USDT",
+      desc: "desc5",
+    },
+    {
+      id: 6,
+      name: "card6",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc6",
+    },
+    {
+      id: 7,
+      name: "card7",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc7",
+    },
+    {
+      id: 8,
+      name: "card8",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc8",
+    },
+    {
+      id: 9,
+      name: "card9",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc9",
+    },
+    {
+      id: 10,
+      name: "card10",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc10",
+    },
+  ],
+};
 
 const messageKey = [
   {
@@ -141,6 +225,122 @@ const messageKey = [
   },
 ];
 
+const addressByType = {
+  bid: {
+    sepolia: "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2",
+    mainnet: "0xae65729956b60e0ddc2973db0cc8d04cf947880e",
+  },
+  impact: {
+    sepolia: "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2",
+    mainnet: "0xA65De43565F752C3F28AF51EDa524C7441B7cD25",
+  },
+} as Record<
+  "bid" | "impact",
+  { sepolia: `0x${string}`; mainnet: `0x${string}` }
+>;
+
+const abis = {
+  bid: [
+    {
+      inputs: [],
+      name: "getAllItems",
+      outputs: [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "price",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expireTm",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "bider",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "count",
+              type: "uint256",
+            },
+          ],
+          internalType: "struct Auction.BidInfo[]",
+          name: "",
+          type: "tuple[]",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ],
+  impact: [
+    {
+      inputs: [],
+      name: "getAllItems",
+      outputs: [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "price",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expireTm",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "bider",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "count",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "flag",
+              type: "bool",
+            },
+          ],
+          internalType: "struct Auction.BidInfo[]",
+          name: "",
+          type: "tuple[]",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ],
+};
+
 export type AuctionItem = {
   id: number;
   name: string;
@@ -152,9 +352,20 @@ export type AuctionItem = {
   startTime: number;
   count: number;
   tokenId: number;
+  flag?: boolean;
+};
+const date = {
+  bid: {
+    startTime: new Date("2024-10-10T10:00:00.000Z").getTime() / 1000,
+  },
+  impact: {
+    startTime: new Date("2024-11-26T15:59:59.000Z").getTime() / 1000,
+  },
 };
 
-export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
+export function useBigList(
+  type: "bid" | "impact" = "bid",
+): [typeof dataset, boolean, typeof fetchData] {
   const [dataset, setDataset] = useState<AuctionItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -173,64 +384,18 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
         address:
           chain?.id === sepolia.id &&
           process.env.NEXT_PUBLIC_TEST_ENV === "true"
-            ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-            : "0xae65729956b60e0ddc2973db0cc8d04cf947880e",
-        abi: [
-          {
-            inputs: [],
-            name: "getAllItems",
-            outputs: [
-              {
-                components: [
-                  {
-                    internalType: "uint256",
-                    name: "id",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "price",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "expireTm",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "address",
-                    name: "bider",
-                    type: "address",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "tokenId",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "count",
-                    type: "uint256",
-                  },
-                ],
-                internalType: "struct Auction.BidInfo[]",
-                name: "",
-                type: "tuple[]",
-              },
-            ],
-            stateMutability: "view",
-            type: "function",
-          },
-        ],
+            ? addressByType[type].sepolia
+            : addressByType[type].mainnet,
+        abi: abis[type],
         functionName: "getAllItems",
         args: [],
       })) as any[];
-      const idByGroup = list.reduce(
+      const idByGroup = list[type].reduce(
         (acc, item) => {
           acc[item.id] = item;
           return acc;
         },
-        {} as Record<number, (typeof list)[number]>,
+        {} as Record<number, (typeof list)[typeof type][number]>,
       );
       setDataset(
         data
@@ -241,7 +406,8 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
             expireTime: item.expireTm.toString(),
             tokenId: item.tokenId.toString(),
             count: item.count.toString(),
-            startTime: new Date("2024-10-10T10:00:00.000Z").getTime() / 1000,
+            startTime: date[type].startTime,
+            flag: item.flag,
           })),
       );
     } catch (error) {
@@ -264,8 +430,9 @@ export function useBigList(): [typeof dataset, boolean, typeof fetchData] {
 
 export function useBigItem(
   id: number,
+  type: "bid" | "impact" = "bid",
 ): [typeof details, boolean, typeof fetchBigItem] {
-  const [dataset, loading, fetchData] = useBigList();
+  const [dataset, loading, fetchData] = useBigList(type);
   const [details, setDetails] = useState<{
     id: number;
     name: string;
@@ -276,6 +443,7 @@ export function useBigItem(
     expireTime: number;
     count: number;
     tokenId: number;
+    flag?: boolean;
   }>();
 
   const fetchBidData = async (changeLoading = true) => {
@@ -297,12 +465,9 @@ export function useBigItem(
   return [details, loading, fetchBigItem];
 }
 
-export function useApprove(): [
-  string | null,
-  boolean,
-  () => Promise<void>,
-  () => Promise<void>,
-] {
+export function useApprove(
+  type: "bid" | "impact" = "bid",
+): [string | null, boolean, () => Promise<void>, () => Promise<void>] {
   const [allowance, setAllowance] = useState<string | null>(null);
   const [approveLoading, setApproveLoading] = useState(false);
 
@@ -360,8 +525,8 @@ export function useApprove(): [
     }
     const contractAddress =
       chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
-        ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-        : "0xae65729956b60e0ddc2973db0cc8d04cf947880e";
+        ? addressByType[type].sepolia
+        : addressByType[type].mainnet;
     const tokenAddress =
       chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
         ? "0xe4160b3b50806053fdE6e17a47799674eB56481e"
@@ -393,7 +558,9 @@ export function useApprove(): [
   return [allowance, approveLoading, approveToken, fetchAllowance];
 }
 
-export function useBidSubmit(): [boolean, typeof submit] {
+export function useBidSubmit(
+  type: "bid" | "impact" = "bid",
+): [boolean, typeof submit] {
   const [bidLoading, setBidLoading] = useState(false);
   const t = useTranslations("Bid");
 
@@ -408,8 +575,8 @@ export function useBidSubmit(): [boolean, typeof submit] {
     const { chain } = getNetwork();
     const contractAddress =
       chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
-        ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-        : "0xae65729956b60e0ddc2973db0cc8d04cf947880e";
+        ? addressByType[type].sepolia
+        : addressByType[type].mainnet;
     try {
       const { hash } = await writeContract({
         address: contractAddress,

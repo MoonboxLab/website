@@ -17,22 +17,17 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { AuctionItem } from "@/service/bid";
-import moment from "moment";
 import "moment/locale/zh-hk";
-import { start } from "repl";
 
 function Item({
   item,
   type = "card",
-  ended = false,
 }: {
   item: AuctionItem;
   type: "card" | "list";
-  ended: boolean;
 }) {
   const t = useTranslations("Impact");
-  const locale = useLocale();
-  const format = useFormatter();
+  const ended = Number(item?.expireTime) * 1000 < Date.now() || !item?.flag;
   const timeRange = useCallback(() => {
     const startTime = new Date(item.startTime * 1000);
     const endTime = new Date(item.expireTime * 1000);
@@ -344,7 +339,7 @@ export default function BidPage() {
               }`}
             >
               {list.map((item) => (
-                <Item key={item.id} item={item} type={type} ended={ended} />
+                <Item key={item.id} item={item} type={type} />
               ))}
             </div>
           )}

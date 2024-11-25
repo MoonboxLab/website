@@ -48,12 +48,18 @@ function Item({
         />
         <div className="mt-8 text-2xl font-bold">{t(item.name)}</div>
         <div className="mt-3 flex flex-col justify-between gap-2 text-lg lg:flex-row">
-          <div>
-            {item.coin} {Math.max(Number(item?.price), 10)}
-          </div>
+          {item.flag ? (
+            <div>
+              {item.coin} {Math.max(Number(item?.price), 10)}
+            </div>
+          ) : null}
           {ended ? (
-            <div className="rounded border border-[#aaa] px-10 py-1 text-center text-base text-[#605D5E]">
-              {t(item.flag ? "bidEnded" : "enter")}
+            <div
+              className={`rounded border border-[#aaa] px-10 py-1 text-center text-base ${
+                item.flag ? "" : "flex-1"
+              }`}
+            >
+              {item.flag ? t("bidEnded") : t("enter")}
             </div>
           ) : (
             <div
@@ -91,14 +97,16 @@ function Item({
               <div className="text-xl font-bold lg:text-3xl">
                 {t(item.name)}
               </div>
-              <div className="text-base lg:text-xl">
-                {item.coin} {Math.max(Number(item?.price), 10)}
-              </div>
+              {item.flag ? (
+                <div className="text-base lg:text-xl">
+                  {item.coin} {Math.max(Number(item?.price), 10)}
+                </div>
+              ) : null}
             </div>
             <div className="flex flex-col items-end gap-2 lg:gap-4">
               {ended ? (
                 <div className="rounded border border-[#aaa] px-2 py-0 text-center text-base text-[#605D5E]">
-                  {t("bidEnded")}
+                  {item.flag ? t("bidEnded") : t("enter")}
                 </div>
               ) : (
                 <div

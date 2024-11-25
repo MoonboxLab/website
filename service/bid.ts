@@ -147,6 +147,46 @@ const list = {
       coin: "USDT",
       desc: "desc5",
     },
+    {
+      id: 6,
+      name: "card6",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc6",
+    },
+    {
+      id: 7,
+      name: "card7",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc7",
+    },
+    {
+      id: 8,
+      name: "card8",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc8",
+    },
+    {
+      id: 9,
+      name: "card9",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc9",
+    },
+    {
+      id: 10,
+      name: "card10",
+      img: "/impact/placeholder.svg",
+      price: "100",
+      coin: "USDT",
+      desc: "desc10",
+    },
   ],
 };
 
@@ -192,12 +232,114 @@ const addressByType = {
   },
   impact: {
     sepolia: "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2",
-    mainnet: "0xae65729956b60e0ddc2973db0cc8d04cf947880e",
+    mainnet: "0xA65De43565F752C3F28AF51EDa524C7441B7cD25",
   },
 } as Record<
   "bid" | "impact",
   { sepolia: `0x${string}`; mainnet: `0x${string}` }
 >;
+
+const abis = {
+  bid: [
+    {
+      inputs: [],
+      name: "getAllItems",
+      outputs: [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "price",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expireTm",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "bider",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "count",
+              type: "uint256",
+            },
+          ],
+          internalType: "struct Auction.BidInfo[]",
+          name: "",
+          type: "tuple[]",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ],
+  impact: [
+    {
+      inputs: [],
+      name: "getAllItems",
+      outputs: [
+        {
+          components: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "price",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expireTm",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "bider",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "count",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "flag",
+              type: "bool",
+            },
+          ],
+          internalType: "struct Auction.BidInfo[]",
+          name: "",
+          type: "tuple[]",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ],
+};
 
 export type AuctionItem = {
   id: number;
@@ -210,6 +352,7 @@ export type AuctionItem = {
   startTime: number;
   count: number;
   tokenId: number;
+  flag?: boolean;
 };
 const date = {
   bid: {
@@ -243,53 +386,7 @@ export function useBigList(
           process.env.NEXT_PUBLIC_TEST_ENV === "true"
             ? addressByType[type].sepolia
             : addressByType[type].mainnet,
-        abi: [
-          {
-            inputs: [],
-            name: "getAllItems",
-            outputs: [
-              {
-                components: [
-                  {
-                    internalType: "uint256",
-                    name: "id",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "price",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "expireTm",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "address",
-                    name: "bider",
-                    type: "address",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "tokenId",
-                    type: "uint256",
-                  },
-                  {
-                    internalType: "uint256",
-                    name: "count",
-                    type: "uint256",
-                  },
-                ],
-                internalType: "struct Auction.BidInfo[]",
-                name: "",
-                type: "tuple[]",
-              },
-            ],
-            stateMutability: "view",
-            type: "function",
-          },
-        ],
+        abi: abis[type],
         functionName: "getAllItems",
         args: [],
       })) as any[];
@@ -310,6 +407,7 @@ export function useBigList(
             tokenId: item.tokenId.toString(),
             count: item.count.toString(),
             startTime: date[type].startTime,
+            flag: item.flag,
           })),
       );
     } catch (error) {
@@ -345,6 +443,7 @@ export function useBigItem(
     expireTime: number;
     count: number;
     tokenId: number;
+    flag?: boolean;
   }>();
 
   const fetchBidData = async (changeLoading = true) => {

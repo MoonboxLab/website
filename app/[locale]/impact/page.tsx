@@ -61,18 +61,30 @@ function Item({
               {t("bidEnded")}
             </div>
           ) : (
-            <div className="rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white">
+            <div
+              className={`rounded px-10 py-1 text-center text-base ${
+                item.flag
+                  ? "bg-[#117E8A] text-white"
+                  : "bg-[#605D5E] text-white"
+              }`}
+            >
               {t("bidNow")}
             </div>
           )}
         </div>
-        <div className="mt-2 text-sm text-[#605D5E]">{timeRange()}</div>
+        <div
+          className={`mt-2 text-sm text-[#605D5E] ${
+            item.flag ? "" : "opacity-0"
+          }`}
+        >
+          {timeRange()}
+        </div>
       </Link>
       <Link
         className="border-b border-black/50 py-6 lg:hidden lg:border-b-0"
-        href={`/bid/${item.id}`}
+        href={`/impact/${item.id}`}
       >
-        <div className="text-base lg:hidden">
+        <div className={`text-base lg:hidden ${item.flag ? "" : "opacity-0"}`}>
           {timeRange()} | {item.count} {t("bids")}
         </div>
         <div className="mt-4 flex items-center gap-3 lg:items-start lg:gap-10">
@@ -98,11 +110,21 @@ function Item({
                   {t("bidEnded")}
                 </div>
               ) : (
-                <div className="rounded bg-[#117E8A] px-2 py-0 text-center text-base text-white">
+                <div
+                  className={`rounded px-2 py-0 text-center text-base ${
+                    item.flag
+                      ? "bg-[#117E8A] text-white"
+                      : "bg-[#605D5E] text-white"
+                  }`}
+                >
                   {t("bidNow")}
                 </div>
               )}
-              <div className="mt-2 hidden text-base lg:block">
+              <div
+                className={`mt-2 hidden text-base lg:block ${
+                  item.flag ? "" : "opacity-0"
+                }`}
+              >
                 {timeRange()} | {item.count} {t("bids")}
               </div>
             </div>

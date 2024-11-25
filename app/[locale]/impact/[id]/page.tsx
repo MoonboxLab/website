@@ -62,7 +62,7 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     setCurrentBid(Number(item?.price || 0));
     setEndDate(Number(item?.expireTime) * 1000 || Date.now());
-    setEnded(Number(item?.expireTime) * 1000 < Date.now());
+    setEnded(Number(item?.expireTime) * 1000 < Date.now() || !item?.flag);
   }, [item]);
   useEffect(() => {
     const interval = setInterval(() => {

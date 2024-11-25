@@ -110,7 +110,7 @@ const list = {
     {
       id: 1,
       name: "card1",
-      img: "/impact/card1.png",
+      img: "/impact/card1.webp",
       price: "100",
       coin: "USDT",
       desc: "desc1",
@@ -118,7 +118,7 @@ const list = {
     {
       id: 2,
       name: "card2",
-      img: "/impact/card2.png",
+      img: "/impact/card2.webp",
       price: "100",
       coin: "USDT",
       desc: "desc2",
@@ -126,7 +126,7 @@ const list = {
     {
       id: 3,
       name: "card3",
-      img: "/impact/card3.png",
+      img: "/impact/card3.webp",
       price: "100",
       coin: "USDT",
       desc: "desc3",
@@ -134,7 +134,7 @@ const list = {
     {
       id: 4,
       name: "card4",
-      img: "/impact/card4.png",
+      img: "/impact/card4.webp",
       price: "100",
       coin: "USDT",
       desc: "desc4",
@@ -142,7 +142,7 @@ const list = {
     {
       id: 5,
       name: "card5",
-      img: "/impact/card5.png",
+      img: "/impact/card5.webp",
       price: "100",
       coin: "USDT",
       desc: "desc5",

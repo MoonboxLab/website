@@ -53,15 +53,11 @@ function Item({
           </div>
           {ended ? (
             <div className="rounded border border-[#aaa] px-10 py-1 text-center text-base text-[#605D5E]">
-              {t("bidEnded")}
+              {t(item.flag ? "bidEnded" : "enter")}
             </div>
           ) : (
             <div
-              className={`rounded px-10 py-1 text-center text-base ${
-                item.flag
-                  ? "bg-[#117E8A] text-white"
-                  : "bg-[#605D5E] text-white"
-              }`}
+              className={`rounded bg-[#117E8A] px-10 py-1 text-center text-base text-white`}
             >
               {t("bidNow")}
             </div>
@@ -270,7 +266,7 @@ export default function BidPage() {
                 </div>
               </div>
               {isOpen ? (
-                <div className="absolute left-0 top-full -mt-px w-full border border-t-0 border-black bg-white px-4 py-6 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:py-12">
+                <div className="relative -mt-px w-full border border-t-0 border-black bg-white px-4 py-6 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:py-12">
                   <button
                     className="absolute -top-2  right-4 h-6 w-6 rounded-full border-2 border-[#605D5E] lg:top-4 lg:h-12 lg:w-12"
                     onClick={() => setIsOpen(false)}
@@ -317,7 +313,9 @@ export default function BidPage() {
                           {t("aboutXianRenYiKun")}
                         </div>
                         <div className="mt-2 lg:mt-3">
-                          {t("industryLeader")}
+                          {t.rich("industryLeader", {
+                            br: () => <br />,
+                          })}
                         </div>
                       </div>
                     </div>

@@ -109,9 +109,11 @@ export default function BidDetailsPage({ params }: { params: { id: string } }) {
                   />
                   <div className="lg:w-full lg:max-w-[520px]">
                     <div className="text-3xl font-bold">{t(item?.name)}</div>
-                    <div className="mt-3 text-2xl lg:mt-5">
-                      {item?.coin} {Math.max(Number(item?.price), 10)}
-                    </div>
+                    {item?.flag ? (
+                      <div className="mt-3 text-2xl lg:mt-5">
+                        {item?.coin} {Math.max(Number(item?.price), 10)}
+                      </div>
+                    ) : null}
                     <div className="mt-2 space-y-2 border-b border-black/50 pb-3 text-base lg:pb-5 lg:text-lg">
                       <div>{t(item?.desc)}</div>
                     </div>

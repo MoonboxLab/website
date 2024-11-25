@@ -93,6 +93,15 @@ const Header: React.FC = () => {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mt-2 w-[235px] rounded-[12px] py-[14px]">
+            <Link href={`/${locale}/impact`}>
+              <DropdownMenuItem>
+                <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                  <span className="text-[16px] font-medium leading-[16px]">
+                    {t("impact")}
+                  </span>
+                </div>
+              </DropdownMenuItem>
+            </Link>
             <Link href={`/${locale}/bid`}>
               <DropdownMenuItem>
                 <div className=" inline-flex h-[25px] items-center justify-between px-1">
@@ -547,6 +556,11 @@ const Header: React.FC = () => {
                     {t("event")}
                   </AccordionTrigger>
                   <AccordionContent>
+                    <Link href={`/${locale}/impact`}>
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("impact")}
+                      </div>
+                    </Link>
                     <Link href={`/${locale}/bid`}>
                       <div className="py-3 text-[18px] font-semibold leading-[18px]">
                         {t("bid")}

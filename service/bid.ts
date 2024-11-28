@@ -477,8 +477,8 @@ export function useApprove(
     const { chain } = getNetwork();
     const contractAddress =
       chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
-        ? "0x8efe9236647047Fb2D5a5b43D653b69F1A7677d2"
-        : "0xae65729956b60e0ddc2973db0cc8d04cf947880e";
+        ? addressByType[type].sepolia
+        : addressByType[type].mainnet;
     const tokenAddress =
       chain?.id === sepolia.id && process.env.NEXT_PUBLIC_TEST_ENV === "true"
         ? "0xe4160b3b50806053fdE6e17a47799674eB56481e"

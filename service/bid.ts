@@ -150,7 +150,7 @@ const list = {
     {
       id: 6,
       name: "card6",
-      img: "/impact/placeholder.svg",
+      img: "https://moonbox.s3.ap-east-1.amazonaws.com/image/nobody-image/4558.jpg",
       price: "100",
       coin: "USDT",
       desc: "desc6",

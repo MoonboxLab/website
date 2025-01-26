@@ -137,7 +137,7 @@ const list = {
     {
       id: 4,
       name: "card4",
-      img: "/hares/placeholder.jpg",
+      img: "/hares/placeholder.png",
       price: "100",
       coin: "USDT",
       desc: "desc4",
@@ -145,7 +145,7 @@ const list = {
     {
       id: 5,
       name: "card5",
-      img: "/hares/placeholder.jpg",
+      img: "/hares/placeholder.png",
       price: "100",
       coin: "USDT",
       desc: "desc5",
@@ -153,7 +153,7 @@ const list = {
     {
       id: 6,
       name: "card6",
-      img: "/hares/placeholder.jpg",
+      img: "/hares/placeholder.png",
       price: "100",
       coin: "USDT",
       desc: "desc6",
@@ -161,7 +161,7 @@ const list = {
     {
       id: 7,
       name: "card7",
-      img: "/hares/placeholder.jpg",
+      img: "/hares/placeholder.png",
       price: "100",
       coin: "USDT",
       desc: "desc7",
@@ -169,7 +169,7 @@ const list = {
     {
       id: 8,
       name: "card8",
-      img: "/hares/placeholder.jpg",
+      img: "/hares/placeholder.png",
       price: "100",
       coin: "USDT",
       desc: "desc8",
@@ -177,7 +177,7 @@ const list = {
     {
       id: 9,
       name: "card9",
-      img: "/hares/placeholder.jpg",
+      img: "/hares/placeholder.png",
       price: "100",
       coin: "USDT",
       desc: "desc9",
@@ -185,7 +185,7 @@ const list = {
     {
       id: 10,
       name: "card10",
-      img: "/hares/placeholder.jpg",
+      img: "/hares/placeholder.png",
       price: "100",
       coin: "USDT",
       desc: "desc10",
@@ -420,7 +420,7 @@ export function useBigList(
               ? idByGroup[item.id].img
               : item.tokenId
               ? `${imgPrefix}${item.tokenId}.jpg`
-              : "/hares/placeholder.jpg",
+              : "/hares/placeholder.png",
           })),
       );
     } catch (error) {

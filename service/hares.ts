@@ -411,7 +411,7 @@ export function useBigList(
           .map((item) => ({
             ...idByGroup[item.id],
             price: formatUnits(item.price, 6),
-            expireTime: item.expireTm.toString(),
+            expireTime: (item.expireTm + BigInt(86400)).toString(),
             tokenId: item.tokenId.toString(),
             count: item.count.toString(),
             startTime: date[type].startTime,

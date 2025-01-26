@@ -26,7 +26,7 @@ function Item({
   item: AuctionItem;
   type: "card" | "list";
 }) {
-  const t = useTranslations("Impact");
+  const t = useTranslations("Hares");
   const ended = Number(item?.expireTime) * 1000 < Date.now() || !item?.flag;
   const timeRange = useCallback(() => {
     const startTime = new Date(item.startTime * 1000);

@@ -201,22 +201,20 @@ export default function BidPage() {
           </div> */}
 
           <div className="mt-8">
-            <Carousel plugins={[plugin.current]} setApi={setApi}>
-              <CarouselContent>
-                <CarouselItem>
-                  <Image
-                    src={
-                      locale === "en"
-                        ? "/hares/en-banner.webp"
-                        : "/hares/banner.webp"
-                    }
-                    alt="bid-banner"
-                    width={1280}
-                    height={720}
-                    className="aspect-[1280/720] w-full object-cover"
-                  />
-                </CarouselItem>
-                {/* <CarouselItem>
+            {/* <Carousel plugins={[plugin.current]} setApi={setApi}> */}
+            {/* <CarouselContent> */}
+            {/* <CarouselItem> */}
+            <Image
+              src={
+                locale === "en" ? "/hares/en-banner.webp" : "/hares/banner.webp"
+              }
+              alt="bid-banner"
+              width={1280}
+              height={720}
+              className="aspect-[1280/720] w-full object-cover"
+            />
+            {/* </CarouselItem> */}
+            {/* <CarouselItem>
                   <iframe
                     src={
                       locale === "en"
@@ -231,13 +229,13 @@ export default function BidPage() {
                     className="aspect-[1440/569] w-full"
                   ></iframe>
                 </CarouselItem> */}
-              </CarouselContent>
-              <CarouselPrevious className="left-0 h-20 rounded-l-none rounded-r-lg border-0 bg-black/50 text-white" />
-              <CarouselNext className="right-0 h-20 rounded-l-lg rounded-r-none border-0 bg-black/50 text-white" />
-            </Carousel>
+            {/* </CarouselContent> */}
+            {/* <CarouselPrevious className="left-0 h-20 rounded-l-none rounded-r-lg border-0 bg-black/50 text-white" /> */}
+            {/* <CarouselNext className="right-0 h-20 rounded-l-lg rounded-r-none border-0 bg-black/50 text-white" /> */}
+            {/* </Carousel> */}
             <div className="relative z-[1]">
               <div className="border border-t-0 border-black bg-white pt-6 shadow-[3px_3px_0px_rgba(0,0,0,1)]">
-                <div className="flex h-1 justify-center gap-3">
+                <div className="hidden h-1 justify-center gap-3">
                   <div
                     className={`h-1 w-9 rounded-full ${
                       current === 0 ? "bg-[#605D5E]" : "bg-[#AAAAAA]"

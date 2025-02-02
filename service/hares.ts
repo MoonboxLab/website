@@ -366,7 +366,7 @@ const date = {
     startTime: new Date("2024-10-10T10:00:00.000Z").getTime() / 1000,
   },
   hares: {
-    startTime: new Date("2025-01-27T15:59:59.000Z").getTime() / 1000,
+    startTime: new Date("2025-02-03T15:59:59.000Z").getTime() / 1000,
   },
 };
 

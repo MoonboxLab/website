@@ -239,7 +239,7 @@ const addressByType = {
   },
   hares: {
     sepolia: "0x1a5f4BAA42b0c522029650C717323858F47f7d99",
-    mainnet: "0xba35cb3fd270a9749938739b7e61061e1522f1d8",
+    mainnet: "0x1d48c45d23f0a68cd8d01f49e06f3994066c9150",
   },
 } as Record<
   "bid" | "impact" | "hares",

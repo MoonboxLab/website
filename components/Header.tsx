@@ -160,8 +160,8 @@ const Header: React.FC = () => {
           </div>
         </a> */}
         <Link href={`/${locale}/halloffame`} className="hidden lg:block">
-          <div className=" sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] min-w-[84px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-[24px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:min-w-[80px] 3xl:h-[48px] 3xl:min-w-[96px]">
-            <span className=" ml-[6px] text-[16px]  font-semibold leading-[16px] text-black sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px]">
+          <div className=" sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] min-w-[84px] items-center justify-center whitespace-nowrap rounded-[10px] border-2 border-black bg-white px-[14px] shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:min-w-[80px] 3xl:h-[48px] 3xl:min-w-[96px]">
+            <span className=" ml-[6px] text-[16px]  font-semibold leading-[16px] text-black sm:text-[16px]">
               {t("halloffame")}
             </span>
           </div>
@@ -239,11 +239,11 @@ const Header: React.FC = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {(mediaSize?.width || 0) > 375 && (
+        {(mediaSize?.width || 0) > 1025 && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className=" sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[120px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px]">
-                <span className=" ml-[6px] text-[16px]  font-semibold leading-[16px] text-black sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px]">
+              <div className="sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[120px] items-center justify-center rounded-[10px] border-2 border-black bg-white text-base shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:w-[150px] 3xl:h-[48px] 3xl:w-[158px]">
+                <span className=" ml-[6px] text-[16px]  font-semibold leading-[16px] text-black">
                   {t("collabMerch")}
                 </span>
                 <ChevronDown />

@@ -240,6 +240,46 @@ const Header: React.FC = () => {
         </DropdownMenu>
 
         {(mediaSize?.width || 0) > 375 && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className=" sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[120px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[40px] lg:w-[120px] 3xl:h-[48px] 3xl:w-[142px]">
+                <span className=" ml-[6px] text-[16px]  font-semibold leading-[16px] text-black sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px]">
+                  {t("collabMerch")}
+                </span>
+                <ChevronDown />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mt-2 w-[165px] rounded-[12px] py-[14px]">
+              <a href={t("stayRealLink")} target="_blank">
+                <DropdownMenuItem>{t("stayReal")}</DropdownMenuItem>
+              </a>
+
+              <a href={t("memoriginLink")} target="_blank">
+                <DropdownMenuItem className=" mt-2">
+                  {t("memorigin")}
+                </DropdownMenuItem>
+              </a>
+
+              <a href={t("yeejoyLink")} target="_blank">
+                <DropdownMenuItem className=" mt-2">
+                  {t("yeejoy")}
+                </DropdownMenuItem>
+              </a>
+              <a href={t("oneKeyLink")} target="_blank">
+                <DropdownMenuItem className=" mt-2">
+                  {t("oneKey")}
+                </DropdownMenuItem>
+              </a>
+              <a href={t("crudoLink")} target="_blank">
+                <DropdownMenuItem className=" mt-2">
+                  {t("crudo")}
+                </DropdownMenuItem>
+              </a>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+
+        {(mediaSize?.width || 0) > 375 && (
           <a
             href="https://twitter.com/realnobodyxyz"
             target="_blank"
@@ -294,7 +334,7 @@ const Header: React.FC = () => {
 
         {(mediaSize?.width || 0) > 375 && (
           <a
-            href="https://discord.gg/nobodyxyz"
+            href="https://discord.gg/nobody9527"
             target="_blank"
             className=" ml-[10px] sm:ml-4"
           >
@@ -518,7 +558,6 @@ const Header: React.FC = () => {
             ></label>
             <ul className="menu min-h-full w-full overflow-y-scroll bg-white px-4">
               {/* Sidebar content here */}
-
               <div className=" mt-2 flex items-center justify-between">
                 <div className=" inline-flex items-center justify-between">
                   <Image
@@ -543,7 +582,6 @@ const Header: React.FC = () => {
                   </div>
                 </label>
               </div>
-
               <div className=" my-4 mt-8 border-b-[1px] border-gray-200"></div>
               <Link href={"/declaration"}>
                 <div className=" my-4 mt-1 flex items-center justify-between text-[18px] font-semibold leading-[18px]  ">
@@ -551,9 +589,7 @@ const Header: React.FC = () => {
                   <ChevronRight width={18} height={18} />
                 </div>
               </Link>
-
               <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
-
               <Accordion
                 type="single"
                 collapsible
@@ -593,7 +629,6 @@ const Header: React.FC = () => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-
               <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
               {/* <a href="https://blog.nobody.xyz" target="_blank">
                 <div className=" my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]  ">
@@ -631,6 +666,45 @@ const Header: React.FC = () => {
               </ConnectButton.Custom>
               <div className=" my-1 border-b-[1px] border-gray-200"></div>
 
+              <Accordion
+                type="single"
+                collapsible
+                defaultValue={"event"}
+                className="w-full"
+              >
+                <AccordionItem value="event">
+                  <AccordionTrigger className="text-[18px] font-semibold leading-[18px]  no-underline hover:no-underline">
+                    {t("collabMerch")}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <a href={t("stayRealLink")} target="_blank">
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("stayReal")}
+                      </div>
+                    </a>
+                    <a href={t("memoriginLink")} target="_blank">
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("memorigin")}
+                      </div>
+                    </a>
+                    <a href={t("yeejoyLink")} target="_blank">
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("yeejoy")}
+                      </div>
+                    </a>
+                    <a href={t("oneKeyLink")} target="_blank">
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("oneKey")}
+                      </div>
+                    </a>
+                    <a href={t("crudoLink")} target="_blank">
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("crudo")}
+                      </div>
+                    </a>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
               <Accordion
                 type="multiple"
                 value={accordionList}
@@ -688,7 +762,6 @@ const Header: React.FC = () => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-
               {(mediaSize?.width || 0) <= 375 && (
                 <div className="mt-4 flex justify-around">
                   <a
@@ -741,7 +814,7 @@ const Header: React.FC = () => {
                   </a>
 
                   <a
-                    href="https://discord.gg/nobodyxyz"
+                    href="https://discord.gg/nobody9527"
                     target="_blank"
                     className=""
                   >
@@ -763,7 +836,6 @@ const Header: React.FC = () => {
                   </a>
                 </div>
               )}
-
               <div className=" mt-12">
                 <CustomConnectButton />
               </div>

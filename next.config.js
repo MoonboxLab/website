@@ -13,7 +13,13 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: ["i.ytimg.com", "moonbox.s3.ap-east-1.amazonaws.com"],
+    domains: [
+      "i.ytimg.com",
+      "moonbox.s3.ap-east-1.amazonaws.com",
+      "picsum.photos",
+      "www2.cs.uic.edu",
+      "archive.org",
+    ],
   },
 };
 

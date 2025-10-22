@@ -13,10 +13,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useMusic } from "@/lib/MusicContext";
 
 export default function MusicPage() {
   const t = useTranslations("Music");
   const locale = useLocale();
+  const { playTrack } = useMusic();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
@@ -25,23 +27,101 @@ export default function MusicPage() {
   const [currentEvent, setCurrentEvent] = useState<any>(null);
 
   const fetchEvents = async () => {
-    const response = await fetch("/api/events");
-    const data = await response.json();
-    setEvents(data);
+    // Mock data for events
+    const mockEvents = [
+      {
+        id: "event1",
+        name: "Concert Night",
+      },
+      {
+        id: "event2",
+        name: "DJ Set",
+      },
+      {
+        id: "event3",
+        name: "Acoustic Session",
+      },
+      {
+        id: "event4",
+        name: "Rock Night",
+      },
+    ];
+
+    setEvents(mockEvents);
+
+    // Try to fetch real data, but fallback to mock if it fails
+    try {
+      const response = await fetch("/api/events");
+      const data = await response.json();
+      if (data && data.length > 0) {
+        setEvents(data);
+      }
+    } catch (error) {
+      console.log("Using mock data for events");
+    }
   };
   const fetchMusics = async () => {
-    const response = await fetch("/api/musics");
-    const data = await response.json();
-    setMusics(data);
+    // Mock data for testing
+    const mockMusics = [
+      {
+        id: "1",
+        name: "Nobody Square Theme",
+        description: "Main theme song",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=1",
+      },
+      {
+        id: "2",
+        name: "Digital Dreams",
+        description: "Electronic ambient track",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=2",
+      },
+      {
+        id: "3",
+        name: "NFT Symphony",
+        description: "Orchestral piece",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=3",
+      },
+      {
+        id: "4",
+        name: "Blockchain Blues",
+        description: "Jazz fusion track",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=4",
+      },
+      {
+        id: "5",
+        name: "Crypto Waves",
+        description: "Synthwave style",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=5",
+      },
+    ];
+
+    setMusics(mockMusics);
+
+    // Try to fetch real data, but fallback to mock if it fails
+    try {
+      const response = await fetch("/api/musics");
+      const data = await response.json();
+      if (data && data.length > 0) {
+        setMusics(data);
+      }
+    } catch (error) {
+      console.log("Using mock data for musics");
+    }
   };
 
-  useCallback(() => {
+  useEffect(() => {
     fetchEvents();
-  }, []);
-  useCallback(() => {
-    try {
-      fetchMusics();
-    } catch (error) {}
+    fetchMusics();
   }, []);
 
   return (
@@ -272,8 +352,30 @@ export default function MusicPage() {
                   {/* Song Card 1 */}
                   {musics.map((item) => (
                     <div className="cursor-pointer" key={item.id}>
-                      <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-200">
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400"></div>
+                      <div
+                        className="relative aspect-square overflow-hidden rounded-lg bg-gray-200"
+                        onClick={() =>
+                          playTrack(
+                            {
+                              id: item.id,
+                              name: item.name,
+                              description: item.description,
+                              audioUrl:
+                                item.audioUrl || `/music/${item.id}.mp3`,
+                              coverUrl:
+                                item.coverUrl || `/music/covers/${item.id}.jpg`,
+                            },
+                            musics,
+                          )
+                        }
+                      >
+                        <Image
+                          src={item.coverUrl}
+                          alt={item.name}
+                          width={200}
+                          height={200}
+                          className="h-full w-full object-cover"
+                        />
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
                             <div className="ml-1 h-0 w-0 border-y-[6px] border-l-[8px] border-y-transparent border-l-white"></div>
@@ -287,11 +389,28 @@ export default function MusicPage() {
                         </p>
                       </div>
                       <div className="mt-2 flex flex-col gap-2">
-                        <button className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs">
+                        <button
+                          onClick={() =>
+                            playTrack(
+                              {
+                                id: item.id,
+                                name: item.name,
+                                description: item.description,
+                                audioUrl:
+                                  item.audioUrl || `/music/${item.id}.mp3`, // 假设音频文件路径
+                                coverUrl:
+                                  item.coverUrl ||
+                                  `/music/covers/${item.id}.jpg`, // 假设封面路径
+                              },
+                              musics,
+                            )
+                          }
+                          className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs hover:bg-gray-50"
+                        >
                           <Play size={12} />
                           {t("playNow")}
                         </button>
-                        <button className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs">
+                        <button className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs hover:bg-gray-50">
                           <Download size={12} />
                           {t("downloadDemo")}
                         </button>
@@ -310,31 +429,16 @@ export default function MusicPage() {
 
       {/* View All Modal */}
       <Dialog open={isViewAllModalOpen} onOpenChange={setIsViewAllModalOpen}>
-        <DialogContent className="max-h-[80vh] max-w-md overflow-y-auto">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <DialogContent className="max-h-[80vh] max-w-lg overflow-y-auto">
+          <div className="mt-2 space-y-3">
             {events.map((item) => (
-              <div className="cursor-pointer" key={item.id}>
-                <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-200">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
-                      <div className="ml-1 h-0 w-0 border-y-[6px] border-l-[8px] border-y-transparent border-l-white"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <p className="text-sm font-medium">{item.name}</p>
-                  <p className="text-xs text-gray-600">{item.description}</p>
-                </div>
-                <div className="mt-2 flex flex-col gap-2">
-                  <button className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs">
-                    <Play size={12} />
-                    {t("playNow")}
-                  </button>
-                  <button className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs">
-                    <Download size={12} />
-                    {t("downloadDemo")}
-                  </button>
+              <div
+                key={item.id}
+                className="cursor-pointer rounded-lg border border-gray-300 bg-white p-3 transition-colors hover:border-gray-400 hover:bg-gray-50"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-medium">{item.name}</h3>
+                  <div className="text-gray-400">→</div>
                 </div>
               </div>
             ))}

@@ -10,6 +10,7 @@ import {
   VolumeX,
   Maximize2,
   Minimize2,
+  Loader2,
 } from "lucide-react";
 import { useMusic } from "@/lib/MusicContext";
 import Image from "next/image";
@@ -98,8 +99,15 @@ export default function FloatingMusicPlayer() {
               <button
                 onClick={togglePlayPause}
                 className="rounded p-1 hover:bg-gray-100"
+                disabled={state.isLoading}
               >
-                {state.isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                {state.isLoading ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : state.isPlaying ? (
+                  <Pause size={16} />
+                ) : (
+                  <Play size={16} />
+                )}
               </button>
               <button
                 onClick={nextTrack}
@@ -192,8 +200,15 @@ export default function FloatingMusicPlayer() {
                 <button
                   onClick={togglePlayPause}
                   className="rounded p-1.5 hover:bg-gray-100"
+                  disabled={state.isLoading}
                 >
-                  {state.isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                  {state.isLoading ? (
+                    <Loader2 size={16} className="animate-spin" />
+                  ) : state.isPlaying ? (
+                    <Pause size={16} />
+                  ) : (
+                    <Play size={16} />
+                  )}
                 </button>
                 <button
                   onClick={nextTrack}

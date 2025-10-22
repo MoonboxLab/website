@@ -20,6 +20,7 @@ export interface MusicTrack {
 interface MusicState {
   currentTrack: MusicTrack | null;
   isPlaying: boolean;
+  isLoading: boolean;
   currentTime: number;
   duration: number;
   volume: number;
@@ -31,6 +32,7 @@ type MusicAction =
   | { type: "SET_TRACK"; payload: MusicTrack }
   | { type: "PLAY" }
   | { type: "PAUSE" }
+  | { type: "SET_LOADING"; payload: boolean }
   | { type: "SET_CURRENT_TIME"; payload: number }
   | { type: "SET_DURATION"; payload: number }
   | { type: "SET_VOLUME"; payload: number }
@@ -42,6 +44,7 @@ type MusicAction =
 const initialState: MusicState = {
   currentTrack: null,
   isPlaying: false,
+  isLoading: false,
   currentTime: 0,
   duration: 0,
   volume: 0.7,
@@ -56,12 +59,15 @@ function musicReducer(state: MusicState, action: MusicAction): MusicState {
         ...state,
         currentTrack: action.payload,
         isPlaying: true,
+        isLoading: true,
         currentTime: 0,
       };
     case "PLAY":
       return { ...state, isPlaying: true };
     case "PAUSE":
       return { ...state, isPlaying: false };
+    case "SET_LOADING":
+      return { ...state, isLoading: action.payload };
     case "SET_CURRENT_TIME":
       return { ...state, currentTime: action.payload };
     case "SET_DURATION":
@@ -81,6 +87,7 @@ function musicReducer(state: MusicState, action: MusicAction): MusicState {
         currentTrack: state.playlist[nextIndex] || null,
         currentTime: 0,
         isPlaying: true,
+        isLoading: true,
       };
     case "PREVIOUS_TRACK":
       const prevIndex =
@@ -93,6 +100,7 @@ function musicReducer(state: MusicState, action: MusicAction): MusicState {
         currentTrack: state.playlist[prevIndex] || null,
         currentTime: 0,
         isPlaying: true,
+        isLoading: true,
       };
     case "SET_CURRENT_INDEX":
       return {
@@ -101,6 +109,7 @@ function musicReducer(state: MusicState, action: MusicAction): MusicState {
         currentTrack: state.playlist[action.payload] || null,
         currentTime: 0,
         isPlaying: true,
+        isLoading: true,
       };
     default:
       return state;
@@ -186,16 +195,40 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
       dispatch({ type: "SET_VOLUME", payload: audio.volume });
     };
 
+    const handleLoadStart = () => {
+      dispatch({ type: "SET_LOADING", payload: true });
+    };
+
+    const handleCanPlay = () => {
+      dispatch({ type: "SET_LOADING", payload: false });
+    };
+
+    const handleWaiting = () => {
+      dispatch({ type: "SET_LOADING", payload: true });
+    };
+
+    const handlePlaying = () => {
+      dispatch({ type: "SET_LOADING", payload: false });
+    };
+
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("durationchange", handleDurationChange);
     audio.addEventListener("ended", handleEnded);
     audio.addEventListener("volumechange", handleVolumeChange);
+    audio.addEventListener("loadstart", handleLoadStart);
+    audio.addEventListener("canplay", handleCanPlay);
+    audio.addEventListener("waiting", handleWaiting);
+    audio.addEventListener("playing", handlePlaying);
 
     return () => {
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("durationchange", handleDurationChange);
       audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("volumechange", handleVolumeChange);
+      audio.removeEventListener("loadstart", handleLoadStart);
+      audio.removeEventListener("canplay", handleCanPlay);
+      audio.removeEventListener("waiting", handleWaiting);
+      audio.removeEventListener("playing", handlePlaying);
     };
   }, [state.playlist.length]);
 

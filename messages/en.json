@@ -521,14 +521,12 @@
     "nobodySquare": "Dream a Music Superstar",
     "producerInfo": "Every Nobody is Somebody: Dream a Music Superstar",
     "nobodySquareIntro": "Every month, Fireverse generates 10 AI songs. Contestants can freely choose songs to showcase their personal talent and style.",
-
     "organizersTitle": "Organizers",
     "organizers": "Organizer: Nobody<br></br>Co-organizers: Bigo Group, Fireverse, Aicean",
     "highlightsTitle": "Event Highlights",
     "highlights": "Every month, Fireverse generates 10 AI songs. Contestants can freely choose songs to showcase their personal talent and style.",
     "scheduleTitle": "Event Schedule",
     "schedule": "• Day 1–15 of each month: Accept work submissions, each person can submit at most once per month<br></br>• Day 1–15 of next month: Open for public voting<br></br>• Day 1 of the month after voting ends: Announce winners and final scores (including jury scores)",
-
     "scoringMechanismTitle": "Scoring Mechanism",
     "scoringMechanism": "• 40% Professional jury scoring<br></br>• 60% Public voting",
     "votingMethodTitle": "Voting Method",
@@ -539,7 +537,6 @@
     "juryMembers": "• Nobody Marketing Manager @Sarah So<br></br>• Fireverse Marketing Director @Ray Yu<br></br>• Aicean Marketing Director @BitcoinMan",
     "rewardsTitle": "Rewards",
     "rewards": "1. Official song release and music publishing royalties<br></br>2. Subject to regulatory approval, minimum 10 million views exposure in Chinese-speaking markets<br></br>3. Two-week professional training program in Korea (with photos)<br></br>4. Potential outstanding winners will have the opportunity for artist interviews and contracts with Bigo Group",
-
     "competitionTermsTitle": "Competition Terms",
     "competitionTerms1Title": "1. Entry Work Usage Guidelines",
     "competitionTerms1": "• Contestants may only use designated competition music downloaded from Fireverse for creation and submission purposes in this competition.<br></br>• Contestants may not upload or repost related songs to any social media platforms other than personal accounts, nor use them for any commercial purposes or engage in activities that infringe third-party rights.<br></br>• If found in violation of the above regulations, the organizer has the right to immediately disqualify the contestant from participation and winning, and reserves the right to pursue legal action and claim compensation for all related losses.",
@@ -553,7 +550,6 @@
     "competitionTerms5": "• Every contestant, regardless of winning status, may re-enter monthly with new works for the current period evaluation.<br></br>• Contestants must be individuals aged 18 or above, no location restrictions, all can register to participate.",
     "competitionTerms6Title": "6. General Terms",
     "competitionTerms6": "• In case of any disputes during the event, the organizer reserves the right to final interpretation and decision.<br></br>• Submission, Voting, Results Announcement: nobody.xyz",
-
     "submitWork": "Submit Work",
     "voteNow": "Vote Now",
     "featuredSongs": "September 2025 Featured Songs",
@@ -584,6 +580,7 @@
       "referrerPlaceholder": "Please enter referrer email or username",
       "loginButton": "Login",
       "registerButton": "Register"
-    }
+    },
+    "viewAll": "View All"
   }
 }

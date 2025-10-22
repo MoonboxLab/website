@@ -524,14 +524,12 @@
     "nobodySquare": "星聲追夢賽",
     "producerInfo": "小人物成大事：星聲追夢賽",
     "nobodySquareIntro": "每月由 Fireverse 生成 10 首 AI 歌曲，參加者可自由選唱，展現個人實力與風格。",
-
     "organizersTitle": "主辦單位",
     "organizers": "主辦：Nobody<br></br>協辦：比高集團, Fireverse, Aicean",
     "highlightsTitle": "活動亮點",
     "highlights": "每月由 Fireverse 生成 10首 AI 歌曲，參加者可自由選唱，展現個人實力與風格。",
     "scheduleTitle": "活動流程",
     "schedule": "• 每月 1–15 日：接受作品投稿，每個月每人最多提交一次<br></br>• 次月 1–15 日：開放公眾投票<br></br>• 投票結束後次月 1 日：公佈得獎名單與最終評分（含評審團評分）",
-
     "scoringMechanismTitle": "評分機制",
     "scoringMechanism": "• 40% 專業評審團評分<br></br>• 60% 公眾投票",
     "votingMethodTitle": "投票方式",
@@ -542,7 +540,6 @@
     "juryMembers": "• Nobody 市場經理 @Sarah So<br></br>• Fireverse 市場總監 @Ray Yu<br></br>• Aicean 市場總監 @BitcoinMan",
     "rewardsTitle": "獎勵內容",
     "rewards": "1. 正式發行歌曲，並獲得歌曲發行版權收益<br></br>2. 法規政策許可下，華語市場最少千萬級流量曝光<br></br>3. 韓國兩週專業培訓課程（展示照片）<br></br>4. 潛力優秀的得獎者，將有機會獲得 比高集團 藝人面試及簽約機會",
-
     "competitionTermsTitle": "參賽條款",
     "competitionTerms1Title": "1. 參賽作品使用規範",
     "competitionTerms1": "• 參賽者自 Fireverse 下載之指定參賽音樂，僅限用於本次比賽之創作與投稿用途。<br></br>• 參賽者不得將相關歌曲上載或轉載至個人以外之任何社交媒體平台，亦不得作任何形式之商業用途，或從事侵害第三方權益之行為。<br></br>• 如經查證違反上述規定，主辦方有權立即取消其參賽及得獎資格，並保留依法追究及要求賠償一切相關損失之權利。",
@@ -556,7 +553,6 @@
     "competitionTerms5": "• 每位參賽者不論勝出與否，均可於每月重複參賽，並以當期新作品參加評選。<br></br>• 參賽者須為年滿 18 歲或以上之個人，不限地區，皆可報名參加。",
     "competitionTerms6Title": "6. 通用條款",
     "competitionTerms6": "• 活動期間如有任何爭議，主辦方保留最終解釋及決定權。<br></br>• 投稿、投票、結果公佈：nobody.xyz",
-
     "submitWork": "送交作品",
     "voteNow": "立即投票",
     "featuredSongs": "2025年9月精選歌曲",
@@ -587,6 +583,7 @@
       "referrerPlaceholder": "请输入推荐者邮箱或用户名",
       "loginButton": "登录",
       "registerButton": "注册"
-    }
+    },
+    "viewAll": "所有活动"
   }
 }

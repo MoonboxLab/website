@@ -589,6 +589,20 @@
       "loginButton": "登录",
       "registerButton": "注册"
     },
-    "viewAll": "所有活动"
+    "viewAll": "所有活动",
+    "privacyPolicyTitle": "使用者協議與隱私權政策說明",
+    "privacyPolicyIntro": "請您充分閱讀並理解《使用者協議》與《隱私權政策》。我們非常重視您的隱私與個人資料保護。於您使用「Dream A Superstar」服務期間，我們可能蒐集、處理並使用部分個人資料，目的如下：",
+    "privacyPolicyPoint1": "申請並使用必要的裝置資訊與權限，如定位、相機、麥克風與相簿，用於報名、錄製、上傳與身分驗證。",
+    "privacyPolicyPoint2": "蒐集帳號資料與參賽內容（姓名、聯絡方式、城市、作品與互動紀錄），用於帳號管理、賽務安排、榜單與評審。",
+    "privacyPolicyPoint3": "使用必要 Cookie 與類似技術以維持登入、記錄偏好並改善服務；經您同意後可用於活動與行銷通知。",
+    "privacyPolicyPoint4": "為保障安全與公平競賽，進行反作弊與風險監控並處理違規。",
+    "privacyPolicyPoint5": "於取得授權或法令允許範圍內，得在官方平台與合作媒體使用您的暱稱、頭像與參賽內容作為宣傳。",
+    "privacyPolicyPoint6": "於提供服務所需或符合法令時，可能與受委託之合作夥伴共享必要資料，並要求遵守保密與資安義務。",
+    "privacyPolicyRights": "您可依適用法令行使查詢、閱覽、製給副本、補充更正、停止處理與刪除等權利。聯絡方式請見《隱私權政策》中的客服資訊。",
+    "privacyPolicyMinor": "未滿十八歲者須經法定代理人同意後方可使用與參賽。",
+    "privacyPolicyDetails": "詳細內容以《使用者協議》與《隱私權政策》為準。",
+    "privacyPolicyAgreement": "點選「同意」即表示您已閱讀、理解並同意前述文件之全部內容。",
+    "agree": "同意",
+    "downloading": "下載中..."
   }
 }

@@ -75,7 +75,20 @@
     "audition": "Audition",
     "voting": "Voting",
     "allEvents": "All Events",
-    "historicalEvents": "Historical Events"
+    "historicalEvents": "Historical Events",
+    "privacyPolicyTitle": "User Agreement and Privacy Policy",
+    "privacyPolicyIntro": "Please read and understand the \"User Agreement\" and \"Privacy Policy\" carefully. We highly value your privacy and personal data protection. During your use of \"Dream A Superstar\" services, we may collect, process, and use some personal data for the following purposes:",
+    "privacyPolicyPoint1": "Apply and use necessary device information and permissions, such as location, camera, microphone, and photo album, for registration, recording, uploading, and identity verification.",
+    "privacyPolicyPoint2": "Collect account data and competition content (name, contact information, city, works, and interaction records) for account management, competition arrangements, rankings, and judging.",
+    "privacyPolicyPoint3": "Use necessary cookies and similar technologies to maintain login, record preferences, and improve services; with your consent, they may be used for activities and marketing notifications.",
+    "privacyPolicyPoint4": "Conduct anti-cheating and risk monitoring to ensure security and fair competition, and handle violations.",
+    "privacyPolicyPoint5": "Within the scope of authorization or legal permission, use your nickname, avatar, and competition content for promotion on official platforms and partner media.",
+    "privacyPolicyPoint6": "When necessary for service provision or compliance with laws, share necessary data with entrusted partners and require them to comply with confidentiality and information security obligations.",
+    "privacyPolicyRights": "You may exercise rights such as inquiry, viewing, copying, supplementing and correction, stopping processing, and deletion in accordance with applicable laws. Contact information can be found in the customer service information in the \"Privacy Policy\".",
+    "privacyPolicyMinor": "Users under 18 must obtain consent from legal guardians before using and participating.",
+    "privacyPolicyDetails": "Detailed content is subject to the \"User Agreement\" and \"Privacy Policy\".",
+    "privacyPolicyAgreement": "Clicking \"Agree\" indicates that you have read, understood, and agreed to all the content of the aforementioned documents.",
+    "agree": "Agree"
   },
   "Declaration": {
     "spirit": "SPIRIT",
@@ -586,6 +599,20 @@
       "loginButton": "Login",
       "registerButton": "Register"
     },
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "privacyPolicyTitle": "User Agreement and Privacy Policy",
+    "privacyPolicyIntro": "Please read and understand the \"User Agreement\" and \"Privacy Policy\" carefully. We highly value your privacy and personal data protection. During your use of \"Dream A Superstar\" services, we may collect, process, and use some personal data for the following purposes:",
+    "privacyPolicyPoint1": "Apply and use necessary device information and permissions, such as location, camera, microphone, and photo album, for registration, recording, uploading, and identity verification.",
+    "privacyPolicyPoint2": "Collect account data and competition content (name, contact information, city, works, and interaction records) for account management, competition arrangements, rankings, and judging.",
+    "privacyPolicyPoint3": "Use necessary cookies and similar technologies to maintain login, record preferences, and improve services; with your consent, they may be used for activities and marketing notifications.",
+    "privacyPolicyPoint4": "Conduct anti-cheating and risk monitoring to ensure security and fair competition, and handle violations.",
+    "privacyPolicyPoint5": "Within the scope of authorization or legal permission, use your nickname, avatar, and competition content for promotion on official platforms and partner media.",
+    "privacyPolicyPoint6": "When necessary for service provision or compliance with laws, share necessary data with entrusted partners and require them to comply with confidentiality and information security obligations.",
+    "privacyPolicyRights": "You may exercise rights such as inquiry, viewing, copying, supplementing and correction, stopping processing, and deletion in accordance with applicable laws. Contact information can be found in the customer service information in the \"Privacy Policy\".",
+    "privacyPolicyMinor": "Users under 18 must obtain consent from legal guardians before using and participating.",
+    "privacyPolicyDetails": "Detailed content is subject to the \"User Agreement\" and \"Privacy Policy\".",
+    "privacyPolicyAgreement": "Clicking \"Agree\" indicates that you have read, understood, and agreed to all the content of the aforementioned documents.",
+    "agree": "Agree",
+    "downloading": "Downloading..."
   }
 }

@@ -22,9 +22,46 @@ export default function MusicPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [musics, setMusics] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [currentEvent, setCurrentEvent] = useState<any>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [selectedMusicForDownload, setSelectedMusicForDownload] =
+    useState<any>(null);
+
+  const downloadMusicZip = async (musicItem?: any) => {
+    setIsDownloading(true);
+    try {
+      // 如果指定了特定音乐，使用其downloadUrl
+      if (musicItem && musicItem.downloadUrl) {
+        const response = await fetch(musicItem.downloadUrl);
+        if (!response.ok) {
+          throw new Error("Download failed");
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${musicItem.name
+          .toLowerCase()
+          .replace(/\s+/g, "-")}-demo.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+
+      // 关闭隐私政策弹窗
+      setIsPrivacyModalOpen(false);
+    } catch (error) {
+      console.error("Download error:", error);
+      // 可以添加错误提示
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   const fetchEvents = async () => {
     // Mock data for events
@@ -70,6 +107,7 @@ export default function MusicPage() {
         audioUrl:
           "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
         coverUrl: "https://picsum.photos/200/200?random=1",
+        downloadUrl: "/music/downloads/nobody-square-theme-demo.zip",
       },
       {
         id: "2",
@@ -78,6 +116,7 @@ export default function MusicPage() {
         audioUrl:
           "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
         coverUrl: "https://picsum.photos/200/200?random=2",
+        downloadUrl: "/music/downloads/digital-dreams-demo.zip",
       },
       {
         id: "3",
@@ -86,6 +125,7 @@ export default function MusicPage() {
         audioUrl:
           "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
         coverUrl: "https://picsum.photos/200/200?random=3",
+        downloadUrl: "/music/downloads/nft-symphony-demo.zip",
       },
       {
         id: "4",
@@ -94,6 +134,7 @@ export default function MusicPage() {
         audioUrl:
           "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
         coverUrl: "https://picsum.photos/200/200?random=4",
+        downloadUrl: "/music/downloads/blockchain-blues-demo.zip",
       },
       {
         id: "5",
@@ -410,7 +451,13 @@ export default function MusicPage() {
                           <Play size={12} />
                           {t("playNow")}
                         </button>
-                        <button className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs hover:bg-gray-50">
+                        <button
+                          onClick={() => {
+                            setSelectedMusicForDownload(item);
+                            setIsPrivacyModalOpen(true);
+                          }}
+                          className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-white px-2 py-1 text-xs hover:bg-gray-50"
+                        >
                           <Download size={12} />
                           {t("downloadDemo")}
                         </button>
@@ -442,6 +489,41 @@ export default function MusicPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Privacy Policy Modal */}
+      <Dialog open={isPrivacyModalOpen} onOpenChange={setIsPrivacyModalOpen}>
+        <DialogContent className="max-h-[80vh] max-w-2xl overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-center text-xl font-bold">
+              {t("privacyPolicyTitle")}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 max-h-[400px] space-y-4 overflow-y-auto text-sm leading-relaxed">
+            <p>{t("privacyPolicyIntro")}</p>
+            <ul className="ml-4 list-inside list-disc space-y-2">
+              <li>{t("privacyPolicyPoint1")}</li>
+              <li>{t("privacyPolicyPoint2")}</li>
+              <li>{t("privacyPolicyPoint3")}</li>
+              <li>{t("privacyPolicyPoint4")}</li>
+              <li>{t("privacyPolicyPoint5")}</li>
+              <li>{t("privacyPolicyPoint6")}</li>
+            </ul>
+            <p>{t("privacyPolicyRights")}</p>
+            <p>{t("privacyPolicyMinor")}</p>
+            <p>{t("privacyPolicyDetails")}</p>
+            <p className="font-semibold">{t("privacyPolicyAgreement")}</p>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => downloadMusicZip(selectedMusicForDownload)}
+              disabled={isDownloading}
+              className="rounded-lg border-2 border-black bg-yellow-400 px-6 py-3 text-lg font-bold disabled:opacity-50"
+            >
+              {isDownloading ? t("downloading") : t("agree")}
+            </button>
           </div>
         </DialogContent>
       </Dialog>

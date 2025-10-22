@@ -248,7 +248,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     return () => {
       audio.removeEventListener("canplay", handleCanPlay);
     };
-  }, [state.currentTrack, state.isPlaying]);
+  }, [state.currentTrack]); // 只依赖 currentTrack，不依赖 isPlaying
 
   const value: MusicContextType = {
     state,

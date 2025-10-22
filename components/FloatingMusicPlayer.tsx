@@ -208,24 +208,57 @@ export default function FloatingMusicPlayer() {
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setIsVolumeVisible(!isVolumeVisible)}
-                  className="rounded p-1 hover:bg-gray-100"
+                  className="rounded p-1.5 hover:bg-gray-100"
                 >
                   {state.volume === 0 ? (
-                    <VolumeX size={14} />
+                    <VolumeX size={16} />
                   ) : (
-                    <Volume2 size={14} />
+                    <Volume2 size={16} />
                   )}
                 </button>
                 {isVolumeVisible && (
-                  <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.1"
-                    value={state.volume}
-                    onChange={handleVolumeChange}
-                    className="h-1 w-12 cursor-pointer appearance-none rounded-lg bg-gray-200"
-                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.1"
+                      value={state.volume}
+                      onChange={handleVolumeChange}
+                      className="h-1 w-16 cursor-pointer appearance-none rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-20"
+                      style={{
+                        background: `linear-gradient(to right, #000 0%, #000 ${
+                          state.volume * 100
+                        }%, #e5e7eb ${state.volume * 100}%, #e5e7eb 100%)`,
+                        WebkitAppearance: "none",
+                        appearance: "none",
+                      }}
+                    />
+                    <style jsx>{`
+                      input[type="range"]::-webkit-slider-thumb {
+                        appearance: none;
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        background: #000;
+                        cursor: pointer;
+                        border: 2px solid #fff;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                      }
+                      input[type="range"]::-moz-range-thumb {
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        background: #000;
+                        cursor: pointer;
+                        border: 2px solid #fff;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                      }
+                    `}</style>
+                    <span className="w-8 text-center text-xs text-gray-600">
+                      {Math.round(state.volume * 100)}
+                    </span>
+                  </div>
                 )}
               </div>
             </div>

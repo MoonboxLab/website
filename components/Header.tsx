@@ -92,59 +92,45 @@ const Header: React.FC = () => {
               <ChevronDown />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mt-2 w-[245px] rounded-[12px] py-[14px]">
-            <Link href={`/${locale}/hares`}>
+          <DropdownMenuContent className="mt-2 w-[280px] rounded-[12px] py-[14px]">
+            <div className="px-3 py-2">
+              <div className="relative">
+                <span className="text-[16px] font-semibold leading-[16px] text-gray-800">
+                  {t("dreamMusicSuperstar")}
+                </span>
+                <span className="absolute -right-1 -top-1 animate-pulse rounded-full bg-red-50 px-1.5 py-0.5 text-[10px] font-bold leading-[10px] text-red-500 shadow-sm">
+                  NOW LIVE!
+                </span>
+              </div>
+            </div>
+            <div className="ml-4">
+              <Link href={`/${locale}/music`}>
+                <DropdownMenuItem>
+                  <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                    <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                      {t("audition")}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem className="cursor-not-allowed opacity-50">
+                <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                  <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                    {t("voting")}
+                  </span>
+                </div>
+              </DropdownMenuItem>
+            </div>
+            <div className="mx-3 my-2 border-t border-gray-200"></div>
+            <Link href={`/${locale}/events`}>
               <DropdownMenuItem>
                 <div className=" inline-flex h-[25px] items-center justify-between px-1">
                   <span className="text-[16px] font-medium leading-[16px]">
-                    {t("hares")}
+                    {t("allEvents")}
                   </span>
                 </div>
               </DropdownMenuItem>
             </Link>
-            <Link href={`/${locale}/impact`}>
-              <DropdownMenuItem>
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("impact")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/${locale}/bid`}>
-              <DropdownMenuItem>
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("bid")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/${locale}/talkshow`}>
-              <DropdownMenuItem className="mt-2">
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("talkshow")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/${locale}/show`}>
-              <DropdownMenuItem className="mt-2">
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("show")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            {/* <Link href={"/goldcard"}>
-              <DropdownMenuItem className='mt-2'>
-                <div className=' h-[25px] inline-flex items-center justify-between px-1'>
-                  <span className='text-[16px] leading-[16px] font-medium'>{t("goldenCard")}</span>
-                </div>
-              </DropdownMenuItem>
-            </Link> */}
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -601,29 +587,30 @@ const Header: React.FC = () => {
                     {t("event")}
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Link href={`/${locale}/hares`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("hares")}
+                    <div className="px-3 py-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[16px] font-semibold leading-[16px] text-gray-800">
+                          {t("dreamMusicSuperstar")}
+                        </span>
+                        <span className="animate-pulse rounded-full bg-red-50 px-2 py-1 text-[12px] font-bold leading-[12px] text-red-500 shadow-sm">
+                          NOW LIVE!
+                        </span>
                       </div>
-                    </Link>
-                    <Link href={`/${locale}/impact`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("impact")}
+                    </div>
+                    <div className="ml-4">
+                      <Link href={`/${locale}/music`}>
+                        <div className="py-3 text-[16px] font-semibold leading-[16px] text-gray-700">
+                          {t("audition")}
+                        </div>
+                      </Link>
+                      <div className="py-3 text-[16px] font-semibold leading-[16px] text-gray-700 opacity-50">
+                        {t("voting")}
                       </div>
-                    </Link>
-                    <Link href={`/${locale}/bid`}>
+                    </div>
+                    <div className="mx-3 my-2 border-t border-gray-200"></div>
+                    <Link href={`/${locale}/events`}>
                       <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("bid")}
-                      </div>
-                    </Link>
-                    <Link href={`/${locale}/talkshow`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("talkshow")}
-                      </div>
-                    </Link>
-                    <Link href={`/${locale}/show`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("show")}
+                        {t("allEvents")}
                       </div>
                     </Link>
                   </AccordionContent>

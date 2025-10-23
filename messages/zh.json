@@ -603,6 +603,7 @@
     "privacyPolicyDetails": "詳細內容以《使用者協議》與《隱私權政策》為準。",
     "privacyPolicyAgreement": "點選「同意」即表示您已閱讀、理解並同意前述文件之全部內容。",
     "agree": "同意",
-    "downloading": "下載中..."
+    "downloading": "下載中...",
+    "bid": "投票"
   }
 }

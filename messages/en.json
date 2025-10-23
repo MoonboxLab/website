@@ -577,6 +577,9 @@
     "julySongs": "July Featured Songs",
     "playNow": "Play Now",
     "downloadDemo": "Download Demo",
+    "bid": "Vote",
+    "votes": "Votes",
+    "currentBid": "Current Bid",
     "previous": "Previous",
     "next": "Next",
     "authModal": {

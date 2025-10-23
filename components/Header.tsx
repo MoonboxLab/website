@@ -113,13 +113,15 @@ const Header: React.FC = () => {
                   </div>
                 </DropdownMenuItem>
               </Link>
-              <DropdownMenuItem className="cursor-not-allowed opacity-50">
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[15px] font-medium leading-[15px] text-gray-700">
-                    {t("voting")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
+              <Link href={`/${locale}/music/voting`}>
+                <DropdownMenuItem>
+                  <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                    <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                      {t("voting")}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
             </div>
             <div className="mx-3 my-2 border-t border-gray-200"></div>
             <Link href={`/${locale}/events`}>

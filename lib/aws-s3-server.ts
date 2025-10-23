@@ -127,7 +127,7 @@ export async function uploadToS3Server(
     console.log("Upload completed, result:", result);
 
     // 返回文件的公开URL
-    const avatarUrl = `${credentials.endpoint}nobody-music/${key}`;
+    const avatarUrl = `${credentials.endpoint}${bucket}/${key}`;
     console.log("Generated avatar URL:", avatarUrl);
 
     return avatarUrl;

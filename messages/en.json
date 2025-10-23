@@ -134,7 +134,15 @@
     "notLoggedInMessage": "You need to log in to view your personal profile and manage your information.",
     "loginButton": "Log In",
     "logout": "Log Out",
-    "logoutSuccess": "Successfully logged out"
+    "logoutSuccess": "Successfully logged out",
+    "loadingVoteRecords": "Loading vote records...",
+    "loadingSongRecords": "Loading song records...",
+    "noVoteRecords": "No vote records",
+    "noSongRecords": "No song records",
+    "published": "Published",
+    "pendingReview": "Pending Review",
+    "artistName": "Artist Name (Web Display)",
+    "userPlaceholder": "User {uid}"
   },
   "Declaration": {
     "spirit": "SPIRIT",

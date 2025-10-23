@@ -629,7 +629,7 @@ export default function ProfilePage() {
             {isLoadingData ? (
               <div className="py-[40px] text-center">
                 <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
-                <p className="text-gray-600">加载投票记录中...</p>
+                <p className="text-gray-600">{t("loadingVoteRecords")}</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -640,13 +640,13 @@ export default function ProfilePage() {
                         {t("date")}
                       </th>
                       <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("artistName")}
+                      </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
                         {t("songName")}
                       </th>
                       <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
                         {t("votes")}
-                      </th>
-                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                        投票者
                       </th>
                     </tr>
                   </thead>
@@ -662,13 +662,16 @@ export default function ProfilePage() {
                               {formatDate(vote.createTm)}
                             </td>
                             <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                              {/* TODO: Get artist name from user ID - for now showing user ID */}
+                              {t("userPlaceholder", {
+                                uid: voteRecord.creation.uid,
+                              })}
+                            </td>
+                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
                               {voteRecord.creation.title}
                             </td>
                             <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
                               {vote.amount} {vote.coinName}
-                            </td>
-                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                              {vote.user.slice(0, 6)}...{vote.user.slice(-4)}
                             </td>
                           </tr>
                         )),
@@ -679,7 +682,7 @@ export default function ProfilePage() {
                           colSpan={4}
                           className="px-[16px] py-[20px] text-center text-[14px] text-gray-500"
                         >
-                          暂无投票记录
+                          {t("noVoteRecords")}
                         </td>
                       </tr>
                     )}
@@ -700,7 +703,7 @@ export default function ProfilePage() {
             {isLoadingData ? (
               <div className="py-[40px] text-center">
                 <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
-                <p className="text-gray-600">加载作品记录中...</p>
+                <p className="text-gray-600">{t("loadingSongRecords")}</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -712,12 +715,6 @@ export default function ProfilePage() {
                       </th>
                       <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
                         {t("songName")}
-                      </th>
-                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                        评分
-                      </th>
-                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                        状态
                       </th>
                     </tr>
                   </thead>
@@ -734,21 +731,15 @@ export default function ProfilePage() {
                           <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
                             {creation.title}
                           </td>
-                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                            {creation.scope}
-                          </td>
-                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                            {creation.status === 1 ? "已发布" : "待审核"}
-                          </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
                         <td
-                          colSpan={4}
+                          colSpan={2}
                           className="px-[16px] py-[20px] text-center text-[14px] text-gray-500"
                         >
-                          暂无作品记录
+                          {t("noSongRecords")}
                         </td>
                       </tr>
                     )}

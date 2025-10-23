@@ -589,7 +589,22 @@
       "codePlaceholder": "请输入验证码",
       "referrerPlaceholder": "请输入推荐者邮箱或用户名",
       "loginButton": "登录",
-      "registerButton": "注册"
+      "registerButton": "注册",
+      "toast": {
+        "codeSent": "验证码已发送",
+        "codeSendFailed": "发送验证码失败",
+        "codeSendRetry": "发送验证码失败，请重试",
+        "passwordMismatch": "密码不匹配",
+        "resetSuccess": "密码重置成功！请重新登录",
+        "resetFailed": "密码重置失败",
+        "resetRetry": "密码重置失败，请重试",
+        "loginSuccess": "登录成功！",
+        "loginFailed": "登录失败",
+        "loginRetry": "登录失败，请重试",
+        "registerSuccess": "注册成功！已自动登录",
+        "registerFailed": "注册失败",
+        "registerRetry": "注册失败，请重试"
+      }
     },
     "viewAll": "所有活动",
     "privacyPolicyTitle": "使用者協議與隱私權政策說明",
@@ -609,7 +624,7 @@
     "bid": "投票",
     "vote": "投票",
     "artist": "歌手",
-    "votingMethod": "投票方式",
+    "votingMethodLabel": "投票方式",
     "voteCount": "投票數量",
     "nobodyVoteLimit": "一月只能投一票",
     "voteExplanation": "投票說明",

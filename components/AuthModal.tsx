@@ -66,14 +66,14 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
             return prev - 1;
           });
         }, 1000);
-        toast.success("验证码已发送");
+        toast.success(t("authModal.toast.codeSent"));
       } else {
         const data = await response.json();
-        toast.error(data.error || "发送验证码失败");
+        toast.error(data.error || t("authModal.toast.codeSendFailed"));
       }
     } catch (error) {
       console.error("Failed to send verification code:", error);
-      toast.error("发送验证码失败，请重试");
+      toast.error(t("authModal.toast.codeSendRetry"));
     }
   };
 
@@ -99,21 +99,21 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
             return prev - 1;
           });
         }, 1000);
-        toast.success("验证码已发送");
+        toast.success(t("authModal.toast.codeSent"));
       } else {
         const data = await response.json();
-        toast.error(data.error || "发送验证码失败");
+        toast.error(data.error || t("authModal.toast.codeSendFailed"));
       }
     } catch (error) {
       console.error("Failed to send verification code:", error);
-      toast.error("发送验证码失败，请重试");
+      toast.error(t("authModal.toast.codeSendRetry"));
     }
   };
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (forgotPassword !== forgotConfirmPassword) {
-      toast.error("密码不匹配");
+      toast.error(t("authModal.toast.passwordMismatch"));
       return;
     }
 
@@ -133,7 +133,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
       if (response.ok) {
         // Close modal and show success
         onOpenChange(false);
-        toast.success("密码重置成功！请重新登录");
+        toast.success(t("authModal.toast.resetSuccess"));
 
         // Switch to login tab and reset form
         setActiveTab("login");
@@ -144,11 +144,11 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
         setIsForgotCodeSent(false);
         setForgotCountdown(0);
       } else {
-        toast.error(data.error || "密码重置失败");
+        toast.error(data.error || t("authModal.toast.resetFailed"));
       }
     } catch (error) {
       console.error("Password reset error:", error);
-      toast.error("密码重置失败，请重试");
+      toast.error(t("authModal.toast.resetRetry"));
     }
   };
 
@@ -174,24 +174,24 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
         // Close modal and show success
         onOpenChange(false);
-        toast.success("登录成功！");
+        toast.success(t("authModal.toast.loginSuccess"));
 
         // Reset form
         setLoginEmail("");
         setLoginPassword("");
       } else {
-        toast.error(data.error || "登录失败");
+        toast.error(data.error || t("authModal.toast.loginFailed"));
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("登录失败，请重试");
+      toast.error(t("authModal.toast.loginRetry"));
     }
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (registerPassword !== confirmPassword) {
-      toast.error("密码不匹配");
+      toast.error(t("authModal.toast.passwordMismatch"));
       return;
     }
 
@@ -216,7 +216,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
         // Close modal and show success
         onOpenChange(false);
-        toast.success("注册成功！已自动登录");
+        toast.success(t("authModal.toast.registerSuccess"));
 
         // Reset form
         setRegisterEmail("");
@@ -227,11 +227,11 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
         setIsCodeSent(false);
         setCountdown(0);
       } else {
-        toast.error(data.error || "注册失败");
+        toast.error(data.error || t("authModal.toast.registerFailed"));
       }
     } catch (error) {
       console.error("Registration error:", error);
-      toast.error("注册失败，请重试");
+      toast.error(t("authModal.toast.registerRetry"));
     }
   };
 

@@ -644,7 +644,22 @@
       "codePlaceholder": "Please enter verification code",
       "referrerPlaceholder": "Please enter referrer email or username",
       "loginButton": "Login",
-      "registerButton": "Register"
+      "registerButton": "Register",
+      "toast": {
+        "codeSent": "Verification code sent",
+        "codeSendFailed": "Failed to send verification code",
+        "codeSendRetry": "Failed to send verification code, please try again",
+        "passwordMismatch": "Passwords do not match",
+        "resetSuccess": "Password reset successful! Please login again",
+        "resetFailed": "Password reset failed",
+        "resetRetry": "Password reset failed, please try again",
+        "loginSuccess": "Login successful!",
+        "loginFailed": "Login failed",
+        "loginRetry": "Login failed, please try again",
+        "registerSuccess": "Registration successful! Auto-logged in",
+        "registerFailed": "Registration failed",
+        "registerRetry": "Registration failed, please try again"
+      }
     },
     "viewAll": "View All",
     "privacyPolicyTitle": "User Agreement and Privacy Policy",

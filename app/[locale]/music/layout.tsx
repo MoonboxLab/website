@@ -79,7 +79,7 @@ export default function MusicLayout({
 
         // Check if profile is incomplete
         const isIncomplete =
-          !profileData.nickname || !profileData.fullName || !profileData.avator;
+          !profileData.alias || !profileData.fullName || !profileData.avatar;
 
         if (isIncomplete) {
           setIsProfileIncompleteModalOpen(true);

@@ -626,6 +626,8 @@
     "voteExplanationText": "Enter the number of votes, the contract will automatically convert to the corresponding token amount based on the selected voting method",
     "cancel": "Cancel",
     "submitting": "Submitting...",
-    "confirmVote": "Confirm Vote"
+    "confirmVote": "Confirm Vote",
+    "aiceVoteDescription": "Vote using $AICE tokens",
+    "firVoteDescription": "Vote using $FIR tokens"
   }
 }

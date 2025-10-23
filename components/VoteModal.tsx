@@ -70,7 +70,7 @@ export default function VoteModal({
         return {
           icon: Crown,
           label: "Nobody NFT",
-          description: "一月只能投一票",
+          description: t("nobodyVoteLimit"),
           color: "text-yellow-600",
           bgColor: "bg-yellow-50",
           borderColor: "border-yellow-200",
@@ -79,7 +79,7 @@ export default function VoteModal({
         return {
           icon: Coins,
           label: "$AICE",
-          description: "使用 $AICE 代币投票",
+          description: t("aiceVoteDescription"),
           color: "text-blue-600",
           bgColor: "bg-blue-50",
           borderColor: "border-blue-200",
@@ -88,7 +88,7 @@ export default function VoteModal({
         return {
           icon: Zap,
           label: "$FIR",
-          description: "使用 $FIR 代币投票",
+          description: t("firVoteDescription"),
           color: "text-purple-600",
           bgColor: "bg-purple-50",
           borderColor: "border-purple-200",

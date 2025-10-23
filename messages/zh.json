@@ -614,6 +614,8 @@
     "voteExplanationText": "輸入票數，合約將根據選擇的投票方式自動轉換相應的代幣數量",
     "cancel": "取消",
     "submitting": "提交中...",
-    "confirmVote": "確認投票"
+    "confirmVote": "確認投票",
+    "aiceVoteDescription": "使用 $AICE 代幣投票",
+    "firVoteDescription": "使用 $FIR 代幣投票"
   }
 }

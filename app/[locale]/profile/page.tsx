@@ -541,12 +541,6 @@ export default function ProfilePage() {
                       </Label>
                     </div>
                   </RadioGroup>
-                  <Button
-                    onClick={connectWallet}
-                    className="hover-btn-shadow mt-[12px] h-[48px] rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[16px] font-medium text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:text-white"
-                  >
-                    {t("connectWallet")}
-                  </Button>
                 </div>
 
                 <div className="grid grid-cols-1 gap-[20px] md:grid-cols-3">

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Header from "@/components/Header";
 import AuthModal from "@/components/AuthModal";
+import UploadWorkModal from "@/components/UploadWorkModal";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { Play, Download, X } from "lucide-react";
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { useMusic } from "@/lib/MusicContext";
 import { MusicPageProvider } from "@/lib/MusicPageContext";
+import { useAuthSync } from "@/lib/useAuthSync";
 import Link from "next/link";
 
 export default function MusicLayout({
@@ -26,10 +28,94 @@ export default function MusicLayout({
   const { playTrack } = useMusic();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [selectedMusicForDownload, setSelectedMusicForDownload] =
     useState<any>(null);
+  const [musics, setMusics] = useState<any[]>([]);
+
+  // Use the auth sync hook
+  const { isLoggedIn } = useAuthSync({
+    onLogin: () => {
+      setIsAuthModalOpen(false);
+    },
+    onLogout: () => {
+      setIsAuthModalOpen(false);
+      setIsUploadModalOpen(false);
+    },
+  });
+
+  const fetchMusics = async () => {
+    // Mock data for testing - same as MusicPage
+    const mockMusics = [
+      {
+        id: "1",
+        name: "Nobody Square Theme",
+        description: "Main theme song",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=1",
+        downloadUrl: "/music/downloads/nobody-square-theme-demo.zip",
+      },
+      {
+        id: "2",
+        name: "Digital Dreams",
+        description: "Electronic ambient track",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=2",
+        downloadUrl: "/music/downloads/digital-dreams-demo.zip",
+      },
+      {
+        id: "3",
+        name: "NFT Symphony",
+        description: "Orchestral piece",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=3",
+        downloadUrl: "/music/downloads/nft-symphony-demo.zip",
+      },
+      {
+        id: "4",
+        name: "Blockchain Blues",
+        description: "Jazz fusion track",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=4",
+        downloadUrl: "/music/downloads/blockchain-blues-demo.zip",
+      },
+      {
+        id: "5",
+        name: "Crypto Waves",
+        description: "Synthwave style",
+        audioUrl:
+          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
+        coverUrl: "https://picsum.photos/200/200?random=5",
+      },
+    ];
+
+    setMusics(mockMusics);
+
+    // Try to fetch real data, but fallback to mock if it fails
+    try {
+      const response = await fetch("/api/musics");
+      const data = await response.json();
+      if (data && data.length > 0) {
+        setMusics(data);
+      }
+    } catch (error) {
+      console.log("Using mock data for musics");
+    }
+  };
+
+  const handleSubmitWork = () => {
+    if (isLoggedIn) {
+      setIsUploadModalOpen(true); // 已登录：显示上传作品弹窗
+    } else {
+      setIsAuthModalOpen(true); // 未登录：显示登录弹窗
+    }
+  };
 
   const downloadMusicZip = async (musicItem?: any) => {
     setIsDownloading(true);
@@ -71,6 +157,10 @@ export default function MusicLayout({
     setSelectedMusicForDownload,
     downloadMusicZip,
   };
+
+  useEffect(() => {
+    fetchMusics();
+  }, []);
 
   return (
     <MusicPageProvider value={contextValue}>
@@ -268,7 +358,7 @@ export default function MusicLayout({
               {/* Action Buttons */}
               <div className="mt-8 flex gap-4">
                 <button
-                  onClick={() => setIsAuthModalOpen(true)}
+                  onClick={handleSubmitWork}
                   className="flex-1 rounded-lg border-2 border-black bg-white px-6 py-3 text-lg font-bold"
                 >
                   {t("submitWork")}
@@ -289,6 +379,13 @@ export default function MusicLayout({
 
         {/* Auth Modal */}
         <AuthModal open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
+
+        {/* Upload Work Modal */}
+        <UploadWorkModal
+          open={isUploadModalOpen}
+          onOpenChange={setIsUploadModalOpen}
+          musics={musics}
+        />
 
         {/* Privacy Policy Modal */}
         <Dialog open={isPrivacyModalOpen} onOpenChange={setIsPrivacyModalOpen}>

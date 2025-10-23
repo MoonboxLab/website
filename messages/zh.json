@@ -590,6 +590,13 @@
       "referrerPlaceholder": "请输入推荐者邮箱或用户名",
       "loginButton": "登录",
       "registerButton": "注册",
+      "forgotPassword": "忘记密码",
+      "newPassword": "新密码",
+      "newPasswordPlaceholder": "请输入新密码",
+      "confirmNewPassword": "确认新密码",
+      "confirmNewPasswordPlaceholder": "请再次输入新密码",
+      "sendCodeButton": "发送验证码",
+      "resetPasswordButton": "重置密码",
       "toast": {
         "codeSent": "验证码已发送",
         "codeSendFailed": "发送验证码失败",
@@ -675,6 +682,8 @@
     "votes": "票數",
     "notLoggedInTitle": "請先登入",
     "notLoggedInMessage": "您需要登入才能查看個人資料和管理您的資訊。",
-    "loginButton": "登入"
+    "loginButton": "登入",
+    "logout": "退出登入",
+    "logoutSuccess": "已退出登入"
   }
 }

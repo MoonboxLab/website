@@ -8,9 +8,13 @@ import { useTranslations } from "next-intl";
 
 interface AvatarUploadProps {
   onAvatarChange: (avatarUrl: string) => void;
+  userId?: string;
 }
 
-export default function AvatarUpload({ onAvatarChange }: AvatarUploadProps) {
+export default function AvatarUpload({
+  onAvatarChange,
+  userId,
+}: AvatarUploadProps) {
   const t = useTranslations("Profile");
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -39,12 +43,17 @@ export default function AvatarUpload({ onAvatarChange }: AvatarUploadProps) {
       // Create FormData for file upload
       const formData = new FormData();
       formData.append("avatar", file);
+      if (userId) {
+        formData.append("userId", userId);
+      }
 
-      const token = localStorage.getItem("authToken");
       const response = await fetch("/api/upload-avatar", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          uid: localStorage.getItem("user")
+            ? JSON.parse(localStorage.getItem("user")!).id
+            : "",
         },
         body: formData,
       });
@@ -85,7 +94,7 @@ export default function AvatarUpload({ onAvatarChange }: AvatarUploadProps) {
       <Button
         onClick={handleClick}
         disabled={isUploading}
-        className="hover-btn-shadow h-[40px] w-full rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[14px] font-medium text-black shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+        className="hover-btn-shadow h-[40px] w-full rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[14px] font-medium text-black shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:text-white"
       >
         {isUploading ? t("uploading") : t("changeAvatar")}
       </Button>

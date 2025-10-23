@@ -20,6 +20,12 @@ const nextConfig = {
       "www2.cs.uic.edu",
       "archive.org",
     ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.s3.ap-east-1.amazonaws.com",
+      },
+    ],
   },
 };
 

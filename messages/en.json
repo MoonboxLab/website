@@ -132,7 +132,9 @@
     "votes": "Votes",
     "notLoggedInTitle": "Please Log In",
     "notLoggedInMessage": "You need to log in to view your personal profile and manage your information.",
-    "loginButton": "Log In"
+    "loginButton": "Log In",
+    "logout": "Log Out",
+    "logoutSuccess": "Successfully logged out"
   },
   "Declaration": {
     "spirit": "SPIRIT",
@@ -645,6 +647,13 @@
       "referrerPlaceholder": "Please enter referrer email or username",
       "loginButton": "Login",
       "registerButton": "Register",
+      "forgotPassword": "Forgot Password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Please enter new password",
+      "confirmNewPassword": "Confirm New Password",
+      "confirmNewPasswordPlaceholder": "Please enter new password again",
+      "sendCodeButton": "Send Code",
+      "resetPasswordButton": "Reset Password",
       "toast": {
         "codeSent": "Verification code sent",
         "codeSendFailed": "Failed to send verification code",

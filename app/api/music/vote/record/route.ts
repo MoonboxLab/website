@@ -13,14 +13,35 @@ export async function GET(request: Request) {
       );
     }
 
+    // Get authentication headers
+    const token = request.headers.get("Authorization")?.replace("Bearer ", "");
+    const uid = request.headers.get("uid");
+
+    // Get language from cookie
+    const cookieHeader = request.headers.get("cookie") || "";
+    const localeMatch = cookieHeader.match(/NEXT_LOCALE=([^;]+)/);
+    const lang = localeMatch ? localeMatch[1] : "en";
+
+    // Prepare headers for external API call
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+      lang: lang,
+    };
+
+    // Add authentication headers if present
+    if (token) {
+      headers["token"] = token;
+    }
+    if (uid) {
+      headers["uid"] = uid;
+    }
+
     // Call music vote record API with creation ID
     const response = await fetch(
       `${API_ENDPOINTS.MUSIC_VOTE_RECORD}?id=${id}`,
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
       },
     );
 

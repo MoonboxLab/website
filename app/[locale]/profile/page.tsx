@@ -117,13 +117,17 @@ export default function ProfilePage() {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("authToken");
-      if (!token) {
+      const userData = localStorage.getItem("user");
+      const user = userData ? JSON.parse(userData) : null;
+
+      if (!token || !user?.id) {
         return;
       }
 
       const response = await fetch("/api/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
+          uid: user.id,
         },
       });
 
@@ -159,16 +163,33 @@ export default function ProfilePage() {
   const loadMusicData = async () => {
     try {
       setIsLoadingData(true);
+      const token = localStorage.getItem("authToken");
+      const userData = localStorage.getItem("user");
+      const user = userData ? JSON.parse(userData) : null;
+
+      if (!token || !user?.id) {
+        console.log("No auth token or user ID for music data loading");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        uid: user.id,
+      };
 
       // Load music creation records
-      const creationResponse = await fetch("/api/music/creation/record");
+      const creationResponse = await fetch("/api/music/creation/record", {
+        headers,
+      });
       if (creationResponse.ok) {
         const creationData = await creationResponse.json();
         setMusicCreations(creationData.data || []);
       }
 
       // Load vote records for each creation
-      const creationResponseData = await fetch("/api/music/creation/record");
+      const creationResponseData = await fetch("/api/music/creation/record", {
+        headers,
+      });
       if (creationResponseData.ok) {
         const creationData = await creationResponseData.json();
         const creations = creationData.data || [];
@@ -178,6 +199,7 @@ export default function ProfilePage() {
           try {
             const voteResponse = await fetch(
               `/api/music/vote/record?id=${creation.id}`,
+              { headers },
             );
             if (voteResponse.ok) {
               const voteData = await voteResponse.json();
@@ -229,7 +251,10 @@ export default function ProfilePage() {
     try {
       setIsSaving(true);
       const token = localStorage.getItem("authToken");
-      if (!token) {
+      const userData = localStorage.getItem("user");
+      const user = userData ? JSON.parse(userData) : null;
+
+      if (!token || !user?.id) {
         toast.error(t("notLoggedIn"));
         return;
       }
@@ -239,6 +264,7 @@ export default function ProfilePage() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          uid: user.id,
         },
         body: JSON.stringify(profile),
       });
@@ -310,7 +336,7 @@ export default function ProfilePage() {
       }),
     );
 
-    toast.success("已退出登录");
+    toast.success(t("logoutSuccess"));
   };
 
   if (isLoading) {
@@ -425,6 +451,7 @@ export default function ProfilePage() {
                         width={120}
                         height={120}
                         className="h-full w-full object-cover"
+                        unoptimized
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-gray-200">
@@ -434,7 +461,10 @@ export default function ProfilePage() {
                       </div>
                     )}
                   </div>
-                  <AvatarUpload onAvatarChange={handleAvatarChange} />
+                  <AvatarUpload
+                    onAvatarChange={handleAvatarChange}
+                    userId={profile?.id}
+                  />
                 </div>
               </div>
 
@@ -513,7 +543,7 @@ export default function ProfilePage() {
                   </RadioGroup>
                   <Button
                     onClick={connectWallet}
-                    className="hover-btn-shadow mt-[12px] h-[48px] rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[16px] font-medium text-black shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                    className="hover-btn-shadow mt-[12px] h-[48px] rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[16px] font-medium text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:text-white"
                   >
                     {t("connectWallet")}
                   </Button>
@@ -579,7 +609,7 @@ export default function ProfilePage() {
                   <Button
                     onClick={handleSaveProfile}
                     disabled={isSaving}
-                    className="hover-btn-shadow h-[56px] w-full rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[18px] font-semibold text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] md:w-auto md:px-[40px]"
+                    className="hover-btn-shadow h-[56px] w-full rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[18px] font-semibold text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:text-white md:w-auto md:px-[40px]"
                   >
                     {isSaving ? t("saving") : t("saveProfile")}
                   </Button>
@@ -587,7 +617,7 @@ export default function ProfilePage() {
                     onClick={handleLogout}
                     className="hover-btn-shadow h-[56px] w-full rounded-[8px] border-[2px] border-black bg-red-500 text-[18px] font-semibold text-white shadow-[4px_4px_0px_rgba(0,0,0,1)] md:w-auto md:px-[40px]"
                   >
-                    退出登录
+                    {t("logout")}
                   </Button>
                 </div>
               </div>

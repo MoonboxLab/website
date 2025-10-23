@@ -6,7 +6,18 @@ export async function GET(request: Request) {
     const token = request.headers.get("Authorization")?.replace("Bearer ", "");
     const uid = request.headers.get("uid");
 
+    console.log("Profile GET - Received headers:", {
+      hasAuth: !!request.headers.get("Authorization"),
+      hasUid: !!uid,
+      tokenLength: token?.length || 0,
+      uid: uid,
+    });
+
     if (!token || !uid) {
+      console.log("Profile GET - Missing auth:", {
+        token: !!token,
+        uid: !!uid,
+      });
       return NextResponse.json(
         { error: "Authorization token and uid are required" },
         { status: 401 },
@@ -19,6 +30,16 @@ export async function GET(request: Request) {
     const lang = localeMatch ? localeMatch[1] : "en";
 
     // Call new user info API
+    console.log("Profile GET - Calling external API:", {
+      url: API_ENDPOINTS.USER_INFO,
+      headers: {
+        "Content-Type": "application/json",
+        uid: uid,
+        token: token,
+        lang: lang,
+      },
+    });
+
     const response = await fetch(API_ENDPOINTS.USER_INFO, {
       method: "GET",
       headers: {
@@ -29,9 +50,16 @@ export async function GET(request: Request) {
       },
     });
 
+    console.log("Profile GET - External API response:", {
+      status: response.status,
+      statusText: response.statusText,
+    });
+
     const data = await response.json();
+    console.log("Profile GET - External API data:", data);
 
     if (!response.ok) {
+      console.log("Profile GET - External API error:", data);
       return NextResponse.json(
         { error: data.msg || "Failed to fetch user info" },
         { status: response.status },
@@ -40,7 +68,24 @@ export async function GET(request: Request) {
 
     // Handle successful response
     if (data.code === 0) {
-      return NextResponse.json(data.result.data, { status: 200 });
+      const apiData = data.result.data;
+      console.log("Profile GET - Raw API data:", apiData);
+
+      // Transform API data to match frontend format
+      const transformedData = {
+        id: apiData.id || apiData.uid || "",
+        fullName: apiData.fullName || "",
+        alias: apiData.nickname || "", // Convert nickname to alias
+        email: apiData.email || "",
+        hasNobodyNFT: apiData.holdNft || false,
+        whatsapp: apiData.whatapp || "",
+        wechat: apiData.weixin || "",
+        telegram: apiData.telegram || "",
+        avatar: apiData.avator || "",
+      };
+
+      console.log("Profile GET - Transformed data:", transformedData);
+      return NextResponse.json(transformedData, { status: 200 });
     } else {
       return NextResponse.json(
         { error: data.msg || "Failed to fetch user info" },
@@ -61,7 +106,18 @@ export async function PUT(request: Request) {
     const token = request.headers.get("Authorization")?.replace("Bearer ", "");
     const uid = request.headers.get("uid");
 
+    console.log("Profile PUT - Received headers:", {
+      hasAuth: !!request.headers.get("Authorization"),
+      hasUid: !!uid,
+      tokenLength: token?.length || 0,
+      uid: uid,
+    });
+
     if (!token || !uid) {
+      console.log("Profile PUT - Missing auth:", {
+        token: !!token,
+        uid: !!uid,
+      });
       return NextResponse.json(
         { error: "Authorization token and uid are required" },
         { status: 401 },
@@ -74,11 +130,11 @@ export async function PUT(request: Request) {
     const lang = localeMatch ? localeMatch[1] : "en";
 
     const profileData = await request.json();
+    console.log("Profile PUT - Received profile data:", profileData);
 
     // Transform frontend data to match API format
     const apiData = {
       nickname: profileData.alias || null,
-      email: profileData.email,
       fullName: profileData.fullName || null,
       avator: profileData.avatar || null,
       whatapp: profileData.whatsapp || null,
@@ -87,7 +143,21 @@ export async function PUT(request: Request) {
       holdNft: profileData.hasNobodyNFT || false,
     };
 
+    console.log("Profile PUT - Transformed API data:", apiData);
+
     // Call new user info update API
+    console.log("Profile PUT - Calling external API:", {
+      url: API_ENDPOINTS.USER_INFO,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        uid: uid,
+        token: token,
+        lang: lang,
+      },
+      body: apiData,
+    });
+
     const response = await fetch(API_ENDPOINTS.USER_INFO, {
       method: "POST",
       headers: {
@@ -99,7 +169,13 @@ export async function PUT(request: Request) {
       body: JSON.stringify(apiData),
     });
 
+    console.log("Profile PUT - External API response:", {
+      status: response.status,
+      statusText: response.statusText,
+    });
+
     const data = await response.json();
+    console.log("Profile PUT - External API data:", data);
 
     if (!response.ok) {
       return NextResponse.json(

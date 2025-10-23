@@ -277,7 +277,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 : "text-gray-600"
             }`}
           >
-            忘记密码
+            {t("authModal.forgotPassword")}
           </button>
         </div>
 
@@ -476,13 +476,17 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
                   disabled={!forgotEmail || forgotCountdown > 0}
                   className="rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium disabled:opacity-50"
                 >
-                  {forgotCountdown > 0 ? `${forgotCountdown}s` : "发送验证码"}
+                  {forgotCountdown > 0
+                    ? `${forgotCountdown}s`
+                    : t("authModal.sendCodeButton")}
                 </button>
               </div>
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-medium">新密码</label>
+              <label className="mb-2 block text-sm font-medium">
+                {t("authModal.newPassword")}
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
@@ -490,7 +494,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
                   value={forgotPassword}
                   onChange={(e) => setForgotPassword(e.target.value)}
                   className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-black focus:outline-none"
-                  placeholder="请输入新密码"
+                  placeholder={t("authModal.newPasswordPlaceholder")}
                   required
                 />
               </div>
@@ -498,7 +502,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
             <div>
               <label className="mb-2 block text-sm font-medium">
-                确认新密码
+                {t("authModal.confirmNewPassword")}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -507,7 +511,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
                   value={forgotConfirmPassword}
                   onChange={(e) => setForgotConfirmPassword(e.target.value)}
                   className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-black focus:outline-none"
-                  placeholder="请再次输入新密码"
+                  placeholder={t("authModal.confirmNewPasswordPlaceholder")}
                   required
                 />
               </div>
@@ -517,7 +521,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
               type="submit"
               className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
             >
-              重置密码
+              {t("authModal.resetPasswordButton")}
             </button>
           </form>
         )}

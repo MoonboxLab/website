@@ -1,75 +1,57 @@
-import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
+import { NextRequest, NextResponse } from "next/server";
+import {
+  uploadAvatarServer,
+  validateImageFileServer,
+} from "@/lib/aws-s3-server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const token = request.headers.get("Authorization")?.replace("Bearer ", "");
-
-    if (!token) {
-      return NextResponse.json(
-        { error: "Authorization token required" },
-        { status: 401 },
-      );
-    }
+    console.log("Avatar upload API called");
 
     const formData = await request.formData();
     const file = formData.get("avatar") as File;
+    const userId = formData.get("userId") as string;
+
+    console.log("File received:", file?.name, "Size:", file?.size);
+    console.log("User ID:", userId);
 
     if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+      console.log("No file provided");
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
+    if (!userId) {
+      console.log("No user ID provided");
       return NextResponse.json(
-        { error: "Invalid file type. Only images are allowed." },
+        { error: "User ID is required" },
         { status: 400 },
       );
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json(
-        { error: "File too large. Maximum size is 5MB." },
-        { status: 400 },
-      );
-    }
+    // 将File转换为Buffer
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    console.log("File converted to buffer, size:", buffer.length);
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = join(process.cwd(), "public", "uploads", "avatars");
+    // 验证文件类型和大小
     try {
-      await mkdir(uploadsDir, { recursive: true });
-    } catch (error) {
-      // Directory might already exist, ignore error
+      validateImageFileServer(buffer, file.type);
+      console.log("File validation passed");
+    } catch (error: any) {
+      console.log("File validation failed:", error.message);
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    // Generate unique filename
-    const timestamp = Date.now();
-    const fileExtension = file.name.split(".").pop();
-    const filename = `avatar_${timestamp}.${fileExtension}`;
-    const filepath = join(uploadsDir, filename);
+    // 上传到 S3
+    console.log("Starting S3 upload...");
+    const avatarUrl = await uploadAvatarServer(buffer, userId, request);
+    console.log("S3 upload successful, URL:", avatarUrl);
 
-    // Save file to filesystem
-    await writeFile(filepath, buffer);
-
-    // Generate public URL
-    const avatarUrl = `/uploads/avatars/${filename}`;
-
-    // Optionally, you can also save the avatar URL to your database
-    // by calling your third-party API here
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Avatar uploaded successfully",
-        avatarUrl: avatarUrl,
-      },
-      { status: 200 },
-    );
+    return NextResponse.json({
+      success: true,
+      avatarUrl,
+      message: "Avatar uploaded successfully",
+    });
   } catch (error) {
     console.error("Avatar upload error:", error);
     return NextResponse.json(

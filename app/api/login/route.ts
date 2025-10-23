@@ -5,6 +5,8 @@ export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
+    console.log("Login attempt:", { email, passwordLength: password?.length });
+
     if (!email || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },

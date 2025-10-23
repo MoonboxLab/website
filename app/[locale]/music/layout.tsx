@@ -6,7 +6,7 @@ import AuthModal from "@/components/AuthModal";
 import UploadWorkModal from "@/components/UploadWorkModal";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
-import { Play, Download, X } from "lucide-react";
+import { Play, Download, X, User } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -17,6 +17,7 @@ import { useMusic } from "@/lib/MusicContext";
 import { MusicPageProvider } from "@/lib/MusicPageContext";
 import { useAuthSync } from "@/lib/useAuthSync";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function MusicLayout({
   children,
@@ -25,26 +26,80 @@ export default function MusicLayout({
 }) {
   const t = useTranslations("Music");
   const locale = useLocale();
+  const router = useRouter();
   const { playTrack } = useMusic();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  const [isProfileIncompleteModalOpen, setIsProfileIncompleteModalOpen] =
+    useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [selectedMusicForDownload, setSelectedMusicForDownload] =
     useState<any>(null);
   const [musics, setMusics] = useState<any[]>([]);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [isCheckingProfile, setIsCheckingProfile] = useState(false);
 
   // Use the auth sync hook
-  const { isLoggedIn } = useAuthSync({
+  const { isLoggedIn, user } = useAuthSync({
     onLogin: () => {
       setIsAuthModalOpen(false);
     },
     onLogout: () => {
       setIsAuthModalOpen(false);
       setIsUploadModalOpen(false);
+      setIsProfileIncompleteModalOpen(false);
+      setUserProfile(null);
     },
   });
+
+  // Check user profile completeness
+  const checkUserProfile = async () => {
+    if (!isLoggedIn || !user) return false;
+
+    setIsCheckingProfile(true);
+    try {
+      const token = localStorage.getItem("authToken");
+      const uid = user.id;
+
+      if (!token || !uid) return false;
+
+      const response = await fetch("/api/profile", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          uid: uid.toString(),
+        },
+      });
+
+      if (response.ok) {
+        const profileData = await response.json();
+        setUserProfile(profileData);
+
+        // Check if profile is incomplete
+        const isIncomplete =
+          !profileData.nickname || !profileData.fullName || !profileData.avator;
+
+        if (isIncomplete) {
+          setIsProfileIncompleteModalOpen(true);
+          return false; // Profile is incomplete
+        }
+        return true; // Profile is complete
+      }
+      return false;
+    } catch (error) {
+      console.error("Error checking user profile:", error);
+      return false;
+    } finally {
+      setIsCheckingProfile(false);
+    }
+  };
+
+  const handleGoToProfile = () => {
+    setIsProfileIncompleteModalOpen(false);
+    router.push(`/${locale}/profile`);
+  };
 
   const fetchMusics = async () => {
     // Mock data for testing - same as MusicPage
@@ -109,9 +164,16 @@ export default function MusicLayout({
     }
   };
 
-  const handleSubmitWork = () => {
+  const handleSubmitWork = async () => {
     if (isLoggedIn) {
-      setIsUploadModalOpen(true); // 已登录：显示上传作品弹窗
+      // 已登录：先检查用户资料完整性
+      const isProfileComplete = await checkUserProfile();
+
+      // 如果资料完整，直接显示上传作品弹窗
+      if (isProfileComplete) {
+        setIsUploadModalOpen(true);
+      }
+      // 如果资料不完整，checkUserProfile会弹出提示弹窗
     } else {
       setIsAuthModalOpen(true); // 未登录：显示登录弹窗
     }
@@ -418,6 +480,47 @@ export default function MusicLayout({
               >
                 {isDownloading ? t("downloading") : t("agree")}
               </button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Profile Incomplete Modal */}
+        <Dialog
+          open={isProfileIncompleteModalOpen}
+          onOpenChange={setIsProfileIncompleteModalOpen}
+        >
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center justify-center gap-2 text-center text-xl font-bold">
+                <User className="h-6 w-6" />
+                完善个人资料
+              </DialogTitle>
+            </DialogHeader>
+            <div className="mt-4 space-y-4 text-center">
+              <div className="text-gray-600">
+                <p className="mb-2">
+                  为了更好的参与Dream Music活动，请完善您的个人资料：
+                </p>
+                <ul className="space-y-1 text-left text-sm">
+                  <li>• 昵称 (nickname)</li>
+                  <li>• 真实姓名 (fullName)</li>
+                  <li>• 头像 (avatar)</li>
+                </ul>
+              </div>
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={handleGoToProfile}
+                  className="rounded-lg border-2 border-black bg-yellow-400 px-6 py-3 text-lg font-bold transition-colors hover:bg-yellow-500"
+                >
+                  去完善资料
+                </button>
+                <button
+                  onClick={() => setIsProfileIncompleteModalOpen(false)}
+                  className="rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-lg font-bold transition-colors hover:bg-gray-200"
+                >
+                  稍后再说
+                </button>
+              </div>
             </div>
           </DialogContent>
         </Dialog>

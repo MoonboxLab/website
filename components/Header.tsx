@@ -53,7 +53,7 @@ const Header: React.FC = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Use the auth sync hook
-  const { isLoggedIn } = useAuthSync({
+  const { isLoggedIn, user } = useAuthSync({
     onLogin: () => {
       setShowAuthModal(false);
     },
@@ -61,6 +61,26 @@ const Header: React.FC = () => {
       setShowAuthModal(false);
     },
   });
+
+  // Function to mask email address
+  const maskEmail = (email: string) => {
+    if (!email) return "";
+    const [localPart, domain] = email.split("@");
+    if (localPart.length <= 2) {
+      return email; // Don't mask very short emails
+    }
+    // Show only first 2 characters of local part and first 2 characters of domain
+    const maskedLocal = localPart.substring(0, 2) + "***";
+    const maskedDomain = domain.substring(0, 2) + "***";
+    return `${maskedLocal}@${maskedDomain}`;
+  };
+
+  // Function to handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    // The useAuthSync hook will automatically detect the change and update the state
+  };
 
   const fetchPoint = useCallback(async () => {
     if (!address) return;
@@ -404,13 +424,36 @@ const Header: React.FC = () => {
         </DropdownMenu>
 
         {isLoggedIn ? (
-          <Link href={`/${locale}/profile`}>
-            <div className="sm:hover-btn-shadow ml-[10px] hidden h-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-3 shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:flex lg:h-[40px] 3xl:h-[48px]">
-              <span className="text-[21px] font-semibold leading-[16px]">
-                {t("header_profile")}
-              </span>
-            </div>
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="sm:hover-btn-shadow ml-[10px] hidden h-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-3 shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:flex lg:h-[40px] 3xl:h-[48px]">
+                <span className="text-[16px] font-semibold leading-[16px] text-black sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px]">
+                  {maskEmail(user?.email || "")}
+                </span>
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mt-2 w-[200px] rounded-[12px] py-[14px]">
+              <Link href={`/${locale}/profile`}>
+                <DropdownMenuItem>
+                  <div className="inline-flex h-[25px] items-center justify-between px-1">
+                    <User className="mr-2 h-4 w-4" />
+                    <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                      {t("header_profile")}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem onClick={handleLogout}>
+                <div className="inline-flex h-[25px] items-center justify-between px-1">
+                  <Power className="mr-2 h-4 w-4" />
+                  <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                    {t("disconnect")}
+                  </span>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <button
             onClick={() => setShowAuthModal(true)}
@@ -668,12 +711,29 @@ const Header: React.FC = () => {
 
               {/* Email Login/Profile */}
               {!isLoggedIn ? null : (
+                <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
+              )}
+              {!isLoggedIn ? null : (
+                <div className="my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]">
+                  <span>{maskEmail(user?.email || "")}</span>
+                </div>
+              )}
+              {!isLoggedIn ? null : (
                 <Link href={`/${locale}/profile`}>
                   <div className="my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]">
                     {t("header_profile")}
                     <ChevronRight width={18} height={18} />
                   </div>
                 </Link>
+              )}
+              {!isLoggedIn ? null : (
+                <div
+                  onClick={handleLogout}
+                  className="my-4 mt-1 flex cursor-pointer justify-between text-[18px] font-semibold leading-[18px]"
+                >
+                  {t("disconnect")}
+                  <ChevronRight width={18} height={18} />
+                </div>
               )}
 
               {/* Wallet Connect */}

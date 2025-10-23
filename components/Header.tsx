@@ -12,7 +12,7 @@ import { useRouter, usePathname } from "next-intl/client";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount, useDisconnect } from "wagmi";
-import { Power, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Power, X, ChevronDown, ChevronRight, User } from "lucide-react";
 import Link from "next/link";
 import CustomConnectButton from "./CustomConnectWallet";
 import { formatAddress } from "@/lib/utils";
@@ -23,6 +23,8 @@ import {
   AccordionTrigger,
 } from "./ui/accordion";
 import { getPoint } from "@/service/point";
+import AuthModal from "./AuthModal";
+import { useAuthSync } from "@/lib/useAuthSync";
 
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector("body"));
@@ -48,6 +50,17 @@ const Header: React.FC = () => {
   };
 
   const [point, setPoint] = useState("--");
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  // Use the auth sync hook
+  const { isLoggedIn } = useAuthSync({
+    onLogin: () => {
+      setShowAuthModal(false);
+    },
+    onLogout: () => {
+      setShowAuthModal(false);
+    },
+  });
 
   const fetchPoint = useCallback(async () => {
     if (!address) return;
@@ -390,6 +403,22 @@ const Header: React.FC = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        {isLoggedIn ? (
+          <Link href={`/${locale}/profile`}>
+            <div className="sm:hover-btn-shadow ml-[10px] hidden h-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-3 shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:flex lg:h-[40px] 3xl:h-[48px]">
+              <span className="text-[21px] font-semibold leading-[16px]">
+                {t("header_profile")}
+              </span>
+            </div>
+          </Link>
+        ) : (
+          <button
+            onClick={() => setShowAuthModal(true)}
+            className="sm:hover-btn-shadow ml-[10px] hidden h-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-3 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:flex lg:h-[40px] 3xl:h-[48px]"
+          >
+            {t("header_login")}
+          </button>
+        )}
         <ConnectButton.Custom>
           {({ account, chain, authenticationStatus, mounted }) => {
             const ready = mounted && authenticationStatus !== "loading";
@@ -631,6 +660,23 @@ const Header: React.FC = () => {
                   <ChevronRight width={18} height={18} />
                 </div>
               </Link>
+
+              {/* Email Login/Profile and Wallet Connect in Mobile */}
+              {isLoggedIn && (
+                <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
+              )}
+
+              {/* Email Login/Profile */}
+              {!isLoggedIn ? null : (
+                <Link href={`/${locale}/profile`}>
+                  <div className="my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]">
+                    {t("header_profile")}
+                    <ChevronRight width={18} height={18} />
+                  </div>
+                </Link>
+              )}
+
+              {/* Wallet Connect */}
               <ConnectButton.Custom>
                 {({ account, chain, authenticationStatus, mounted }) => {
                   const ready = mounted && authenticationStatus !== "loading";
@@ -644,16 +690,14 @@ const Header: React.FC = () => {
                     return null;
                   }
                   return (
-                    <>
-                      <div className=" my-1 border-b-[1px] border-gray-200"></div>
-                      <div className="my-4 flex justify-between text-[18px] font-semibold leading-[18px]  ">
-                        {t("point")}: {point}
-                      </div>
-                    </>
+                    <div className="my-4 flex justify-between text-[18px] font-semibold leading-[18px]">
+                      {t("point")}: {point}
+                    </div>
                   );
                 }}
               </ConnectButton.Custom>
-              <div className=" my-1 border-b-[1px] border-gray-200"></div>
+
+              <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
 
               <Accordion
                 type="single"
@@ -825,7 +869,16 @@ const Header: React.FC = () => {
                   </a>
                 </div>
               )}
+
               <div className=" mt-12">
+                {isLoggedIn ? null : (
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="sm:hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white px-3 text-[21px] font-bold shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                  >
+                    {t("header_login")}
+                  </button>
+                )}
                 <CustomConnectButton />
               </div>
             </ul>
@@ -944,6 +997,9 @@ const Header: React.FC = () => {
           </ConnectButton.Custom>
         )}
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
     </header>
   );
 };

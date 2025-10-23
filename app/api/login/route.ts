@@ -11,6 +11,33 @@ export async function POST(request: Request) {
       );
     }
 
+    // Mock login for testing
+    if (email === "test@example.com" && password === "123456") {
+      const mockUser = {
+        id: "mock-user-123",
+        fullName: "張三",
+        alias: "張三豐",
+        email: "test@example.com",
+        hasNobodyNFT: true,
+        whatsapp: "+886912345678",
+        wechat: "zhangsan_wx",
+        telegram: "@zhangsan_tg",
+        avatar: "/uploads/avatars/mock-avatar.jpg",
+      };
+
+      const mockToken = "mock-jwt-token-12345";
+
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Mock login successful",
+          token: mockToken,
+          user: mockUser,
+        },
+        { status: 200 },
+      );
+    }
+
     // Call third-party login API
     const response = await fetch(
       `${process.env.THIRD_PARTY_API_URL}/auth/login`,

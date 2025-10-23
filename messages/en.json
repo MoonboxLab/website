@@ -616,6 +616,16 @@
     "privacyPolicyDetails": "Detailed content is subject to the \"User Agreement\" and \"Privacy Policy\".",
     "privacyPolicyAgreement": "Clicking \"Agree\" indicates that you have read, understood, and agreed to all the content of the aforementioned documents.",
     "agree": "Agree",
-    "downloading": "Downloading..."
+    "downloading": "Downloading...",
+    "vote": "Vote",
+    "artist": "Artist",
+    "votingMethod": "Voting Method",
+    "voteCount": "Vote Count",
+    "nobodyVoteLimit": "One vote per month only",
+    "voteExplanation": "Vote Explanation",
+    "voteExplanationText": "Enter the number of votes, the contract will automatically convert to the corresponding token amount based on the selected voting method",
+    "cancel": "Cancel",
+    "submitting": "Submitting...",
+    "confirmVote": "Confirm Vote"
   }
 }

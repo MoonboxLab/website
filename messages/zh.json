@@ -604,6 +604,16 @@
     "privacyPolicyAgreement": "點選「同意」即表示您已閱讀、理解並同意前述文件之全部內容。",
     "agree": "同意",
     "downloading": "下載中...",
-    "bid": "投票"
+    "bid": "投票",
+    "vote": "投票",
+    "artist": "歌手",
+    "votingMethod": "投票方式",
+    "voteCount": "投票數量",
+    "nobodyVoteLimit": "一月只能投一票",
+    "voteExplanation": "投票說明",
+    "voteExplanationText": "輸入票數，合約將根據選擇的投票方式自動轉換相應的代幣數量",
+    "cancel": "取消",
+    "submitting": "提交中...",
+    "confirmVote": "確認投票"
   }
 }

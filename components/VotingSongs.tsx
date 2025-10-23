@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Play, Ticket } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMusic } from "@/lib/MusicContext";
+import VoteModal from "./VoteModal";
 
 interface VotingSongsProps {
   musics: any[];
@@ -18,6 +20,23 @@ export default function VotingSongs({
 }: VotingSongsProps) {
   const t = useTranslations("Music");
   const { playTrack } = useMusic();
+  const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
+  const [selectedMusic, setSelectedMusic] = useState<any>(null);
+
+  const handleVoteClick = (music: any) => {
+    setSelectedMusic(music);
+    setIsVoteModalOpen(true);
+  };
+
+  const handleVote = async (voteData: {
+    musicId: string;
+    voteType: "nobody" | "aice" | "fir";
+    amount: number;
+  }) => {
+    // TODO: 实现合约调用
+    console.log("Voting:", voteData);
+    // 这里将来会调用合约进行投票
+  };
 
   return (
     <div className="mt-12">
@@ -219,10 +238,10 @@ export default function VotingSongs({
                     {t("playNow")}
                   </button>
                   <button
-                    onClick={() => onBid(item)}
+                    onClick={() => handleVoteClick(item)}
                     className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-yellow-400 px-2 py-1 text-xs font-bold hover:bg-yellow-500"
                   >
-                    {t("bid")}
+                    {t("vote")}
                   </button>
                 </div>
               </div>
@@ -230,6 +249,14 @@ export default function VotingSongs({
           })}
         </div>
       </div>
+
+      {/* 投票弹窗 */}
+      <VoteModal
+        isOpen={isVoteModalOpen}
+        onClose={() => setIsVoteModalOpen(false)}
+        music={selectedMusic}
+        onVote={handleVote}
+      />
     </div>
   );
 }

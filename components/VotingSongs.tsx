@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Play, Ticket } from "lucide-react";
+import { Play, Ticket, Vote } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMusic } from "@/lib/MusicContext";
 import VoteModal from "./VoteModal";
@@ -241,6 +241,7 @@ export default function VotingSongs({
                     onClick={() => handleVoteClick(item)}
                     className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-yellow-400 px-2 py-1 text-xs font-bold hover:bg-yellow-500"
                   >
+                    <Vote size={12} />
                     {t("vote")}
                   </button>
                 </div>

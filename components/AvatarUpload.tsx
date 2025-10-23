@@ -61,7 +61,6 @@ export default function AvatarUpload({
       if (response.ok) {
         const data = await response.json();
         onAvatarChange(data.avatarUrl);
-        toast.success(t("avatarUploadSuccess"));
       } else {
         const errorData = await response.json();
         toast.error(errorData.error || t("avatarUploadError"));

@@ -290,11 +290,52 @@ export default function ProfilePage() {
     }
   };
 
-  const handleAvatarChange = (newAvatarUrl: string) => {
+  const handleAvatarChange = async (newAvatarUrl: string) => {
     setProfile((prev) => ({
       ...prev,
       avatar: newAvatarUrl,
     }));
+
+    // Auto-save profile after avatar update
+    try {
+      const token = localStorage.getItem("authToken");
+      const userData = localStorage.getItem("user");
+      const user = userData ? JSON.parse(userData) : null;
+
+      if (!token || !user?.id) {
+        toast.error(t("notLoggedIn"));
+        return;
+      }
+
+      const updatedProfile = { ...profile, avatar: newAvatarUrl };
+
+      const response = await fetch("/api/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          uid: user.id,
+        },
+        body: JSON.stringify(updatedProfile),
+      });
+
+      if (response.ok) {
+        toast.success(t("avatarUploadSuccess"));
+        // Update localStorage with new profile data
+        const userData = localStorage.getItem("user");
+        if (userData) {
+          const user = JSON.parse(userData);
+          const updatedUser = { ...user, ...updatedProfile };
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+        }
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || t("saveError"));
+      }
+    } catch (error) {
+      console.error("Error saving profile after avatar update:", error);
+      toast.error(t("saveError"));
+    }
   };
 
   const connectWallet = () => {

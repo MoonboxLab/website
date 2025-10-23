@@ -178,7 +178,7 @@ export default function VotingSongs({
                     className="h-full w-full object-cover transition-all duration-300 hover:brightness-110"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-white/30 group-hover:shadow-[inset_0_-2px_8px_rgba(255,255,255,0.6)] group-hover:backdrop-brightness-110">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-white/30 group-hover:shadow-[inset_0_-2px_5px_rgba(255,255,255,0.6)] group-hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] group-hover:backdrop-brightness-110">
                       <div className="ml-1 h-0 w-0 border-y-[6px] border-l-[8px] border-y-transparent border-l-white transition-all duration-300 group-hover:scale-110"></div>
                     </div>
                   </div>

@@ -704,6 +704,17 @@
     "submitting": "Submitting...",
     "confirmVote": "Confirm Vote",
     "aiceVoteDescription": "Vote using $AICE tokens",
-    "firVoteDescription": "Vote using $FIR tokens"
+    "firVoteDescription": "Vote using $FIR tokens",
+    "profileIncompleteModal": {
+      "title": "Complete Your Profile",
+      "description": "To better participate in Dream Music activities, please complete your profile:",
+      "requirements": {
+        "nickname": "• Nickname",
+        "fullName": "• Full Name",
+        "avatar": "• Avatar"
+      },
+      "completeProfile": "Complete Profile",
+      "later": "Later"
+    }
   }
 }

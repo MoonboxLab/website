@@ -493,18 +493,18 @@ export default function MusicLayout({
             <DialogHeader>
               <DialogTitle className="flex items-center justify-center gap-2 text-center text-xl font-bold">
                 <User className="h-6 w-6" />
-                完善个人资料
+                {t("profileIncompleteModal.title")}
               </DialogTitle>
             </DialogHeader>
             <div className="mt-4 space-y-4 text-center">
               <div className="text-gray-600">
                 <p className="mb-2">
-                  为了更好的参与Dream Music活动，请完善您的个人资料：
+                  {t("profileIncompleteModal.description")}
                 </p>
                 <ul className="space-y-1 text-left text-sm">
-                  <li>• 昵称 (nickname)</li>
-                  <li>• 真实姓名 (fullName)</li>
-                  <li>• 头像 (avatar)</li>
+                  <li>{t("profileIncompleteModal.requirements.nickname")}</li>
+                  <li>{t("profileIncompleteModal.requirements.fullName")}</li>
+                  <li>{t("profileIncompleteModal.requirements.avatar")}</li>
                 </ul>
               </div>
               <div className="flex justify-center gap-3">
@@ -512,13 +512,13 @@ export default function MusicLayout({
                   onClick={handleGoToProfile}
                   className="rounded-lg border-2 border-black bg-yellow-400 px-6 py-3 text-lg font-bold transition-colors hover:bg-yellow-500"
                 >
-                  去完善资料
+                  {t("profileIncompleteModal.completeProfile")}
                 </button>
                 <button
                   onClick={() => setIsProfileIncompleteModalOpen(false)}
                   className="rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-lg font-bold transition-colors hover:bg-gray-200"
                 >
-                  稍后再说
+                  {t("profileIncompleteModal.later")}
                 </button>
               </div>
             </div>

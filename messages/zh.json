@@ -640,7 +640,18 @@
     "submitting": "提交中...",
     "confirmVote": "確認投票",
     "aiceVoteDescription": "使用 $AICE 代幣投票",
-    "firVoteDescription": "使用 $FIR 代幣投票"
+    "firVoteDescription": "使用 $FIR 代幣投票",
+    "profileIncompleteModal": {
+      "title": "完善個人資料",
+      "description": "為了更好的參與Dream Music活動，請完善您的個人資料：",
+      "requirements": {
+        "nickname": "• 昵稱",
+        "fullName": "• 真實姓名",
+        "avatar": "• 頭像"
+      },
+      "completeProfile": "去完善資料",
+      "later": "稍後再說"
+    }
   },
   "Profile": {
     "title": "個人資料",

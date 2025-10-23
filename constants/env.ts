@@ -1,0 +1,15 @@
+// API Configuration
+export const API_BASE_URL = "http://geena.nobody.xyz";
+
+// API Endpoints
+export const API_ENDPOINTS = {
+  USER_REGISTER: `${API_BASE_URL}/api/user/register`,
+  USER_LOGIN: `${API_BASE_URL}/api/user/login`,
+  USER_INFO: `${API_BASE_URL}/api/user/info`,
+  USER_PROFILE: `${API_BASE_URL}/api/user/profile`,
+  USER_RESET_PASSWORD: `${API_BASE_URL}/api/user/reset/password`,
+  SEND_EMAIL_CODE: `${API_BASE_URL}/api/sys/mail`,
+  SEND_VERIFICATION_CODE: `${API_BASE_URL}/api/user/send-verification-code`,
+  MUSIC_CREATION_RECORD: `${API_BASE_URL}/api/music/creation/record`,
+  MUSIC_VOTE_RECORD: `${API_BASE_URL}/api/music/vote/record`,
+} as const;

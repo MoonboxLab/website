@@ -25,6 +25,34 @@ interface UserProfile {
   avatar?: string;
 }
 
+interface MusicCreation {
+  id: number;
+  uid: number;
+  templateId: number;
+  url: string;
+  title: string;
+  month: number;
+  scope: number;
+  status: number;
+  createTm: number;
+}
+
+interface VoteRecord {
+  id: number;
+  chain: string;
+  creationId: number;
+  user: string;
+  coinName: string;
+  coin: string | null;
+  amount: number;
+  createTm: number;
+}
+
+interface VoteRecordResponse {
+  data: VoteRecord[];
+  creation: MusicCreation;
+}
+
 export default function ProfilePage() {
   const t = useTranslations("Profile");
   const [profile, setProfile] = useState<UserProfile>({
@@ -41,6 +69,9 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [musicCreations, setMusicCreations] = useState<MusicCreation[]>([]);
+  const [voteRecords, setVoteRecords] = useState<VoteRecordResponse[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(false);
 
   // Use the auth sync hook
   const { isLoggedIn } = useAuthSync({
@@ -68,11 +99,13 @@ export default function ProfilePage() {
   useEffect(() => {
     if (isLoggedIn) {
       loadUserProfile();
+      loadMusicData();
     } else {
       // Check if user is already logged in from localStorage
       const token = localStorage.getItem("authToken");
       if (token) {
         loadUserProfile();
+        loadMusicData();
       } else {
         // User is not logged in, show auth modal
         setShowAuthModal(true);
@@ -121,6 +154,65 @@ export default function ProfilePage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const loadMusicData = async () => {
+    try {
+      setIsLoadingData(true);
+
+      // Load music creation records
+      const creationResponse = await fetch("/api/music/creation/record");
+      if (creationResponse.ok) {
+        const creationData = await creationResponse.json();
+        setMusicCreations(creationData.data || []);
+      }
+
+      // Load vote records for each creation
+      const creationResponseData = await fetch("/api/music/creation/record");
+      if (creationResponseData.ok) {
+        const creationData = await creationResponseData.json();
+        const creations = creationData.data || [];
+
+        // Load vote records for each creation
+        const votePromises = creations.map(async (creation: MusicCreation) => {
+          try {
+            const voteResponse = await fetch(
+              `/api/music/vote/record?id=${creation.id}`,
+            );
+            if (voteResponse.ok) {
+              const voteData = await voteResponse.json();
+              return voteData;
+            }
+            return null;
+          } catch (error) {
+            console.error(
+              `Error loading vote records for creation ${creation.id}:`,
+              error,
+            );
+            return null;
+          }
+        });
+
+        const voteResults = await Promise.all(votePromises);
+        const validVoteResults = voteResults.filter(
+          (result) => result !== null,
+        );
+        setVoteRecords(validVoteResults);
+      }
+    } catch (error) {
+      console.error("Error loading music data:", error);
+    } finally {
+      setIsLoadingData(false);
+    }
+  };
+
+  const formatDate = (timestamp: number) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
   };
 
   const handleInputChange = (
@@ -510,70 +602,67 @@ export default function ProfilePage() {
             <h2 className="mb-[20px] text-[20px] font-semibold text-black">
               {t("votingHistory")}
             </h2>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b-[2px] border-black">
-                    <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                      {t("date")}
-                    </th>
-                    <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                      {t("singer")}
-                    </th>
-                    <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                      {t("songName")}
-                    </th>
-                    <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                      {t("votes")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-gray-200">
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      2025/09/11
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      張藝興
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      Lay
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      10 Nobody NFT
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-200">
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      2025/09/11
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      周杰倫
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      Lay
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      100 $AICE
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-200">
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      2025/09/10
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      張藝興
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      告白氣球
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      10 Nobody NFT
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {isLoadingData ? (
+              <div className="py-[40px] text-center">
+                <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
+                <p className="text-gray-600">加载投票记录中...</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b-[2px] border-black">
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("date")}
+                      </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("songName")}
+                      </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("votes")}
+                      </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        投票者
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {voteRecords.length > 0 ? (
+                      voteRecords.flatMap((voteRecord) =>
+                        voteRecord.data.map((vote, index) => (
+                          <tr
+                            key={`${voteRecord.creation.id}-${vote.id}-${index}`}
+                            className="border-b border-gray-200"
+                          >
+                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                              {formatDate(vote.createTm)}
+                            </td>
+                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                              {voteRecord.creation.title}
+                            </td>
+                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                              {vote.amount} {vote.coinName}
+                            </td>
+                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                              {vote.user.slice(0, 6)}...{vote.user.slice(-4)}
+                            </td>
+                          </tr>
+                        )),
+                      )
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={4}
+                          className="px-[16px] py-[20px] text-center text-[14px] text-gray-500"
+                        >
+                          暂无投票记录
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           {/* Song History Card */}
@@ -584,46 +673,65 @@ export default function ProfilePage() {
             <h2 className="mb-[20px] text-[20px] font-semibold text-black">
               {t("songHistory")}
             </h2>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b-[2px] border-black">
-                    <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                      {t("date")}
-                    </th>
-                    <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                      {t("songName")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-gray-200">
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      2025/09/11
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      A
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-200">
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      2025/09/11
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      A
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-200">
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      2025/09/11
-                    </td>
-                    <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                      A
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {isLoadingData ? (
+              <div className="py-[40px] text-center">
+                <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
+                <p className="text-gray-600">加载作品记录中...</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b-[2px] border-black">
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("date")}
+                      </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("songName")}
+                      </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        评分
+                      </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        状态
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {musicCreations.length > 0 ? (
+                      musicCreations.map((creation) => (
+                        <tr
+                          key={creation.id}
+                          className="border-b border-gray-200"
+                        >
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {formatDate(creation.createTm)}
+                          </td>
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {creation.title}
+                          </td>
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {creation.scope}
+                          </td>
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {creation.status === 1 ? "已发布" : "待审核"}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={4}
+                          className="px-[16px] py-[20px] text-center text-[14px] text-gray-500"
+                        >
+                          暂无作品记录
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       </div>

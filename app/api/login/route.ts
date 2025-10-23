@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { API_ENDPOINTS } from "@/constants/env";
 
 export async function POST(request: Request) {
   try {
@@ -10,6 +11,11 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
+
+    // Get language from cookie
+    const cookieHeader = request.headers.get("cookie") || "";
+    const localeMatch = cookieHeader.match(/NEXT_LOCALE=([^;]+)/);
+    const lang = localeMatch ? localeMatch[1] : "en";
 
     // Mock login for testing
     if (email === "test@example.com" && password === "123456") {
@@ -38,40 +44,46 @@ export async function POST(request: Request) {
       );
     }
 
-    // Call third-party login API
-    const response = await fetch(
-      `${process.env.THIRD_PARTY_API_URL}/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.THIRD_PARTY_API_KEY}`,
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+    // Call new login API
+    const formData = new URLSearchParams();
+    formData.append("username", email); // Using email as username
+    formData.append("password", password);
+
+    const response = await fetch(API_ENDPOINTS.USER_LOGIN, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        lang: lang,
       },
-    );
+      body: formData,
+    });
 
     const data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.message || "Login failed" },
+        { error: data.msg || "Login failed" },
         { status: response.status },
       );
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Login successful",
-        token: data.token,
-        user: data.user,
-      },
-      { status: 200 },
-    );
+    // Handle successful response
+    if (data.code === 0) {
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Login successful",
+          token: data.result.data.token,
+          user: data.result.data,
+        },
+        { status: 200 },
+      );
+    } else {
+      return NextResponse.json(
+        { error: data.msg || "Login failed" },
+        { status: 400 },
+      );
+    }
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json({ error: "Login failed" }, { status: 500 });

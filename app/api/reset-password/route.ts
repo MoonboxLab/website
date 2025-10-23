@@ -3,10 +3,13 @@ import { API_ENDPOINTS } from "@/constants/env";
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const { email, password, code } = await request.json();
 
-    if (!email) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    if (!email || !password || !code) {
+      return NextResponse.json(
+        { error: "Email, password, and verification code are required" },
+        { status: 400 },
+      );
     }
 
     // Get language from cookie
@@ -14,11 +17,13 @@ export async function POST(request: Request) {
     const localeMatch = cookieHeader.match(/NEXT_LOCALE=([^;]+)/);
     const lang = localeMatch ? localeMatch[1] : "en";
 
-    // Call new email verification code API
+    // Call reset password API
     const formData = new URLSearchParams();
     formData.append("email", email);
+    formData.append("password", password);
+    formData.append("code", code);
 
-    const response = await fetch(API_ENDPOINTS.SEND_EMAIL_CODE, {
+    const response = await fetch(API_ENDPOINTS.USER_RESET_PASSWORD, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -31,7 +36,7 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || "Failed to send verification code" },
+        { error: data.msg || "Failed to reset password" },
         { status: response.status },
       );
     }
@@ -41,24 +46,20 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: true,
-          message: "Verification code sent successfully",
-          // In development, return the code for testing
-          ...(process.env.NODE_ENV === "development" && {
-            code: data.result?.code,
-          }),
+          message: "Password reset successfully",
         },
         { status: 200 },
       );
     } else {
       return NextResponse.json(
-        { error: data.msg || "Failed to send verification code" },
+        { error: data.msg || "Failed to reset password" },
         { status: 400 },
       );
     }
   } catch (error) {
-    console.error("Error sending verification code:", error);
+    console.error("Password reset error:", error);
     return NextResponse.json(
-      { error: "Failed to send verification code" },
+      { error: "Failed to reset password" },
       { status: 500 },
     );
   }

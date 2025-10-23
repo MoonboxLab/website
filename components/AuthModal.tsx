@@ -19,7 +19,9 @@ interface AuthModalProps {
 
 export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const t = useTranslations("Music");
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  const [activeTab, setActiveTab] = useState<"login" | "register" | "forgot">(
+    "login",
+  );
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
@@ -33,6 +35,14 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const [verificationCode, setVerificationCode] = useState("");
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
+
+  // Forgot password form state
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotPassword, setForgotPassword] = useState("");
+  const [forgotConfirmPassword, setForgotConfirmPassword] = useState("");
+  const [forgotVerificationCode, setForgotVerificationCode] = useState("");
+  const [isForgotCodeSent, setIsForgotCodeSent] = useState(false);
+  const [forgotCountdown, setForgotCountdown] = useState(0);
 
   const handleSendCode = async () => {
     if (!registerEmail) return;
@@ -56,9 +66,89 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
             return prev - 1;
           });
         }, 1000);
+        toast.success("验证码已发送");
+      } else {
+        const data = await response.json();
+        toast.error(data.error || "发送验证码失败");
       }
     } catch (error) {
       console.error("Failed to send verification code:", error);
+      toast.error("发送验证码失败，请重试");
+    }
+  };
+
+  const handleSendForgotCode = async () => {
+    if (!forgotEmail) return;
+
+    try {
+      const response = await fetch("/api/send-verification-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: forgotEmail }),
+      });
+
+      if (response.ok) {
+        setIsForgotCodeSent(true);
+        setForgotCountdown(60);
+        const timer = setInterval(() => {
+          setForgotCountdown((prev) => {
+            if (prev <= 1) {
+              clearInterval(timer);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+        toast.success("验证码已发送");
+      } else {
+        const data = await response.json();
+        toast.error(data.error || "发送验证码失败");
+      }
+    } catch (error) {
+      console.error("Failed to send verification code:", error);
+      toast.error("发送验证码失败，请重试");
+    }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (forgotPassword !== forgotConfirmPassword) {
+      toast.error("密码不匹配");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: forgotEmail,
+          password: forgotPassword,
+          code: forgotVerificationCode,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Close modal and show success
+        onOpenChange(false);
+        toast.success("密码重置成功！请重新登录");
+
+        // Switch to login tab and reset form
+        setActiveTab("login");
+        setForgotEmail("");
+        setForgotPassword("");
+        setForgotConfirmPassword("");
+        setForgotVerificationCode("");
+        setIsForgotCodeSent(false);
+        setForgotCountdown(0);
+      } else {
+        toast.error(data.error || "密码重置失败");
+      }
+    } catch (error) {
+      console.error("Password reset error:", error);
+      toast.error("密码重置失败，请重试");
     }
   };
 
@@ -120,12 +210,15 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
       const data = await response.json();
 
       if (response.ok) {
+        // Store token and user data in localStorage (auto-login)
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
         // Close modal and show success
         onOpenChange(false);
-        toast.success("注册成功！请登录");
+        toast.success("注册成功！已自动登录");
 
-        // Switch to login tab and reset form
-        setActiveTab("login");
+        // Reset form
         setRegisterEmail("");
         setRegisterPassword("");
         setConfirmPassword("");
@@ -175,6 +268,16 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
             }`}
           >
             {t("authModal.register")}
+          </button>
+          <button
+            onClick={() => setActiveTab("forgot")}
+            className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
+              activeTab === "forgot"
+                ? "bg-white text-black shadow-sm"
+                : "text-gray-600"
+            }`}
+          >
+            忘记密码
           </button>
         </div>
 
@@ -328,6 +431,93 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
               className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
             >
               {t("authModal.registerButton")}
+            </button>
+          </form>
+        )}
+
+        {/* Forgot Password Form */}
+        {activeTab === "forgot" && (
+          <form onSubmit={handleForgotPassword} className="space-y-4">
+            <div>
+              <label className="mb-2 block text-sm font-medium">
+                {t("authModal.email")}
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="email"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-black focus:outline-none"
+                  placeholder={t("authModal.emailPlaceholder")}
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium">
+                {t("authModal.verificationCode")}
+              </label>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    value={forgotVerificationCode}
+                    onChange={(e) => setForgotVerificationCode(e.target.value)}
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-black focus:outline-none"
+                    placeholder={t("authModal.codePlaceholder")}
+                    required
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSendForgotCode}
+                  disabled={!forgotEmail || forgotCountdown > 0}
+                  className="rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium disabled:opacity-50"
+                >
+                  {forgotCountdown > 0 ? `${forgotCountdown}s` : "发送验证码"}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium">新密码</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="password"
+                  value={forgotPassword}
+                  onChange={(e) => setForgotPassword(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-black focus:outline-none"
+                  placeholder="请输入新密码"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium">
+                确认新密码
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="password"
+                  value={forgotConfirmPassword}
+                  onChange={(e) => setForgotConfirmPassword(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-black focus:outline-none"
+                  placeholder="请再次输入新密码"
+                  required
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+            >
+              重置密码
             </button>
           </form>
         )}

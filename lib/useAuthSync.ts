@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
+  user: any | null;
 }
 
 interface UseAuthSyncOptions {
@@ -15,22 +16,28 @@ export function useAuthSync(options: UseAuthSyncOptions = {}) {
   const { onLogin, onLogout, checkInterval = 2000 } = options;
   const [authState, setAuthState] = useState<AuthState>(() => {
     const token = localStorage.getItem("authToken");
+    const userStr = localStorage.getItem("user");
+    const user = userStr ? JSON.parse(userStr) : null;
     return {
       isLoggedIn: !!token,
       token,
+      user,
     };
   });
 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "authToken") {
-        const newToken = e.newValue;
+      if (e.key === "authToken" || e.key === "user") {
+        const newToken = localStorage.getItem("authToken");
+        const userStr = localStorage.getItem("user");
+        const newUser = userStr ? JSON.parse(userStr) : null;
         const wasLoggedIn = authState.isLoggedIn;
         const isNowLoggedIn = !!newToken;
 
         setAuthState({
           isLoggedIn: isNowLoggedIn,
           token: newToken,
+          user: newUser,
         });
 
         if (!wasLoggedIn && isNowLoggedIn) {
@@ -44,6 +51,8 @@ export function useAuthSync(options: UseAuthSyncOptions = {}) {
     // Check localStorage periodically for mobile compatibility
     const checkAuthStatus = () => {
       const token = localStorage.getItem("authToken");
+      const userStr = localStorage.getItem("user");
+      const user = userStr ? JSON.parse(userStr) : null;
       const wasLoggedIn = authState.isLoggedIn;
       const isNowLoggedIn = !!token;
 
@@ -51,6 +60,7 @@ export function useAuthSync(options: UseAuthSyncOptions = {}) {
         setAuthState({
           isLoggedIn: isNowLoggedIn,
           token,
+          user,
         });
 
         if (!wasLoggedIn && isNowLoggedIn) {

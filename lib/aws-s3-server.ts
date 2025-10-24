@@ -164,6 +164,36 @@ export async function uploadAvatarServer(
   }
 }
 
+// 上传作品文件（服务端）
+export async function uploadWorkFileServer(
+  file: Buffer,
+  userId: string,
+  sampleSong: string,
+  originalFileName: string,
+  request?: Request,
+): Promise<string> {
+  try {
+    // 生成唯一的文件名
+    const timestamp = Date.now();
+    const fileExtension = originalFileName.split(".").pop() || "mp3";
+    const key = `works/${userId}/${sampleSong}/${timestamp}.${fileExtension}`;
+
+    // 上传到 S3
+    const workFileUrl = await uploadToS3Server(
+      file,
+      key,
+      undefined,
+      "audio/mpeg",
+      request,
+    );
+
+    return workFileUrl;
+  } catch (error) {
+    console.error("Work file upload error:", error);
+    throw new Error("Failed to upload work file");
+  }
+}
+
 // 验证文件类型（服务端）
 export function validateImageFileServer(
   file: Buffer,
@@ -186,6 +216,35 @@ export function validateImageFileServer(
 
   if (file.length > maxSize) {
     throw new Error("File size too large. Maximum size is 5MB.");
+  }
+
+  return true;
+}
+
+// 验证音频文件类型（服务端）
+export function validateAudioFileServer(
+  file: Buffer,
+  contentType: string,
+): boolean {
+  const allowedTypes = [
+    "audio/mpeg",
+    "audio/mp3",
+    "audio/wav",
+    "audio/ogg",
+    "audio/m4a",
+    "audio/aac",
+    "audio/flac",
+  ];
+  const maxSize = 50 * 1024 * 1024; // 50MB for audio files
+
+  if (!allowedTypes.includes(contentType)) {
+    throw new Error(
+      "Invalid file type. Only MP3, WAV, OGG, M4A, AAC, and FLAC are allowed.",
+    );
+  }
+
+  if (file.length > maxSize) {
+    throw new Error("File size too large. Maximum size is 50MB.");
   }
 
   return true;

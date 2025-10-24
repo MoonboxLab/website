@@ -17,5 +17,6 @@ export const API_ENDPOINTS = {
   MUSIC_CREATION_MONTH_LIST: `${API_BASE_URL}/api/music/creation/month/list`,
   MUSIC_TEMPLATE_LIST: `${API_BASE_URL}/api/music/template/list`,
   MUSIC_CREATION_VOTE_LIST: `${API_BASE_URL}/api/music/creation/vote/list`,
+  MUSIC_CREATION: `${API_BASE_URL}/api/music/creation`,
   STS_CREDENTIALS: `${API_BASE_URL}/api/sys/sts`,
 } as const;

@@ -100,7 +100,7 @@ export default function AvatarUpload({
         className={`absolute inset-0 flex items-center justify-center rounded-[12px] bg-black/50 transition-opacity duration-200 ${
           disabled || isUploading || externalIsUploading
             ? "cursor-not-allowed opacity-100"
-            : "cursor-pointer opacity-0 hover:opacity-100"
+            : "cursor-pointer opacity-20 hover:opacity-100"
         }`}
       >
         <div className="flex flex-col items-center justify-center text-white">

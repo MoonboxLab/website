@@ -190,22 +190,16 @@ export default function MusicLayout({
     try {
       // 如果指定了特定音乐，使用其downloadUrl
       if (musicItem && musicItem.downloadUrl) {
-        const response = await fetch(musicItem.downloadUrl);
-        if (!response.ok) {
-          throw new Error("Download failed");
-        }
-
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
+        // 直接使用a标签打开downloadUrl
         const link = document.createElement("a");
-        link.href = url;
+        link.href = musicItem.downloadUrl;
         link.download = `${musicItem.name
           .toLowerCase()
           .replace(/\s+/g, "-")}-demo.zip`;
+        link.target = "_blank";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
       }
 
       // 关闭隐私政策弹窗

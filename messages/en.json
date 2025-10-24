@@ -673,6 +673,12 @@
     "authModal": {
       "title": "Login / Register",
       "subtitle": "Please choose to login or register a new account",
+      "loginTitle": "Login",
+      "loginSubtitle": "Enter your credentials to access your account",
+      "registerTitle": "Register",
+      "registerSubtitle": "Create a new account to get started",
+      "forgotTitle": "Reset Password",
+      "forgotSubtitle": "Enter your email to reset your password",
       "login": "Login",
       "register": "Register",
       "email": "Email",
@@ -696,6 +702,10 @@
       "confirmNewPasswordPlaceholder": "Please enter new password again",
       "sendCodeButton": "Send Code",
       "resetPasswordButton": "Reset Password",
+      "registerLink": "Don't have an account? Register",
+      "loginLink": "Already have an account? Login",
+      "backToLogin": "Back to Login",
+      "forgotPasswordDescription": "Enter your email to reset your password",
       "toast": {
         "codeSent": "Verification code sent",
         "codeSendFailed": "Failed to send verification code",

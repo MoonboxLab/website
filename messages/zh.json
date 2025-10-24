@@ -593,6 +593,12 @@
     "authModal": {
       "title": "登录 / 注册",
       "subtitle": "请选择登录或注册新账户",
+      "loginTitle": "登录",
+      "loginSubtitle": "输入您的凭据以访问您的账户",
+      "registerTitle": "注册",
+      "registerSubtitle": "创建新账户开始使用",
+      "forgotTitle": "重置密码",
+      "forgotSubtitle": "输入您的邮箱以重置密码",
       "login": "登录",
       "register": "注册",
       "email": "邮箱",
@@ -616,6 +622,10 @@
       "confirmNewPasswordPlaceholder": "请再次输入新密码",
       "sendCodeButton": "发送验证码",
       "resetPasswordButton": "重置密码",
+      "registerLink": "还没有账户？注册",
+      "loginLink": "已有账户？登录",
+      "backToLogin": "返回登录",
+      "forgotPasswordDescription": "输入您的邮箱以重置密码",
       "toast": {
         "codeSent": "验证码已发送",
         "codeSendFailed": "发送验证码失败",

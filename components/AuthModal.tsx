@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Mail, Lock, UserPlus, Loader2 } from "lucide-react";
+import { Mail, Lock, UserPlus, Loader2, ChevronLeft } from "lucide-react";
 import { toast } from "react-toastify";
 import {
   Dialog,
@@ -15,13 +15,20 @@ import {
 interface AuthModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  title?: string;
+  subtitle?: string;
 }
 
-export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
+export default function AuthModal({
+  open,
+  onOpenChange,
+  title,
+  subtitle,
+}: AuthModalProps) {
   const t = useTranslations("Music");
-  const [activeTab, setActiveTab] = useState<"login" | "register" | "forgot">(
-    "login",
-  );
+  const [currentPage, setCurrentPage] = useState<
+    "login" | "register" | "forgot"
+  >("login");
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
@@ -143,8 +150,8 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
         onOpenChange(false);
         toast.success(t("authModal.toast.resetSuccess"));
 
-        // Switch to login tab and reset form
-        setActiveTab("login");
+        // Switch to login page and reset form
+        setCurrentPage("login");
         setForgotEmail("");
         setForgotPassword("");
         setForgotConfirmPassword("");
@@ -248,49 +255,46 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
       <DialogContent className="w-full max-w-md border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]">
         <DialogHeader className="text-center">
           <DialogTitle className="text-2xl font-bold">
-            {t("authModal.title")}
+            {currentPage === "login" && (title || t("authModal.loginTitle"))}
+            {currentPage === "register" &&
+              (title || t("authModal.registerTitle"))}
+            {currentPage === "forgot" && (title || t("authModal.forgotTitle"))}
           </DialogTitle>
-          <DialogDescription className="text-sm text-gray-600">
-            {t("authModal.subtitle")}
-          </DialogDescription>
+          {currentPage === "login" &&
+            (subtitle || t("authModal.loginSubtitle")) && (
+              <DialogDescription className="text-sm text-gray-600">
+                {subtitle || t("authModal.loginSubtitle")}
+              </DialogDescription>
+            )}
+          {currentPage === "register" &&
+            (subtitle || t("authModal.registerSubtitle")) && (
+              <DialogDescription className="text-sm text-gray-600">
+                {subtitle || t("authModal.registerSubtitle")}
+              </DialogDescription>
+            )}
+          {currentPage === "forgot" &&
+            (subtitle || t("authModal.forgotSubtitle")) && (
+              <DialogDescription className="text-sm text-gray-600">
+                {subtitle || t("authModal.forgotSubtitle")}
+              </DialogDescription>
+            )}
         </DialogHeader>
 
-        {/* Tab buttons */}
-        <div className="mb-6 flex rounded-lg border border-gray-300 bg-gray-100 p-1">
-          <button
-            onClick={() => setActiveTab("login")}
-            className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
-              activeTab === "login"
-                ? "bg-white text-black shadow-sm"
-                : "text-gray-600"
-            }`}
-          >
-            {t("authModal.login")}
-          </button>
-          <button
-            onClick={() => setActiveTab("register")}
-            className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
-              activeTab === "register"
-                ? "bg-white text-black shadow-sm"
-                : "text-gray-600"
-            }`}
-          >
-            {t("authModal.register")}
-          </button>
-          <button
-            onClick={() => setActiveTab("forgot")}
-            className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
-              activeTab === "forgot"
-                ? "bg-white text-black shadow-sm"
-                : "text-gray-600"
-            }`}
-          >
-            {t("authModal.forgotPassword")}
-          </button>
-        </div>
+        {/* Page navigation */}
+        {currentPage !== "login" && (
+          <div className="mb-4">
+            <button
+              onClick={() => setCurrentPage("login")}
+              className="flex items-center gap-2 text-sm text-blue-600 underline hover:text-blue-800"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              {t("authModal.backToLogin")}
+            </button>
+          </div>
+        )}
 
         {/* Login Form */}
-        {activeTab === "login" && (
+        {currentPage === "login" && (
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="mb-2 block text-sm font-medium">
@@ -326,17 +330,37 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
               </div>
             </div>
 
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={() => setCurrentPage("forgot")}
+                className="text-sm text-blue-600 underline hover:text-blue-800"
+              >
+                {t("authModal.forgotPassword")}
+              </button>
+            </div>
+
             <button
               type="submit"
               className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
             >
               {t("authModal.loginButton")}
             </button>
+
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={() => setCurrentPage("register")}
+                className="text-sm text-blue-600 underline hover:text-blue-800"
+              >
+                {t("authModal.registerLink")}
+              </button>
+            </div>
           </form>
         )}
 
         {/* Register Form */}
-        {activeTab === "register" && (
+        {currentPage === "register" && (
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
               <label className="mb-2 block text-sm font-medium">
@@ -446,11 +470,21 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
             >
               {t("authModal.registerButton")}
             </button>
+
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={() => setCurrentPage("login")}
+                className="text-sm text-blue-600 underline hover:text-blue-800"
+              >
+                {t("authModal.loginLink")}
+              </button>
+            </div>
           </form>
         )}
 
         {/* Forgot Password Form */}
-        {activeTab === "forgot" && (
+        {currentPage === "forgot" && (
           <form onSubmit={handleForgotPassword} className="space-y-4">
             <div>
               <label className="mb-2 block text-sm font-medium">
@@ -497,7 +531,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
                   ) : forgotCountdown > 0 ? (
                     `${forgotCountdown}s`
                   ) : (
-                    t("authModal.sendCodeButton")
+                    t("authModal.sendCode")
                   )}
                 </button>
               </div>

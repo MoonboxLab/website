@@ -69,6 +69,7 @@ export default function ProfilePage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [musicCreations, setMusicCreations] = useState<MusicCreation[]>([]);
@@ -293,6 +294,8 @@ export default function ProfilePage() {
   };
 
   const handleAvatarChange = async (newAvatarUrl: string) => {
+    setIsUploadingAvatar(true);
+
     setProfile((prev) => ({
       ...prev,
       avatar: newAvatarUrl,
@@ -333,10 +336,22 @@ export default function ProfilePage() {
       } else {
         const errorData = await response.json();
         toast.error(errorData.error || t("saveError"));
+        // Revert avatar change on error
+        setProfile((prev) => ({
+          ...prev,
+          avatar: profile.avatar,
+        }));
       }
     } catch (error) {
       console.error("Error saving profile after avatar update:", error);
       toast.error(t("saveError"));
+      // Revert avatar change on error
+      setProfile((prev) => ({
+        ...prev,
+        avatar: profile.avatar,
+      }));
+    } finally {
+      setIsUploadingAvatar(false);
     }
   };
 
@@ -485,7 +500,7 @@ export default function ProfilePage() {
             <div className="flex flex-col gap-[30px] lg:flex-row">
               {/* Avatar Section */}
               <div className="flex-shrink-0">
-                <div className="relative">
+                <div className="group relative">
                   <div className="h-[120px] w-[120px] overflow-hidden rounded-[12px] border-[2px] border-black">
                     {profile.avatar ? (
                       <Image
@@ -507,6 +522,8 @@ export default function ProfilePage() {
                   <AvatarUpload
                     onAvatarChange={handleAvatarChange}
                     userId={profile?.id}
+                    disabled={isUploadingAvatar}
+                    isUploading={isUploadingAvatar}
                   />
                 </div>
               </div>

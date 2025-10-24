@@ -703,6 +703,21 @@
     "published": "已发布",
     "pendingReview": "待审核",
     "artistName": "藝名 (網頁展示)",
-    "userPlaceholder": "用户 {uid}"
+    "userPlaceholder": "用户 {uid}",
+    "changePassword": "更改密碼",
+    "oldPassword": "舊密碼",
+    "oldPasswordPlaceholder": "請輸入您的舊密碼",
+    "newPassword": "新密碼",
+    "newPasswordPlaceholder": "請輸入您的新密碼",
+    "confirmPassword": "確認密碼",
+    "confirmPasswordPlaceholder": "請再次輸入新密碼",
+    "cancel": "取消",
+    "changing": "更改中...",
+    "oldPasswordRequired": "請輸入舊密碼",
+    "newPasswordRequired": "請輸入新密碼",
+    "passwordTooShort": "密碼至少需要6個字符",
+    "passwordsDoNotMatch": "兩次輸入的密碼不一致",
+    "passwordChangeSuccess": "密碼更改成功",
+    "passwordChangeError": "密碼更改失敗"
   }
 }

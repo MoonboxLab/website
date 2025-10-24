@@ -11,6 +11,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Header from "@/components/Header";
 import AvatarUpload from "../../../components/AvatarUpload";
 import AuthModal from "@/components/AuthModal";
+import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { useAuthSync } from "@/lib/useAuthSync";
 
 interface UserProfile {
@@ -69,6 +70,7 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [musicCreations, setMusicCreations] = useState<MusicCreation[]>([]);
   const [voteRecords, setVoteRecords] = useState<VoteRecordResponse[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
@@ -649,6 +651,12 @@ export default function ProfilePage() {
                     {isSaving ? t("saving") : t("saveProfile")}
                   </Button>
                   <Button
+                    onClick={() => setShowChangePasswordModal(true)}
+                    className="hover-btn-shadow h-[56px] w-full rounded-[8px] border-[2px] border-black bg-blue-500 text-[18px] font-semibold text-white shadow-[4px_4px_0px_rgba(0,0,0,1)] md:w-auto md:px-[40px]"
+                  >
+                    {t("changePassword")}
+                  </Button>
+                  <Button
                     onClick={handleLogout}
                     className="hover-btn-shadow h-[56px] w-full rounded-[8px] border-[2px] border-black bg-red-500 text-[18px] font-semibold text-white shadow-[4px_4px_0px_rgba(0,0,0,1)] md:w-auto md:px-[40px]"
                   >
@@ -793,6 +801,10 @@ export default function ProfilePage() {
       </div>
 
       <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
+      <ChangePasswordModal
+        open={showChangePasswordModal}
+        onOpenChange={setShowChangePasswordModal}
+      />
     </div>
   );
 }

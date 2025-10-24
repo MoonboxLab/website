@@ -142,7 +142,22 @@
     "published": "Published",
     "pendingReview": "Pending Review",
     "artistName": "Artist Name (Web Display)",
-    "userPlaceholder": "User {uid}"
+    "userPlaceholder": "User {uid}",
+    "changePassword": "Change Password",
+    "oldPassword": "Old Password",
+    "oldPasswordPlaceholder": "Enter your old password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your new password",
+    "cancel": "Cancel",
+    "changing": "Changing...",
+    "oldPasswordRequired": "Old password is required",
+    "newPasswordRequired": "New password is required",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "passwordChangeSuccess": "Password changed successfully",
+    "passwordChangeError": "Failed to change password"
   },
   "Declaration": {
     "spirit": "SPIRIT",

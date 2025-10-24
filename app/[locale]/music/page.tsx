@@ -22,7 +22,6 @@ export default function MusicPage() {
   const locale = useLocale();
   const searchParams = useSearchParams();
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
-  const [musics, setMusics] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [currentEventId, setCurrentEventId] = useState<number | undefined>(
     undefined,
@@ -31,57 +30,9 @@ export default function MusicPage() {
     isPrivacyModalOpen,
     setIsPrivacyModalOpen,
     setSelectedMusicForDownload,
+    fetchMusics,
+    musics,
   } = useMusicPage();
-
-  const fetchMusics = async () => {
-    console.log("=== fetchMusics called ===", {
-      currentEventId,
-      timestamp: new Date().toISOString(),
-    });
-
-    try {
-      // Fetch music templates based on current event
-      const url = new URL("/api/music/template/list", window.location.origin);
-      if (currentEventId) {
-        url.searchParams.set("monthNumber", currentEventId.toString());
-      }
-
-      console.log("Fetching musics with URL:", url.toString());
-
-      const response = await fetch(url.toString());
-      const data = await response.json();
-
-      console.log("fetchMusics response:", {
-        success: data.success,
-        dataLength: data.data?.length || 0,
-      });
-
-      if (data.success && data.data) {
-        // Transform API data to match component format
-        const transformedMusics = data.data
-          .filter((item: any) => item.status !== 0) // Filter out items with status 0 (不显示)
-          .map((item: any) => ({
-            id: item.id.toString(),
-            name: item.title,
-            description: item.description,
-            audioUrl: item.url,
-            coverUrl: item.cover,
-            downloadUrl: item.zipUrl,
-            status: item.status, // 0-不显示 1-可以下载 2-只显示不下载
-            singer: item.singer,
-          }));
-
-        console.log("Transformed musics:", transformedMusics.length);
-        setMusics(transformedMusics);
-      } else {
-        console.log("No data or failed response, setting empty array");
-        setMusics([]);
-      }
-    } catch (error) {
-      console.error("Failed to fetch musics:", error);
-      setMusics([]);
-    }
-  };
 
   const fetchEvents = async () => {
     console.log("=== fetchEvents called ===", {
@@ -174,22 +125,25 @@ export default function MusicPage() {
     }
   }, [events, searchParams]); // 移除 currentEventId 依赖
 
-  // Fetch musics when currentEventId changes (including when it's undefined)
+  // Fetch musics when currentEventId changes (but not when it's undefined, since layout handles initial load)
   useEffect(() => {
     console.log("=== Music fetch useEffect ===", {
       currentEventId,
-      willFetch: true,
+      willFetch: currentEventId !== undefined,
     });
 
-    // Use a ref to prevent duplicate calls in React Strict Mode
-    const timeoutId = setTimeout(() => {
-      fetchMusics();
-    }, 100);
+    // Only fetch when we have a specific event ID (not undefined)
+    if (currentEventId !== undefined) {
+      // Use setTimeout to prevent duplicate calls in React Strict Mode
+      const timeoutId = setTimeout(() => {
+        fetchMusics(currentEventId);
+      }, 100);
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [currentEventId]);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [currentEventId, fetchMusics]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);

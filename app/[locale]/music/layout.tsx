@@ -34,6 +34,9 @@ export default function MusicLayout({
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isProfileIncompleteModalOpen, setIsProfileIncompleteModalOpen] =
     useState(false);
+  const [isEventNotStartedModalOpen, setIsEventNotStartedModalOpen] =
+    useState(false);
+  const [isNoSubmissionModalOpen, setIsNoSubmissionModalOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [selectedMusicForDownload, setSelectedMusicForDownload] =
     useState<any>(null);
@@ -101,70 +104,73 @@ export default function MusicLayout({
     router.push(`/${locale}/profile`);
   };
 
-  const fetchMusics = async () => {
-    // Mock data for testing - same as MusicPage
-    const mockMusics = [
-      {
-        id: "1",
-        name: "Nobody Square Theme",
-        description: "Main theme song",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=1",
-        downloadUrl: "/music/downloads/nobody-square-theme-demo.zip",
-      },
-      {
-        id: "2",
-        name: "Digital Dreams",
-        description: "Electronic ambient track",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=2",
-        downloadUrl: "/music/downloads/digital-dreams-demo.zip",
-      },
-      {
-        id: "3",
-        name: "NFT Symphony",
-        description: "Orchestral piece",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=3",
-        downloadUrl: "/music/downloads/nft-symphony-demo.zip",
-      },
-      {
-        id: "4",
-        name: "Blockchain Blues",
-        description: "Jazz fusion track",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=4",
-        downloadUrl: "/music/downloads/blockchain-blues-demo.zip",
-      },
-      {
-        id: "5",
-        name: "Crypto Waves",
-        description: "Synthwave style",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=5",
-      },
-    ];
+  const fetchMusics = useCallback(async (currentEventId?: number) => {
+    console.log("=== Layout fetchMusics called ===", {
+      currentEventId,
+      timestamp: new Date().toISOString(),
+    });
 
-    setMusics(mockMusics);
-
-    // Try to fetch real data, but fallback to mock if it fails
     try {
-      const response = await fetch("/api/musics");
+      // Fetch music templates based on current event
+      const url = new URL("/api/music/template/list", window.location.origin);
+      if (currentEventId) {
+        url.searchParams.set("monthNumber", currentEventId.toString());
+      }
+
+      console.log("Layout fetching musics with URL:", url.toString());
+
+      const response = await fetch(url.toString());
       const data = await response.json();
-      if (data && data.length > 0) {
-        setMusics(data);
+
+      console.log("Layout fetchMusics response:", {
+        success: data.success,
+        dataLength: data.data?.length || 0,
+      });
+
+      if (data.success && data.data) {
+        // Transform API data to match component format
+        const transformedMusics = data.data
+          .filter((item: any) => item.status !== 0) // Filter out items with status 0 (不显示)
+          .map((item: any) => ({
+            id: item.id.toString(),
+            name: item.title,
+            description: item.description,
+            audioUrl: item.url,
+            coverUrl: item.cover,
+            downloadUrl: item.zipUrl,
+            status: item.status, // 0-不显示 1-可以下载 2-只显示不下载
+            singer: item.singer,
+          }));
+
+        console.log("Layout transformed musics:", transformedMusics.length);
+        setMusics(transformedMusics);
+      } else {
+        console.log("Layout: No data or failed response, setting empty array");
+        setMusics([]);
       }
     } catch (error) {
-      console.log("Using mock data for musics");
+      console.error("Layout: Failed to fetch musics:", error);
+      setMusics([]);
     }
-  };
+  }, []);
 
   const handleSubmitWork = async () => {
+    // 检查特殊情况
+    if (musics.length === 0) {
+      // 情况1：活动还未开始
+      setIsEventNotStartedModalOpen(true);
+      return;
+    }
+
+    // 检查是否所有音乐的status都不等于1
+    const hasDownloadableMusic = musics.some((music) => music.status === 1);
+    if (!hasDownloadableMusic) {
+      // 情况2：活动不能递交作品
+      setIsNoSubmissionModalOpen(true);
+      return;
+    }
+
+    // 正常情况：检查登录状态
     if (isLoggedIn) {
       // 已登录：先检查用户资料完整性
       const isProfileComplete = await checkUserProfile();
@@ -218,11 +224,14 @@ export default function MusicLayout({
     selectedMusicForDownload,
     setSelectedMusicForDownload,
     downloadMusicZip,
+    fetchMusics,
+    musics,
   };
 
   useEffect(() => {
+    // Fetch all musics initially (no specific event)
     fetchMusics();
-  }, []);
+  }, [fetchMusics]);
 
   return (
     <MusicPageProvider value={contextValue}>
@@ -519,6 +528,62 @@ export default function MusicLayout({
                   className="rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-lg font-bold transition-colors hover:bg-gray-200"
                 >
                   {t("profileIncompleteModal.later")}
+                </button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Event Not Started Modal */}
+        <Dialog
+          open={isEventNotStartedModalOpen}
+          onOpenChange={setIsEventNotStartedModalOpen}
+        >
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center justify-center gap-2 text-center text-xl font-bold">
+                <User className="h-6 w-6" />
+                {t("eventNotStarted.title")}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="mt-4 space-y-4 text-center">
+              <div className="text-gray-600">
+                <p className="mb-2">{t("eventNotStarted.description")}</p>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setIsEventNotStartedModalOpen(false)}
+                  className="rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-lg font-bold transition-colors hover:bg-gray-200"
+                >
+                  {t("ok")}
+                </button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* No Submission Allowed Modal */}
+        <Dialog
+          open={isNoSubmissionModalOpen}
+          onOpenChange={setIsNoSubmissionModalOpen}
+        >
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center justify-center gap-2 text-center text-xl font-bold">
+                <User className="h-6 w-6" />
+                {t("noSubmissionAllowed.title")}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="mt-4 space-y-4 text-center">
+              <div className="text-gray-600">
+                <p className="mb-2">{t("noSubmissionAllowed.description")}</p>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setIsNoSubmissionModalOpen(false)}
+                  className="rounded-lg border-2 border-gray-300 bg-gray-100 px-6 py-3 text-lg font-bold transition-colors hover:bg-gray-200"
+                >
+                  {t("ok")}
                 </button>
               </div>
             </div>

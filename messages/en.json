@@ -751,6 +751,15 @@
     "noSongsAvailable": {
       "title": "Event Not Started Yet",
       "description": "The music event for this month has not started yet. Please check back later for featured songs."
-    }
+    },
+    "eventNotStarted": {
+      "title": "Event Not Started Yet",
+      "description": "The music event for this month has not started yet. Please check back later for featured songs."
+    },
+    "noSubmissionAllowed": {
+      "title": "Submission Not Allowed",
+      "description": "The current event does not allow work submissions. Please check back later or try a different event."
+    },
+    "ok": "OK"
   }
 }

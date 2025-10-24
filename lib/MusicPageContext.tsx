@@ -8,6 +8,8 @@ interface MusicContextType {
   selectedMusicForDownload: any;
   setSelectedMusicForDownload: (music: any) => void;
   downloadMusicZip: (musicItem?: any) => Promise<void>;
+  fetchMusics: (currentEventId?: number) => Promise<void>;
+  musics: any[];
 }
 
 const MusicPageContext = createContext<MusicContextType | undefined>(undefined);

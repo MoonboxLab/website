@@ -672,7 +672,16 @@
     "noSongsAvailable": {
       "title": "活動尚未開始",
       "description": "本月音樂活動尚未開始，請稍後再來查看精選歌曲。"
-    }
+    },
+    "eventNotStarted": {
+      "title": "活動尚未開始",
+      "description": "本月音樂活動尚未開始，請稍後再來查看精選歌曲。"
+    },
+    "noSubmissionAllowed": {
+      "title": "不允許遞交作品",
+      "description": "當前活動不允許遞交作品，請稍後再來或嘗試其他活動。"
+    },
+    "ok": "確定"
   },
   "Profile": {
     "title": "個人資料",

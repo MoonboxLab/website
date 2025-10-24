@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Mail, Lock, UserPlus } from "lucide-react";
+import { Mail, Lock, UserPlus, Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 import {
   Dialog,
@@ -35,6 +35,7 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const [verificationCode, setVerificationCode] = useState("");
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [isSendingCode, setIsSendingCode] = useState(false);
 
   // Forgot password form state
   const [forgotEmail, setForgotEmail] = useState("");
@@ -43,10 +44,12 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const [forgotVerificationCode, setForgotVerificationCode] = useState("");
   const [isForgotCodeSent, setIsForgotCodeSent] = useState(false);
   const [forgotCountdown, setForgotCountdown] = useState(0);
+  const [isSendingForgotCode, setIsSendingForgotCode] = useState(false);
 
   const handleSendCode = async () => {
-    if (!registerEmail) return;
+    if (!registerEmail || isSendingCode) return;
 
+    setIsSendingCode(true);
     try {
       const response = await fetch("/api/send-verification-code", {
         method: "POST",
@@ -74,12 +77,15 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
     } catch (error) {
       console.error("Failed to send verification code:", error);
       toast.error(t("authModal.toast.codeSendRetry"));
+    } finally {
+      setIsSendingCode(false);
     }
   };
 
   const handleSendForgotCode = async () => {
-    if (!forgotEmail) return;
+    if (!forgotEmail || isSendingForgotCode) return;
 
+    setIsSendingForgotCode(true);
     try {
       const response = await fetch("/api/send-verification-code", {
         method: "POST",
@@ -107,6 +113,8 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
     } catch (error) {
       console.error("Failed to send verification code:", error);
       toast.error(t("authModal.toast.codeSendRetry"));
+    } finally {
+      setIsSendingForgotCode(false);
     }
   };
 
@@ -365,10 +373,16 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 <button
                   type="button"
                   onClick={handleSendCode}
-                  disabled={!registerEmail || countdown > 0}
-                  className="rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium disabled:opacity-50"
+                  disabled={!registerEmail || countdown > 0 || isSendingCode}
+                  className="flex items-center gap-2 rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium disabled:opacity-50"
                 >
-                  {countdown > 0 ? `${countdown}s` : t("authModal.sendCode")}
+                  {isSendingCode ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : countdown > 0 ? (
+                    `${countdown}s`
+                  ) : (
+                    t("authModal.sendCode")
+                  )}
                 </button>
               </div>
             </div>
@@ -473,12 +487,18 @@ export default function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 <button
                   type="button"
                   onClick={handleSendForgotCode}
-                  disabled={!forgotEmail || forgotCountdown > 0}
-                  className="rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium disabled:opacity-50"
+                  disabled={
+                    !forgotEmail || forgotCountdown > 0 || isSendingForgotCode
+                  }
+                  className="flex items-center gap-2 rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium disabled:opacity-50"
                 >
-                  {forgotCountdown > 0
-                    ? `${forgotCountdown}s`
-                    : t("authModal.sendCodeButton")}
+                  {isSendingForgotCode ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : forgotCountdown > 0 ? (
+                    `${forgotCountdown}s`
+                  ) : (
+                    t("authModal.sendCodeButton")
+                  )}
                 </button>
               </div>
             </div>

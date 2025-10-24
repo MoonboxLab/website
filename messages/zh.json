@@ -668,7 +668,11 @@
     },
     "featuredSongsTemplate": "{year}年{month}精選歌曲",
     "finalistsTemplate": "{year}年{month}入圍名單",
-    "noEventsAvailable": "暫無活動數據"
+    "noEventsAvailable": "暫無活動數據",
+    "noSongsAvailable": {
+      "title": "活動尚未開始",
+      "description": "本月音樂活動尚未開始，請稍後再來查看精選歌曲。"
+    }
   },
   "Profile": {
     "title": "個人資料",

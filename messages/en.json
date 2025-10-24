@@ -747,6 +747,10 @@
     },
     "featuredSongsTemplate": "{month} {year} Featured Songs",
     "finalistsTemplate": "{month} {year} Finalists",
-    "noEventsAvailable": "No events available at the moment"
+    "noEventsAvailable": "No events available at the moment",
+    "noSongsAvailable": {
+      "title": "Event Not Started Yet",
+      "description": "The music event for this month has not started yet. Please check back later for featured songs."
+    }
   }
 }

@@ -651,7 +651,24 @@
       },
       "completeProfile": "去完善資料",
       "later": "稍後再說"
-    }
+    },
+    "months": {
+      "january": "1月",
+      "february": "2月",
+      "march": "3月",
+      "april": "4月",
+      "may": "5月",
+      "june": "6月",
+      "july": "7月",
+      "august": "8月",
+      "september": "9月",
+      "october": "10月",
+      "november": "11月",
+      "december": "12月"
+    },
+    "featuredSongsTemplate": "{year}年{month}精選歌曲",
+    "finalistsTemplate": "{year}年{month}入圍名單",
+    "noEventsAvailable": "暫無活動數據"
   },
   "Profile": {
     "title": "個人資料",

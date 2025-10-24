@@ -11,17 +11,51 @@ interface VotingSongsProps {
   musics: any[];
   onViewAll: () => void;
   onBid: (music: any) => void;
+  currentEventId?: number;
 }
 
 export default function VotingSongs({
   musics,
   onViewAll,
   onBid,
+  currentEventId,
 }: VotingSongsProps) {
   const t = useTranslations("Music");
   const { playTrack } = useMusic();
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
   const [selectedMusic, setSelectedMusic] = useState<any>(null);
+
+  // Helper function to convert event ID (year*12+month) to year and month
+  const convertEventIdToDate = (eventId: number) => {
+    const year = Math.floor(eventId / 12);
+    const month = eventId % 12;
+    return { year, month };
+  };
+
+  // Get dynamic title based on current event
+  const getTitle = () => {
+    if (currentEventId) {
+      const { year, month } = convertEventIdToDate(currentEventId);
+      const monthNames = [
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+      ];
+      const monthKey = monthNames[month - 1];
+      const monthName = t(`months.${monthKey}`);
+      return t("finalistsTemplate", { month: monthName, year });
+    }
+    return t("finalistsTemplate", { month: "October", year: 2025 }); // fallback to default
+  };
 
   const handleVoteClick = (music: any) => {
     setSelectedMusic(music);
@@ -45,9 +79,7 @@ export default function VotingSongs({
       >
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold lg:text-3xl">
-              {t("featuredSongs")}
-            </h2>
+            <h2 className="text-2xl font-bold lg:text-3xl">{getTitle()}</h2>
             <p className="text-sm text-gray-600 lg:text-base">
               {t("providedBy")}
             </p>

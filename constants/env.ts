@@ -13,5 +13,7 @@ export const API_ENDPOINTS = {
   SEND_VERIFICATION_CODE: `${API_BASE_URL}/api/user/send-verification-code`,
   MUSIC_CREATION_RECORD: `${API_BASE_URL}/api/music/creation/record`,
   MUSIC_VOTE_RECORD: `${API_BASE_URL}/api/music/vote/record`,
+  MUSIC_TEMPLATE_MONTH_LIST: `${API_BASE_URL}/api/music/template/month/list`,
+  MUSIC_CREATION_MONTH_LIST: `${API_BASE_URL}/api/music/creation/month/list`,
   STS_CREDENTIALS: `${API_BASE_URL}/api/sys/sts`,
 } as const;

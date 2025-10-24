@@ -9,15 +9,49 @@ interface FeaturedSongsProps {
   musics: any[];
   onViewAll: () => void;
   onDownload: (music: any) => void;
+  currentEventId?: number;
 }
 
 export default function FeaturedSongs({
   musics,
   onViewAll,
   onDownload,
+  currentEventId,
 }: FeaturedSongsProps) {
   const t = useTranslations("Music");
   const { playTrack } = useMusic();
+
+  // Helper function to convert event ID (year*12+month) to year and month
+  const convertEventIdToDate = (eventId: number) => {
+    const year = Math.floor(eventId / 12);
+    const month = eventId % 12;
+    return { year, month };
+  };
+
+  // Get dynamic title based on current event
+  const getTitle = () => {
+    if (currentEventId) {
+      const { year, month } = convertEventIdToDate(currentEventId);
+      const monthNames = [
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+      ];
+      const monthKey = monthNames[month - 1];
+      const monthName = t(`months.${monthKey}`);
+      return t("featuredSongsTemplate", { month: monthName, year });
+    }
+    return t("featuredSongsTemplate", { month: "September", year: 2025 }); // fallback to default
+  };
 
   return (
     <div className="mt-12">
@@ -26,9 +60,7 @@ export default function FeaturedSongs({
       >
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold lg:text-3xl">
-              {t("featuredSongs")}
-            </h2>
+            <h2 className="text-2xl font-bold lg:text-3xl">{getTitle()}</h2>
             <p className="text-sm text-gray-600 lg:text-base">
               {t("providedBy")}
             </p>

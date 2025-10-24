@@ -7,6 +7,14 @@ import { useMusicPage } from "@/lib/MusicPageContext";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Link from "next/link";
 import { useLocale } from "next-intl";
+import { Calendar } from "lucide-react";
+
+// Helper function to convert event ID (year*12+month) to year and month
+const convertEventIdToDate = (eventId: number) => {
+  const year = Math.floor(eventId / 12);
+  const month = eventId % 12;
+  return { year, month };
+};
 
 export default function MusicVotingPage() {
   const t = useTranslations("Music");
@@ -14,6 +22,9 @@ export default function MusicVotingPage() {
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
   const [votingMusics, setVotingMusics] = useState<any[]>([]);
   const [votingEvents, setVotingEvents] = useState<any[]>([]);
+  const [currentEventId, setCurrentEventId] = useState<number | undefined>(
+    undefined,
+  );
   const {
     isPrivacyModalOpen,
     setIsPrivacyModalOpen,
@@ -70,33 +81,46 @@ export default function MusicVotingPage() {
   };
 
   const fetchVotingEvents = async () => {
-    // Mock data for voting events - different from regular events
-    const mockVotingEvents = [
-      {
-        id: "voting1",
-        name: "Voting Event 1",
-      },
-      {
-        id: "voting2",
-        name: "Voting Event 2",
-      },
-      {
-        id: "voting3",
-        name: "Voting Event 3",
-      },
-    ];
-
-    setVotingEvents(mockVotingEvents);
-
-    // Try to fetch real voting events data, but fallback to mock if it fails
     try {
-      const response = await fetch("/api/voting-events");
-      const data = await response.json();
-      if (data && data.length > 0) {
-        setVotingEvents(data);
+      // Fetch creation events (投票活动列表)
+      const creationResponse = await fetch("/api/music/creation/month/list");
+      const creationData = await creationResponse.json();
+
+      const allEvents: Array<{ id: number; name: string; type: string }> = [];
+
+      // Process creation events
+      if (creationData.success && creationData.data) {
+        creationData.data.forEach((eventId: number) => {
+          const { year, month } = convertEventIdToDate(eventId);
+          const monthNames = [
+            "january",
+            "february",
+            "march",
+            "april",
+            "may",
+            "june",
+            "july",
+            "august",
+            "september",
+            "october",
+            "november",
+            "december",
+          ];
+          const monthKey = monthNames[month - 1];
+          const monthName = t(`months.${monthKey}`);
+
+          allEvents.push({
+            id: eventId,
+            name: t("finalistsTemplate", { month: monthName, year }),
+            type: "creation",
+          });
+        });
       }
+
+      setVotingEvents(allEvents);
     } catch (error) {
-      console.log("Using mock data for voting events");
+      console.error("Failed to fetch voting events:", error);
+      setVotingEvents([]);
     }
   };
 
@@ -104,6 +128,13 @@ export default function MusicVotingPage() {
     fetchVotingMusics();
     fetchVotingEvents();
   }, []);
+
+  // Set current event ID when events are loaded
+  useEffect(() => {
+    if (votingEvents.length > 0 && !currentEventId) {
+      setCurrentEventId(votingEvents[0].id);
+    }
+  }, [votingEvents, currentEventId]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);
@@ -127,26 +158,36 @@ export default function MusicVotingPage() {
         musics={votingMusics}
         onViewAll={handleViewAll}
         onBid={handleBid}
+        currentEventId={currentEventId}
       />
 
       {/* View All Modal for /music/voting page */}
       <Dialog open={isViewAllModalOpen} onOpenChange={setIsViewAllModalOpen}>
         <DialogContent className="max-h-[80vh] max-w-lg overflow-y-auto">
           <div className="mt-2 flex flex-col gap-2">
-            {votingEvents.map((item) => (
-              <Link
-                key={item.id}
-                href={`/${locale}/music/voting?event=${item.id}`}
-                onClick={() => setIsViewAllModalOpen(false)}
-              >
-                <div className="cursor-pointer rounded-lg border border-gray-300 bg-white p-3 transition-colors hover:border-gray-400 hover:bg-gray-50">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium">{item.name}</h3>
-                    <div className="text-gray-400">→</div>
+            {votingEvents.length > 0 ? (
+              votingEvents.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/${locale}/music/voting?event=${item.id}`}
+                  onClick={() => setIsViewAllModalOpen(false)}
+                >
+                  <div className="cursor-pointer rounded-lg border border-gray-300 bg-white p-3 transition-colors hover:border-gray-400 hover:bg-gray-50">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-medium">{item.name}</h3>
+                      <div className="text-gray-400">→</div>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Calendar className="mb-4 h-12 w-12 text-gray-400" />
+                <p className="text-sm text-gray-500">
+                  {t("noEventsAvailable")}
+                </p>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>

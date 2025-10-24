@@ -331,7 +331,7 @@ export default function MusicLayout({
                           </div>
                         </div>
                         <div className="mt-3 lg:mt-5">
-                          <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
+                          <div className="font-bold underline decoration-solid underline-offset-4">
                             {t("prizeDistributionTitle")}
                           </div>
                           <div className="mt-2 lg:mt-3">
@@ -421,7 +421,7 @@ export default function MusicLayout({
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-8 flex gap-4">
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <button
                   onClick={handleSubmitWork}
                   className="flex-1 rounded-lg border-2 border-black bg-white px-6 py-3 text-lg font-bold"

@@ -699,6 +699,10 @@
       "title": "不允許遞交作品",
       "description": "當前活動不允許遞交作品，請稍後再來或嘗試其他活動。"
     },
+    "noFinalistsAvailable": {
+      "title": "作品統計中",
+      "description": "活動方正在統計參賽作品，入圍名單即將公佈，請耐心等待。"
+    },
     "ok": "確定"
   },
   "Profile": {

@@ -779,6 +779,10 @@
       "title": "Submission Not Allowed",
       "description": "The current event does not allow work submissions. Please check back later or try a different event."
     },
+    "noFinalistsAvailable": {
+      "title": "Counting Submissions",
+      "description": "The organizers are currently counting the submitted works. The finalist list will be announced soon. Please be patient."
+    },
     "ok": "OK"
   }
 }

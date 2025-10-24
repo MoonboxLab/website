@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import { Calendar } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 // Helper function to convert event ID (year*12+month) to year and month
 const convertEventIdToDate = (eventId: number) => {
@@ -19,6 +20,7 @@ const convertEventIdToDate = (eventId: number) => {
 export default function MusicVotingPage() {
   const t = useTranslations("Music");
   const locale = useLocale();
+  const searchParams = useSearchParams();
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
   const [votingMusics, setVotingMusics] = useState<any[]>([]);
   const [votingEvents, setVotingEvents] = useState<any[]>([]);
@@ -32,59 +34,73 @@ export default function MusicVotingPage() {
   } = useMusicPage();
 
   const fetchVotingMusics = async () => {
-    // Mock data for voting - different from regular musics
-    const mockVotingMusics = [
-      {
-        id: "v1",
-        name: "Voting Song 1",
-        description: "First voting track",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=10",
-        downloadUrl: "/music/downloads/voting-song-1-demo.zip",
-        voteCount: 156,
-      },
-      {
-        id: "v2",
-        name: "Voting Song 2",
-        description: "Second voting track",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=11",
-        downloadUrl: "/music/downloads/voting-song-2-demo.zip",
-        voteCount: 89,
-      },
-      {
-        id: "v3",
-        name: "Voting Song 3",
-        description: "Third voting track",
-        audioUrl:
-          "https://archive.org/download/testmp3testfile/mpthreetest.mp3",
-        coverUrl: "https://picsum.photos/200/200?random=12",
-        downloadUrl: "/music/downloads/voting-song-3-demo.zip",
-        voteCount: 234,
-      },
-    ];
+    console.log("=== fetchVotingMusics called ===", {
+      currentEventId,
+      timestamp: new Date().toISOString(),
+    });
 
-    setVotingMusics(mockVotingMusics);
-
-    // Try to fetch real voting data, but fallback to mock if it fails
     try {
-      const response = await fetch("/api/voting-musics");
+      // Fetch voting musics based on current event
+      const url = new URL(
+        "/api/music/creation/vote/list",
+        window.location.origin,
+      );
+      if (currentEventId) {
+        url.searchParams.set("monthNumber", currentEventId.toString());
+      }
+
+      console.log("Fetching voting musics with URL:", url.toString());
+
+      const response = await fetch(url.toString());
       const data = await response.json();
-      if (data && data.length > 0) {
-        setVotingMusics(data);
+
+      console.log("fetchVotingMusics response:", {
+        success: data.success,
+        dataLength: data.data?.length || 0,
+      });
+
+      if (data.success && data.data) {
+        // Transform API data to match component format
+        const transformedMusics = data.data.map((item: any) => ({
+          id: item.id.toString(),
+          name: item.user?.nickname || `User ${item.user?.id || item.id}`, // Use nickname or user ID
+          description: item.title, // Using title as description
+          audioUrl: item.url,
+          coverUrl: item.user?.avator || "/music/covers/default.jpg", // Use user avatar as cover
+          downloadUrl: null, // No download for voting musics
+          voteCount: item.scope || 0, // Using scope as vote count
+          status: item.status,
+          singer: item.singer,
+          user: item.user,
+          createTm: item.createTm,
+        }));
+
+        console.log("Transformed voting musics:", transformedMusics.length);
+        setVotingMusics(transformedMusics);
+      } else {
+        console.log("No data or failed response, setting empty array");
+        setVotingMusics([]);
       }
     } catch (error) {
-      console.log("Using mock data for voting musics");
+      console.error("Failed to fetch voting musics:", error);
+      setVotingMusics([]);
     }
   };
 
   const fetchVotingEvents = async () => {
+    console.log("=== fetchVotingEvents called ===", {
+      timestamp: new Date().toISOString(),
+    });
+
     try {
       // Fetch creation events (投票活动列表)
       const creationResponse = await fetch("/api/music/creation/month/list");
       const creationData = await creationResponse.json();
+
+      console.log("fetchVotingEvents response:", {
+        success: creationData.success,
+        dataLength: creationData.data?.length || 0,
+      });
 
       const allEvents: Array<{ id: number; name: string; type: string }> = [];
 
@@ -117,6 +133,7 @@ export default function MusicVotingPage() {
         });
       }
 
+      console.log("Processed voting events:", allEvents.length);
       setVotingEvents(allEvents);
     } catch (error) {
       console.error("Failed to fetch voting events:", error);
@@ -125,16 +142,58 @@ export default function MusicVotingPage() {
   };
 
   useEffect(() => {
-    fetchVotingMusics();
-    fetchVotingEvents();
+    console.log("=== Voting Events fetch useEffect ===");
+
+    // Use setTimeout to prevent duplicate calls in React Strict Mode
+    const timeoutId = setTimeout(() => {
+      fetchVotingEvents();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
-  // Set current event ID when events are loaded
+  // Set current event ID when events are loaded or URL params change
   useEffect(() => {
-    if (votingEvents.length > 0 && !currentEventId) {
+    console.log("=== Voting Event ID useEffect ===", {
+      eventParam: searchParams.get("event"),
+      eventsLength: votingEvents.length,
+      currentEventId,
+    });
+
+    const eventParam = searchParams.get("event");
+
+    if (eventParam) {
+      // Use event from URL parameter
+      const eventId = parseInt(eventParam);
+      if (!isNaN(eventId) && eventId !== currentEventId) {
+        console.log("Setting currentEventId from URL param:", eventId);
+        setCurrentEventId(eventId);
+      }
+    } else if (votingEvents.length > 0 && currentEventId === undefined) {
+      // Only set default if currentEventId is still undefined
+      console.log("Setting currentEventId to first event:", votingEvents[0].id);
       setCurrentEventId(votingEvents[0].id);
     }
-  }, [votingEvents, currentEventId]);
+  }, [votingEvents, searchParams]); // 移除 currentEventId 依赖
+
+  // Fetch voting musics when currentEventId changes (including when it's undefined)
+  useEffect(() => {
+    console.log("=== Voting Music fetch useEffect ===", {
+      currentEventId,
+      willFetch: true,
+    });
+
+    // Use setTimeout to prevent duplicate calls in React Strict Mode
+    const timeoutId = setTimeout(() => {
+      fetchVotingMusics();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [currentEventId]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);

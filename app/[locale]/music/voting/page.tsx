@@ -27,6 +27,7 @@ export default function MusicVotingPage() {
   const [currentEventId, setCurrentEventId] = useState<number | undefined>(
     undefined,
   );
+  const [useMockData, setUseMockData] = useState(false); // 默认使用真实数据
   const {
     isPrivacyModalOpen,
     setIsPrivacyModalOpen,
@@ -36,15 +37,17 @@ export default function MusicVotingPage() {
   const fetchVotingMusics = async () => {
     console.log("=== fetchVotingMusics called ===", {
       currentEventId,
+      useMockData,
       timestamp: new Date().toISOString(),
     });
 
     try {
-      // Fetch voting musics based on current event
-      const url = new URL(
-        "/api/music/creation/vote/list",
-        window.location.origin,
-      );
+      // Choose API endpoint based on mock data setting
+      const baseUrl = useMockData
+        ? "/api/music/creation/vote/list/mock"
+        : "/api/music/creation/vote/list";
+
+      const url = new URL(baseUrl, window.location.origin);
       if (currentEventId) {
         url.searchParams.set("monthNumber", currentEventId.toString());
       }
@@ -89,24 +92,31 @@ export default function MusicVotingPage() {
 
   const fetchVotingEvents = async () => {
     console.log("=== fetchVotingEvents called ===", {
+      useMockData,
       timestamp: new Date().toISOString(),
     });
 
     try {
-      // Fetch creation events (投票活动列表)
-      const creationResponse = await fetch("/api/music/creation/month/list");
-      const creationData = await creationResponse.json();
+      // Choose API endpoint based on mock data setting
+      const url = useMockData
+        ? "/api/music/creation/month/list/mock"
+        : "/api/music/creation/month/list";
+
+      console.log("Fetching voting events with URL:", url);
+
+      const response = await fetch(url);
+      const data = await response.json();
 
       console.log("fetchVotingEvents response:", {
-        success: creationData.success,
-        dataLength: creationData.data?.length || 0,
+        success: data.success,
+        dataLength: data.data?.length || 0,
       });
 
       const allEvents: Array<{ id: number; name: string; type: string }> = [];
 
-      // Process creation events
-      if (creationData.success && creationData.data) {
-        creationData.data.forEach((eventId: number) => {
+      // Process events
+      if (data.success && data.data) {
+        data.data.forEach((eventId: number) => {
           const { year, month } = convertEventIdToDate(eventId);
           const monthNames = [
             "january",
@@ -152,7 +162,7 @@ export default function MusicVotingPage() {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [useMockData]);
 
   // Set current event ID when events are loaded or URL params change
   useEffect(() => {
@@ -178,10 +188,11 @@ export default function MusicVotingPage() {
     }
   }, [votingEvents, searchParams]); // 移除 currentEventId 依赖
 
-  // Fetch voting musics when currentEventId changes (including when it's undefined)
+  // Fetch voting musics when currentEventId or useMockData changes
   useEffect(() => {
     console.log("=== Voting Music fetch useEffect ===", {
       currentEventId,
+      useMockData,
       willFetch: true,
     });
 
@@ -193,7 +204,7 @@ export default function MusicVotingPage() {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [currentEventId]);
+  }, [currentEventId, useMockData]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);
@@ -212,6 +223,28 @@ export default function MusicVotingPage() {
 
   return (
     <div>
+      {/* Mock Data Toggle - Hidden */}
+      {/* <div className="mb-4 flex justify-center">
+        <div className="rounded-lg border-2 border-black bg-white p-4 shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+          <div className="flex items-center space-x-3">
+            <span className="text-sm font-semibold">测试模式:</span>
+            <button
+              onClick={() => setUseMockData(!useMockData)}
+              className={`rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
+                useMockData
+                  ? "bg-green-400 text-black hover:bg-green-500"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {useMockData ? "Mock数据" : "真实数据"}
+            </button>
+            <span className="text-xs text-gray-600">
+              {useMockData ? "使用测试数据" : "使用真实API"}
+            </span>
+          </div>
+        </div>
+      </div> */}
+
       {/* Voting Songs Section */}
       <VotingSongs
         musics={votingMusics}

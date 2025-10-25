@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
+import { mainnet, sepolia, bsc, bscTestnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import {
@@ -20,8 +20,8 @@ import {
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_TEST_ENV === "true"
-      ? [mainnet, sepolia]
-      : [mainnet]),
+      ? [mainnet, sepolia, bsc, bscTestnet]
+      : [mainnet, bsc]),
   ],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID as string }),

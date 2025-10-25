@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
@@ -14,7 +14,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Crown, Coins, Zap } from "lucide-react";
+import { Crown, Coins, Zap, AlertCircle, CheckCircle } from "lucide-react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { VOTING_CONTRACTS } from "@/constants/voting-contract";
+import {
+  useWalletConnection,
+  useTokenBalance,
+  useNftBalance,
+  useTokenVote,
+  useNftVote,
+  useNetworkSwitch,
+} from "@/lib/use-voting";
+import { getNetwork } from "@wagmi/core";
+import { useTokenApproval } from "@/lib/use-token-approval";
 
 interface VoteModalProps {
   isOpen: boolean;
@@ -30,6 +42,7 @@ interface VoteModalProps {
     musicId: string;
     voteType: "nobody" | "aice" | "fir";
     amount: number;
+    txHash?: string;
   }) => void;
 }
 
@@ -44,25 +57,73 @@ export default function VoteModal({
   const t = useTranslations("Music");
   const [voteType, setVoteType] = useState<VoteType>("nobody");
   const [voteAmount, setVoteAmount] = useState<string>("1");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [nftIdInput, setNftIdInput] = useState<string>("");
+  const [selectedNftId, setSelectedNftId] = useState<number | null>(null);
+  const [error, setError] = useState<string>("");
+  const [txStatus, setTxStatus] = useState<
+    "idle" | "pending" | "success" | "failed"
+  >("idle");
+  const [txHash, setTxHash] = useState<string>("");
 
-  const handleVote = async () => {
-    if (!music || !voteAmount) return;
+  // 使用hooks
+  const { isConnected, address } = useWalletConnection();
+  const { switchToChain, switching } = useNetworkSwitch();
 
-    setIsSubmitting(true);
-    try {
-      await onVote({
-        musicId: music.id,
-        voteType,
-        amount: parseInt(voteAmount),
-      });
-      onClose();
-    } catch (error) {
-      console.error("Vote failed:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  // 代币余额hooks
+  const { balance: aiceBalance } = useTokenBalance(
+    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_AICE,
+    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    voteType === "aice" && isConnected,
+  );
+
+  const { balance: firBalance } = useTokenBalance(
+    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_FIR,
+    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    voteType === "fir" && isConnected,
+  );
+
+  // NFT余额hook
+  const { balance: nftBalance, nftIds } = useNftBalance(
+    VOTING_CONTRACTS.ETH_SEPOLIA.NFT_CONTRACT,
+    VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID,
+    voteType === "nobody" && isConnected,
+  );
+
+  // 投票hooks
+  const { vote: voteByToken, loading: tokenVoteLoading } = useTokenVote();
+  const { vote: voteByNft, loading: nftVoteLoading } = useNftVote();
+
+  // 授权hooks
+  const {
+    allowance: aiceAllowance,
+    needsApproval: needsAiceApproval,
+    approve: approveAice,
+    approving: aiceApproving,
+  } = useTokenApproval(
+    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_AICE,
+    VOTING_CONTRACTS.BSC_TESTNET.VOTING_CONTRACT,
+    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    voteType === "aice" && isConnected,
+  );
+
+  const {
+    allowance: firAllowance,
+    needsApproval: needsFirApproval,
+    approve: approveFir,
+    approving: firApproving,
+  } = useTokenApproval(
+    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_FIR,
+    VOTING_CONTRACTS.BSC_TESTNET.VOTING_CONTRACT,
+    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    voteType === "fir" && isConnected,
+  );
+
+  const isSubmitting =
+    tokenVoteLoading ||
+    nftVoteLoading ||
+    switching ||
+    aiceApproving ||
+    firApproving;
 
   const getVoteTypeInfo = (type: VoteType) => {
     switch (type) {
@@ -96,6 +157,164 @@ export default function VoteModal({
     }
   };
 
+  const handleVote = async () => {
+    if (!music || !address) return;
+
+    // 验证输入
+    if (voteType === "nobody") {
+      // NFT投票：使用输入的NFT ID或选择的NFT
+      const nftId = nftIdInput ? parseInt(nftIdInput) : selectedNftId;
+      if (!nftId || nftId < 0) {
+        setError(t("invalidNftId"));
+        return;
+      }
+    } else {
+      // 代币投票：检查投票数量
+      if (!voteAmount || parseInt(voteAmount) < 1) {
+        setError(t("invalidVoteAmount"));
+        return;
+      }
+    }
+
+    setError("");
+    setTxStatus("pending");
+
+    try {
+      // 检查当前网络是否正确，只在需要时切换
+      const targetChainId = voteType === "nobody" ? 11155111 : 97; // ETH Sepolia : BSC Testnet
+      const { chain } = getNetwork();
+
+      if (chain?.id !== targetChainId) {
+        await switchToChain(targetChainId);
+      }
+
+      // 对于代币投票，先检查是否需要授权
+      if (voteType === "aice" && needsAiceApproval(voteAmount)) {
+        setTxStatus("pending");
+        await approveAice(voteAmount);
+        // 授权成功后继续投票
+      } else if (voteType === "fir" && needsFirApproval(voteAmount)) {
+        setTxStatus("pending");
+        await approveFir(voteAmount);
+        // 授权成功后继续投票
+      }
+
+      let hash: string;
+
+      if (voteType === "nobody") {
+        const nftId = nftIdInput ? parseInt(nftIdInput) : selectedNftId!;
+        hash = await voteByNft(parseInt(music.id), nftId);
+      } else {
+        hash = await voteByToken(
+          parseInt(music.id),
+          voteType,
+          parseInt(voteAmount),
+        );
+      }
+
+      setTxHash(hash);
+      setTxStatus("success");
+
+      // 调用回调函数
+      await onVote({
+        musicId: music.id,
+        voteType,
+        amount: voteType === "nobody" ? 1 : parseInt(voteAmount),
+        txHash: hash,
+      });
+
+      // 延迟关闭弹窗
+      setTimeout(() => {
+        onClose();
+        resetForm();
+      }, 2000);
+    } catch (error: any) {
+      console.error("Vote failed:", error);
+
+      // 检查是否是用户拒绝操作
+      if (
+        error.message &&
+        error.message.includes("User rejected the request.")
+      ) {
+        // 用户拒绝操作，不显示错误提示，直接返回
+        setTxStatus("failed");
+        return;
+      }
+
+      // 提供简洁的用户友好错误信息
+      let errorMessage = t("voteFailedGeneric");
+
+      if (error.message) {
+        // 处理常见的合约错误
+        if (error.message.includes("insufficient funds")) {
+          errorMessage = t("insufficientFunds") || "余额不足";
+        } else if (error.message.includes("user rejected")) {
+          errorMessage = t("userRejected") || "用户取消操作";
+        } else if (error.message.includes("network")) {
+          errorMessage = t("networkError") || "网络错误，请重试";
+        } else if (error.message.includes("allowance")) {
+          errorMessage = t("insufficientAllowance") || "授权额度不足";
+        } else if (error.message.includes("not owner")) {
+          errorMessage = t("notOwner") || "您不是该NFT的所有者";
+        } else {
+          // 对于其他错误，只显示简短信息
+          errorMessage = t("operationFailed") || "操作失败，请重试";
+        }
+      }
+
+      setError(errorMessage);
+      setTxStatus("failed");
+    }
+  };
+
+  const resetForm = () => {
+    setVoteType("nobody");
+    setVoteAmount("1");
+    setNftIdInput("");
+    setSelectedNftId(null);
+    setError("");
+    setTxStatus("idle");
+    setTxHash("");
+  };
+
+  // 获取当前余额
+  const getCurrentBalance = () => {
+    switch (voteType) {
+      case "aice":
+        return aiceBalance;
+      case "fir":
+        return firBalance;
+      case "nobody":
+        return nftBalance.toString();
+      default:
+        return "0";
+    }
+  };
+
+  // 自动选择第一个NFT
+  useEffect(() => {
+    if (voteType === "nobody" && nftIds.length > 0 && !selectedNftId) {
+      setSelectedNftId(nftIds[0]);
+    }
+  }, [voteType, nftIds, selectedNftId]);
+
+  // 自动切换网络
+  useEffect(() => {
+    if (!address) return; // 只有连接钱包后才切换网络
+
+    const switchNetwork = async () => {
+      try {
+        const targetChainId = voteType === "nobody" ? 11155111 : 97; // ETH Sepolia : BSC Testnet
+        await switchToChain(targetChainId);
+      } catch (error) {
+        console.log("Network switch failed:", error);
+        // 网络切换失败不影响用户体验，静默处理
+      }
+    };
+
+    switchNetwork();
+  }, [voteType, address, switchToChain]);
+
   const currentVoteInfo = getVoteTypeInfo(voteType);
 
   return (
@@ -108,10 +327,10 @@ export default function VoteModal({
         </DialogHeader>
 
         {music && (
-          <div className="space-y-6">
-            {/* 音乐信息 */}
-            <div className="flex gap-4">
-              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg">
+          <div className="space-y-4">
+            {/* 音乐信息 - 更紧凑 */}
+            <div className="flex gap-3">
+              <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
                 <Image
                   src={music.coverUrl}
                   alt={music.name}
@@ -119,20 +338,18 @@ export default function VoteModal({
                   className="object-cover"
                 />
               </div>
-              <div className="flex-1 space-y-2">
-                <h3 className="text-lg font-semibold">{music.name}</h3>
-                <div className="space-y-1">
-                  <p className="text-sm text-gray-600">{t("artist")}</p>
-                  <p className="text-lg font-bold text-primary">
-                    {music.artist || music.description}
-                  </p>
-                </div>
+              <div className="flex-1 space-y-1">
+                <h3 className="text-base font-semibold">{music.name}</h3>
+                <p className="text-sm text-gray-600">{t("artist")}</p>
+                <p className="text-sm font-bold text-primary">
+                  {music.artist || music.description}
+                </p>
               </div>
             </div>
 
             {/* 投票方式选择 */}
-            <div className="space-y-4">
-              <Label className="text-base font-semibold">
+            <div>
+              <Label className="text-xs font-semibold">
                 {t("votingMethod")}
               </Label>
               <RadioGroup
@@ -140,9 +357,11 @@ export default function VoteModal({
                 onValueChange={(value: string) =>
                   setVoteType(value as VoteType)
                 }
-                className="space-y-3"
+                className="gap-2"
               >
-                {(["nobody", "aice", "fir"] as VoteType[]).map((type) => {
+                {/* NFT投票 - 单独一行 */}
+                {(() => {
+                  const type = "nobody" as VoteType;
                   const info = getVoteTypeInfo(type);
                   const Icon = info.icon;
                   const isSelected = voteType === type;
@@ -150,14 +369,14 @@ export default function VoteModal({
                   return (
                     <div
                       key={type}
-                      className={`relative cursor-pointer rounded-xl border-2 p-4 transition-all duration-300 ${
+                      className={`relative cursor-pointer rounded-md border-2 p-2 transition-all duration-300 ${
                         isSelected
                           ? `${info.borderColor} ${info.bgColor} shadow-[3px_3px_0_0px_rgba(0,0,0,1)]`
                           : "border-gray-200 bg-white/20 hover:border-gray-300 hover:bg-white/30 hover:shadow-[3px_3px_0_0px_rgba(0,0,0,1)]"
                       }`}
                       onClick={() => setVoteType(type)}
                     >
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-1">
                         <RadioGroupItem
                           value={type}
                           id={type}
@@ -165,27 +384,27 @@ export default function VoteModal({
                             isSelected ? info.color : "text-gray-400"
                           }`}
                         />
-                        <div className="flex flex-1 items-center space-x-3">
+                        <div className="flex flex-1 items-center space-x-1">
                           <div
-                            className={`rounded-lg p-2 transition-all duration-300 ${
+                            className={`rounded-sm p-1 transition-all duration-300 ${
                               isSelected
                                 ? `${info.bgColor} ${info.color}`
                                 : "bg-white/20 text-gray-500"
                             }`}
                           >
-                            <Icon className="h-5 w-5" />
+                            <Icon className="h-3 w-3" />
                           </div>
                           <div className="flex-1">
                             <Label
                               htmlFor={type}
-                              className={`cursor-pointer text-base font-semibold ${
+                              className={`cursor-pointer text-xs font-semibold ${
                                 isSelected ? info.color : "text-gray-700"
                               }`}
                             >
                               {info.label}
                             </Label>
                             <p
-                              className={`mt-1 text-sm ${
+                              className={`text-xs ${
                                 isSelected ? "text-gray-600" : "text-gray-500"
                               }`}
                             >
@@ -196,32 +415,174 @@ export default function VoteModal({
                       </div>
                     </div>
                   );
-                })}
-              </RadioGroup>
-            </div>
+                })()}
 
-            {/* 投票数量 */}
-            <div className="space-y-3">
-              <Label htmlFor="voteAmount" className="text-base font-semibold">
-                {t("voteCount")}
-              </Label>
-              <Input
-                id="voteAmount"
-                type="number"
-                min="1"
-                value={voteAmount}
-                onChange={(e) => setVoteAmount(e.target.value)}
-                className="border-2 text-center text-lg font-semibold focus:border-primary"
-                placeholder="1"
-              />
-              {voteType === "nobody" && (
-                <div className="flex items-center space-x-2 rounded-lg border border-yellow-200 bg-yellow-50 p-3">
-                  <Crown className="h-4 w-4 text-yellow-600" />
-                  <p className="text-sm font-medium text-yellow-700">
-                    {t("nobodyVoteLimit")}
+                {/* 代币投票 - 一行两个 */}
+                <div className="grid grid-cols-2 gap-2">
+                  {(["aice", "fir"] as VoteType[]).map((type) => {
+                    const info = getVoteTypeInfo(type);
+                    const Icon = info.icon;
+                    const isSelected = voteType === type;
+
+                    return (
+                      <div
+                        key={type}
+                        className={`relative cursor-pointer rounded-md border-2 p-2 transition-all duration-300 ${
+                          isSelected
+                            ? `${info.borderColor} ${info.bgColor} shadow-[3px_3px_0_0px_rgba(0,0,0,1)]`
+                            : "border-gray-200 bg-white/20 hover:border-gray-300 hover:bg-white/30 hover:shadow-[3px_3px_0_0px_rgba(0,0,0,1)]"
+                        }`}
+                        onClick={() => setVoteType(type)}
+                      >
+                        <div className="flex items-center space-x-1">
+                          <RadioGroupItem
+                            value={type}
+                            id={type}
+                            className={`${
+                              isSelected ? info.color : "text-gray-400"
+                            }`}
+                          />
+                          <div className="flex flex-1 items-center space-x-1">
+                            <div
+                              className={`rounded-sm p-1 transition-all duration-300 ${
+                                isSelected
+                                  ? `${info.bgColor} ${info.color}`
+                                  : "bg-white/20 text-gray-500"
+                              }`}
+                            >
+                              <Icon className="h-3 w-3" />
+                            </div>
+                            <div className="flex-1">
+                              <Label
+                                htmlFor={type}
+                                className={`cursor-pointer text-xs font-semibold ${
+                                  isSelected ? info.color : "text-gray-700"
+                                }`}
+                              >
+                                {info.label}
+                              </Label>
+                              <p
+                                className={`text-xs ${
+                                  isSelected ? "text-gray-600" : "text-gray-500"
+                                }`}
+                              >
+                                {info.description}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </RadioGroup>
+
+              {/* 网络提示 */}
+              <div className="mt-2 rounded-md border border-blue-200 bg-blue-50 p-2">
+                <div className="flex items-center space-x-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
+                  <p className="text-xs font-medium text-blue-700">
+                    {voteType === "nobody"
+                      ? t("networkHintEth")
+                      : t("networkHintBsc")}
                   </p>
                 </div>
+              </div>
+            </div>
+
+            {/* 投票输入 */}
+            <div className="space-y-1">
+              {voteType === "nobody" ? (
+                <>
+                  <Label htmlFor="nftId" className="text-xs font-semibold">
+                    {t("nftId")}
+                  </Label>
+                  <Input
+                    id="nftId"
+                    type="number"
+                    min="0"
+                    value={nftIdInput}
+                    onChange={(e) => setNftIdInput(e.target.value)}
+                    className="border-2 text-center text-sm font-semibold focus:border-primary"
+                    placeholder={t("nftIdPlaceholder")}
+                  />
+                </>
+              ) : (
+                <>
+                  <Label htmlFor="voteAmount" className="text-xs font-semibold">
+                    {t("voteCount")}
+                  </Label>
+                  <Input
+                    id="voteAmount"
+                    type="number"
+                    min="1"
+                    value={voteAmount}
+                    onChange={(e) => setVoteAmount(e.target.value)}
+                    className="border-2 text-center text-sm font-semibold focus:border-primary"
+                    placeholder="1"
+                  />
+                </>
               )}
+
+              {/* 余额显示 */}
+              {address && voteType !== "nobody" && (
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-gray-700">
+                    {t("tokenBalance")}:
+                  </span>
+                  <span className="text-xs font-bold text-primary">
+                    {getCurrentBalance()} {voteType.toUpperCase()}
+                  </span>
+                </div>
+              )}
+
+              {/* NFT选择 - 隐藏，使用输入框 */}
+              {/* {voteType === "nobody" && nftIds.length > 0 && (
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold">
+                    {t("selectNft")}:
+                  </Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {nftIds.map((nftId) => (
+                      <button
+                        key={nftId}
+                        onClick={() => setSelectedNftId(nftId)}
+                        className={`rounded-lg border-2 p-2 text-sm font-medium transition-all ${
+                          selectedNftId === nftId
+                            ? "border-yellow-400 bg-yellow-100 text-yellow-800"
+                            : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
+                        }`}
+                      >
+                        #{nftId}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )} */}
+
+              {/* NFT选择 - 隐藏，使用输入框 */}
+              {/* {voteType === "nobody" && nftIds.length > 0 && (
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold">
+                    {t("selectNft")}:
+                  </Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {nftIds.map((nftId) => (
+                      <button
+                        key={nftId}
+                        onClick={() => setSelectedNftId(nftId)}
+                        className={`rounded-lg border-2 p-2 text-sm font-medium transition-all ${
+                          selectedNftId === nftId
+                            ? "border-yellow-400 bg-yellow-100 text-yellow-800"
+                            : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
+                        }`}
+                      >
+                        #{nftId}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )} */}
             </div>
           </div>
         )}
@@ -235,20 +596,83 @@ export default function VoteModal({
           >
             {t("cancel")}
           </Button>
-          <Button
-            onClick={handleVote}
-            disabled={isSubmitting || !voteAmount || parseInt(voteAmount) < 1}
-            className="h-12 flex-1 border-2 border-black bg-yellow-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-yellow-500 disabled:opacity-50"
-          >
-            {isSubmitting ? (
-              <div className="flex items-center space-x-2">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent"></div>
-                <span>{t("submitting")}</span>
-              </div>
-            ) : (
-              t("confirmVote")
-            )}
-          </Button>
+
+          <ConnectButton.Custom>
+            {({
+              account,
+              chain,
+              openAccountModal,
+              openChainModal,
+              openConnectModal,
+              authenticationStatus,
+              mounted,
+            }) => {
+              const ready = mounted && authenticationStatus !== "loading";
+              const connected =
+                ready &&
+                account &&
+                chain &&
+                (!authenticationStatus ||
+                  authenticationStatus === "authenticated");
+
+              if (!connected) {
+                return (
+                  <Button
+                    onClick={openConnectModal}
+                    className="h-12 flex-1 border-2 border-black bg-blue-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-blue-500"
+                  >
+                    {t("connectWallet")}
+                  </Button>
+                );
+              }
+
+              if (chain.unsupported) {
+                return (
+                  <Button
+                    onClick={openChainModal}
+                    className="h-12 flex-1 border-2 border-black bg-red-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-red-500"
+                  >
+                    {t("wrongNetwork")}
+                  </Button>
+                );
+              }
+
+              return (
+                <Button
+                  onClick={handleVote}
+                  disabled={
+                    isSubmitting ||
+                    (voteType === "nobody" && !nftIdInput && !selectedNftId) ||
+                    (voteType === "nobody" &&
+                      nftIdInput &&
+                      parseInt(nftIdInput) < 0) ||
+                    (voteType !== "nobody" &&
+                      (!voteAmount || parseInt(voteAmount) < 1)) ||
+                    txStatus === "pending"
+                  }
+                  className="h-12 flex-1 border-2 border-black bg-yellow-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-yellow-500 disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent"></div>
+                      <span>
+                        {(voteType === "aice" &&
+                          needsAiceApproval(voteAmount)) ||
+                        (voteType === "fir" && needsFirApproval(voteAmount))
+                          ? t("approving")
+                          : t("submitting")}
+                      </span>
+                    </div>
+                  ) : (voteType === "aice" && needsAiceApproval(voteAmount)) ||
+                    (voteType === "fir" && needsFirApproval(voteAmount)) ? (
+                    t("approveAndVote")
+                  ) : (
+                    t("confirmVote")
+                  )}
+                </Button>
+              );
+            }}
+          </ConnectButton.Custom>
         </DialogFooter>
       </DialogContent>
     </Dialog>

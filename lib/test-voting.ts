@@ -1,6 +1,12 @@
 // 测试投票合约集成
 import { VOTING_CONTRACTS } from "@/constants/voting-contract";
-import { getAccount, getNetwork, readContract, erc20ABI, erc721ABI } from "@wagmi/core";
+import {
+  getAccount,
+  getNetwork,
+  readContract,
+  erc20ABI,
+  erc721ABI,
+} from "@wagmi/core";
 
 // 测试函数
 export async function testVotingIntegration() {
@@ -44,7 +50,7 @@ export async function testVotingIntegration() {
     console.log("3. 测试NFT余额查询...");
     const nftBalance = await readContract({
       address: VOTING_CONTRACTS.ETH_SEPOLIA.NFT_CONTRACT,
-      abi: ERC721_ABI,
+      abi: erc721ABI,
       functionName: "balanceOf",
       args: [account.address],
       chainId: VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID,

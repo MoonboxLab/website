@@ -13,6 +13,8 @@ import { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import localFont from "next/font/local";
 import { GoogleTagManager } from "@next/third-parties/google";
+import { MusicProvider } from "@/lib/MusicContext";
+import FloatingMusicPlayer from "@/components/FloatingMusicPlayer";
 
 const impact = localFont({
   src: "../../public/fonts/impact.ttf",
@@ -47,10 +49,13 @@ export default async function LocaleLayout({
       <body className={` ${impact.variable} ${inter.className}`}>
         <ToastContainer />
         <WagmiProviders>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {/* <Header /> */}
-            {children}
-          </NextIntlClientProvider>
+          <MusicProvider>
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              {/* <Header /> */}
+              {children}
+              <FloatingMusicPlayer />
+            </NextIntlClientProvider>
+          </MusicProvider>
         </WagmiProviders>
         <Analytics />
         {/* <!-- 动态引入验证码JS示例 --> */}

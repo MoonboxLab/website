@@ -12,7 +12,7 @@ import { useRouter, usePathname } from "next-intl/client";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount, useDisconnect } from "wagmi";
-import { Power, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Power, X, ChevronDown, ChevronRight, User } from "lucide-react";
 import Link from "next/link";
 import CustomConnectButton from "./CustomConnectWallet";
 import { formatAddress } from "@/lib/utils";
@@ -23,6 +23,8 @@ import {
   AccordionTrigger,
 } from "./ui/accordion";
 import { getPoint } from "@/service/point";
+import AuthModal from "./AuthModal";
+import { useAuthSync } from "@/lib/useAuthSync";
 
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector("body"));
@@ -48,6 +50,37 @@ const Header: React.FC = () => {
   };
 
   const [point, setPoint] = useState("--");
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  // Use the auth sync hook
+  const { isLoggedIn, user } = useAuthSync({
+    onLogin: () => {
+      setShowAuthModal(false);
+    },
+    onLogout: () => {
+      setShowAuthModal(false);
+    },
+  });
+
+  // Function to mask email address
+  const maskEmail = (email: string) => {
+    if (!email) return "";
+    const [localPart, domain] = email.split("@");
+    if (localPart.length <= 2) {
+      return email; // Don't mask very short emails
+    }
+    // Show only first 2 characters of local part and first 2 characters of domain
+    const maskedLocal = localPart.substring(0, 2) + "***";
+    const maskedDomain = domain.substring(0, 2) + "***";
+    return `${maskedLocal}@${maskedDomain}`;
+  };
+
+  // Function to handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    // The useAuthSync hook will automatically detect the change and update the state
+  };
 
   const fetchPoint = useCallback(async () => {
     if (!address) return;
@@ -92,59 +125,47 @@ const Header: React.FC = () => {
               <ChevronDown />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mt-2 w-[245px] rounded-[12px] py-[14px]">
-            <Link href={`/${locale}/hares`}>
+          <DropdownMenuContent className="mt-2 w-[280px] rounded-[12px] py-[14px]">
+            <div className="px-3 py-2">
+              <div className="relative">
+                <span className="text-[16px] font-semibold leading-[16px] text-gray-800">
+                  {t("dreamMusicSuperstar")}
+                </span>
+                <span className="absolute -right-1 -top-1 animate-pulse rounded-full bg-red-50 px-1.5 py-0.5 text-[10px] font-bold leading-[10px] text-red-500 shadow-sm">
+                  NOW LIVE!
+                </span>
+              </div>
+            </div>
+            <div className="ml-4">
+              <Link href={`/${locale}/music`}>
+                <DropdownMenuItem>
+                  <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                    <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                      {t("audition")}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
+              <Link href={`/${locale}/music/voting`}>
+                <DropdownMenuItem>
+                  <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                    <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                      {t("voting")}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
+            </div>
+            <div className="mx-3 my-2 border-t border-gray-200"></div>
+            <Link href={`/${locale}/events`}>
               <DropdownMenuItem>
                 <div className=" inline-flex h-[25px] items-center justify-between px-1">
                   <span className="text-[16px] font-medium leading-[16px]">
-                    {t("hares")}
+                    {t("allEvents")}
                   </span>
                 </div>
               </DropdownMenuItem>
             </Link>
-            <Link href={`/${locale}/impact`}>
-              <DropdownMenuItem>
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("impact")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/${locale}/bid`}>
-              <DropdownMenuItem>
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("bid")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/${locale}/talkshow`}>
-              <DropdownMenuItem className="mt-2">
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("talkshow")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/${locale}/show`}>
-              <DropdownMenuItem className="mt-2">
-                <div className=" inline-flex h-[25px] items-center justify-between px-1">
-                  <span className="text-[16px] font-medium leading-[16px]">
-                    {t("show")}
-                  </span>
-                </div>
-              </DropdownMenuItem>
-            </Link>
-            {/* <Link href={"/goldcard"}>
-              <DropdownMenuItem className='mt-2'>
-                <div className=' h-[25px] inline-flex items-center justify-between px-1'>
-                  <span className='text-[16px] leading-[16px] font-medium'>{t("goldenCard")}</span>
-                </div>
-              </DropdownMenuItem>
-            </Link> */}
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -402,6 +423,45 @@ const Header: React.FC = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        {isLoggedIn ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="sm:hover-btn-shadow ml-[10px] hidden h-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-3 shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:flex lg:h-[40px] 3xl:h-[48px]">
+                <span className="text-[16px] font-semibold leading-[16px] text-black sm:text-[18px] sm:leading-[18px] 3xl:text-[21px] 3xl:leading-[21px]">
+                  {maskEmail(user?.email || "")}
+                </span>
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mt-2 w-[200px] rounded-[12px] py-[14px]">
+              <Link href={`/${locale}/profile`}>
+                <DropdownMenuItem>
+                  <div className="inline-flex h-[25px] items-center justify-between px-1">
+                    <User className="mr-2 h-4 w-4" />
+                    <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                      {t("header_profile")}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem onClick={handleLogout}>
+                <div className="inline-flex h-[25px] items-center justify-between px-1">
+                  <Power className="mr-2 h-4 w-4" />
+                  <span className="text-[15px] font-medium leading-[15px] text-gray-700">
+                    {t("disconnect")}
+                  </span>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <button
+            onClick={() => setShowAuthModal(true)}
+            className="sm:hover-btn-shadow ml-[10px] hidden h-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white px-3 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:flex lg:h-[40px] 3xl:h-[48px]"
+          >
+            {t("header_login")}
+          </button>
+        )}
         <ConnectButton.Custom>
           {({ account, chain, authenticationStatus, mounted }) => {
             const ready = mounted && authenticationStatus !== "loading";
@@ -601,29 +661,30 @@ const Header: React.FC = () => {
                     {t("event")}
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Link href={`/${locale}/hares`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("hares")}
+                    <div className="px-3 py-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[16px] font-semibold leading-[16px] text-gray-800">
+                          {t("dreamMusicSuperstar")}
+                        </span>
+                        <span className="animate-pulse rounded-full bg-red-50 px-2 py-1 text-[12px] font-bold leading-[12px] text-red-500 shadow-sm">
+                          NOW LIVE!
+                        </span>
                       </div>
-                    </Link>
-                    <Link href={`/${locale}/impact`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("impact")}
+                    </div>
+                    <div className="ml-4">
+                      <Link href={`/${locale}/music`}>
+                        <div className="py-3 text-[16px] font-semibold leading-[16px] text-gray-700">
+                          {t("audition")}
+                        </div>
+                      </Link>
+                      <div className="py-3 text-[16px] font-semibold leading-[16px] text-gray-700 opacity-50">
+                        {t("voting")}
                       </div>
-                    </Link>
-                    <Link href={`/${locale}/bid`}>
+                    </div>
+                    <div className="mx-3 my-2 border-t border-gray-200"></div>
+                    <Link href={`/${locale}/events`}>
                       <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("bid")}
-                      </div>
-                    </Link>
-                    <Link href={`/${locale}/talkshow`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("talkshow")}
-                      </div>
-                    </Link>
-                    <Link href={`/${locale}/show`}>
-                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
-                        {t("show")}
+                        {t("allEvents")}
                       </div>
                     </Link>
                   </AccordionContent>
@@ -642,6 +703,40 @@ const Header: React.FC = () => {
                   <ChevronRight width={18} height={18} />
                 </div>
               </Link>
+
+              {/* Email Login/Profile and Wallet Connect in Mobile */}
+              {isLoggedIn && (
+                <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
+              )}
+
+              {/* Email Login/Profile */}
+              {!isLoggedIn ? null : (
+                <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
+              )}
+              {!isLoggedIn ? null : (
+                <div className="my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]">
+                  <span>{maskEmail(user?.email || "")}</span>
+                </div>
+              )}
+              {!isLoggedIn ? null : (
+                <Link href={`/${locale}/profile`}>
+                  <div className="my-4 mt-1 flex justify-between text-[18px] font-semibold leading-[18px]">
+                    {t("header_profile")}
+                    <ChevronRight width={18} height={18} />
+                  </div>
+                </Link>
+              )}
+              {!isLoggedIn ? null : (
+                <div
+                  onClick={handleLogout}
+                  className="my-4 mt-1 flex cursor-pointer justify-between text-[18px] font-semibold leading-[18px]"
+                >
+                  {t("disconnect")}
+                  <ChevronRight width={18} height={18} />
+                </div>
+              )}
+
+              {/* Wallet Connect */}
               <ConnectButton.Custom>
                 {({ account, chain, authenticationStatus, mounted }) => {
                   const ready = mounted && authenticationStatus !== "loading";
@@ -655,16 +750,14 @@ const Header: React.FC = () => {
                     return null;
                   }
                   return (
-                    <>
-                      <div className=" my-1 border-b-[1px] border-gray-200"></div>
-                      <div className="my-4 flex justify-between text-[18px] font-semibold leading-[18px]  ">
-                        {t("point")}: {point}
-                      </div>
-                    </>
+                    <div className="my-4 flex justify-between text-[18px] font-semibold leading-[18px]">
+                      {t("point")}: {point}
+                    </div>
                   );
                 }}
               </ConnectButton.Custom>
-              <div className=" my-1 border-b-[1px] border-gray-200"></div>
+
+              <div className="my-4 mt-0 border-b-[1px] border-gray-200"></div>
 
               <Accordion
                 type="single"
@@ -836,7 +929,16 @@ const Header: React.FC = () => {
                   </a>
                 </div>
               )}
+
               <div className=" mt-12">
+                {isLoggedIn ? null : (
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="sm:hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white px-3 text-[21px] font-bold shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                  >
+                    {t("header_login")}
+                  </button>
+                )}
                 <CustomConnectButton />
               </div>
             </ul>
@@ -955,6 +1057,9 @@ const Header: React.FC = () => {
           </ConnectButton.Custom>
         )}
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
     </header>
   );
 };

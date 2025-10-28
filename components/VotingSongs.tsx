@@ -73,9 +73,9 @@ export default function VotingSongs({
   };
 
   return (
-    <div className="mt-12">
+    <div className="">
       <div
-        className={`mx-auto mt-4 grid w-full rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:px-16 lg:py-10`}
+        className={`mx-auto grid w-full rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:px-16 lg:py-10`}
       >
         <div className="flex items-center justify-between">
           <div>

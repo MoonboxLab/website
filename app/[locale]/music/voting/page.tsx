@@ -7,7 +7,7 @@ import { useMusicPage } from "@/lib/MusicPageContext";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Link from "next/link";
 import { useLocale } from "next-intl";
-import { Calendar } from "lucide-react";
+import { Calendar, ArrowLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 // Helper function to convert event ID (year*12+month) to year and month
@@ -223,6 +223,15 @@ export default function MusicVotingPage() {
 
   return (
     <div>
+      {/* Back Button */}
+      <Link
+        href={`/${locale}/music`}
+        className="mb-4 mt-4 inline-flex items-center rounded-lg border-2 border-black bg-white px-6 py-3 text-lg font-bold transition-colors hover:bg-gray-50"
+      >
+        <ArrowLeft className="mr-2 h-5 w-5" />
+        {t("back")}
+      </Link>
+
       {/* Mock Data Toggle - Hidden */}
       {/* <div className="mb-4 flex justify-center">
         <div className="rounded-lg border-2 border-black bg-white p-4 shadow-[2px_2px_0px_rgba(0,0,0,1)]">

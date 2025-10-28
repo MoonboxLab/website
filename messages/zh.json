@@ -558,6 +558,7 @@
     "uploadWorkButton": "上傳作品",
     "uploadSuccess": "作品上傳並提交成功！",
     "uploadFailed": "上傳失敗，請重試",
+    "back": "返回",
     "submitFailed": "提交作品失敗",
     "submitFailedButUploaded": "提交作品失敗，但文件已上傳成功",
     "fillCompleteInfo": "請填寫完整信息：選擇樣品歌曲並上傳作品文件",

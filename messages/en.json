@@ -635,6 +635,7 @@
     "uploadWorkButton": "Upload Work",
     "uploadSuccess": "Work uploaded and submitted successfully!",
     "uploadFailed": "Upload failed, please try again",
+    "back": "Back",
     "submitFailed": "Failed to submit work",
     "submitFailedButUploaded": "Failed to submit work, but file uploaded successfully",
     "fillCompleteInfo": "Please fill in complete information: select sample song and upload work file",

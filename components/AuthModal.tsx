@@ -53,6 +53,11 @@ export default function AuthModal({
   const [forgotCountdown, setForgotCountdown] = useState(0);
   const [isSendingForgotCode, setIsSendingForgotCode] = useState(false);
 
+  // Loading states for submit buttons
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+
   const handleSendCode = async () => {
     if (!registerEmail || isSendingCode) return;
 
@@ -132,6 +137,9 @@ export default function AuthModal({
       return;
     }
 
+    if (isResettingPassword) return;
+
+    setIsResettingPassword(true);
     try {
       const response = await fetch("/api/reset-password", {
         method: "POST",
@@ -164,12 +172,17 @@ export default function AuthModal({
     } catch (error) {
       console.error("Password reset error:", error);
       toast.error(t("authModal.toast.resetRetry"));
+    } finally {
+      setIsResettingPassword(false);
     }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (isLoggingIn) return;
+
+    setIsLoggingIn(true);
     try {
       const response = await fetch("/api/login", {
         method: "POST",
@@ -200,6 +213,8 @@ export default function AuthModal({
     } catch (error) {
       console.error("Login error:", error);
       toast.error(t("authModal.toast.loginRetry"));
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -210,6 +225,9 @@ export default function AuthModal({
       return;
     }
 
+    if (isRegistering) return;
+
+    setIsRegistering(true);
     try {
       const response = await fetch("/api/register", {
         method: "POST",
@@ -247,6 +265,8 @@ export default function AuthModal({
     } catch (error) {
       console.error("Registration error:", error);
       toast.error(t("authModal.toast.registerRetry"));
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -342,9 +362,17 @@ export default function AuthModal({
 
             <button
               type="submit"
-              className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+              disabled={isLoggingIn}
+              className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
             >
-              {t("authModal.loginButton")}
+              {isLoggingIn ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {t("authModal.loggingIn")}
+                </span>
+              ) : (
+                t("authModal.loginButton")
+              )}
             </button>
 
             <div className="mt-4 text-center">
@@ -466,9 +494,17 @@ export default function AuthModal({
 
             <button
               type="submit"
-              className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+              disabled={isRegistering}
+              className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
             >
-              {t("authModal.registerButton")}
+              {isRegistering ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {t("authModal.registering")}
+                </span>
+              ) : (
+                t("authModal.registerButton")
+              )}
             </button>
 
             <div className="mt-4 text-center">
@@ -573,9 +609,17 @@ export default function AuthModal({
 
             <button
               type="submit"
-              className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+              disabled={isResettingPassword}
+              className="w-full rounded-lg border-2 border-black bg-[#FFD600] py-2 font-semibold shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-shadow hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:shadow-[2px_2px_0px_rgba(0,0,0,1)]"
             >
-              {t("authModal.resetPasswordButton")}
+              {isResettingPassword ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {t("authModal.resettingPassword")}
+                </span>
+              ) : (
+                t("authModal.resetPasswordButton")
+              )}
             </button>
           </form>
         )}

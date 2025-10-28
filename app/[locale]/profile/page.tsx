@@ -589,13 +589,17 @@ export default function ProfilePage() {
                     className="flex gap-[20px]"
                   >
                     <div className="flex items-center space-x-[8px]">
-                      <RadioGroupItem value="yes" id="yes" />
+                      <RadioGroupItem
+                        value="yes"
+                        id="yes"
+                        className="bg-white"
+                      />
                       <Label htmlFor="yes" className="text-[16px] text-black">
                         {t("yes")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-[8px]">
-                      <RadioGroupItem value="no" id="no" />
+                      <RadioGroupItem value="no" id="no" className="bg-white" />
                       <Label htmlFor="no" className="text-[16px] text-black">
                         {t("no")}
                       </Label>
@@ -609,7 +613,10 @@ export default function ProfilePage() {
                       htmlFor="whatsapp"
                       className="text-[16px] font-medium text-black"
                     >
-                      WhatsApp
+                      WhatsApp{" "}
+                      <span className="text-[14px] font-normal text-gray-500">
+                        (可选)
+                      </span>
                     </Label>
                     <Input
                       id="whatsapp"
@@ -627,7 +634,10 @@ export default function ProfilePage() {
                       htmlFor="wechat"
                       className="text-[16px] font-medium text-black"
                     >
-                      {t("wechat")}
+                      {t("wechat")}{" "}
+                      <span className="text-[14px] font-normal text-gray-500">
+                        (可选)
+                      </span>
                     </Label>
                     <Input
                       id="wechat"
@@ -645,7 +655,10 @@ export default function ProfilePage() {
                       htmlFor="telegram"
                       className="text-[16px] font-medium text-black"
                     >
-                      Telegram
+                      Telegram{" "}
+                      <span className="text-[14px] font-normal text-gray-500">
+                        (可选)
+                      </span>
                     </Label>
                     <Input
                       id="telegram"

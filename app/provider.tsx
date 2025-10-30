@@ -17,6 +17,10 @@ import {
   metaMaskWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 
+sepolia.rpcUrls.default.http = ["https://ethereum-sepolia-rpc.publicnode.com/"];
+sepolia.rpcUrls.default.ws = ["wss://ethereum-sepolia-rpc.publicnode.com/"];
+sepolia.rpcUrls.public.http = ["https://ethereum-sepolia-rpc.publicnode.com/"];
+sepolia.rpcUrls.public.ws = ["wss://ethereum-sepolia-rpc.publicnode.com/"];
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_TEST_ENV === "true"

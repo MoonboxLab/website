@@ -403,7 +403,7 @@ export default function VoteModal({
             {/* 投票方式选择 */}
             <div>
               <Label className="text-xs font-semibold">
-                {t("votingMethod")}
+                {t("votingMethodTitle")}
               </Label>
               <RadioGroup
                 value={voteType}

@@ -129,7 +129,7 @@ export default function VotingSongs({
                           <path
                             d="M10.1737 16.9903H6L4 7.7955L7.33617 10.7375L10.1737 16.9903Z"
                             fill="white"
-                            fill-opacity="0.42"
+                            fillOpacity="0.42"
                           />
                           <path
                             d="M11.5834 6.00162V17H7.1365V16.9114H7.13499V10.9984L7.1365 10.9968L8.52821 9.43318L11.5834 6.00162Z"
@@ -138,7 +138,7 @@ export default function VotingSongs({
                           <path
                             d="M11.5834 6.00162V17H7.1365V16.9114H7.13499V10.9984L7.1365 10.9968L8.52821 9.43318L11.5834 6.00162Z"
                             fill="white"
-                            fill-opacity="0.42"
+                            fillOpacity="0.42"
                           />
                           <path
                             d="M12.9961 17H17.1713L19.1713 7.80516H19.1698L15.8351 10.7472L12.9961 17Z"
@@ -149,8 +149,8 @@ export default function VotingSongs({
                             fill="currentColor"
                           />
                           <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
                             d="M11.5624 9.33011L10.624 10.3994L11.5624 11.3897L12.5457 10.3994L11.5624 9.33011Z"
                             fill="white"
                           />

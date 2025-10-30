@@ -279,9 +279,6 @@ export function useNftVote() {
       setLoading(true);
       try {
         const config = VOTE_CONFIG.nobody;
-        const chainId = VOTING_CONTRACTS[config.chain].CHAIN_ID;
-        const { chain } = getNetwork();
-        const currentChainId = chain?.id || chainId;
 
         // 检查NFT所有权
         const owner = await readContract({
@@ -289,7 +286,6 @@ export function useNftVote() {
           abi: ERC721_ABI,
           functionName: "ownerOf",
           args: [BigInt(nftId)],
-          chainId: currentChainId,
         });
 
         if (owner.toLowerCase() !== account.address.toLowerCase()) {
@@ -302,7 +298,6 @@ export function useNftVote() {
           abi: VOTING_CONTRACT_ABI,
           functionName: "voteByNft",
           args: [BigInt(musicId), BigInt(nftId)],
-          chainId: currentChainId,
         });
 
         await waitForTransaction({ hash });

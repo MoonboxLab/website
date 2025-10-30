@@ -10,6 +10,7 @@ interface FeaturedSongsProps {
   onViewAll: () => void;
   onDownload: (music: any) => void;
   currentEventId?: number;
+  isLoading?: boolean;
 }
 
 export default function FeaturedSongs({
@@ -17,6 +18,7 @@ export default function FeaturedSongs({
   onViewAll,
   onDownload,
   currentEventId,
+  isLoading = false,
 }: FeaturedSongsProps) {
   const t = useTranslations("Music");
   const { playTrack } = useMusic();
@@ -58,24 +60,50 @@ export default function FeaturedSongs({
       <div
         className={`mx-auto mt-4 grid w-full rounded-3xl border border-black bg-[#F3EFE4] px-3 py-3 shadow-[3px_3px_0px_rgba(0,0,0,1)] lg:px-16 lg:py-10`}
       >
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold lg:text-3xl">{getTitle()}</h2>
-            <p className="text-sm text-gray-600 lg:text-base">
-              {t("providedBy")}
-            </p>
+        {isLoading ? (
+          <div className="flex items-center justify-between">
+            <div className="animate-pulse">
+              <div className="mb-2 h-7 w-56 rounded bg-gray-200 lg:h-8 lg:w-72" />
+              <div className="h-4 w-40 rounded bg-gray-200 lg:w-48" />
+            </div>
+            <div className="h-10 w-28 rounded-lg border-2 border-black bg-gray-200" />
           </div>
-          <button
-            onClick={onViewAll}
-            className="rounded-lg border-2 border-black bg-white px-6 py-3 text-sm font-bold lg:text-base"
-          >
-            {t("viewAll")}
-          </button>
-        </div>
+        ) : (
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold lg:text-3xl">{getTitle()}</h2>
+              <p className="text-sm text-gray-600 lg:text-base">
+                {t("providedBy")}
+              </p>
+            </div>
+            <button
+              onClick={onViewAll}
+              className="rounded-lg border-2 border-black bg-white px-6 py-3 text-sm font-bold lg:text-base"
+            >
+              {t("viewAll")}
+            </button>
+          </div>
+        )}
 
         {/* Songs Grid */}
         <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-          {musics.length > 0 ? (
+          {isLoading ? (
+            Array.from({ length: 10 }).map((_, idx) => (
+              <div key={idx} className="cursor-pointer">
+                <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-200">
+                  <div className="h-full w-full animate-pulse bg-gray-200" />
+                </div>
+                <div className="mt-2">
+                  <div className="mb-2 h-4 w-3/4 animate-pulse rounded bg-gray-200" />
+                  <div className="h-3 w-1/2 animate-pulse rounded bg-gray-200" />
+                </div>
+                <div className="mt-2 flex flex-col gap-2">
+                  <div className="h-8 w-full animate-pulse rounded border border-gray-300 bg-gray-200" />
+                  <div className="h-8 w-full animate-pulse rounded border border-gray-300 bg-gray-200" />
+                </div>
+              </div>
+            ))
+          ) : musics.length > 0 ? (
             musics.map((item) => (
               <div className="cursor-pointer" key={item.id}>
                 <div

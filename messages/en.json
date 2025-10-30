@@ -141,6 +141,8 @@
     "noSongRecords": "No song records",
     "published": "Published",
     "pendingReview": "Pending Review",
+    "status": "Status",
+    "uploadSuccess": "Upload Success",
     "artistName": "Artist Name (Web Display)",
     "userPlaceholder": "User {uid}",
     "changePassword": "Change Password",

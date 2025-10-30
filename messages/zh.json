@@ -807,6 +807,8 @@
     "noSongRecords": "暫無作品記錄",
     "published": "已發布",
     "pendingReview": "待審核",
+    "status": "狀態",
+    "uploadSuccess": "成功上傳",
     "artistName": "藝名 (網頁展示)",
     "userPlaceholder": "用戶 {uid}",
     "changePassword": "更改密碼",

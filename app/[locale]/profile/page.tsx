@@ -795,6 +795,9 @@ export default function ProfilePage() {
                       <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
                         {t("songName")}
                       </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("status")}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -810,12 +813,30 @@ export default function ProfilePage() {
                           <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
                             {creation.title}
                           </td>
+                          <td className="px-[16px] py-[12px] text-[14px]">
+                            <div className="flex items-center gap-[8px] text-green-600">
+                              <svg
+                                className="h-[16px] w-[16px]"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                              <span>{t("uploadSuccess")}</span>
+                            </div>
+                          </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
                         <td
-                          colSpan={2}
+                          colSpan={3}
                           className="px-[16px] py-[20px] text-center text-[14px] text-gray-500"
                         >
                           {t("noSongRecords")}

@@ -845,6 +845,7 @@
     "invalidContract": "Contract address is invalid or not deployed",
     "willApproveAndVote": "Click vote button will auto approve and vote",
     "approveAndVote": "Approve & Vote",
-    "ok": "OK"
+    "ok": "OK",
+    "noNft": "Current wallet has no Nobody NFT"
   }
 }

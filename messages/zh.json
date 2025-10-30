@@ -760,7 +760,8 @@
     "invalidContract": "合約地址無效或合約未部署",
     "willApproveAndVote": "點擊投票按鈕將自動授權並投票",
     "approveAndVote": "授權並投票",
-    "ok": "我明白"
+    "ok": "我明白",
+    "noNft": "當前錢包沒有Nobody NFT"
   },
   "Profile": {
     "title": "個人資料",

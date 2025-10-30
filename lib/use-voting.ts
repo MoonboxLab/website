@@ -280,18 +280,6 @@ export function useNftVote() {
       try {
         const config = VOTE_CONFIG.nobody;
 
-        // 检查NFT所有权
-        const owner = await readContract({
-          address: config.tokenContract as `0x${string}`,
-          abi: ERC721_ABI,
-          functionName: "ownerOf",
-          args: [BigInt(nftId)],
-        });
-
-        if (owner.toLowerCase() !== account.address.toLowerCase()) {
-          throw new Error("您不拥有此NFT");
-        }
-
         // 执行投票
         const { hash } = await writeContract({
           address: config.contract,
@@ -306,7 +294,14 @@ export function useNftVote() {
         return hash;
       } catch (error: any) {
         console.error("投票失败:", error);
-        toast.error(error.message || t("voteFailed") || "投票失败");
+
+        // 检查是否包含 "no nft" 错误
+        const errorMessage = error.message || error.toString() || "";
+        if (errorMessage.toLowerCase().includes("no nft")) {
+          toast.error(t("noNft") || "當前錢包沒有Nobody NFT");
+        } else {
+          toast.error(errorMessage || t("voteFailed") || "投票失敗");
+        }
         throw error;
       } finally {
         setLoading(false);

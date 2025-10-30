@@ -640,6 +640,9 @@ export default function VoteModal({
           </div>
         )}
 
+        <div className="pt-2 text-center text-xs text-gray-500">
+          投票後刷新，票數數據會自動更新
+        </div>
         <DialogFooter className="flex gap-3 pt-4">
           <Button
             variant="outline"

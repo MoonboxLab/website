@@ -844,6 +844,7 @@
     "operationFailed": "Operation failed, please try again",
     "invalidContract": "Contract address is invalid or not deployed",
     "willApproveAndVote": "Click vote button will auto approve and vote",
-    "approveAndVote": "Approve & Vote"
+    "approveAndVote": "Approve & Vote",
+    "ok": "OK"
   }
 }

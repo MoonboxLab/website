@@ -77,7 +77,8 @@
     "audition": "海選",
     "voting": "投票",
     "allEvents": "所有活動",
-    "historicalEvents": "歷史活動"
+    "historicalEvents": "歷史活動",
+    "participationRecords": "參加記錄"
   },
   "Declaration": {
     "spirit": "精神",
@@ -793,7 +794,7 @@
     "telegramPlaceholder": "請輸入Telegram用戶名",
     "saveProfile": "儲存資料",
     "votingHistory": "投票記錄",
-    "songHistory": "歌曲記錄",
+    "songHistory": "參加記錄",
     "date": "日期",
     "singer": "歌手",
     "songName": "歌名",

@@ -123,6 +123,19 @@ export default function ProfilePage() {
     }
   }, [isLoggedIn]);
 
+  // Handle scroll to participation records after loading completes
+  useEffect(() => {
+    // Only scroll when isLoading is false
+    if (!isLoading && window.location.hash === "#participation-records") {
+      setTimeout(() => {
+        const element = document.getElementById("participation-records");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+  }, [isLoading]);
+
   const loadUserProfile = async () => {
     try {
       setIsLoading(true);
@@ -246,6 +259,20 @@ export default function ProfilePage() {
       day: "2-digit",
     });
   };
+
+  // Handle scroll to participation records after data is loaded
+  useEffect(() => {
+    // Only scroll if data is not loading and we have a hash in URL
+    if (!isLoadingData && window.location.hash === "#participation-records") {
+      // Small delay to ensure DOM is fully rendered
+      setTimeout(() => {
+        const element = document.getElementById("participation-records");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+  }, [isLoadingData]);
 
   const handleInputChange = (
     field: keyof UserProfile,
@@ -708,6 +735,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          {/* Participation Records Section */}
           {/* Voting History Card */}
           <div
             className="rounded-[16px] p-[30px] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
@@ -784,7 +812,8 @@ export default function ProfilePage() {
 
           {/* Song History Card */}
           <div
-            className="rounded-[16px] p-[30px] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+            id="participation-records"
+            className="scroll-mt-20 rounded-[16px] p-[30px] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
             style={{ backgroundColor: "#F3EFE4" }}
           >
             <h2 className="mb-[20px] text-[20px] font-semibold text-black">

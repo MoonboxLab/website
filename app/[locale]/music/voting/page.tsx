@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import VotingSongs from "@/components/VotingSongs";
 import { useMusicPage } from "@/lib/MusicPageContext";
@@ -28,6 +28,7 @@ export default function MusicVotingPage() {
     undefined,
   );
   const [useMockData, setUseMockData] = useState(false); // 默认使用真实数据
+  const [isLoadingMusics, setIsLoadingMusics] = useState<boolean>(true);
   const {
     isPrivacyModalOpen,
     setIsPrivacyModalOpen,
@@ -87,6 +88,8 @@ export default function MusicVotingPage() {
     } catch (error) {
       console.error("Failed to fetch voting musics:", error);
       setVotingMusics([]);
+    } finally {
+      // loading state handled by effect with request guards
     }
   };
 
@@ -97,6 +100,7 @@ export default function MusicVotingPage() {
     });
 
     try {
+      // events loading skeleton not required; keep UX simple
       // Choose API endpoint based on mock data setting
       const url = useMockData
         ? "/api/music/creation/month/list/mock"
@@ -188,6 +192,10 @@ export default function MusicVotingPage() {
     }
   }, [votingEvents, searchParams]); // 移除 currentEventId 依赖
 
+  // Guarded loading control to avoid double flashing in Strict Mode
+  const lastEventIdRef = useRef<number | undefined>(undefined);
+  const requestIdRef = useRef(0);
+
   // Fetch voting musics when currentEventId or useMockData changes
   useEffect(() => {
     console.log("=== Voting Music fetch useEffect ===", {
@@ -196,9 +204,26 @@ export default function MusicVotingPage() {
       willFetch: true,
     });
 
+    // Only toggle loading if it's a new event or we have no data yet
+    const shouldShowLoading =
+      currentEventId !== undefined &&
+      (votingMusics.length === 0 || lastEventIdRef.current !== currentEventId);
+
+    if (shouldShowLoading) {
+      setIsLoadingMusics(true);
+    }
+
+    const myRequestId = ++requestIdRef.current;
     // Use setTimeout to prevent duplicate calls in React Strict Mode
-    const timeoutId = setTimeout(() => {
-      fetchVotingMusics();
+    const timeoutId = setTimeout(async () => {
+      await fetchVotingMusics();
+      // Only clear loading if this is the latest request
+      if (requestIdRef.current === myRequestId) {
+        if (shouldShowLoading) {
+          setIsLoadingMusics(false);
+        }
+        lastEventIdRef.current = currentEventId;
+      }
     }, 100);
 
     return () => {
@@ -260,6 +285,7 @@ export default function MusicVotingPage() {
         onViewAll={handleViewAll}
         onBid={handleBid}
         currentEventId={currentEventId}
+        isLoading={isLoadingMusics}
       />
 
       {/* View All Modal for /music/voting page */}

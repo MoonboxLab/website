@@ -26,6 +26,7 @@ export default function MusicPage() {
   const [currentEventId, setCurrentEventId] = useState<number | undefined>(
     undefined,
   );
+  const [isLoadingMusics, setIsLoadingMusics] = useState<boolean>(true);
   const {
     isPrivacyModalOpen,
     setIsPrivacyModalOpen,
@@ -134,9 +135,17 @@ export default function MusicPage() {
 
     // Only fetch when we have a specific event ID (not undefined)
     if (currentEventId !== undefined) {
+      // Set loading immediately to avoid brief empty-state flash between sequential effects in Strict Mode
+      setIsLoadingMusics(true);
       // Use setTimeout to prevent duplicate calls in React Strict Mode
       const timeoutId = setTimeout(() => {
-        fetchMusics(currentEventId);
+        (async () => {
+          try {
+            await fetchMusics(currentEventId);
+          } finally {
+            setIsLoadingMusics(false);
+          }
+        })();
       }, 100);
 
       return () => {
@@ -162,6 +171,7 @@ export default function MusicPage() {
         onViewAll={handleViewAll}
         onDownload={handleDownload}
         currentEventId={currentEventId}
+        isLoading={isLoadingMusics}
       />
 
       {/* View All Modal for /music page */}

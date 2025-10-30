@@ -166,6 +166,15 @@ const Header: React.FC = () => {
                 </div>
               </DropdownMenuItem>
             </Link>
+            <Link href={`/${locale}/profile#participation-records`}>
+              <DropdownMenuItem>
+                <div className=" inline-flex h-[25px] items-center justify-between px-1">
+                  <span className="text-[16px] font-medium leading-[16px]">
+                    {t("participationRecords")}
+                  </span>
+                </div>
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -685,6 +694,11 @@ const Header: React.FC = () => {
                     <Link href={`/${locale}/events`}>
                       <div className="py-3 text-[18px] font-semibold leading-[18px]">
                         {t("allEvents")}
+                      </div>
+                    </Link>
+                    <Link href={`/${locale}/profile#participation-records`}>
+                      <div className="py-3 text-[18px] font-semibold leading-[18px]">
+                        {t("participationRecords")}
                       </div>
                     </Link>
                   </AccordionContent>

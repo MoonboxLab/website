@@ -15,7 +15,7 @@ export const VOTING_CONTRACTS = {
       "0xBcd510f93114a6370f35D3a9dae77Fdea66Ed2f3" as `0x${string}`,
     NFT_CONTRACT: "0xA9a1f1ec46819B99f8fb569452c6b0FE5CC235bc" as `0x${string}`,
     CHAIN_ID: 11155111, // Sepolia
-    RPC_URL: "https://sepolia.infura.io/v3/",
+    RPC_URL: "https://ethereum-sepolia-rpc.publicnode.com/",
   },
 } as const;
 

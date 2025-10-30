@@ -1,18 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import Header from "@/components/Header";
 import AvatarUpload from "../../../components/AvatarUpload";
 import AuthModal from "@/components/AuthModal";
 import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { useAuthSync } from "@/lib/useAuthSync";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 interface UserProfile {
   id: string;
@@ -24,6 +31,7 @@ interface UserProfile {
   wechat: string;
   telegram: string;
   avatar?: string;
+  address?: string;
 }
 
 interface MusicCreation {
@@ -56,6 +64,8 @@ interface VoteRecordResponse {
 
 export default function ProfilePage() {
   const t = useTranslations("Profile");
+  const tMusic = useTranslations("Music");
+  const { address: connectedAddress } = useAccount();
   const [profile, setProfile] = useState<UserProfile>({
     id: "",
     fullName: "",
@@ -66,6 +76,7 @@ export default function ProfilePage() {
     wechat: "",
     telegram: "",
     avatar: "",
+    address: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -75,48 +86,10 @@ export default function ProfilePage() {
   const [musicCreations, setMusicCreations] = useState<MusicCreation[]>([]);
   const [voteRecords, setVoteRecords] = useState<VoteRecordResponse[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [walletAddressInput, setWalletAddressInput] = useState("");
+  const isManualInputRef = useRef(false); // Track if user manually entered address
 
-  // Use the auth sync hook
-  const { isLoggedIn } = useAuthSync({
-    onLogin: () => {
-      setShowAuthModal(false);
-      loadUserProfile();
-    },
-    onLogout: () => {
-      setShowAuthModal(true);
-      setProfile({
-        id: "",
-        fullName: "",
-        alias: "",
-        email: "",
-        hasNobodyNFT: false,
-        whatsapp: "",
-        wechat: "",
-        telegram: "",
-        avatar: "",
-      });
-    },
-  });
-
-  // Load user profile on component mount
-  useEffect(() => {
-    if (isLoggedIn) {
-      loadUserProfile();
-      loadMusicData();
-    } else {
-      // Check if user is already logged in from localStorage
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        loadUserProfile();
-        loadMusicData();
-      } else {
-        // User is not logged in, show auth modal
-        setShowAuthModal(true);
-      }
-    }
-  }, [isLoggedIn]);
-
-  const loadUserProfile = async () => {
+  const loadUserProfile = useCallback(async () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("authToken");
@@ -136,7 +109,10 @@ export default function ProfilePage() {
 
       if (response.ok) {
         const userData = await response.json();
+        console.log("Profile GET - Received user data:", userData);
+        console.log("Profile GET - Address in user data:", userData.address);
         setProfile(userData);
+        // Don't set walletAddressInput here, let useEffect handle it
       } else {
         // If no profile exists, try to get user data from localStorage
         const userData = localStorage.getItem("user");
@@ -152,7 +128,9 @@ export default function ProfilePage() {
             wechat: user.wechat || "",
             telegram: user.telegram || "",
             avatar: user.avatar || "",
+            address: user.address || "",
           });
+          // Don't set walletAddressInput here, let useEffect handle it
         }
       }
     } catch (error) {
@@ -161,9 +139,9 @@ export default function ProfilePage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [t]);
 
-  const loadMusicData = async () => {
+  const loadMusicData = useCallback(async () => {
     try {
       setIsLoadingData(true);
       const token = localStorage.getItem("authToken");
@@ -229,7 +207,63 @@ export default function ProfilePage() {
     } finally {
       setIsLoadingData(false);
     }
-  };
+  }, []);
+
+  // Use the auth sync hook
+  const { isLoggedIn } = useAuthSync({
+    onLogin: () => {
+      setShowAuthModal(false);
+      loadUserProfile();
+      loadMusicData();
+    },
+    onLogout: () => {
+      setShowAuthModal(true);
+      setProfile({
+        id: "",
+        fullName: "",
+        alias: "",
+        email: "",
+        hasNobodyNFT: false,
+        whatsapp: "",
+        wechat: "",
+        telegram: "",
+        avatar: "",
+        address: "",
+      });
+      setWalletAddressInput("");
+    },
+  });
+
+  // Load user profile on component mount
+  useEffect(() => {
+    if (isLoggedIn) {
+      loadUserProfile();
+      loadMusicData();
+    } else {
+      // Check if user is already logged in from localStorage
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        loadUserProfile();
+        loadMusicData();
+      } else {
+        // User is not logged in, show auth modal
+        setShowAuthModal(true);
+      }
+    }
+  }, [isLoggedIn, loadUserProfile, loadMusicData]);
+
+  // Handle scroll to participation records after loading completes
+  useEffect(() => {
+    // Only scroll when isLoading is false
+    if (!isLoading && window.location.hash === "#participation-records") {
+      setTimeout(() => {
+        const element = document.getElementById("participation-records");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+  }, [isLoading]);
 
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
@@ -239,6 +273,58 @@ export default function ProfilePage() {
       day: "2-digit",
     });
   };
+
+  // Handle scroll to participation records after data is loaded
+  useEffect(() => {
+    // Only scroll if data is not loading and we have a hash in URL
+    if (!isLoadingData && window.location.hash === "#participation-records") {
+      // Small delay to ensure DOM is fully rendered
+      setTimeout(() => {
+        const element = document.getElementById("participation-records");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+  }, [isLoadingData]);
+
+  // Sync wallet address to input when wallet is connected and address is not yet saved
+  useEffect(() => {
+    console.log("Profile useEffect - Sync address:", {
+      profileAddress: profile.address,
+      connectedAddress: connectedAddress,
+      currentWalletAddressInput: walletAddressInput,
+      isManualInput: isManualInputRef.current,
+    });
+
+    // If profile.address exists, use it (already saved) - always override
+    if (profile.address) {
+      console.log(
+        "Profile useEffect - Setting walletAddressInput from profile.address:",
+        profile.address,
+      );
+      isManualInputRef.current = false;
+      setWalletAddressInput(profile.address);
+    } else if (connectedAddress) {
+      // If profile.address is empty but wallet is connected, use connected address
+      // This handles wallet switching - always update when wallet changes
+      if (walletAddressInput !== connectedAddress) {
+        console.log(
+          "Profile useEffect - Setting walletAddressInput from connectedAddress:",
+          connectedAddress,
+        );
+        isManualInputRef.current = false;
+        setWalletAddressInput(connectedAddress);
+      }
+    } else if (!connectedAddress && !profile.address) {
+      // If both are empty, clear the input
+      console.log(
+        "Profile useEffect - No address to sync, clearing walletAddressInput",
+      );
+      isManualInputRef.current = false;
+      setWalletAddressInput("");
+    }
+  }, [connectedAddress, profile.address]);
 
   const handleInputChange = (
     field: keyof UserProfile,
@@ -262,6 +348,19 @@ export default function ProfilePage() {
         return;
       }
 
+      // Include wallet address in profile if it's filled
+      const profileToSave = {
+        ...profile,
+        address: walletAddressInput || profile.address || "",
+      };
+
+      console.log("Profile PUT - Profile to save:", profileToSave);
+      console.log(
+        "Profile PUT - Address in profile to save:",
+        profileToSave.address,
+      );
+      console.log("Profile PUT - walletAddressInput:", walletAddressInput);
+
       const response = await fetch("/api/profile", {
         method: "PUT",
         headers: {
@@ -269,16 +368,21 @@ export default function ProfilePage() {
           Authorization: `Bearer ${token}`,
           uid: user.id,
         },
-        body: JSON.stringify(profile),
+        body: JSON.stringify(profileToSave),
       });
 
       if (response.ok) {
         toast.success(t("saveSuccess"));
+        // Update profile state with saved address
+        setProfile((prev) => ({
+          ...prev,
+          address: profileToSave.address,
+        }));
         // Update localStorage with new profile data
         const userData = localStorage.getItem("user");
         if (userData) {
           const user = JSON.parse(userData);
-          const updatedUser = { ...user, ...profile };
+          const updatedUser = { ...user, ...profileToSave };
           localStorage.setItem("user", JSON.stringify(updatedUser));
         }
       } else {
@@ -581,30 +685,70 @@ export default function ProfilePage() {
                   <Label className="mb-[12px] block text-[16px] font-medium text-black">
                     {t("hasNobodyNFT")}
                   </Label>
-                  <RadioGroup
-                    value={profile.hasNobodyNFT ? "yes" : "no"}
-                    onValueChange={(value) =>
-                      handleInputChange("hasNobodyNFT", value === "yes")
-                    }
-                    className="flex gap-[20px]"
+                  <div className="mt-[8px] text-[16px] text-gray-600">
+                    {profile.hasNobodyNFT ? t("yes") : t("no")}
+                  </div>
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="walletAddress"
+                    className="mb-[12px] block text-[16px] font-medium text-black"
                   >
-                    <div className="flex items-center space-x-[8px]">
-                      <RadioGroupItem
-                        value="yes"
-                        id="yes"
-                        className="bg-white"
-                      />
-                      <Label htmlFor="yes" className="text-[16px] text-black">
-                        {t("yes")}
-                      </Label>
+                    {t("walletAddress")}
+                  </Label>
+                  <Input
+                    id="walletAddress"
+                    value={walletAddressInput}
+                    onChange={(e) => {
+                      isManualInputRef.current = true;
+                      setWalletAddressInput(e.target.value);
+                    }}
+                    placeholder={t("walletAddressPlaceholder")}
+                    disabled={!!profile.address}
+                    className="mt-[8px] h-[48px] rounded-[8px] border-[2px] border-black bg-white text-[16px] disabled:cursor-not-allowed disabled:bg-gray-100"
+                  />
+                  {!profile.address && (
+                    <div className="mt-[12px]">
+                      <ConnectButton.Custom>
+                        {({
+                          account,
+                          chain,
+                          openAccountModal,
+                          openChainModal,
+                          openConnectModal,
+                          authenticationStatus,
+                          mounted,
+                        }) => {
+                          const ready =
+                            mounted && authenticationStatus !== "loading";
+                          const connected =
+                            ready &&
+                            account &&
+                            chain &&
+                            (!authenticationStatus ||
+                              authenticationStatus === "authenticated");
+
+                          if (!connected) {
+                            return (
+                              <Button
+                                onClick={openConnectModal}
+                                className="h-[48px] w-full rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[16px] font-semibold text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:text-white md:w-auto md:px-[40px]"
+                              >
+                                {t("connectWallet")}
+                              </Button>
+                            );
+                          }
+                          return null;
+                        }}
+                      </ConnectButton.Custom>
                     </div>
-                    <div className="flex items-center space-x-[8px]">
-                      <RadioGroupItem value="no" id="no" className="bg-white" />
-                      <Label htmlFor="no" className="text-[16px] text-black">
-                        {t("no")}
-                      </Label>
+                  )}
+                  {profile.address && (
+                    <div className="mt-[8px] text-[14px] text-gray-500">
+                      {t("walletAddressLocked")}
                     </div>
-                  </RadioGroup>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 gap-[20px] md:grid-cols-3">
@@ -615,7 +759,7 @@ export default function ProfilePage() {
                     >
                       WhatsApp{" "}
                       <span className="text-[14px] font-normal text-gray-500">
-                        (可选)
+                        {t("optional")}
                       </span>
                     </Label>
                     <Input
@@ -636,7 +780,7 @@ export default function ProfilePage() {
                     >
                       {t("wechat")}{" "}
                       <span className="text-[14px] font-normal text-gray-500">
-                        (可选)
+                        {t("optional")}
                       </span>
                     </Label>
                     <Input
@@ -657,7 +801,7 @@ export default function ProfilePage() {
                     >
                       Telegram{" "}
                       <span className="text-[14px] font-normal text-gray-500">
-                        (可选)
+                        {t("optional")}
                       </span>
                     </Label>
                     <Input
@@ -670,6 +814,10 @@ export default function ProfilePage() {
                       className="mt-[8px] h-[48px] rounded-[8px] border-[2px] border-black bg-white text-[16px]"
                     />
                   </div>
+                </div>
+
+                <div className="mt-[8px] text-[14px] text-gray-600">
+                  {t("contactInfoHint")}
                 </div>
 
                 <div className="flex gap-[20px] pt-[20px]">
@@ -697,6 +845,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          {/* Participation Records Section */}
           {/* Voting History Card */}
           <div
             className="rounded-[16px] p-[30px] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
@@ -773,7 +922,8 @@ export default function ProfilePage() {
 
           {/* Song History Card */}
           <div
-            className="rounded-[16px] p-[30px] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+            id="participation-records"
+            className="scroll-mt-20 rounded-[16px] p-[30px] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
             style={{ backgroundColor: "#F3EFE4" }}
           >
             <h2 className="mb-[20px] text-[20px] font-semibold text-black">
@@ -795,6 +945,9 @@ export default function ProfilePage() {
                       <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
                         {t("songName")}
                       </th>
+                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
+                        {t("status")}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -810,12 +963,30 @@ export default function ProfilePage() {
                           <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
                             {creation.title}
                           </td>
+                          <td className="px-[16px] py-[12px] text-[14px]">
+                            <div className="flex items-center gap-[8px] text-green-600">
+                              <svg
+                                className="h-[16px] w-[16px]"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                              <span>{t("uploadSuccess")}</span>
+                            </div>
+                          </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
                         <td
-                          colSpan={2}
+                          colSpan={3}
                           className="px-[16px] py-[20px] text-center text-[14px] text-gray-500"
                         >
                           {t("noSongRecords")}
@@ -827,6 +998,34 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
+
+          {/* Privacy Policy Accordion */}
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem
+              value="privacy-policy"
+              className="rounded-[16px] border-[2px] border-black bg-[#F3EFE4] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+            >
+              <AccordionTrigger className="px-[30px] py-[20px] text-left text-[20px] font-semibold text-black hover:no-underline">
+                {tMusic("privacyPolicyTitle")}
+              </AccordionTrigger>
+              <AccordionContent className="px-[30px] pb-[30px]">
+                <div className="space-y-4 text-sm leading-relaxed text-black">
+                  <p>{tMusic("privacyPolicyIntro")}</p>
+                  <ul className="ml-4 list-inside list-disc space-y-2">
+                    <li>{tMusic("privacyPolicyPoint1")}</li>
+                    <li>{tMusic("privacyPolicyPoint2")}</li>
+                    <li>{tMusic("privacyPolicyPoint3")}</li>
+                    <li>{tMusic("privacyPolicyPoint4")}</li>
+                    <li>{tMusic("privacyPolicyPoint5")}</li>
+                    <li>{tMusic("privacyPolicyPoint6")}</li>
+                  </ul>
+                  <p>{tMusic("privacyPolicyRights")}</p>
+                  <p>{tMusic("privacyPolicyMinor")}</p>
+                  <p>{tMusic("privacyPolicyDetails")}</p>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
 

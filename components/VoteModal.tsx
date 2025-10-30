@@ -64,6 +64,7 @@ export default function VoteModal({
     "idle" | "pending" | "success" | "failed"
   >("idle");
   const [txHash, setTxHash] = useState<string>("");
+  const [isConnectingWallet, setIsConnectingWallet] = useState(false);
 
   // 使用hooks
   const { isConnected, address } = useWalletConnection();
@@ -315,11 +316,63 @@ export default function VoteModal({
     switchNetwork();
   }, [voteType, address, switchToChain]);
 
+  // 监听钱包连接状态，连接成功后恢复 Dialog 关闭行为
+  useEffect(() => {
+    if (isConnected && address) {
+      setIsConnectingWallet(false);
+    }
+  }, [isConnected, address]);
+
+  // 当 Dialog 关闭时重置连接状态
+  useEffect(() => {
+    if (!isOpen) {
+      setIsConnectingWallet(false);
+    }
+  }, [isOpen]);
+
+  // 监听 RainbowKit modal 关闭（用户取消连接时）
+  useEffect(() => {
+    if (!isConnectingWallet || !isOpen) return;
+
+    const checkRainbowKitModal = () => {
+      const modal =
+        document.querySelector("[data-rk]") ||
+        document.querySelector('[id*="rk"]') ||
+        document.querySelector('[class*="rk"]') ||
+        document.querySelector('[class*="rainbow"]');
+
+      // 如果 RainbowKit modal 关闭了但钱包未连接，恢复 Dialog 关闭行为
+      if (!modal && !isConnected) {
+        setIsConnectingWallet(false);
+      }
+    };
+
+    const interval = setInterval(checkRainbowKitModal, 200);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isConnectingWallet, isOpen, isConnected]);
+
   const currentVoteInfo = getVoteTypeInfo(voteType);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
+      <DialogContent
+        className="max-w-md"
+        onInteractOutside={(event) => {
+          // 当正在连接钱包时，阻止 Dialog 关闭
+          if (isConnectingWallet) {
+            event.preventDefault();
+          }
+        }}
+        onEscapeKeyDown={(event) => {
+          // 当正在连接钱包时，阻止 Dialog 关闭
+          if (isConnectingWallet) {
+            event.preventDefault();
+          }
+        }}
+      >
         <DialogHeader>
           <DialogTitle className="text-center text-xl font-bold">
             {t("vote")}
@@ -350,7 +403,7 @@ export default function VoteModal({
             {/* 投票方式选择 */}
             <div>
               <Label className="text-xs font-semibold">
-                {t("votingMethod")}
+                {t("votingMethodTitle")}
               </Label>
               <RadioGroup
                 value={voteType}
@@ -495,7 +548,7 @@ export default function VoteModal({
               {voteType === "nobody" ? (
                 <>
                   <Label htmlFor="nftId" className="text-xs font-semibold">
-                    {t("nftId")}
+                    {t("voteCount")}
                   </Label>
                   <Input
                     id="nftId"
@@ -504,7 +557,7 @@ export default function VoteModal({
                     value={nftIdInput}
                     onChange={(e) => setNftIdInput(e.target.value)}
                     className="border-2 text-center text-sm font-semibold focus:border-primary"
-                    placeholder={t("nftIdPlaceholder")}
+                    placeholder={t("voteAmountPlaceholder")}
                   />
                 </>
               ) : (
@@ -618,7 +671,10 @@ export default function VoteModal({
               if (!connected) {
                 return (
                   <Button
-                    onClick={openConnectModal}
+                    onClick={() => {
+                      setIsConnectingWallet(true);
+                      openConnectModal();
+                    }}
                     className="h-12 flex-1 border-2 border-black bg-blue-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-blue-500"
                   >
                     {t("connectWallet")}

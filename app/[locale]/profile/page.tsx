@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 import Image from "next/image";
@@ -87,6 +87,7 @@ export default function ProfilePage() {
   const [voteRecords, setVoteRecords] = useState<VoteRecordResponse[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [walletAddressInput, setWalletAddressInput] = useState("");
+  const isManualInputRef = useRef(false); // Track if user manually entered address
 
   const loadUserProfile = useCallback(async () => {
     try {
@@ -108,8 +109,10 @@ export default function ProfilePage() {
 
       if (response.ok) {
         const userData = await response.json();
+        console.log("Profile GET - Received user data:", userData);
+        console.log("Profile GET - Address in user data:", userData.address);
         setProfile(userData);
-        setWalletAddressInput(userData.address || "");
+        // Don't set walletAddressInput here, let useEffect handle it
       } else {
         // If no profile exists, try to get user data from localStorage
         const userData = localStorage.getItem("user");
@@ -127,7 +130,7 @@ export default function ProfilePage() {
             avatar: user.avatar || "",
             address: user.address || "",
           });
-          setWalletAddressInput(user.address || "");
+          // Don't set walletAddressInput here, let useEffect handle it
         }
       }
     } catch (error) {
@@ -287,10 +290,39 @@ export default function ProfilePage() {
 
   // Sync wallet address to input when wallet is connected and address is not yet saved
   useEffect(() => {
-    // Only update if address is not saved yet (profile.address is empty)
-    // The input will display connectedAddress if profile.address is empty
-    if (connectedAddress && !profile.address) {
-      setWalletAddressInput(connectedAddress);
+    console.log("Profile useEffect - Sync address:", {
+      profileAddress: profile.address,
+      connectedAddress: connectedAddress,
+      currentWalletAddressInput: walletAddressInput,
+      isManualInput: isManualInputRef.current,
+    });
+
+    // If profile.address exists, use it (already saved) - always override
+    if (profile.address) {
+      console.log(
+        "Profile useEffect - Setting walletAddressInput from profile.address:",
+        profile.address,
+      );
+      isManualInputRef.current = false;
+      setWalletAddressInput(profile.address);
+    } else if (connectedAddress) {
+      // If profile.address is empty but wallet is connected, use connected address
+      // This handles wallet switching - always update when wallet changes
+      if (walletAddressInput !== connectedAddress) {
+        console.log(
+          "Profile useEffect - Setting walletAddressInput from connectedAddress:",
+          connectedAddress,
+        );
+        isManualInputRef.current = false;
+        setWalletAddressInput(connectedAddress);
+      }
+    } else if (!connectedAddress && !profile.address) {
+      // If both are empty, clear the input
+      console.log(
+        "Profile useEffect - No address to sync, clearing walletAddressInput",
+      );
+      isManualInputRef.current = false;
+      setWalletAddressInput("");
     }
   }, [connectedAddress, profile.address]);
 
@@ -321,6 +353,13 @@ export default function ProfilePage() {
         ...profile,
         address: walletAddressInput || profile.address || "",
       };
+
+      console.log("Profile PUT - Profile to save:", profileToSave);
+      console.log(
+        "Profile PUT - Address in profile to save:",
+        profileToSave.address,
+      );
+      console.log("Profile PUT - walletAddressInput:", walletAddressInput);
 
       const response = await fetch("/api/profile", {
         method: "PUT",
@@ -660,13 +699,11 @@ export default function ProfilePage() {
                   </Label>
                   <Input
                     id="walletAddress"
-                    value={
-                      profile.address ||
-                      walletAddressInput ||
-                      connectedAddress ||
-                      ""
-                    }
-                    onChange={(e) => setWalletAddressInput(e.target.value)}
+                    value={walletAddressInput}
+                    onChange={(e) => {
+                      isManualInputRef.current = true;
+                      setWalletAddressInput(e.target.value);
+                    }}
                     placeholder={t("walletAddressPlaceholder")}
                     disabled={!!profile.address}
                     className="mt-[8px] h-[48px] rounded-[8px] border-[2px] border-black bg-white text-[16px] disabled:cursor-not-allowed disabled:bg-gray-100"

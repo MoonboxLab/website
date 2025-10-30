@@ -70,6 +70,7 @@ export async function GET(request: Request) {
     if (data.code === 0) {
       const apiData = data.result.data;
       console.log("Profile GET - Raw API data:", apiData);
+      console.log("Profile GET - Address in raw API data:", apiData.address || apiData.walletAddress);
 
       // Transform API data to match frontend format
       const transformedData = {
@@ -82,9 +83,11 @@ export async function GET(request: Request) {
         wechat: apiData.weixin || "",
         telegram: apiData.telegram || "",
         avatar: apiData.avator || "",
+        address: apiData.address || apiData.walletAddress || "",
       };
 
       console.log("Profile GET - Transformed data:", transformedData);
+      console.log("Profile GET - Address in transformed data:", transformedData.address);
       return NextResponse.json(transformedData, { status: 200 });
     } else {
       return NextResponse.json(
@@ -131,6 +134,7 @@ export async function PUT(request: Request) {
 
     const profileData = await request.json();
     console.log("Profile PUT - Received profile data:", profileData);
+    console.log("Profile PUT - Address in received profile data:", profileData.address);
 
     // Transform frontend data to match API format
     const apiData = {
@@ -141,9 +145,11 @@ export async function PUT(request: Request) {
       telegram: profileData.telegram || null,
       weixin: profileData.wechat || null,
       holdNft: profileData.hasNobodyNFT || false,
+      address: profileData.address || null,
     };
 
     console.log("Profile PUT - Transformed API data:", apiData);
+    console.log("Profile PUT - Address in transformed API data:", apiData.address);
 
     // Call new user info update API
     console.log("Profile PUT - Calling external API:", {

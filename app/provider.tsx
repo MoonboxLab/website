@@ -21,6 +21,10 @@ sepolia.rpcUrls.default.http = ["https://ethereum-sepolia-rpc.publicnode.com/"];
 sepolia.rpcUrls.default.ws = ["wss://ethereum-sepolia-rpc.publicnode.com/"];
 sepolia.rpcUrls.public.http = ["https://ethereum-sepolia-rpc.publicnode.com/"];
 sepolia.rpcUrls.public.ws = ["wss://ethereum-sepolia-rpc.publicnode.com/"];
+bscTestnet.rpcUrls.default.http = ["https://bsc-testnet.public.blastapi.io"];
+bscTestnet.rpcUrls.default.ws = ["wss://bsc-testnet-rpc.publicnode.com"];
+bscTestnet.rpcUrls.public.http = ["https://bsc-testnet.public.blastapi.io"];
+bscTestnet.rpcUrls.public.ws = ["wss://bsc-testnet-rpc.publicnode.com"];
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_TEST_ENV === "true"

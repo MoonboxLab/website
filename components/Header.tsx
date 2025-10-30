@@ -364,7 +364,7 @@ const Header: React.FC = () => {
 
         {(mediaSize?.width || 0) > 375 && (
           <a
-            href="https://discord.gg/nobody9527"
+            href="https://discord.gg/PAwkqNgXAd"
             target="_blank"
             className=" ml-[10px] sm:ml-4"
           >
@@ -921,7 +921,7 @@ const Header: React.FC = () => {
                   </a>
 
                   <a
-                    href="https://discord.gg/nobody9527"
+                    href="https://discord.gg/PAwkqNgXAd"
                     target="_blank"
                     className=""
                   >

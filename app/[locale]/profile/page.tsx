@@ -622,7 +622,7 @@ export default function ProfilePage() {
                     >
                       WhatsApp{" "}
                       <span className="text-[14px] font-normal text-gray-500">
-                        (可选)
+                        {t("optional")}
                       </span>
                     </Label>
                     <Input
@@ -643,7 +643,7 @@ export default function ProfilePage() {
                     >
                       {t("wechat")}{" "}
                       <span className="text-[14px] font-normal text-gray-500">
-                        (可选)
+                        {t("optional")}
                       </span>
                     </Label>
                     <Input
@@ -664,7 +664,7 @@ export default function ProfilePage() {
                     >
                       Telegram{" "}
                       <span className="text-[14px] font-normal text-gray-500">
-                        (可选)
+                        {t("optional")}
                       </span>
                     </Label>
                     <Input
@@ -677,6 +677,10 @@ export default function ProfilePage() {
                       className="mt-[8px] h-[48px] rounded-[8px] border-[2px] border-black bg-white text-[16px]"
                     />
                   </div>
+                </div>
+
+                <div className="mt-[8px] text-[14px] text-gray-600">
+                  {t("contactInfoHint")}
                 </div>
 
                 <div className="flex gap-[20px] pt-[20px]">
@@ -879,7 +883,9 @@ export default function ProfilePage() {
                   <p>{tMusic("privacyPolicyRights")}</p>
                   <p>{tMusic("privacyPolicyMinor")}</p>
                   <p>{tMusic("privacyPolicyDetails")}</p>
-                  <p className="font-semibold">{tMusic("privacyPolicyAgreement")}</p>
+                  <p className="font-semibold">
+                    {tMusic("privacyPolicyAgreement")}
+                  </p>
                 </div>
               </AccordionContent>
             </AccordionItem>

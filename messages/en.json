@@ -159,7 +159,9 @@
     "passwordTooShort": "Password must be at least 6 characters",
     "passwordsDoNotMatch": "Passwords do not match",
     "passwordChangeSuccess": "Password changed successfully",
-    "passwordChangeError": "Failed to change password"
+    "passwordChangeError": "Failed to change password",
+    "optional": "(Optional)",
+    "contactInfoHint": "To facilitate staff contact, please provide contact information as much as possible."
   },
   "Declaration": {
     "spirit": "SPIRIT",

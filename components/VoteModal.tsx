@@ -548,7 +548,7 @@ export default function VoteModal({
               {voteType === "nobody" ? (
                 <>
                   <Label htmlFor="nftId" className="text-xs font-semibold">
-                    {t("nftId")}
+                    {t("voteCount")}
                   </Label>
                   <Input
                     id="nftId"
@@ -557,7 +557,7 @@ export default function VoteModal({
                     value={nftIdInput}
                     onChange={(e) => setNftIdInput(e.target.value)}
                     className="border-2 text-center text-sm font-semibold focus:border-primary"
-                    placeholder={t("nftIdPlaceholder")}
+                    placeholder={t("voteAmountPlaceholder")}
                   />
                 </>
               ) : (

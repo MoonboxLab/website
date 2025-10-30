@@ -754,7 +754,7 @@
     "vote": "Vote",
     "artist": "Artist",
     "voteCount": "Vote Count",
-    "nobodyVoteLimit": "One vote per month only",
+    "nobodyVoteLimit": "Each NFT can vote once per month",
     "voteExplanation": "Vote Explanation",
     "voteExplanationText": "Enter the number of votes, the contract will automatically convert to the corresponding token amount based on the selected voting method",
     "submitting": "Submitting...",
@@ -846,6 +846,7 @@
     "willApproveAndVote": "Click vote button will auto approve and vote",
     "approveAndVote": "Approve & Vote",
     "ok": "OK",
-    "noNft": "Current wallet has no Nobody NFT"
+    "noNft": "Current wallet has no Nobody NFT",
+    "voteHint": "After voting, refresh — the vote counts update automatically"
   }
 }

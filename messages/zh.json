@@ -669,7 +669,7 @@
     "artist": "歌手",
     "votingMethodLabel": "投票方式",
     "voteCount": "投票數量",
-    "nobodyVoteLimit": "一月只能投一票",
+    "nobodyVoteLimit": "一個NFT每個月只能投票一次",
     "voteExplanation": "投票說明",
     "voteExplanationText": "輸入票數，合約將根據選擇的投票方式自動轉換相應的代幣數量",
     "submitting": "提交中...",
@@ -761,7 +761,8 @@
     "willApproveAndVote": "點擊投票按鈕將自動授權並投票",
     "approveAndVote": "授權並投票",
     "ok": "我明白",
-    "noNft": "當前錢包沒有Nobody NFT"
+    "noNft": "當前錢包沒有Nobody NFT",
+    "voteHint": "投票後刷新，票數數據會自動更新"
   },
   "Profile": {
     "title": "個人資料",

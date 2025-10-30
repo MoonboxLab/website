@@ -13,6 +13,12 @@ interface VotingSongsProps {
   onBid: (music: any) => void;
   currentEventId?: number;
   isLoading?: boolean;
+  onVoted?: (voteData: {
+    musicId: string;
+    voteType: "nobody" | "aice" | "fir";
+    amount: number;
+    txHash?: string;
+  }) => void;
 }
 
 export default function VotingSongs({
@@ -21,6 +27,7 @@ export default function VotingSongs({
   onBid,
   currentEventId,
   isLoading = false,
+  onVoted,
 }: VotingSongsProps) {
   const t = useTranslations("Music");
   const { playTrack } = useMusic();
@@ -68,10 +75,14 @@ export default function VotingSongs({
     musicId: string;
     voteType: "nobody" | "aice" | "fir";
     amount: number;
+    txHash?: string;
   }) => {
-    // TODO: 实现合约调用
-    console.log("Voting:", voteData);
-    // 这里将来会调用合约进行投票
+    // 投票成功后的回调，通知上层刷新数据
+    try {
+      onVoted?.(voteData);
+    } finally {
+      // no-op
+    }
   };
 
   return (

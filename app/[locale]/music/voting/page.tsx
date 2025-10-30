@@ -246,6 +246,11 @@ export default function MusicVotingPage() {
     setIsPrivacyModalOpen(true);
   };
 
+  const handleVoted = async () => {
+    // 投票成功后刷新入围列表
+    await fetchVotingMusics();
+  };
+
   return (
     <div>
       {/* Back Button */}
@@ -286,6 +291,7 @@ export default function MusicVotingPage() {
         onBid={handleBid}
         currentEventId={currentEventId}
         isLoading={isLoadingMusics}
+        onVoted={handleVoted}
       />
 
       {/* View All Modal for /music/voting page */}

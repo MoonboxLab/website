@@ -8,6 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import Header from "@/components/Header";
 import AvatarUpload from "../../../components/AvatarUpload";
 import AuthModal from "@/components/AuthModal";
@@ -56,6 +62,7 @@ interface VoteRecordResponse {
 
 export default function ProfilePage() {
   const t = useTranslations("Profile");
+  const tMusic = useTranslations("Music");
   const [profile, setProfile] = useState<UserProfile>({
     id: "",
     fullName: "",
@@ -848,6 +855,35 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
+
+          {/* Privacy Policy Accordion */}
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem
+              value="privacy-policy"
+              className="rounded-[16px] border-[2px] border-black bg-[#F3EFE4] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+            >
+              <AccordionTrigger className="px-[30px] py-[20px] text-left text-[20px] font-semibold text-black hover:no-underline">
+                {tMusic("privacyPolicyTitle")}
+              </AccordionTrigger>
+              <AccordionContent className="px-[30px] pb-[30px]">
+                <div className="space-y-4 text-sm leading-relaxed text-black">
+                  <p>{tMusic("privacyPolicyIntro")}</p>
+                  <ul className="ml-4 list-inside list-disc space-y-2">
+                    <li>{tMusic("privacyPolicyPoint1")}</li>
+                    <li>{tMusic("privacyPolicyPoint2")}</li>
+                    <li>{tMusic("privacyPolicyPoint3")}</li>
+                    <li>{tMusic("privacyPolicyPoint4")}</li>
+                    <li>{tMusic("privacyPolicyPoint5")}</li>
+                    <li>{tMusic("privacyPolicyPoint6")}</li>
+                  </ul>
+                  <p>{tMusic("privacyPolicyRights")}</p>
+                  <p>{tMusic("privacyPolicyMinor")}</p>
+                  <p>{tMusic("privacyPolicyDetails")}</p>
+                  <p className="font-semibold">{tMusic("privacyPolicyAgreement")}</p>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
 

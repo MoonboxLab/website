@@ -452,28 +452,16 @@ export default function MusicLayout({
           musics={musics}
         />
 
-        {/* Privacy Policy Modal */}
+        {/* Download Usage Guidelines Modal */}
         <Dialog open={isPrivacyModalOpen} onOpenChange={setIsPrivacyModalOpen}>
           <DialogContent className="max-h-[80vh] max-w-2xl overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-center text-xl font-bold">
-                {t("privacyPolicyTitle")}
+                {t("downloadUsageTitle")}
               </DialogTitle>
             </DialogHeader>
             <div className="mt-4 max-h-[400px] space-y-4 overflow-y-auto text-sm leading-relaxed">
-              <p>{t("privacyPolicyIntro")}</p>
-              <ul className="ml-4 list-inside list-disc space-y-2">
-                <li>{t("privacyPolicyPoint1")}</li>
-                <li>{t("privacyPolicyPoint2")}</li>
-                <li>{t("privacyPolicyPoint3")}</li>
-                <li>{t("privacyPolicyPoint4")}</li>
-                <li>{t("privacyPolicyPoint5")}</li>
-                <li>{t("privacyPolicyPoint6")}</li>
-              </ul>
-              <p>{t("privacyPolicyRights")}</p>
-              <p>{t("privacyPolicyMinor")}</p>
-              <p>{t("privacyPolicyDetails")}</p>
-              <p className="font-semibold">{t("privacyPolicyAgreement")}</p>
+              <div>{t.rich("downloadUsageContent", { br: () => <br /> })}</div>
             </div>
             <div className="mt-6 flex justify-center">
               <button

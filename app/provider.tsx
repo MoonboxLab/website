@@ -17,18 +17,40 @@ import {
   metaMaskWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 
-sepolia.rpcUrls.default.http = ["https://ethereum-sepolia-rpc.publicnode.com/"];
-sepolia.rpcUrls.default.ws = ["wss://ethereum-sepolia-rpc.publicnode.com/"];
-sepolia.rpcUrls.public.http = ["https://ethereum-sepolia-rpc.publicnode.com/"];
-sepolia.rpcUrls.public.ws = ["wss://ethereum-sepolia-rpc.publicnode.com/"];
-bscTestnet.rpcUrls.default.http = ["https://bsc-testnet.public.blastapi.io"];
-bscTestnet.rpcUrls.default.ws = ["wss://bsc-testnet-rpc.publicnode.com"];
-bscTestnet.rpcUrls.public.http = ["https://bsc-testnet.public.blastapi.io"];
-bscTestnet.rpcUrls.public.ws = ["wss://bsc-testnet-rpc.publicnode.com"];
+// 创建自定义 chain 配置，覆盖 RPC URLs
+const customSepolia = {
+  ...sepolia,
+  rpcUrls: {
+    ...sepolia.rpcUrls,
+    default: {
+      http: ["https://ethereum-sepolia-rpc.publicnode.com/"],
+      webSocket: ["wss://ethereum-sepolia-rpc.publicnode.com/"],
+    },
+    public: {
+      http: ["https://ethereum-sepolia-rpc.publicnode.com/"],
+      webSocket: ["wss://ethereum-sepolia-rpc.publicnode.com/"],
+    },
+  },
+} as unknown as typeof sepolia;
+
+const customBscTestnet = {
+  ...bscTestnet,
+  rpcUrls: {
+    ...bscTestnet.rpcUrls,
+    default: {
+      http: ["https://bsc-testnet.public.blastapi.io"],
+      webSocket: ["wss://bsc-testnet-rpc.publicnode.com"],
+    },
+    public: {
+      http: ["https://bsc-testnet.public.blastapi.io"],
+      webSocket: ["wss://bsc-testnet-rpc.publicnode.com"],
+    },
+  },
+} as unknown as typeof bscTestnet;
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_TEST_ENV === "true"
-      ? [mainnet, sepolia, bsc, bscTestnet]
+      ? [mainnet, customSepolia, bsc, customBscTestnet]
       : [mainnet, bsc]),
   ],
   [

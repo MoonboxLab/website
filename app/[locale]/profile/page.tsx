@@ -1022,9 +1022,6 @@ export default function ProfilePage() {
                   <p>{tMusic("privacyPolicyRights")}</p>
                   <p>{tMusic("privacyPolicyMinor")}</p>
                   <p>{tMusic("privacyPolicyDetails")}</p>
-                  <p className="font-semibold">
-                    {tMusic("privacyPolicyAgreement")}
-                  </p>
                 </div>
               </AccordionContent>
             </AccordionItem>

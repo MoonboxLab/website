@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Accordion,
   AccordionContent,
@@ -19,6 +18,8 @@ import AvatarUpload from "../../../components/AvatarUpload";
 import AuthModal from "@/components/AuthModal";
 import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { useAuthSync } from "@/lib/useAuthSync";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 interface UserProfile {
   id: string;
@@ -30,6 +31,7 @@ interface UserProfile {
   wechat: string;
   telegram: string;
   avatar?: string;
+  address?: string;
 }
 
 interface MusicCreation {
@@ -63,6 +65,7 @@ interface VoteRecordResponse {
 export default function ProfilePage() {
   const t = useTranslations("Profile");
   const tMusic = useTranslations("Music");
+  const { address: connectedAddress } = useAccount();
   const [profile, setProfile] = useState<UserProfile>({
     id: "",
     fullName: "",
@@ -73,6 +76,7 @@ export default function ProfilePage() {
     wechat: "",
     telegram: "",
     avatar: "",
+    address: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -82,61 +86,9 @@ export default function ProfilePage() {
   const [musicCreations, setMusicCreations] = useState<MusicCreation[]>([]);
   const [voteRecords, setVoteRecords] = useState<VoteRecordResponse[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [walletAddressInput, setWalletAddressInput] = useState("");
 
-  // Use the auth sync hook
-  const { isLoggedIn } = useAuthSync({
-    onLogin: () => {
-      setShowAuthModal(false);
-      loadUserProfile();
-    },
-    onLogout: () => {
-      setShowAuthModal(true);
-      setProfile({
-        id: "",
-        fullName: "",
-        alias: "",
-        email: "",
-        hasNobodyNFT: false,
-        whatsapp: "",
-        wechat: "",
-        telegram: "",
-        avatar: "",
-      });
-    },
-  });
-
-  // Load user profile on component mount
-  useEffect(() => {
-    if (isLoggedIn) {
-      loadUserProfile();
-      loadMusicData();
-    } else {
-      // Check if user is already logged in from localStorage
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        loadUserProfile();
-        loadMusicData();
-      } else {
-        // User is not logged in, show auth modal
-        setShowAuthModal(true);
-      }
-    }
-  }, [isLoggedIn]);
-
-  // Handle scroll to participation records after loading completes
-  useEffect(() => {
-    // Only scroll when isLoading is false
-    if (!isLoading && window.location.hash === "#participation-records") {
-      setTimeout(() => {
-        const element = document.getElementById("participation-records");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
-    }
-  }, [isLoading]);
-
-  const loadUserProfile = async () => {
+  const loadUserProfile = useCallback(async () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("authToken");
@@ -157,6 +109,7 @@ export default function ProfilePage() {
       if (response.ok) {
         const userData = await response.json();
         setProfile(userData);
+        setWalletAddressInput(userData.address || "");
       } else {
         // If no profile exists, try to get user data from localStorage
         const userData = localStorage.getItem("user");
@@ -172,7 +125,9 @@ export default function ProfilePage() {
             wechat: user.wechat || "",
             telegram: user.telegram || "",
             avatar: user.avatar || "",
+            address: user.address || "",
           });
+          setWalletAddressInput(user.address || "");
         }
       }
     } catch (error) {
@@ -181,9 +136,9 @@ export default function ProfilePage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [t]);
 
-  const loadMusicData = async () => {
+  const loadMusicData = useCallback(async () => {
     try {
       setIsLoadingData(true);
       const token = localStorage.getItem("authToken");
@@ -249,7 +204,63 @@ export default function ProfilePage() {
     } finally {
       setIsLoadingData(false);
     }
-  };
+  }, []);
+
+  // Use the auth sync hook
+  const { isLoggedIn } = useAuthSync({
+    onLogin: () => {
+      setShowAuthModal(false);
+      loadUserProfile();
+      loadMusicData();
+    },
+    onLogout: () => {
+      setShowAuthModal(true);
+      setProfile({
+        id: "",
+        fullName: "",
+        alias: "",
+        email: "",
+        hasNobodyNFT: false,
+        whatsapp: "",
+        wechat: "",
+        telegram: "",
+        avatar: "",
+        address: "",
+      });
+      setWalletAddressInput("");
+    },
+  });
+
+  // Load user profile on component mount
+  useEffect(() => {
+    if (isLoggedIn) {
+      loadUserProfile();
+      loadMusicData();
+    } else {
+      // Check if user is already logged in from localStorage
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        loadUserProfile();
+        loadMusicData();
+      } else {
+        // User is not logged in, show auth modal
+        setShowAuthModal(true);
+      }
+    }
+  }, [isLoggedIn, loadUserProfile, loadMusicData]);
+
+  // Handle scroll to participation records after loading completes
+  useEffect(() => {
+    // Only scroll when isLoading is false
+    if (!isLoading && window.location.hash === "#participation-records") {
+      setTimeout(() => {
+        const element = document.getElementById("participation-records");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+  }, [isLoading]);
 
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
@@ -274,6 +285,15 @@ export default function ProfilePage() {
     }
   }, [isLoadingData]);
 
+  // Sync wallet address to input when wallet is connected and address is not yet saved
+  useEffect(() => {
+    // Only update if address is not saved yet (profile.address is empty)
+    // The input will display connectedAddress if profile.address is empty
+    if (connectedAddress && !profile.address) {
+      setWalletAddressInput(connectedAddress);
+    }
+  }, [connectedAddress, profile.address]);
+
   const handleInputChange = (
     field: keyof UserProfile,
     value: string | boolean,
@@ -296,6 +316,12 @@ export default function ProfilePage() {
         return;
       }
 
+      // Include wallet address in profile if it's filled
+      const profileToSave = {
+        ...profile,
+        address: walletAddressInput || profile.address || "",
+      };
+
       const response = await fetch("/api/profile", {
         method: "PUT",
         headers: {
@@ -303,16 +329,21 @@ export default function ProfilePage() {
           Authorization: `Bearer ${token}`,
           uid: user.id,
         },
-        body: JSON.stringify(profile),
+        body: JSON.stringify(profileToSave),
       });
 
       if (response.ok) {
         toast.success(t("saveSuccess"));
+        // Update profile state with saved address
+        setProfile((prev) => ({
+          ...prev,
+          address: profileToSave.address,
+        }));
         // Update localStorage with new profile data
         const userData = localStorage.getItem("user");
         if (userData) {
           const user = JSON.parse(userData);
-          const updatedUser = { ...user, ...profile };
+          const updatedUser = { ...user, ...profileToSave };
           localStorage.setItem("user", JSON.stringify(updatedUser));
         }
       } else {
@@ -615,30 +646,72 @@ export default function ProfilePage() {
                   <Label className="mb-[12px] block text-[16px] font-medium text-black">
                     {t("hasNobodyNFT")}
                   </Label>
-                  <RadioGroup
-                    value={profile.hasNobodyNFT ? "yes" : "no"}
-                    onValueChange={(value) =>
-                      handleInputChange("hasNobodyNFT", value === "yes")
-                    }
-                    className="flex gap-[20px]"
+                  <div className="mt-[8px] text-[16px] text-gray-600">
+                    {profile.hasNobodyNFT ? t("yes") : t("no")}
+                  </div>
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="walletAddress"
+                    className="mb-[12px] block text-[16px] font-medium text-black"
                   >
-                    <div className="flex items-center space-x-[8px]">
-                      <RadioGroupItem
-                        value="yes"
-                        id="yes"
-                        className="bg-white"
-                      />
-                      <Label htmlFor="yes" className="text-[16px] text-black">
-                        {t("yes")}
-                      </Label>
+                    {t("walletAddress")}
+                  </Label>
+                  <Input
+                    id="walletAddress"
+                    value={
+                      profile.address ||
+                      walletAddressInput ||
+                      connectedAddress ||
+                      ""
+                    }
+                    onChange={(e) => setWalletAddressInput(e.target.value)}
+                    placeholder={t("walletAddressPlaceholder")}
+                    disabled={!!profile.address}
+                    className="mt-[8px] h-[48px] rounded-[8px] border-[2px] border-black bg-white text-[16px] disabled:cursor-not-allowed disabled:bg-gray-100"
+                  />
+                  {!profile.address && (
+                    <div className="mt-[12px]">
+                      <ConnectButton.Custom>
+                        {({
+                          account,
+                          chain,
+                          openAccountModal,
+                          openChainModal,
+                          openConnectModal,
+                          authenticationStatus,
+                          mounted,
+                        }) => {
+                          const ready =
+                            mounted && authenticationStatus !== "loading";
+                          const connected =
+                            ready &&
+                            account &&
+                            chain &&
+                            (!authenticationStatus ||
+                              authenticationStatus === "authenticated");
+
+                          if (!connected) {
+                            return (
+                              <Button
+                                onClick={openConnectModal}
+                                className="h-[48px] w-full rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] text-[16px] font-semibold text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:text-white md:w-auto md:px-[40px]"
+                              >
+                                {t("connectWallet")}
+                              </Button>
+                            );
+                          }
+                          return null;
+                        }}
+                      </ConnectButton.Custom>
                     </div>
-                    <div className="flex items-center space-x-[8px]">
-                      <RadioGroupItem value="no" id="no" className="bg-white" />
-                      <Label htmlFor="no" className="text-[16px] text-black">
-                        {t("no")}
-                      </Label>
+                  )}
+                  {profile.address && (
+                    <div className="mt-[8px] text-[14px] text-gray-500">
+                      {t("walletAddressLocked")}
                     </div>
-                  </RadioGroup>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 gap-[20px] md:grid-cols-3">

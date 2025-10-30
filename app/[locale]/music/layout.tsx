@@ -299,7 +299,29 @@ export default function MusicLayout({
                             {t("organizersTitle")}
                           </div>
                           <div>
-                            {t.rich("organizers", { br: () => <br /> })}
+                            {t.rich("organizers", {
+                              br: () => <br />,
+                              fireverse: (chunks) => (
+                                <a
+                                  href="https://app.fireverseai.com/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline decoration-solid underline-offset-4 transition-colors hover:text-blue-600"
+                                >
+                                  {chunks}
+                                </a>
+                              ),
+                              aicean: (chunks) => (
+                                <a
+                                  href="https://www.aicean.ai/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline decoration-solid underline-offset-4 transition-colors hover:text-blue-600"
+                                >
+                                  {chunks}
+                                </a>
+                              ),
+                            })}
                           </div>
                         </div>
                         <div className="mt-3 flex gap-2 lg:mt-5">

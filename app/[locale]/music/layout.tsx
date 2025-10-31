@@ -287,7 +287,7 @@ export default function MusicLayout({
 
                     {isOpen ? null : (
                       <button
-                        className="absolute right-4 top-0 h-6 w-6 rounded-full border-2 border-[#605D5E] lg:top-4 lg:h-12 lg:w-12"
+                        className="absolute -top-3 right-1 h-6 w-6 rounded-full border-2 border-[#605D5E] lg:top-4 lg:h-12 lg:w-12"
                         onClick={() => setIsOpen(true)}
                       >
                         <div className="absolute left-1/2 top-1/2 h-0.5 w-2 -translate-x-1/2 -translate-y-1/2 bg-[#605D5E] lg:w-5"></div>

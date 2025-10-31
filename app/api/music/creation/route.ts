@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_ENDPOINTS } from "@/constants/env";
+import { handleApiResponse } from "@/lib/api-response-handler";
 
 export async function POST(request: NextRequest) {
   try {
@@ -85,6 +86,12 @@ export async function POST(request: NextRequest) {
         { code: 1, msg: data.msg || "Failed to create music" },
         { status: response.status },
       );
+    }
+
+    // Check for login requirement (code 104)
+    const loginResponse = handleApiResponse(data, "Failed to create music");
+    if (loginResponse) {
+      return loginResponse;
     }
 
     // 处理成功响应

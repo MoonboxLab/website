@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { API_ENDPOINTS } from "@/constants/env";
+import { handleApiResponse } from "@/lib/api-response-handler";
 
 export async function GET(request: Request) {
   try {
@@ -39,6 +40,12 @@ export async function GET(request: Request) {
         { error: data.msg || "Failed to fetch template month list" },
         { status: response.status },
       );
+    }
+
+    // Check for login requirement (code 104)
+    const loginResponse = handleApiResponse(data, "Failed to fetch template month list");
+    if (loginResponse) {
+      return loginResponse;
     }
 
     // Handle successful response

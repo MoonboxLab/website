@@ -76,6 +76,19 @@ export default function MusicLayout({
         },
       });
 
+      // Check if login is required (code 104)
+      if (response.status === 401) {
+        try {
+          const errorData = await response.clone().json();
+          if (errorData.code === 104 || errorData.requiresLogin) {
+            window.dispatchEvent(new CustomEvent("showLoginModal"));
+            return false;
+          }
+        } catch (e) {
+          // Not JSON response, continue
+        }
+      }
+
       if (response.ok) {
         const profileData = await response.json();
         setUserProfile(profileData);

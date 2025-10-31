@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_ENDPOINTS } from "@/constants/env";
+import { handleApiResponse } from "@/lib/api-response-handler";
 
 export async function GET(request: NextRequest) {
   try {
@@ -51,6 +52,12 @@ export async function GET(request: NextRequest) {
         { error: data.msg || "Failed to get STS credentials" },
         { status: response.status },
       );
+    }
+
+    // Check for login requirement (code 104)
+    const loginResponse = handleApiResponse(data, "Failed to get STS credentials");
+    if (loginResponse) {
+      return loginResponse;
     }
 
     // Handle successful response

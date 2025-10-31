@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useAuthSync } from "@/lib/useAuthSync";
 
 import { useCountDown, useSize } from "ahooks";
 import "core-js/features/object/has-own";
@@ -33,6 +34,9 @@ export default function Home() {
   const t = useTranslations("Home");
 
   const mediaSize = useSize(document.querySelector("body"));
+
+  // 使用 auth sync hook 来监听登录状态变化
+  const { isLoggedIn } = useAuthSync();
 
   const [role, setRole] = useState<string>("role2");
 

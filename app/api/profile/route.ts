@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { API_ENDPOINTS } from "@/constants/env";
+import { handleApiResponse } from "@/lib/api-response-handler";
 
 export async function GET(request: Request) {
   try {
@@ -66,11 +67,20 @@ export async function GET(request: Request) {
       );
     }
 
+    // Check for login requirement (code 104)
+    const loginResponse = handleApiResponse(data, "Failed to fetch user info");
+    if (loginResponse) {
+      return loginResponse;
+    }
+
     // Handle successful response
     if (data.code === 0) {
       const apiData = data.result.data;
       console.log("Profile GET - Raw API data:", apiData);
-      console.log("Profile GET - Address in raw API data:", apiData.address || apiData.walletAddress);
+      console.log(
+        "Profile GET - Address in raw API data:",
+        apiData.address || apiData.walletAddress,
+      );
 
       // Transform API data to match frontend format
       const transformedData = {
@@ -87,7 +97,10 @@ export async function GET(request: Request) {
       };
 
       console.log("Profile GET - Transformed data:", transformedData);
-      console.log("Profile GET - Address in transformed data:", transformedData.address);
+      console.log(
+        "Profile GET - Address in transformed data:",
+        transformedData.address,
+      );
       return NextResponse.json(transformedData, { status: 200 });
     } else {
       return NextResponse.json(
@@ -134,7 +147,10 @@ export async function PUT(request: Request) {
 
     const profileData = await request.json();
     console.log("Profile PUT - Received profile data:", profileData);
-    console.log("Profile PUT - Address in received profile data:", profileData.address);
+    console.log(
+      "Profile PUT - Address in received profile data:",
+      profileData.address,
+    );
 
     // Transform frontend data to match API format
     const apiData = {
@@ -149,7 +165,10 @@ export async function PUT(request: Request) {
     };
 
     console.log("Profile PUT - Transformed API data:", apiData);
-    console.log("Profile PUT - Address in transformed API data:", apiData.address);
+    console.log(
+      "Profile PUT - Address in transformed API data:",
+      apiData.address,
+    );
 
     // Call new user info update API
     console.log("Profile PUT - Calling external API:", {
@@ -188,6 +207,12 @@ export async function PUT(request: Request) {
         { error: data.msg || "Failed to update profile" },
         { status: response.status },
       );
+    }
+
+    // Check for login requirement (code 104)
+    const loginResponse = handleApiResponse(data, "Failed to update profile");
+    if (loginResponse) {
+      return loginResponse;
     }
 
     // Handle successful response

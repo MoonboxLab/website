@@ -107,6 +107,20 @@ export default function ProfilePage() {
         },
       });
 
+      // Check if login is required (code 104)
+      if (response.status === 401) {
+        try {
+          const errorData = await response.clone().json();
+          if (errorData.code === 104 || errorData.requiresLogin) {
+            // Trigger login modal via event
+            window.dispatchEvent(new CustomEvent("showLoginModal"));
+            return;
+          }
+        } catch (e) {
+          // Not JSON response, continue
+        }
+      }
+
       if (response.ok) {
         const userData = await response.json();
         console.log("Profile GET - Received user data:", userData);

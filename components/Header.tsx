@@ -25,6 +25,8 @@ import {
 import { getPoint } from "@/service/point";
 import AuthModal from "./AuthModal";
 import { useAuthSync } from "@/lib/useAuthSync";
+import { registerLoginModalCallback } from "@/lib/api-interceptor";
+import { setupApiInterceptor } from "@/lib/setup-api-interceptor";
 
 const Header: React.FC = () => {
   const mediaSize = useSize(document.querySelector("body"));
@@ -62,6 +64,28 @@ const Header: React.FC = () => {
       setShowAuthModal(false);
     },
   });
+
+  // Register login modal callback for API interceptor and setup global interceptor
+  useEffect(() => {
+    // Register callback for API interceptor
+    registerLoginModalCallback(() => {
+      setShowAuthModal(true);
+    });
+
+    // Setup global fetch interceptor
+    setupApiInterceptor();
+
+    // Listen for custom event to show login modal
+    const handleShowLoginModal = () => {
+      setShowAuthModal(true);
+    };
+
+    window.addEventListener("showLoginModal", handleShowLoginModal);
+
+    return () => {
+      window.removeEventListener("showLoginModal", handleShowLoginModal);
+    };
+  }, []);
 
   // Function to mask email address
   const maskEmail = (email: string) => {

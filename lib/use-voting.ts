@@ -12,7 +12,6 @@ import {
   erc721ABI,
 } from "@wagmi/core";
 import { formatUnits, parseUnits } from "viem";
-import { sepolia, bscTestnet } from "viem/chains";
 import {
   VOTING_CONTRACTS,
   VOTING_CONTRACT_ABI,
@@ -342,28 +341,28 @@ export function useNetworkSwitch() {
 
   const addNetwork = useCallback(async (chainId: number) => {
     const networkConfig =
-      chainId === 97
+      chainId === 56
         ? {
             chainId: `0x${chainId.toString(16)}`,
-            chainName: "BSC Testnet",
+            chainName: "BNB Smart Chain",
             nativeCurrency: {
               name: "BNB",
               symbol: "BNB",
               decimals: 18,
             },
-            rpcUrls: [VOTING_CONTRACTS.BSC_TESTNET.RPC_URL],
-            blockExplorerUrls: ["https://testnet.bscscan.com"],
+            rpcUrls: [VOTING_CONTRACTS.BSC_MAINNET.RPC_URL],
+            blockExplorerUrls: ["https://bscscan.com"],
           }
         : {
             chainId: `0x${chainId.toString(16)}`,
-            chainName: "Sepolia",
+            chainName: "Ethereum Mainnet",
             nativeCurrency: {
               name: "ETH",
               symbol: "ETH",
               decimals: 18,
             },
-            rpcUrls: [VOTING_CONTRACTS.ETH_SEPOLIA.RPC_URL],
-            blockExplorerUrls: ["https://sepolia.etherscan.io"],
+            rpcUrls: [VOTING_CONTRACTS.ETH_MAINNET.RPC_URL],
+            blockExplorerUrls: ["https://etherscan.io"],
           };
 
     await (window as any).ethereum.request({

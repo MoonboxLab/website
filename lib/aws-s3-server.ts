@@ -22,9 +22,7 @@ async function getSTSCredentialsServer(
     console.log("Getting STS credentials from:", API_ENDPOINTS.STS_CREDENTIALS);
 
     // 准备请求头
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-    };
+    const headers: HeadersInit = {};
 
     // 如果有request参数，传递认证信息
     if (request) {
@@ -32,7 +30,9 @@ async function getSTSCredentialsServer(
       const uidHeader = request.headers.get("uid");
 
       if (authHeader) {
-        headers["Authorization"] = authHeader;
+        // 提取 token（去掉 "Bearer " 前缀）
+        const token = authHeader.replace("Bearer ", "");
+        headers["token"] = token;
       }
       if (uidHeader) {
         headers["uid"] = uidHeader;
@@ -43,6 +43,8 @@ async function getSTSCredentialsServer(
         hasUid: !!uidHeader,
       });
     }
+
+    console.log("STS API - Calling external API with headers:", headers);
 
     const response = await fetch(API_ENDPOINTS.STS_CREDENTIALS, {
       method: "GET",

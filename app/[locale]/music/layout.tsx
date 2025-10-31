@@ -314,6 +314,16 @@ export default function MusicLayout({
                           <div>
                             {t.rich("organizers", {
                               br: () => <br />,
+                              bingo: (chunks) => (
+                                <a
+                                  href="https://www.bingogroup.com.hk/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline decoration-solid underline-offset-4 transition-colors hover:text-blue-600"
+                                >
+                                  {chunks}
+                                </a>
+                              ),
                               fireverse: (chunks) => (
                                 <a
                                   href="https://app.fireverseai.com/"

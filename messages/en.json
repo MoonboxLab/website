@@ -625,6 +625,7 @@
     "schedule": "• Day 1–15 of each month: Accept work submissions, each person can submit at most once per month<br></br>• Day 1–15 of next month: Open for public voting<br></br>• Day 1 of the month after voting ends: Announce winners and final scores (including jury scores)",
     "scoringMechanismTitle": "Scoring Mechanism",
     "scoringMechanism": "• 40% Professional jury scoring<br></br>• 60% Public voting",
+    "scoringMechanismDetails": "• 40% Professional jury scoring<br></br>- Pitch 10/10<br></br>- Rhythm 10/10<br></br>- Enunciation 10/10<br></br>- Technique 10/10<br></br>- Emotion 10/10<br></br>• 60% Public voting",
     "votingMethodTitle": "Voting Method",
     "votingMethod": "• Each Nobody NFT = equivalent to 200 USDT votes<br></br>• The rounded value of $AICE or $FIR after conversion to USDT equals the number of votes. Exchange rates are settled daily at 18:00 Hong Kong time.<br></br>• Minimum voting amount must be equivalent to 10 USDT<br></br>• Final ranking is determined by total number of votes",
     "prizeDistributionTitle": "Prize Distribution (Nobody NFT votes not counted for prize calculation)",

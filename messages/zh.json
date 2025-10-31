@@ -540,6 +540,7 @@
     "schedule": "• 每月 1–15 日：接受作品投稿，每個月每人最多提交一次<br></br>• 次月 1–15 日：開放公眾投票<br></br>• 投票結束後次月 1 日：公佈得獎名單與最終評分（含評審團評分）",
     "scoringMechanismTitle": "評分機制",
     "scoringMechanism": "• 40% 專業評審團評分<br></br>• 60% 公眾投票",
+    "scoringMechanismDetails": "• 40% 專業評審團評分<br></br>- 音準 10/10<br></br>- 節奏 10/10<br></br>- 咬字 10/10<br></br>- 技巧 10/10<br></br>- 感情 10/10<br></br>• 60% 公眾投票",
     "votingMethodTitle": "投票方式",
     "votingMethod": "• 每個 Nobody NFT = 等值 200 USDT 票數<br></br>• $AICE 或 $FIR 與 USDT 兌換後的價值取整即為票數，兌換率按 香港時間每日 18:00 結算<br></br>• 每次投票 最低須等值 10 USDT<br></br>• 最終排名依 票數總數 排定",
     "prizeDistributionTitle": "獎金分配（Nobody NFT的票數不作獎金計算）",

@@ -131,7 +131,17 @@ export default function MusicPage() {
     console.log("=== Music fetch useEffect ===", {
       currentEventId,
       willFetch: currentEventId !== undefined,
+      eventsLength: events.length,
     });
+
+    // If events are empty, directly set musics to empty
+    if (events.length === 0) {
+      setIsLoadingMusics(false);
+      // Call fetchMusics with an invalid eventId to ensure musics state is cleared
+      // Using -1 as invalid eventId should return empty array from API
+      fetchMusics(-1);
+      return;
+    }
 
     // Only fetch when we have a specific event ID (not undefined)
     if (currentEventId !== undefined) {
@@ -152,7 +162,7 @@ export default function MusicPage() {
         clearTimeout(timeoutId);
       };
     }
-  }, [currentEventId, fetchMusics]);
+  }, [currentEventId, fetchMusics, events]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);

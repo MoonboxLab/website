@@ -148,3 +148,11 @@ input[type="number"] {
 [data-rk] {
   pointer-events: auto;
 }
+
+/* 强制所有 input 和 select 在暗黑模式下使用白色背景 */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+select,
+textarea {
+  background-color: white !important;
+  color: black !important;
+}

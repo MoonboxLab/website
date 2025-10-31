@@ -55,10 +55,6 @@ interface VoteRecord {
   coin: string | null;
   amount: number;
   createTm: number;
-}
-
-interface VoteRecordResponse {
-  data: VoteRecord[];
   creation: MusicCreation;
 }
 
@@ -84,7 +80,7 @@ export default function ProfilePage() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [musicCreations, setMusicCreations] = useState<MusicCreation[]>([]);
-  const [voteRecords, setVoteRecords] = useState<VoteRecordResponse[]>([]);
+  const [voteRecords, setVoteRecords] = useState<VoteRecord[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [walletAddressInput, setWalletAddressInput] = useState("");
   const isManualInputRef = useRef(false); // Track if user manually entered address
@@ -106,6 +102,20 @@ export default function ProfilePage() {
           uid: user.id,
         },
       });
+
+      // Check if login is required (code 104)
+      if (response.status === 401) {
+        try {
+          const errorData = await response.clone().json();
+          if (errorData.code === 104 || errorData.requiresLogin) {
+            // Trigger login modal via event
+            window.dispatchEvent(new CustomEvent("showLoginModal"));
+            return;
+          }
+        } catch (e) {
+          // Not JSON response, continue
+        }
+      }
 
       if (response.ok) {
         const userData = await response.json();
@@ -166,42 +176,6 @@ export default function ProfilePage() {
         const creationData = await creationResponse.json();
         setMusicCreations(creationData.data || []);
       }
-
-      // Load vote records for each creation
-      const creationResponseData = await fetch("/api/music/creation/record", {
-        headers,
-      });
-      if (creationResponseData.ok) {
-        const creationData = await creationResponseData.json();
-        const creations = creationData.data || [];
-
-        // Load vote records for each creation
-        const votePromises = creations.map(async (creation: MusicCreation) => {
-          try {
-            const voteResponse = await fetch(
-              `/api/music/vote/record?id=${creation.id}`,
-              { headers },
-            );
-            if (voteResponse.ok) {
-              const voteData = await voteResponse.json();
-              return voteData;
-            }
-            return null;
-          } catch (error) {
-            console.error(
-              `Error loading vote records for creation ${creation.id}:`,
-              error,
-            );
-            return null;
-          }
-        });
-
-        const voteResults = await Promise.all(votePromises);
-        const validVoteResults = voteResults.filter(
-          (result) => result !== null,
-        );
-        setVoteRecords(validVoteResults);
-      }
     } catch (error) {
       console.error("Error loading music data:", error);
     } finally {
@@ -209,12 +183,68 @@ export default function ProfilePage() {
     }
   }, []);
 
+  const loadVoteRecords = useCallback(async () => {
+    try {
+      setIsLoadingData(true);
+      const token = localStorage.getItem("authToken");
+      const userData = localStorage.getItem("user");
+      const user = userData ? JSON.parse(userData) : null;
+
+      if (!token || !user?.id) {
+        console.log("No auth token or user ID for vote records loading");
+        return;
+      }
+
+      if (!connectedAddress) {
+        // No connected address, clear vote records
+        setVoteRecords([]);
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        uid: user.id,
+      };
+
+      try {
+        const voteResponse = await fetch(
+          `/api/music/vote/record?address=${connectedAddress}`,
+          { headers },
+        );
+        if (voteResponse.ok) {
+          const responseData = await voteResponse.json();
+          // New structure: responseData.data is an array of vote records
+          // Each record has: { id, creationId, user, amount, createTm, creation, ... }
+          if (responseData.success && Array.isArray(responseData.data)) {
+            setVoteRecords(responseData.data);
+          } else if (Array.isArray(responseData)) {
+            // Fallback: if response is directly an array
+            setVoteRecords(responseData);
+          } else {
+            setVoteRecords([]);
+          }
+        } else {
+          setVoteRecords([]);
+        }
+      } catch (error) {
+        console.error("Error loading vote records:", error);
+        setVoteRecords([]);
+      }
+    } catch (error) {
+      console.error("Error loading vote records:", error);
+      setVoteRecords([]);
+    } finally {
+      setIsLoadingData(false);
+    }
+  }, [connectedAddress]);
+
   // Use the auth sync hook
   const { isLoggedIn } = useAuthSync({
     onLogin: () => {
       setShowAuthModal(false);
       loadUserProfile();
       loadMusicData();
+      loadVoteRecords();
     },
     onLogout: () => {
       setShowAuthModal(true);
@@ -239,18 +269,30 @@ export default function ProfilePage() {
     if (isLoggedIn) {
       loadUserProfile();
       loadMusicData();
+      loadVoteRecords();
     } else {
       // Check if user is already logged in from localStorage
       const token = localStorage.getItem("authToken");
       if (token) {
         loadUserProfile();
         loadMusicData();
+        loadVoteRecords();
       } else {
         // User is not logged in, show auth modal
         setShowAuthModal(true);
       }
     }
-  }, [isLoggedIn, loadUserProfile, loadMusicData]);
+  }, [isLoggedIn, loadUserProfile, loadMusicData, loadVoteRecords]);
+
+  // Load vote records when wallet address changes
+  useEffect(() => {
+    if (isLoggedIn) {
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        loadVoteRecords();
+      }
+    }
+  }, [connectedAddress, isLoggedIn, loadVoteRecords]);
 
   // Handle scroll to participation records after loading completes
   useEffect(() => {
@@ -845,7 +887,6 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Participation Records Section */}
           {/* Voting History Card */}
           <div
             className="rounded-[16px] p-[30px] shadow-[2px_2px_0px_rgba(0,0,0,1)]"
@@ -854,7 +895,44 @@ export default function ProfilePage() {
             <h2 className="mb-[20px] text-[20px] font-semibold text-black">
               {t("votingHistory")}
             </h2>
-            {isLoadingData ? (
+            {!connectedAddress ? (
+              <div className="py-[40px] text-center">
+                <p className="mb-[20px] text-[16px] text-gray-600">
+                  {t("connectWalletToViewVotes")}
+                </p>
+                <ConnectButton.Custom>
+                  {({
+                    account,
+                    chain,
+                    openAccountModal,
+                    openChainModal,
+                    openConnectModal,
+                    authenticationStatus,
+                    mounted,
+                  }) => {
+                    const ready = mounted && authenticationStatus !== "loading";
+                    const connected =
+                      ready &&
+                      account &&
+                      chain &&
+                      (!authenticationStatus ||
+                        authenticationStatus === "authenticated");
+
+                    if (!connected) {
+                      return (
+                        <Button
+                          onClick={openConnectModal}
+                          className="h-[48px] rounded-[8px] border-[2px] border-black bg-[rgba(255,214,0,1)] px-[40px] text-[16px] font-semibold text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:text-white"
+                        >
+                          {t("connectWallet")}
+                        </Button>
+                      );
+                    }
+                    return null;
+                  }}
+                </ConnectButton.Custom>
+              </div>
+            ) : isLoadingData ? (
               <div className="py-[40px] text-center">
                 <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900"></div>
                 <p className="text-gray-600">{t("loadingVoteRecords")}</p>
@@ -880,30 +958,28 @@ export default function ProfilePage() {
                   </thead>
                   <tbody>
                     {voteRecords.length > 0 ? (
-                      voteRecords.flatMap((voteRecord) =>
-                        voteRecord.data.map((vote, index) => (
-                          <tr
-                            key={`${voteRecord.creation.id}-${vote.id}-${index}`}
-                            className="border-b border-gray-200"
-                          >
-                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                              {formatDate(vote.createTm)}
-                            </td>
-                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                              {/* TODO: Get artist name from user ID - for now showing user ID */}
-                              {t("userPlaceholder", {
-                                uid: voteRecord.creation.uid,
-                              })}
-                            </td>
-                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                              {voteRecord.creation.title}
-                            </td>
-                            <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
-                              {vote.amount} {vote.coinName}
-                            </td>
-                          </tr>
-                        )),
-                      )
+                      voteRecords.map((vote, index) => (
+                        <tr
+                          key={`${vote.id}-${index}`}
+                          className="border-b border-gray-200"
+                        >
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {formatDate(vote.createTm)}
+                          </td>
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {/* TODO: Get artist name from user ID - for now showing user ID */}
+                            {t("userPlaceholder", {
+                              uid: vote.creation?.uid || "N/A",
+                            })}
+                          </td>
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {vote.creation?.title || "N/A"}
+                          </td>
+                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                            {vote.amount} {vote.coinName}
+                          </td>
+                        </tr>
+                      ))
                     ) : (
                       <tr>
                         <td

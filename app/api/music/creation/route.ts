@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_ENDPOINTS } from "@/constants/env";
+import { handleApiResponse } from "@/lib/api-response-handler";
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,27 +49,37 @@ export async function POST(request: NextRequest) {
     const localeMatch = cookieHeader.match(/NEXT_LOCALE=([^;]+)/);
     const lang = localeMatch ? localeMatch[1] : "en";
 
+    // 提取 token（去掉 "Bearer " 前缀）
+    const token = authHeader.replace("Bearer ", "");
+
+    // 准备 JSON 数据
+    const requestBody = {
+      templateId,
+      url,
+      title,
+    };
+
     // 调用第三方API创建作品
     console.log("Calling external music creation API:", {
       url: API_ENDPOINTS.MUSIC_CREATION,
       headers: {
         "Content-Type": "application/json",
-        Authorization: authHeader,
+        token: token,
         uid: uidHeader,
         lang: lang,
       },
-      body: { templateId, url, title },
+      body: requestBody,
     });
 
     const response = await fetch(API_ENDPOINTS.MUSIC_CREATION, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: authHeader,
+        token: token,
         uid: uidHeader,
         lang: lang,
       },
-      body: JSON.stringify({ templateId, url, title }),
+      body: JSON.stringify(requestBody),
     });
 
     console.log("External API response:", {
@@ -85,6 +96,12 @@ export async function POST(request: NextRequest) {
         { code: 1, msg: data.msg || "Failed to create music" },
         { status: response.status },
       );
+    }
+
+    // Check for login requirement (code 104)
+    const loginResponse = handleApiResponse(data, "Failed to create music");
+    if (loginResponse) {
+      return loginResponse;
     }
 
     // 处理成功响应

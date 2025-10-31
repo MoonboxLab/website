@@ -76,6 +76,19 @@ export default function MusicLayout({
         },
       });
 
+      // Check if login is required (code 104)
+      if (response.status === 401) {
+        try {
+          const errorData = await response.clone().json();
+          if (errorData.code === 104 || errorData.requiresLogin) {
+            window.dispatchEvent(new CustomEvent("showLoginModal"));
+            return false;
+          }
+        } catch (e) {
+          // Not JSON response, continue
+        }
+      }
+
       if (response.ok) {
         const profileData = await response.json();
         setUserProfile(profileData);
@@ -301,6 +314,16 @@ export default function MusicLayout({
                           <div>
                             {t.rich("organizers", {
                               br: () => <br />,
+                              bingo: (chunks) => (
+                                <a
+                                  href="https://www.bingogroup.com.hk/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline decoration-solid underline-offset-4 transition-colors hover:text-blue-600"
+                                >
+                                  {chunks}
+                                </a>
+                              ),
                               fireverse: (chunks) => (
                                 <a
                                   href="https://app.fireverseai.com/"
@@ -366,6 +389,16 @@ export default function MusicLayout({
                           </div>
                           <div className="mt-2 lg:mt-3">
                             {t.rich("juryMembers", { br: () => <br /> })}
+                          </div>
+                        </div>
+                        <div className="mt-3 lg:mt-5">
+                          <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
+                            {t("scoringMechanismTitle")}
+                          </div>
+                          <div className="mt-2 lg:mt-3">
+                            {t.rich("scoringMechanismDetails", {
+                              br: () => <br />,
+                            })}
                           </div>
                         </div>
                         <div className="mt-3 lg:mt-5">

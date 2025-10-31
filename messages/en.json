@@ -165,7 +165,7 @@
     "passwordChangeSuccess": "Password changed successfully",
     "passwordChangeError": "Failed to change password",
     "optional": "(Optional)",
-    "contactInfoHint": "To facilitate staff contact, please provide contact information as much as possible."
+    "contactInfoHint": "Please provide as much contact information as possible to help our staff reach you easily."
   },
   "Declaration": {
     "spirit": "SPIRIT",
@@ -615,7 +615,7 @@
   "Music": {
     "nobodySquare": "Dream a Music Superstar",
     "producerInfo": "Every Nobody is Somebody",
-    "nobodySquareIntro": "Every month, Fireverse generates 10 AI songs. Contestants can freely choose songs to showcase their personal talent and style.",
+    "nobodySquareIntro": "Every month, Fireverse generates 10 AI songs. Contestants can freely choose a song to showcase their personal talent and style.",
     "organizersTitle": "Organizers",
     "organizers": "Organizer: Nobody<br></br>Co-organizers: Bingo Group, <fireverse>Fireverse</fireverse>, <aicean>Aicean</aicean>",
     "highlightsTitle": "Event Highlights",
@@ -847,6 +847,7 @@
     "approveAndVote": "Approve & Vote",
     "ok": "OK",
     "noNft": "Current wallet has no Nobody NFT",
-    "voteHint": "After voting, refresh — the vote counts update automatically"
+    "voteHint": "After voting, refresh — the vote counts update automatically",
+    "contactInfoHint": "Please provide as much contact information as possible to help our staff reach you easily."
   }
 }

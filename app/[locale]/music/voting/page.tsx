@@ -24,6 +24,7 @@ export default function MusicVotingPage() {
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
   const [votingMusics, setVotingMusics] = useState<any[]>([]);
   const [votingEvents, setVotingEvents] = useState<any[]>([]);
+  const [isLoadingVotingEvents, setIsLoadingVotingEvents] = useState<boolean>(true);
   const [currentEventId, setCurrentEventId] = useState<number | undefined>(
     undefined,
   );
@@ -99,6 +100,7 @@ export default function MusicVotingPage() {
       timestamp: new Date().toISOString(),
     });
 
+    setIsLoadingVotingEvents(true);
     try {
       // events loading skeleton not required; keep UX simple
       // Choose API endpoint based on mock data setting
@@ -152,6 +154,8 @@ export default function MusicVotingPage() {
     } catch (error) {
       console.error("Failed to fetch voting events:", error);
       setVotingEvents([]);
+    } finally {
+      setIsLoadingVotingEvents(false);
     }
   };
 
@@ -203,9 +207,15 @@ export default function MusicVotingPage() {
       useMockData,
       willFetch: true,
       votingEventsLength: votingEvents.length,
+      isLoadingVotingEvents,
     });
 
-    // If voting events are empty, directly set voting musics to empty
+    // If voting events are still loading, wait
+    if (isLoadingVotingEvents) {
+      return;
+    }
+
+    // If voting events are loaded but empty, directly set voting musics to empty
     if (votingEvents.length === 0) {
       setIsLoadingMusics(false);
       setVotingMusics([]);
@@ -237,7 +247,7 @@ export default function MusicVotingPage() {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [currentEventId, useMockData, votingEvents]);
+  }, [currentEventId, useMockData, votingEvents, isLoadingVotingEvents]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);

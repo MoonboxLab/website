@@ -23,6 +23,7 @@ export default function MusicPage() {
   const searchParams = useSearchParams();
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
   const [events, setEvents] = useState<any[]>([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState<boolean>(true);
   const [currentEventId, setCurrentEventId] = useState<number | undefined>(
     undefined,
   );
@@ -40,6 +41,7 @@ export default function MusicPage() {
       timestamp: new Date().toISOString(),
     });
 
+    setIsLoadingEvents(true);
     try {
       // Fetch template events (精选活动列表)
       const templateResponse = await fetch("/api/music/template/month/list");
@@ -86,6 +88,8 @@ export default function MusicPage() {
     } catch (error) {
       console.error("Failed to fetch events:", error);
       setEvents([]);
+    } finally {
+      setIsLoadingEvents(false);
     }
   };
 
@@ -132,9 +136,15 @@ export default function MusicPage() {
       currentEventId,
       willFetch: currentEventId !== undefined,
       eventsLength: events.length,
+      isLoadingEvents,
     });
 
-    // If events are empty, directly set musics to empty
+    // If events are still loading, wait
+    if (isLoadingEvents) {
+      return;
+    }
+
+    // If events are loaded but empty, directly set musics to empty
     if (events.length === 0) {
       setIsLoadingMusics(false);
       // Call fetchMusics with an invalid eventId to ensure musics state is cleared
@@ -162,7 +172,7 @@ export default function MusicPage() {
         clearTimeout(timeoutId);
       };
     }
-  }, [currentEventId, fetchMusics, events]);
+  }, [currentEventId, fetchMusics, events, isLoadingEvents]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);

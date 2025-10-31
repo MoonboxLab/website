@@ -202,7 +202,15 @@ export default function MusicVotingPage() {
       currentEventId,
       useMockData,
       willFetch: true,
+      votingEventsLength: votingEvents.length,
     });
+
+    // If voting events are empty, directly set voting musics to empty
+    if (votingEvents.length === 0) {
+      setIsLoadingMusics(false);
+      setVotingMusics([]);
+      return;
+    }
 
     // Only toggle loading if it's a new event or we have no data yet
     const shouldShowLoading =
@@ -229,7 +237,7 @@ export default function MusicVotingPage() {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [currentEventId, useMockData]);
+  }, [currentEventId, useMockData, votingEvents]);
 
   const handleViewAll = () => {
     setIsViewAllModalOpen(true);

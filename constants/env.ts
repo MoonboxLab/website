@@ -1,5 +1,5 @@
 // API Configuration
-export const API_BASE_URL = "http://geena.nobody.xyz";
+export const API_BASE_URL = "http://api.nobody.xyz";
 
 // API Endpoints
 export const API_ENDPOINTS = {

@@ -4,11 +4,11 @@ import { API_ENDPOINTS } from "@/constants/env";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
+    const address = searchParams.get("address");
 
-    if (!id) {
+    if (!address) {
       return NextResponse.json(
-        { error: "Creation ID is required" },
+        { error: "Address is required" },
         { status: 400 },
       );
     }
@@ -36,9 +36,9 @@ export async function GET(request: Request) {
       headers["uid"] = uid;
     }
 
-    // Call music vote record API with creation ID
+    // Call music vote record API with address
     const response = await fetch(
-      `${API_ENDPOINTS.MUSIC_VOTE_RECORD}?id=${id}`,
+      `${API_ENDPOINTS.MUSIC_VOTE_RECORD}?address=${address}`,
       {
         method: "GET",
         headers,
@@ -49,25 +49,24 @@ export async function GET(request: Request) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || "Failed to fetch vote records" },
+        { error: data.msg || data.message || "Failed to fetch vote records" },
         { status: response.status },
       );
     }
 
-    // Handle successful response
-    if (data.code === 0) {
+    // Handle successful response - new structure: { success, message, data: [...] }
+    if (data.success || data.code === 0) {
       return NextResponse.json(
         {
           success: true,
-          message: "Vote records fetched successfully",
-          data: data.result.data,
-          creation: data.result.creation,
+          message: data.message || "Vote records fetched successfully",
+          data: data.result.data || [],
         },
         { status: 200 },
       );
     } else {
       return NextResponse.json(
-        { error: data.msg || "Failed to fetch vote records" },
+        { error: data.msg || data.message || "Failed to fetch vote records" },
         { status: 400 },
       );
     }

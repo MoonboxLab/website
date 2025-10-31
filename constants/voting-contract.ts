@@ -9,6 +9,15 @@ export const VOTING_CONTRACTS = {
     CHAIN_ID: 97, // BSC Testnet
     RPC_URL: "https://data-seed-prebsc-1-s1.binance.org:8545/",
   },
+  // BSC 主网配置
+  BSC_MAINNET: {
+    VOTING_CONTRACT:
+      "0x3C52223a67C869A7e878969AB318df93a0792246" as `0x${string}`,
+    TOKEN_AICE: "0x81De84e51f49983E043A8527dDFae08238ACC330" as `0x${string}`,
+    TOKEN_FIR: "0x238D72E179A581C98DC1996417a49818c7E509dC" as `0x${string}`,
+    CHAIN_ID: 56, // BSC Mainnet
+    RPC_URL: "https://bsc-dataseed.binance.org/",
+  },
   // ETH Sepolia 测试链配置
   ETH_SEPOLIA: {
     VOTING_CONTRACT:
@@ -16,6 +25,14 @@ export const VOTING_CONTRACTS = {
     NFT_CONTRACT: "0xA9a1f1ec46819B99f8fb569452c6b0FE5CC235bc" as `0x${string}`,
     CHAIN_ID: 11155111, // Sepolia
     RPC_URL: "https://ethereum-sepolia-rpc.publicnode.com/",
+  },
+  // ETH 主网配置
+  ETH_MAINNET: {
+    VOTING_CONTRACT:
+      "0x3C52223a67C869A7e878969AB318df93a0792246" as `0x${string}`,
+    NFT_CONTRACT: "0xa28d6A8EB65A41f3958f1DE62CBfcA20B817E66a" as `0x${string}`,
+    CHAIN_ID: 1, // Ethereum Mainnet
+    RPC_URL: "https://eth.llamarpc.com/",
   },
 } as const;
 
@@ -272,21 +289,21 @@ export type VoteType = "nobody" | "aice" | "fir";
 // 投票配置
 export const VOTE_CONFIG = {
   nobody: {
-    chain: "ETH_SEPOLIA" as const,
+    chain: "ETH_MAINNET" as const,
     type: "nft" as const,
-    contract: VOTING_CONTRACTS.ETH_SEPOLIA.VOTING_CONTRACT,
-    tokenContract: VOTING_CONTRACTS.ETH_SEPOLIA.NFT_CONTRACT,
+    contract: VOTING_CONTRACTS.ETH_MAINNET.VOTING_CONTRACT,
+    tokenContract: VOTING_CONTRACTS.ETH_MAINNET.NFT_CONTRACT,
   },
   aice: {
-    chain: "BSC_TESTNET" as const,
+    chain: "BSC_MAINNET" as const,
     type: "token" as const,
-    contract: VOTING_CONTRACTS.BSC_TESTNET.VOTING_CONTRACT,
-    tokenContract: VOTING_CONTRACTS.BSC_TESTNET.TOKEN_AICE,
+    contract: VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
+    tokenContract: VOTING_CONTRACTS.BSC_MAINNET.TOKEN_AICE,
   },
   fir: {
-    chain: "BSC_TESTNET" as const,
+    chain: "BSC_MAINNET" as const,
     type: "token" as const,
-    contract: VOTING_CONTRACTS.BSC_TESTNET.VOTING_CONTRACT,
-    tokenContract: VOTING_CONTRACTS.BSC_TESTNET.TOKEN_FIR,
+    contract: VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
+    tokenContract: VOTING_CONTRACTS.BSC_MAINNET.TOKEN_FIR,
   },
 } as const;

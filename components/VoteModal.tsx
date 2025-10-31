@@ -72,21 +72,21 @@ export default function VoteModal({
 
   // 代币余额hooks
   const { balance: aiceBalance } = useTokenBalance(
-    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_AICE,
-    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_AICE,
+    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
     voteType === "aice" && isConnected,
   );
 
   const { balance: firBalance } = useTokenBalance(
-    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_FIR,
-    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_FIR,
+    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
     voteType === "fir" && isConnected,
   );
 
   // NFT余额hook
   const { balance: nftBalance, nftIds } = useNftBalance(
-    VOTING_CONTRACTS.ETH_SEPOLIA.NFT_CONTRACT,
-    VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID,
+    VOTING_CONTRACTS.ETH_MAINNET.NFT_CONTRACT,
+    VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID,
     voteType === "nobody" && isConnected,
   );
 
@@ -101,9 +101,9 @@ export default function VoteModal({
     approve: approveAice,
     approving: aiceApproving,
   } = useTokenApproval(
-    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_AICE,
-    VOTING_CONTRACTS.BSC_TESTNET.VOTING_CONTRACT,
-    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_AICE,
+    VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
+    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
     voteType === "aice" && isConnected,
   );
 
@@ -113,9 +113,9 @@ export default function VoteModal({
     approve: approveFir,
     approving: firApproving,
   } = useTokenApproval(
-    VOTING_CONTRACTS.BSC_TESTNET.TOKEN_FIR,
-    VOTING_CONTRACTS.BSC_TESTNET.VOTING_CONTRACT,
-    VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID,
+    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_FIR,
+    VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
+    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
     voteType === "fir" && isConnected,
   );
 
@@ -182,7 +182,7 @@ export default function VoteModal({
 
     try {
       // 检查当前网络是否正确，只在需要时切换
-      const targetChainId = voteType === "nobody" ? 11155111 : 97; // ETH Sepolia : BSC Testnet
+      const targetChainId = voteType === "nobody" ? 1 : 56; // ETH Mainnet : BSC Mainnet
       const { chain } = getNetwork();
 
       if (chain?.id !== targetChainId) {
@@ -305,7 +305,7 @@ export default function VoteModal({
 
     const switchNetwork = async () => {
       try {
-        const targetChainId = voteType === "nobody" ? 11155111 : 97; // ETH Sepolia : BSC Testnet
+        const targetChainId = voteType === "nobody" ? 1 : 56; // ETH Mainnet : BSC Mainnet
         await switchToChain(targetChainId);
       } catch (error) {
         console.log("Network switch failed:", error);

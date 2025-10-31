@@ -645,8 +645,8 @@ export default function ProfilePage() {
 
             <div className="flex flex-col gap-[30px] lg:flex-row">
               {/* Avatar Section */}
-              <div className="flex-shrink-0">
-                <div className="group relative">
+              <div className="flex flex-shrink-0 justify-center">
+                <div className="group relative h-[120px] w-[120px]">
                   <div className="h-[120px] w-[120px] overflow-hidden rounded-[12px] border-[2px] border-black">
                     {profile.avatar ? (
                       <Image

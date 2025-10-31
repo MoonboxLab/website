@@ -364,7 +364,9 @@ export default function MusicLayout({
                             {t("scoringMechanismTitle")}
                           </div>
                           <div className="mt-2 lg:mt-3">
-                            {t.rich("scoringMechanism", { br: () => <br /> })}
+                            {t.rich("scoringMechanismDetails", {
+                              br: () => <br />,
+                            })}
                           </div>
                         </div>
                         <div className="mt-3 lg:mt-5">
@@ -389,16 +391,6 @@ export default function MusicLayout({
                           </div>
                           <div className="mt-2 lg:mt-3">
                             {t.rich("juryMembers", { br: () => <br /> })}
-                          </div>
-                        </div>
-                        <div className="mt-3 lg:mt-5">
-                          <div className="whitespace-nowrap font-bold underline decoration-solid underline-offset-4">
-                            {t("scoringMechanismTitle")}
-                          </div>
-                          <div className="mt-2 lg:mt-3">
-                            {t.rich("scoringMechanismDetails", {
-                              br: () => <br />,
-                            })}
                           </div>
                         </div>
                         <div className="mt-3 lg:mt-5">

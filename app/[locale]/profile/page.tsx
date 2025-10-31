@@ -799,7 +799,7 @@ export default function ProfilePage() {
                       htmlFor="telegram"
                       className="text-[16px] font-medium text-black"
                     >
-                      Telegram{" "}
+                      Instagram{" "}
                       <span className="text-[14px] font-normal text-gray-500">
                         {t("optional")}
                       </span>

@@ -227,19 +227,46 @@ export function validateImageFileServer(
 export function validateAudioFileServer(
   file: Buffer,
   contentType: string,
+  fileName?: string,
 ): boolean {
-  const allowedTypes = [
+  // 允许的 MIME 类型（包含各种变体）
+  const allowedMimeTypes = [
     "audio/mpeg",
     "audio/mp3",
     "audio/wav",
+    "audio/wave",
+    "audio/x-wav",
     "audio/ogg",
+    "audio/oga",
     "audio/m4a",
+    "audio/x-m4a",
+    "audio/mp4",
+    "audio/mp4a-latm",
     "audio/aac",
     "audio/flac",
+    "audio/x-flac",
   ];
+
+  // 允许的文件扩展名
+  const allowedExtensions = [".mp3", ".wav", ".ogg", ".m4a", ".aac", ".flac"];
+
   const maxSize = 50 * 1024 * 1024; // 50MB for audio files
 
-  if (!allowedTypes.includes(contentType)) {
+  // 检查 MIME 类型
+  const hasValidMimeType =
+    contentType && allowedMimeTypes.includes(contentType);
+
+  // 如果 MIME 类型不匹配，检查文件扩展名
+  let hasValidExtension = false;
+  if (fileName) {
+    const lowerFileName = fileName.toLowerCase();
+    hasValidExtension = allowedExtensions.some((ext) =>
+      lowerFileName.endsWith(ext),
+    );
+  }
+
+  // 如果两者都不匹配，抛出错误
+  if (!hasValidMimeType && !hasValidExtension) {
     throw new Error(
       "Invalid file type. Only MP3, WAV, OGG, M4A, AAC, and FLAC are allowed.",
     );

@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
     // 验证文件类型和大小
     try {
-      validateAudioFileServer(buffer, file.type);
+      validateAudioFileServer(buffer, file.type, file.name);
       console.log("File validation passed");
     } catch (error: any) {
       console.log("File validation failed:", error.message);

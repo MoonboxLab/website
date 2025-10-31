@@ -39,7 +39,8 @@ type MusicAction =
   | { type: "SET_PLAYLIST"; payload: MusicTrack[] }
   | { type: "NEXT_TRACK" }
   | { type: "PREVIOUS_TRACK" }
-  | { type: "SET_CURRENT_INDEX"; payload: number };
+  | { type: "SET_CURRENT_INDEX"; payload: number }
+  | { type: "CLEAR_TRACK" };
 
 const initialState: MusicState = {
   currentTrack: null,
@@ -111,6 +112,14 @@ function musicReducer(state: MusicState, action: MusicAction): MusicState {
         isPlaying: true,
         isLoading: true,
       };
+    case "CLEAR_TRACK":
+      return {
+        ...state,
+        currentTrack: null,
+        isPlaying: false,
+        currentTime: 0,
+        duration: 0,
+      };
     default:
       return state;
   }
@@ -126,6 +135,7 @@ interface MusicContextType {
   previousTrack: () => void;
   setVolume: (volume: number) => void;
   seekTo: (time: number) => void;
+  clearTrack: () => void;
 }
 
 const MusicContext = createContext<MusicContextType | undefined>(undefined);
@@ -168,6 +178,14 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
       audioRef.current.currentTime = time;
       dispatch({ type: "SET_CURRENT_TIME", payload: time });
     }
+  };
+
+  const clearTrack = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+    }
+    dispatch({ type: "CLEAR_TRACK" });
   };
 
   // 音频事件处理
@@ -293,6 +311,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     previousTrack,
     setVolume,
     seekTo,
+    clearTrack,
   };
 
   return (

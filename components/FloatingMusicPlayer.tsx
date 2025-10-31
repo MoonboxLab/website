@@ -11,6 +11,7 @@ import {
   Maximize2,
   Minimize2,
   Loader2,
+  X,
 } from "lucide-react";
 import { useMusic } from "@/lib/MusicContext";
 import Image from "next/image";
@@ -23,6 +24,7 @@ export default function FloatingMusicPlayer() {
     previousTrack,
     setVolume,
     seekTo,
+    clearTrack,
   } = useMusic();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVolumeVisible, setIsVolumeVisible] = useState(false);
@@ -51,7 +53,7 @@ export default function FloatingMusicPlayer() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 z-10">
       <div
         className={`border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)] transition-all duration-300 ${
           isExpanded ? "w-80" : "h-16 w-64"
@@ -122,6 +124,12 @@ export default function FloatingMusicPlayer() {
               >
                 <Maximize2 size={16} />
               </button>
+              <button
+                onClick={clearTrack}
+                className="rounded p-1 hover:bg-gray-100"
+              >
+                <X size={16} />
+              </button>
             </div>
           </div>
         )}
@@ -160,12 +168,20 @@ export default function FloatingMusicPlayer() {
                 </div>
               </div>
 
-              <button
-                onClick={() => setIsExpanded(false)}
-                className="rounded p-1 hover:bg-gray-100"
-              >
-                <Minimize2 size={14} />
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setIsExpanded(false)}
+                  className="rounded p-1 hover:bg-gray-100"
+                >
+                  <Minimize2 size={14} />
+                </button>
+                <button
+                  onClick={clearTrack}
+                  className="rounded p-1 hover:bg-gray-100"
+                >
+                  <X size={14} />
+                </button>
+              </div>
             </div>
 
             {/* 进度条 */}

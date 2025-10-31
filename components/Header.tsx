@@ -9,7 +9,7 @@ import { useSize } from "ahooks";
 import { useLocale, useTranslations } from "next-intl";
 import { track } from "@vercel/analytics";
 import { useRouter, usePathname } from "next-intl/client";
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition, useRef } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount, useDisconnect } from "wagmi";
 import { Power, X, ChevronDown, ChevronRight, User } from "lucide-react";
@@ -51,6 +51,7 @@ const Header: React.FC = () => {
 
   const [point, setPoint] = useState("--");
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const drawerCheckboxRef = useRef<HTMLInputElement>(null);
 
   // Use the auth sync hook
   const { isLoggedIn, user } = useAuthSync({
@@ -93,6 +94,16 @@ const Header: React.FC = () => {
   useEffect(() => {
     fetchPoint();
   }, [address, fetchPoint]);
+
+  // Handle login button click in mobile drawer
+  const handleDrawerLoginClick = () => {
+    // Close drawer by unchecking the checkbox
+    if (drawerCheckboxRef.current) {
+      drawerCheckboxRef.current.checked = false;
+    }
+    // Open auth modal
+    setShowAuthModal(true);
+  };
 
   return (
     <header className="relative z-[100] flex w-full justify-between px-[12px] py-[8px] sm:z-[200] sm:px-[20px]">
@@ -605,7 +616,12 @@ const Header: React.FC = () => {
           }}
         </ConnectButton.Custom>
         <div className="drawer w-auto">
-          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <input
+            id="my-drawer"
+            type="checkbox"
+            className="drawer-toggle"
+            ref={drawerCheckboxRef}
+          />
           <div className="drawer-content flex lg:hidden">
             <label htmlFor="my-drawer" className="drawer-button">
               <div className="sm:hover-btn-shadow ml-[10px] inline-flex h-[36px] w-[36px] items-center justify-center rounded-[10px] border-2 border-black bg-white shadow-[2px_2px_0px_rgba(0,0,0,1)] sm:ml-4 sm:shadow-[4px_4px_0px_rgba(0,0,0,1)] lg:h-[48px]  lg:w-[48px]">
@@ -947,7 +963,7 @@ const Header: React.FC = () => {
               <div className=" mt-12">
                 {isLoggedIn ? null : (
                   <button
-                    onClick={() => setShowAuthModal(true)}
+                    onClick={handleDrawerLoginClick}
                     className="sm:hover-btn-shadow mt-[20px] flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white px-3 text-[21px] font-bold shadow-[4px_4px_0px_rgba(0,0,0,1)]"
                   >
                     {t("header_login")}

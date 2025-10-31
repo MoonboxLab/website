@@ -814,6 +814,7 @@
     "loadingSongRecords": "載入作品記錄中...",
     "noVoteRecords": "暫無投票記錄",
     "noSongRecords": "暫無作品記錄",
+    "connectWalletToViewVotes": "請連接您的錢包以查看投票記錄",
     "published": "已發布",
     "pendingReview": "待審核",
     "status": "狀態",

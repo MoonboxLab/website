@@ -143,6 +143,7 @@
     "loadingSongRecords": "Loading song records...",
     "noVoteRecords": "No vote records",
     "noSongRecords": "No song records",
+    "connectWalletToViewVotes": "Please connect your wallet to view voting history",
     "published": "Published",
     "pendingReview": "Pending Review",
     "status": "Status",

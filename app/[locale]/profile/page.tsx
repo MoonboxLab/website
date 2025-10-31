@@ -898,8 +898,7 @@ export default function ProfilePage() {
             {!connectedAddress ? (
               <div className="py-[40px] text-center">
                 <p className="mb-[20px] text-[16px] text-gray-600">
-                  {t("connectWalletToViewVotes") ||
-                    "Please connect your wallet to view voting history"}
+                  {t("connectWalletToViewVotes")}
                 </p>
                 <ConnectButton.Custom>
                   {({

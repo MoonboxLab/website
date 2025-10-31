@@ -39,21 +39,44 @@ export default function UploadWorkModal({
     }));
   };
 
+  // 验证文件类型（包括 MIME 类型和文件扩展名）
+  const isValidAudioFile = (file: File): boolean => {
+    // 允许的 MIME 类型（包含各种变体）
+    const allowedMimeTypes = [
+      "audio/mpeg",
+      "audio/mp3",
+      "audio/wav",
+      "audio/wave",
+      "audio/x-wav",
+      "audio/ogg",
+      "audio/oga",
+      "audio/m4a",
+      "audio/x-m4a",
+      "audio/mp4",
+      "audio/mp4a-latm",
+      "audio/aac",
+      "audio/flac",
+      "audio/x-flac",
+    ];
+
+    // 允许的文件扩展名
+    const allowedExtensions = [".mp3", ".wav", ".ogg", ".m4a", ".aac", ".flac"];
+
+    // 检查 MIME 类型
+    if (file.type && allowedMimeTypes.includes(file.type)) {
+      return true;
+    }
+
+    // 如果 MIME 类型不匹配，检查文件扩展名
+    const fileName = file.name.toLowerCase();
+    return allowedExtensions.some((ext) => fileName.endsWith(ext));
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       // 验证文件类型
-      const allowedTypes = [
-        "audio/mpeg",
-        "audio/mp3",
-        "audio/wav",
-        "audio/ogg",
-        "audio/m4a",
-        "audio/aac",
-        "audio/flac",
-      ];
-
-      if (!allowedTypes.includes(file.type)) {
+      if (!isValidAudioFile(file)) {
         toast.error(t("invalidFileType"));
         // 重置input
         e.target.value = "";
@@ -107,17 +130,7 @@ export default function UploadWorkModal({
       const file = files[0];
 
       // 验证文件类型
-      const allowedTypes = [
-        "audio/mpeg",
-        "audio/mp3",
-        "audio/wav",
-        "audio/ogg",
-        "audio/m4a",
-        "audio/aac",
-        "audio/flac",
-      ];
-
-      if (!allowedTypes.includes(file.type)) {
+      if (!isValidAudioFile(file)) {
         toast.error(t("invalidFileType"));
         return;
       }
@@ -259,7 +272,7 @@ export default function UploadWorkModal({
               <input
                 id="workFile"
                 type="file"
-                accept="audio/*"
+                accept="audio/mpeg,audio/mp3,audio/wav,audio/wave,audio/x-wav,audio/ogg,audio/oga,audio/m4a,audio/x-m4a,audio/mp4,audio/mp4a-latm,audio/aac,audio/flac,audio/x-flac,.mp3,.wav,.ogg,.m4a,.aac,.flac"
                 onChange={handleFileChange}
                 className="hidden"
               />

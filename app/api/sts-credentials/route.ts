@@ -26,7 +26,9 @@ export async function GET(request: NextRequest) {
 
     // Add authentication headers if present
     if (authHeader) {
-      headers["Authorization"] = authHeader;
+      // Extract token (remove "Bearer " prefix)
+      const token = authHeader.replace("Bearer ", "");
+      headers["token"] = token;
     }
     if (uidHeader) {
       headers["uid"] = uidHeader;

@@ -8,6 +8,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useCountDown, useSize } from "ahooks";
 import "core-js/features/object/has-own";
 import ReactFullpage from "@fullpage/react-fullpage";
+import Autoplay from "embla-carousel-autoplay";
 
 import Chat from "@/components/Chat";
 import Header from "@/components/Header";
@@ -15,6 +16,11 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import Link from "next/link";
 import {
   MINT_START_TIME,
@@ -134,13 +140,62 @@ export default function Home() {
               >
                 <div className="relative h-screen w-full bg-white">
                   <Header />
-                  <Image
-                    src="/home_bg_mint_1.png"
-                    fill
-                    alt="mint"
-                    priority
-                    className="object-cover"
-                  />
+                  <div className="absolute inset-0 h-full w-full [&>div>div]:h-full [&>div]:h-full">
+                    <Carousel
+                      opts={{
+                        align: "start",
+                        loop: true,
+                      }}
+                      plugins={[
+                        Autoplay({
+                          delay: 3000,
+                        }),
+                      ]}
+                      className="h-full w-full"
+                    >
+                      <CarouselContent
+                        className="-ml-0 h-full"
+                        style={{ height: "100%" }}
+                      >
+                        <CarouselItem
+                          className="relative h-full w-full basis-full pl-0"
+                          style={{
+                            height: "100%",
+                            width: "100%",
+                            minWidth: "100%",
+                          }}
+                        >
+                          <div className="relative h-full w-full">
+                            <Image
+                              src="/home_bg_mint_1.png"
+                              fill
+                              alt="mint"
+                              priority
+                              className="object-cover"
+                            />
+                          </div>
+                        </CarouselItem>
+                        <CarouselItem
+                          className="relative h-full w-full basis-full pl-0"
+                          style={{
+                            height: "100%",
+                            width: "100%",
+                            minWidth: "100%",
+                          }}
+                        >
+                          <div className="relative h-full w-full">
+                            <Image
+                              src="/music/banner.png"
+                              fill
+                              alt="music banner"
+                              priority
+                              className="object-cover"
+                            />
+                          </div>
+                        </CarouselItem>
+                      </CarouselContent>
+                    </Carousel>
+                  </div>
                   {/* <div className="absolute bottom-[108px] right-[20px] w-[200px] h-[250px] 4xl:bottom-[140px] 4xl:right-[30px] rounded-[16px] border-2 border-black bg-[rgba(219,53,57,1)] pl-[5px] ">
                     <Image src={"/card-back.png"} alt="card back" quality={100} width={90} height={119} className=" absolute top-[23px] left-[29px]" />
                     <Image src={"/card-front.png"} alt="card front" quality={100} width={106} height={128} className=" absolute top-[46px] right-[25px]" />
@@ -361,17 +416,46 @@ export default function Home() {
       {(mediaSize?.width || 0) <= 1024 && (
         <div className="w-full bg-white">
           <div className="relative h-auto w-full">
-            <div className="absolute top-0 w-full">
+            <div className="absolute top-0 z-20 w-full">
               <Header />
             </div>
-            <Image
-              src="/home_bg_mint_mobile_1.jpg"
-              width={1080}
-              height={1920}
-              alt="mint"
-              priority
-              className="w-full object-contain"
-            />
+            <div className="relative w-full">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                plugins={[
+                  Autoplay({
+                    delay: 3000,
+                  }),
+                ]}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-0 w-full">
+                  <CarouselItem className="relative w-full basis-full pl-0">
+                    <Image
+                      src="/home_bg_mint_mobile_1.jpg"
+                      width={1080}
+                      height={1920}
+                      alt="mint"
+                      priority
+                      className="w-full object-contain"
+                    />
+                  </CarouselItem>
+                  <CarouselItem className="relative w-full basis-full pl-0">
+                    <Image
+                      src="/music/banner.png"
+                      width={1080}
+                      height={1920}
+                      alt="music banner"
+                      priority
+                      className="h-full w-full object-cover"
+                    />
+                  </CarouselItem>
+                </CarouselContent>
+              </Carousel>
+            </div>
             <div className="absolute bottom-[15%] z-10 flex w-full flex-col px-[15px]">
               {/* <div
                 className="hover-btn-shadow relative flex h-[56px] w-full items-center justify-center rounded-[12px] border-2 border-black bg-white shadow-[4px_4px_0px_rgba(0,0,0,1)]"

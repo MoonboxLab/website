@@ -244,7 +244,7 @@ const Header: React.FC = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mt-2 w-[165px] rounded-[12px] py-[14px]">
               <a
-                href="https://www.okx.com/web3/marketplace/nft/collection/eth/nobody"
+                href="https://web3.okx.com/zh-hans/nft/collection/eth/nobody"
                 target="_blank"
               >
                 <DropdownMenuItem>
@@ -822,7 +822,7 @@ const Header: React.FC = () => {
                         </div>
                       </a>
                       <a
-                        href="https://www.okx.com/web3/marketplace/nft/collection/eth/nobody"
+                        href="https://web3.okx.com/zh-hans/nft/collection/eth/nobody"
                         target="_blank"
                       >
                         <div className="py-3 text-[18px] font-semibold leading-[18px]">

@@ -63,7 +63,9 @@ export default function VotingSongs({
       const monthName = t(`months.${monthKey}`);
       return t("finalistsTemplate", { month: monthName, year });
     }
-    return t("finalistsTemplate", { month: "October", year: 2025 }); // fallback to default
+    // fallback to default with internationalized month
+    const monthName = t("months.october");
+    return t("finalistsTemplate", { month: monthName, year: 2025 });
   };
 
   const handleVoteClick = (music: any) => {

@@ -80,13 +80,13 @@ export const metadata: Metadata = {
     title: "Nobody",
     description: "Bring life to NFTs",
     type: "website",
-    images: "/twitter_cover.jpg",
+    images: "/music/banner.png",
     url: "https://nobody.xyz",
   },
   twitter: {
     card: "summary_large_image",
     title: "Nobody",
     description: "Bring life to NFTs",
-    images: ["/twitter_cover.jpg"],
+    images: ["/music/banner.png"],
   },
 };

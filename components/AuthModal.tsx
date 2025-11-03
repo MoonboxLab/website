@@ -493,7 +493,7 @@ export default function AuthModal({
                 <select
                   value={referrer}
                   onChange={(e) => setReferrer(e.target.value)}
-                  className={`w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-10 focus:border-black focus:outline-none ${
+                  className={`w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-10 capitalize focus:border-black focus:outline-none ${
                     !referrer ? "!text-gray-400" : "text-black"
                   }`}
                 >

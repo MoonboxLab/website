@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Mail, Lock, UserPlus, Loader2, ChevronLeft } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  UserPlus,
+  Loader2,
+  ChevronLeft,
+  ChevronDown,
+} from "lucide-react";
 import { toast } from "react-toastify";
 import {
   Dialog,
@@ -481,14 +488,26 @@ export default function AuthModal({
                 </span>
               </label>
               <div className="relative">
-                <UserPlus className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
+                <UserPlus className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <select
                   value={referrer}
                   onChange={(e) => setReferrer(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-black focus:outline-none"
-                  placeholder={t("authModal.referrerPlaceholder")}
-                />
+                  className={`w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-10 capitalize focus:border-black focus:outline-none ${
+                    !referrer ? "!text-gray-400" : "text-black"
+                  }`}
+                >
+                  <option value="">{t("authModal.referrerPlaceholder")}</option>
+                  <option value="aicean">aicean</option>
+                  <option value="anybody">anybody</option>
+                  <option value="csla">csla</option>
+                  <option value="fireverse">fireverse</option>
+                  <option value="kap">kap</option>
+                  <option value="nobody">nobody</option>
+                  <option value="others">
+                    {t("authModal.referrerOthers")}
+                  </option>
+                </select>
               </div>
             </div>
 

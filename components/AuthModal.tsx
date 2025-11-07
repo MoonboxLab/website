@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import {
   Mail,
@@ -46,6 +46,8 @@ export default function AuthModal({
   const [registerPassword, setRegisterPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [referrer, setReferrer] = useState("");
+  const [referrerOptions, setReferrerOptions] = useState<string[]>([]);
+  const [isLoadingReferrers, setIsLoadingReferrers] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
@@ -64,6 +66,34 @@ export default function AuthModal({
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
+
+  // Fetch referrer options from API
+  useEffect(() => {
+    const fetchReferrers = async () => {
+      if (!open || currentPage !== "register") return;
+
+      setIsLoadingReferrers(true);
+      try {
+        const response = await fetch("/api/user/referrer/list", {
+          method: "GET",
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.code === 0 && data.result?.data) {
+          setReferrerOptions(data.result.data);
+        } else {
+          console.error("Failed to fetch referrers:", data.msg);
+        }
+      } catch (error) {
+        console.error("Error fetching referrers:", error);
+      } finally {
+        setIsLoadingReferrers(false);
+      }
+    };
+
+    fetchReferrers();
+  }, [open, currentPage]);
 
   const handleSendCode = async () => {
     if (!registerEmail || isSendingCode) return;
@@ -493,17 +523,17 @@ export default function AuthModal({
                 <select
                   value={referrer}
                   onChange={(e) => setReferrer(e.target.value)}
-                  className={`w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-10 capitalize focus:border-black focus:outline-none ${
+                  disabled={isLoadingReferrers}
+                  className={`w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-10 capitalize focus:border-black focus:outline-none disabled:opacity-50 ${
                     !referrer ? "!text-gray-400" : "text-black"
                   }`}
                 >
                   <option value="">{t("authModal.referrerPlaceholder")}</option>
-                  <option value="aicean">aicean</option>
-                  <option value="anybody">anybody</option>
-                  <option value="csla">csla</option>
-                  <option value="fireverse">fireverse</option>
-                  <option value="kap">kap</option>
-                  <option value="nobody">nobody</option>
+                  {referrerOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
                   <option value="others">
                     {t("authModal.referrerOthers")}
                   </option>

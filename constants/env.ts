@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   USER_PROFILE: `${API_BASE_URL}/api/user/profile`,
   USER_RESET_PASSWORD: `${API_BASE_URL}/api/user/reset/password`,
   USER_MODIFY_PASSWORD: `${API_BASE_URL}/api/user/modify/password`,
+  USER_REFERRER_LIST: `${API_BASE_URL}/api/user/referrer/list`,
   SEND_EMAIL_CODE: `${API_BASE_URL}/api/sys/mail`,
   SEND_VERIFICATION_CODE: `${API_BASE_URL}/api/user/send-verification-code`,
   MUSIC_CREATION_RECORD: `${API_BASE_URL}/api/music/creation/record`,

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import { uploadAvatar } from "@/lib/aws-s3";
 
 interface AvatarUploadProps {
   onAvatarChange: (avatarUrl: string) => void;
@@ -44,31 +45,22 @@ export default function AvatarUpload({
     try {
       setIsUploading(true);
 
-      // Create FormData for file upload
-      const formData = new FormData();
-      formData.append("avatar", file);
-      if (userId) {
-        formData.append("userId", userId);
+      // 获取用户ID
+      const userData = localStorage.getItem("user");
+      const user = userData ? JSON.parse(userData) : null;
+
+      if (!user?.id) {
+        toast.error(t("avatarUploadError"));
+        setIsUploading(false);
+        return;
       }
 
-      const response = await fetch("/api/upload-avatar", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          uid: localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user")!).id
-            : "",
-        },
-        body: formData,
-      });
+      // 直接上传到 S3（客户端上传，绕过 Vercel 4.5MB 限制）
+      const avatarUrl = await uploadAvatar(file, user.id);
 
-      if (response.ok) {
-        const data = await response.json();
-        onAvatarChange(data.avatarUrl);
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.error || t("avatarUploadError"));
-      }
+      // 上传成功后，调用回调函数
+      onAvatarChange(avatarUrl);
+      toast.success(t("avatarUploadSuccess") || "头像上传成功");
     } catch (error) {
       console.error("Avatar upload error:", error);
       toast.error(t("avatarUploadError"));

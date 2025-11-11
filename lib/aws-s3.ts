@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 
 // STS 凭证接口
@@ -16,7 +16,25 @@ interface STSCredentials {
 // 获取STS凭证
 async function getSTSCredentials(): Promise<STSCredentials> {
   try {
-    const response = await fetch("/api/sts-credentials");
+    // 从 localStorage 获取认证信息
+    const authToken = localStorage.getItem("authToken");
+    const userData = localStorage.getItem("user");
+    const user = userData ? JSON.parse(userData) : null;
+
+    // 准备请求头
+    const headers: HeadersInit = {};
+    if (authToken) {
+      headers["Authorization"] = `Bearer ${authToken}`;
+    }
+    if (user?.id) {
+      headers["uid"] = user.id;
+    }
+
+    const response = await fetch("/api/sts-credentials", {
+      method: "GET",
+      headers,
+    });
+
     if (!response.ok) {
       throw new Error("Failed to get STS credentials");
     }
@@ -28,16 +46,18 @@ async function getSTSCredentials(): Promise<STSCredentials> {
 }
 
 // 创建S3客户端
-async function createS3Client(): Promise<S3Client> {
-  const credentials = await getSTSCredentials();
+async function createS3Client(credentials?: STSCredentials): Promise<S3Client> {
+  // 如果传入了 credentials，直接使用；否则获取新的
+  const creds = credentials || (await getSTSCredentials());
 
   return new S3Client({
-    region: credentials.region,
-    endpoint: credentials.endpoint,
+    region: creds.region,
+    endpoint: creds.endpoint,
+    forcePathStyle: true, // 使用路径样式URL
     credentials: {
-      accessKeyId: credentials.accessKeyId,
-      secretAccessKey: credentials.secretAccessKey,
-      sessionToken: credentials.sessionToken,
+      accessKeyId: creds.accessKeyId,
+      secretAccessKey: creds.secretAccessKey,
+      sessionToken: creds.sessionToken,
     },
   });
 }
@@ -50,8 +70,9 @@ export async function uploadToS3(
   contentType?: string,
 ): Promise<string> {
   try {
+    // 只获取一次 credentials，然后传递给 createS3Client 复用
     const credentials = await getSTSCredentials();
-    const s3Client = await createS3Client();
+    const s3Client = await createS3Client(credentials);
     const bucket = bucketName || credentials.bucket;
 
     const uploadParams = {
@@ -62,16 +83,20 @@ export async function uploadToS3(
       ACL: "public-read" as const,
     };
 
-    // 使用 Upload 类进行上传，支持大文件
+    // 统一使用 Upload 类，它能正确处理 File 对象和 Buffer
+    // 设置较大的 partSize（50MB），对于小于 50MB 的文件会使用单次上传，避免分片上传的 CRC32 校验和问题
     const upload = new Upload({
       client: s3Client,
       params: uploadParams,
+      // 设置较大的 partSize，小文件会使用单次上传，大文件会分片上传
+      partSize: 50 * 1024 * 1024, // 50MB
+      leavePartsOnError: false,
     });
 
-    const result = await upload.done();
+    await upload.done();
 
     // 返回文件的公开URL
-    return `${credentials.front}${key}`;
+    return `${credentials.endpoint}${bucket}/${key}`;
   } catch (error) {
     console.error("S3 upload error:", error);
     throw new Error("Failed to upload file to S3");
@@ -99,25 +124,25 @@ export async function uploadAvatar(
   }
 }
 
-// 删除 S3 文件
-export async function deleteFromS3(
-  key: string,
-  bucketName?: string,
-): Promise<void> {
+// 上传作品文件
+export async function uploadWorkFile(
+  file: File,
+  userId: string,
+  sampleSong: string,
+): Promise<string> {
   try {
-    const credentials = await getSTSCredentials();
-    const s3Client = await createS3Client();
-    const bucket = bucketName || credentials.bucket;
+    // 生成唯一的文件名
+    const timestamp = Date.now();
+    const fileExtension = file.name.split(".").pop() || "mp3";
+    const key = `works/${userId}/${sampleSong}/${timestamp}.${fileExtension}`;
 
-    const command = new PutObjectCommand({
-      Bucket: bucket,
-      Key: key,
-    });
+    // 上传到 S3
+    const workFileUrl = await uploadToS3(file, key, undefined, file.type);
 
-    await s3Client.send(command);
+    return workFileUrl;
   } catch (error) {
-    console.error("S3 delete error:", error);
-    throw new Error("Failed to delete file from S3");
+    console.error("Work file upload error:", error);
+    throw new Error("Failed to upload work file");
   }
 }
 

@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { uploadWorkFile } from "@/lib/aws-s3";
 
 interface UploadWorkModalProps {
   open: boolean;
@@ -157,73 +158,62 @@ export default function UploadWorkModal({
 
     setIsUploading(true);
     try {
-      // 创建FormData用于文件上传
-      const uploadFormData = new FormData();
-      uploadFormData.append("workFile", formData.workFile);
-      uploadFormData.append("sampleSong", formData.sampleSong);
-
       // 获取用户ID
       const userData = localStorage.getItem("user");
       const user = userData ? JSON.parse(userData) : null;
-      if (user?.id) {
-        uploadFormData.append("userId", user.id);
+
+      if (!user?.id) {
+        toast.error(t("uploadFailed"));
+        setIsUploading(false);
+        return;
       }
 
-      const response = await fetch("/api/upload-work", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          uid: user?.id || "",
-        },
-        body: uploadFormData,
-      });
+      // 直接上传到 S3（客户端上传，绕过 Vercel 4.5MB 限制）
+      const workFileUrl = await uploadWorkFile(
+        formData.workFile,
+        user.id,
+        formData.sampleSong,
+      );
 
-      if (response.ok) {
-        const data = await response.json();
+      // 上传成功后，调用提交作品接口
+      try {
+        const creationResponse = await fetch("/api/music/creation", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            uid: user.id,
+          },
+          body: JSON.stringify({
+            templateId: parseInt(formData.sampleSong),
+            url: workFileUrl,
+            title:
+              musics.find((music) => music.id === formData.sampleSong)?.name ||
+              "未命名作品",
+          }),
+        });
 
-        // 上传成功后，调用提交作品接口
-        try {
-          const creationResponse = await fetch("/api/music/creation", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-              uid: user?.id || "",
-            },
-            body: JSON.stringify({
-              templateId: parseInt(formData.sampleSong),
-              url: data.workFileUrl,
-              title:
-                musics.find((music) => music.id === formData.sampleSong)
-                  ?.name || "未命名作品",
-            }),
-          });
+        if (creationResponse.ok) {
+          const creationData = await creationResponse.json();
+          if (creationData.code === 0) {
+            toast.success(t("uploadSuccess"));
+            onOpenChange(false);
 
-          if (creationResponse.ok) {
-            const creationData = await creationResponse.json();
-            if (creationData.code === 0) {
-              toast.success(t("uploadSuccess"));
-              onOpenChange(false);
-
-              // 重置表单
-              setFormData({
-                sampleSong: "",
-                workFile: null,
-              });
-            } else {
-              toast.error(creationData.msg || t("submitFailed"));
-            }
+            // 重置表单
+            setFormData({
+              sampleSong: "",
+              workFile: null,
+            });
           } else {
-            const errorData = await creationResponse.json();
-            toast.error(errorData.msg || t("submitFailed"));
+            toast.error(creationData.msg || t("submitFailed"));
           }
-        } catch (creationError) {
-          console.error("Creation error:", creationError);
-          toast.error(t("submitFailedButUploaded"));
+        } else {
+          const errorData = await creationResponse.json();
+          toast.error(errorData.msg || t("submitFailed"));
         }
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.error || t("uploadFailed"));
+      } catch (creationError) {
+        console.error("Creation error:", creationError);
+        toast.error(t("submitFailedButUploaded"));
       }
     } catch (error) {
       console.error("Upload error:", error);

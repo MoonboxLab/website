@@ -32,27 +32,34 @@ export default function FeaturedSongs({
 
   // Get dynamic title based on current event
   const getTitle = () => {
-    if (currentEventId) {
+    const monthNames = [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+    ];
+
+    if (currentEventId && currentEventId > 0) {
       const { year, month } = convertEventIdToDate(currentEventId);
-      const monthNames = [
-        "january",
-        "february",
-        "march",
-        "april",
-        "may",
-        "june",
-        "july",
-        "august",
-        "september",
-        "october",
-        "november",
-        "december",
-      ];
       const monthKey = monthNames[month - 1];
       const monthName = t(`months.${monthKey}`);
       return t("featuredSongsTemplate", { month: monthName, year });
     }
-    return t("featuredSongsTemplate", { month: "September", year: 2025 }); // fallback to default
+    // Use current month when no valid eventId
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1; // getMonth() returns 0-11
+    const monthKey = monthNames[currentMonth - 1];
+    const monthName = t(`months.${monthKey}`);
+    return t("featuredSongsTemplate", { month: monthName, year: currentYear });
   };
 
   return (

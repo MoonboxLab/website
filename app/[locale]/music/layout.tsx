@@ -123,10 +123,17 @@ export default function MusicLayout({
       timestamp: new Date().toISOString(),
     });
 
+    // If invalid eventId (e.g., -1), clear musics and return early
+    if (currentEventId !== undefined && currentEventId <= 0) {
+      console.log("Layout: Invalid eventId, clearing musics");
+      setMusics([]);
+      return;
+    }
+
     try {
       // Fetch music templates based on current event
       const url = new URL("/api/music/template/list", window.location.origin);
-      if (currentEventId) {
+      if (currentEventId && currentEventId > 0) {
         url.searchParams.set("monthNumber", currentEventId.toString());
       }
 

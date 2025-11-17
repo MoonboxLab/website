@@ -120,32 +120,41 @@ export default function MusicVotingPage() {
 
       const allEvents: Array<{ id: number; name: string; type: string }> = [];
 
-      // Process events
+      // Get current month for filtering
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1; // getMonth() returns 0-11, so add 1
+      const currentEventId = currentYear * 12 + currentMonth;
+
+      // Process events and filter out current month and future months
       if (data.success && data.data) {
         data.data.forEach((eventId: number) => {
-          const { year, month } = convertEventIdToDate(eventId);
-          const monthNames = [
-            "january",
-            "february",
-            "march",
-            "april",
-            "may",
-            "june",
-            "july",
-            "august",
-            "september",
-            "october",
-            "november",
-            "december",
-          ];
-          const monthKey = monthNames[month - 1];
-          const monthName = t(`months.${monthKey}`);
+          // Only include events before current month
+          if (eventId < currentEventId) {
+            const { year, month } = convertEventIdToDate(eventId);
+            const monthNames = [
+              "january",
+              "february",
+              "march",
+              "april",
+              "may",
+              "june",
+              "july",
+              "august",
+              "september",
+              "october",
+              "november",
+              "december",
+            ];
+            const monthKey = monthNames[month - 1];
+            const monthName = t(`months.${monthKey}`);
 
-          allEvents.push({
-            id: eventId,
-            name: t("finalistsTemplate", { month: monthName, year }),
-            type: "creation",
-          });
+            allEvents.push({
+              id: eventId,
+              name: t("finalistsTemplate", { month: monthName, year }),
+              type: "creation",
+            });
+          }
         });
       }
 
@@ -219,6 +228,7 @@ export default function MusicVotingPage() {
     if (votingEvents.length === 0) {
       setIsLoadingMusics(false);
       setVotingMusics([]);
+      setCurrentEventId(undefined); // Clear currentEventId to show previous month
       return;
     }
 

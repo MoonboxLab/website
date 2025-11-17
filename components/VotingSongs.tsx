@@ -43,29 +43,49 @@ export default function VotingSongs({
 
   // Get dynamic title based on current event
   const getTitle = () => {
-    if (currentEventId) {
+    const monthNames = [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+    ];
+
+    // If currentEventId is valid, use it regardless of data availability
+    if (currentEventId && currentEventId > 0) {
       const { year, month } = convertEventIdToDate(currentEventId);
-      const monthNames = [
-        "january",
-        "february",
-        "march",
-        "april",
-        "may",
-        "june",
-        "july",
-        "august",
-        "september",
-        "october",
-        "november",
-        "december",
-      ];
       const monthKey = monthNames[month - 1];
       const monthName = t(`months.${monthKey}`);
       return t("finalistsTemplate", { month: monthName, year });
     }
-    // fallback to default with internationalized month
-    const monthName = t("months.october");
-    return t("finalistsTemplate", { month: monthName, year: 2025 });
+
+    // Use previous month when no valid eventId (e.g., when no events found)
+    const now = new Date();
+    const currentMonthIndex = now.getMonth(); // getMonth() returns 0-11 (0=Jan, 11=Dec)
+    let previousYear = now.getFullYear();
+    let previousMonthIndex: number;
+
+    // Calculate previous month index (handle year rollover)
+    if (currentMonthIndex === 0) {
+      // If current month is January, previous month is December of last year
+      previousMonthIndex = 11; // December index
+      previousYear -= 1;
+    } else {
+      // Otherwise, subtract 1 to get previous month index
+      previousMonthIndex = currentMonthIndex - 1;
+    }
+
+    // previousMonthIndex is now 0-11, use it directly for array access
+    const monthKey = monthNames[previousMonthIndex];
+    const monthName = t(`months.${monthKey}`);
+    return t("finalistsTemplate", { month: monthName, year: previousYear });
   };
 
   const handleVoteClick = (music: any) => {

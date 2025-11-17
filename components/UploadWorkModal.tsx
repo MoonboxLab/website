@@ -51,17 +51,13 @@ export default function UploadWorkModal({
       "audio/x-wav",
       "audio/ogg",
       "audio/oga",
-      "audio/m4a",
-      "audio/x-m4a",
-      "audio/mp4",
-      "audio/mp4a-latm",
       "audio/aac",
       "audio/flac",
       "audio/x-flac",
     ];
 
     // 允许的文件扩展名
-    const allowedExtensions = [".mp3", ".wav", ".ogg", ".m4a", ".aac", ".flac"];
+    const allowedExtensions = [".mp3", ".wav", ".ogg", ".aac", ".flac"];
 
     // 检查 MIME 类型
     if (file.type && allowedMimeTypes.includes(file.type)) {
@@ -262,7 +258,7 @@ export default function UploadWorkModal({
               <input
                 id="workFile"
                 type="file"
-                accept="audio/mpeg,audio/mp3,audio/wav,audio/wave,audio/x-wav,audio/ogg,audio/oga,audio/m4a,audio/x-m4a,audio/mp4,audio/mp4a-latm,audio/aac,audio/flac,audio/x-flac,.mp3,.wav,.ogg,.m4a,.aac,.flac"
+                accept="audio/mpeg,audio/mp3,audio/wav,audio/wave,audio/x-wav,audio/ogg,audio/oga,audio/aac,audio/flac,audio/x-flac,.mp3,.wav,.ogg,.aac,.flac"
                 onChange={handleFileChange}
                 className="hidden"
               />

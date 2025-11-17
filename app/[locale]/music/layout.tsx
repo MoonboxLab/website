@@ -183,7 +183,7 @@ export default function MusicLayout({
     }
 
     // 检查是否所有音乐的status都不等于1
-    const hasDownloadableMusic = musics.some((music) => music.status === 1);
+    const hasDownloadableMusic = musics.some((music) => music.status === 2);
     if (!hasDownloadableMusic) {
       // 情况2：活动不能递交作品
       setIsNoSubmissionModalOpen(true);

@@ -258,7 +258,7 @@ export default function UploadWorkModal({
               <input
                 id="workFile"
                 type="file"
-                accept="audio/mpeg,audio/mp3,audio/wav,audio/wave,audio/x-wav,audio/ogg,audio/oga,audio/m4a,audio/x-m4a,audio/mp4,audio/mp4a-latm,audio/aac,audio/flac,audio/x-flac,.mp3,.wav,.ogg,.m4a,.aac,.flac"
+                accept="audio/mpeg,audio/mp3,audio/wav,audio/wave,audio/x-wav,audio/ogg,audio/oga,audio/aac,audio/flac,audio/x-flac,.mp3,.wav,.ogg,.aac,.flac"
                 onChange={handleFileChange}
                 className="hidden"
               />

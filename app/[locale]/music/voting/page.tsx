@@ -12,8 +12,8 @@ import { useSearchParams } from "next/navigation";
 
 // Helper function to convert event ID (year*12+month) to year and month
 const convertEventIdToDate = (eventId: number) => {
-  const year = Math.floor(eventId / 12);
-  const month = eventId % 12;
+  const year = Math.floor((eventId - 1) / 12);
+  const month = ((eventId - 1) % 12) + 1;
   return { year, month };
 };
 
@@ -24,7 +24,8 @@ export default function MusicVotingPage() {
   const [isViewAllModalOpen, setIsViewAllModalOpen] = useState(false);
   const [votingMusics, setVotingMusics] = useState<any[]>([]);
   const [votingEvents, setVotingEvents] = useState<any[]>([]);
-  const [isLoadingVotingEvents, setIsLoadingVotingEvents] = useState<boolean>(true);
+  const [isLoadingVotingEvents, setIsLoadingVotingEvents] =
+    useState<boolean>(true);
   const [currentEventId, setCurrentEventId] = useState<number | undefined>(
     undefined,
   );

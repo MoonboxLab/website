@@ -47,11 +47,53 @@ const customBscTestnet = {
     },
   },
 } as unknown as typeof bscTestnet;
+const customBsc = {
+  ...bsc,
+  rpcUrls: {
+    ...bsc.rpcUrls,
+    default: {
+      http: [
+        "https://bsc.blockrazor.xyz",
+        "https://bsc-dataseed1.defibit.io/",
+        "https://bsc-dataseed1.ninicoin.io/",
+      ],
+    },
+    public: {
+      http: [
+        "https://bsc.blockrazor.xyz",
+        "https://bsc-dataseed1.defibit.io/",
+        "https://bsc-dataseed1.ninicoin.io/",
+      ],
+    },
+  },
+} as unknown as typeof bsc;
+
+const customMainnet = {
+  ...mainnet,
+  rpcUrls: {
+    ...mainnet.rpcUrls,
+    default: {
+      http: [
+        "https://ethereum-rpc.publicnode.com",
+        "https://eth.llamarpc.com",
+        "https://eth.blockrazor.xyz",
+      ],
+    },
+    public: {
+      http: [
+        "https://ethereum-rpc.publicnode.com",
+        "https://eth.llamarpc.com",
+        "https://eth.blockrazor.xyz",
+      ],
+    },
+  },
+} as unknown as typeof mainnet;
+
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_TEST_ENV === "true"
-      ? [mainnet, customSepolia, bsc, customBscTestnet]
-      : [mainnet, bsc]),
+      ? [customMainnet, customSepolia, customBsc, customBscTestnet]
+      : [customMainnet, customBsc]),
   ],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID as string }),

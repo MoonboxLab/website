@@ -27,7 +27,6 @@ import { VOTING_CONTRACTS } from "@/constants/voting-contract";
 import {
   useWalletConnection,
   useTokenBalance,
-  useNftBalance,
   useTokenVote,
   useNftVote,
   useNetworkSwitch,
@@ -65,7 +64,6 @@ export default function VoteModal({
   const [voteType, setVoteType] = useState<VoteType>("nobody");
   const [voteAmount, setVoteAmount] = useState<string>("1");
   const [nftIdInput, setNftIdInput] = useState<string>("");
-  const [selectedNftId, setSelectedNftId] = useState<number | null>(null);
   const [error, setError] = useState<string>("");
   const [txStatus, setTxStatus] = useState<
     "idle" | "pending" | "success" | "failed"
@@ -94,13 +92,6 @@ export default function VoteModal({
     VOTING_CONTRACTS.BSC_MAINNET.TOKEN_USDT,
     VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
     voteType === "usdt" && isConnected,
-  );
-
-  // NFT余额hook
-  const { balance: nftBalance, nftIds } = useNftBalance(
-    VOTING_CONTRACTS.ETH_MAINNET.NFT_CONTRACT,
-    VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID,
-    voteType === "nobody" && isConnected,
   );
 
   // 投票hooks
@@ -198,9 +189,9 @@ export default function VoteModal({
 
     // 验证输入
     if (voteType === "nobody") {
-      // NFT投票：使用输入的NFT ID或选择的NFT
-      const nftId = nftIdInput ? parseInt(nftIdInput) : selectedNftId;
-      if (!nftId || nftId < 0) {
+      // NFT投票：使用输入的NFT ID
+      const nftId = nftIdInput ? parseInt(nftIdInput) : null;
+      if (nftId === null || isNaN(nftId) || nftId < 0) {
         setError(t("invalidNftId"));
         return;
       }
@@ -246,7 +237,7 @@ export default function VoteModal({
       let hash: string;
 
       if (voteType === "nobody") {
-        const nftId = nftIdInput ? parseInt(nftIdInput) : selectedNftId!;
+        const nftId = parseInt(nftIdInput);
         hash = await voteByNft(parseInt(music.id), nftId);
       } else {
         hash = await voteByToken(
@@ -315,7 +306,8 @@ export default function VoteModal({
     setVoteType("nobody");
     setVoteAmount("1");
     setNftIdInput("");
-    setSelectedNftId(null);
+    setNftIdInput("");
+    setError("");
     setError("");
     setTxStatus("idle");
     setTxHash("");
@@ -331,20 +323,14 @@ export default function VoteModal({
       case "usdt":
         return usdtBalance;
       case "nobody":
-        return nftBalance.toString();
+      case "nobody":
+        return "0";
       case "usdt":
         return usdtBalance;
       default:
         return "0";
     }
   };
-
-  // 自动选择第一个NFT
-  useEffect(() => {
-    if (voteType === "nobody" && nftIds.length > 0 && !selectedNftId) {
-      setSelectedNftId(nftIds[0]);
-    }
-  }, [voteType, nftIds, selectedNftId]);
 
   // 自动切换网络
   useEffect(() => {
@@ -806,7 +792,7 @@ export default function VoteModal({
                   onClick={handleVote}
                   disabled={
                     isSubmitting ||
-                    (voteType === "nobody" && !nftIdInput && !selectedNftId) ||
+                    (voteType === "nobody" && !nftIdInput) ||
                     (voteType === "nobody" &&
                       nftIdInput &&
                       parseInt(nftIdInput) < 0) ||

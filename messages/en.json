@@ -764,6 +764,7 @@
     "confirmVote": "Confirm Vote",
     "aiceVoteDescription": "Vote using $AICE tokens",
     "firVoteDescription": "Vote using $FIR tokens",
+    "usdtVoteDescription": "Vote using $USDT tokens",
     "profileIncompleteModal": {
       "title": "Complete Your Profile",
       "description": "To better participate in Dream Music activities, please complete your profile:",

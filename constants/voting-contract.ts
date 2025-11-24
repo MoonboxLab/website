@@ -6,15 +6,17 @@ export const VOTING_CONTRACTS = {
       "0x1d40FB307C43613666a8ce1F4b4E66a8D0F99508" as `0x${string}`,
     TOKEN_AICE: "0x0cDDcAC46Cc976Dc67b6433145398Db1Ebe879d2" as `0x${string}`,
     TOKEN_FIR: "0x5e18C2bB57F4f447b1c72f594Bc02Ba20e9F4b74" as `0x${string}`,
+    TOKEN_USDT: "0x5e18C2bB57F4f447b1c72f594Bc02Ba20e9F4b74" as `0x${string}`,
     CHAIN_ID: 97, // BSC Testnet
     RPC_URL: "https://data-seed-prebsc-1-s1.binance.org:8545/",
   },
   // BSC 主网配置
   BSC_MAINNET: {
     VOTING_CONTRACT:
-      "0x3C52223a67C869A7e878969AB318df93a0792246" as `0x${string}`,
+      "0x7496eb4d568ADCF4c8cB77D47c617810332376B1" as `0x${string}`,
     TOKEN_AICE: "0x81De84e51f49983E043A8527dDFae08238ACC330" as `0x${string}`,
     TOKEN_FIR: "0x238D72E179A581C98DC1996417a49818c7E509dC" as `0x${string}`,
+    TOKEN_USDT: "0x55d398326f99059ff775485246999027b3197955" as `0x${string}`,
     CHAIN_ID: 56, // BSC Mainnet
     RPC_URL: "https://bsc-dataseed.binance.org/",
   },
@@ -284,7 +286,7 @@ export const ERC721_ABI = [
 ] as const;
 
 // 投票类型枚举
-export type VoteType = "nobody" | "aice" | "fir";
+export type VoteType = "nobody" | "aice" | "fir" | "usdt";
 
 // 投票配置
 export const VOTE_CONFIG = {
@@ -305,5 +307,11 @@ export const VOTE_CONFIG = {
     type: "token" as const,
     contract: VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
     tokenContract: VOTING_CONTRACTS.BSC_MAINNET.TOKEN_FIR,
+  },
+  usdt: {
+    chain: "BSC_MAINNET" as const,
+    type: "token" as const,
+    contract: VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
+    tokenContract: VOTING_CONTRACTS.BSC_MAINNET.TOKEN_USDT,
   },
 } as const;

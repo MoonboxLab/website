@@ -15,7 +15,7 @@ interface VotingSongsProps {
   isLoading?: boolean;
   onVoted?: (voteData: {
     musicId: string;
-    voteType: "nobody" | "aice" | "fir";
+    voteType: "nobody" | "aice" | "fir" | "usdt";
     amount: number;
     txHash?: string;
   }) => void;
@@ -95,7 +95,7 @@ export default function VotingSongs({
 
   const handleVote = async (voteData: {
     musicId: string;
-    voteType: "nobody" | "aice" | "fir";
+    voteType: "nobody" | "aice" | "fir" | "usdt";
     amount: number;
     txHash?: string;
   }) => {

@@ -14,7 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Crown, Coins, Zap, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  Crown,
+  Coins,
+  Zap,
+  AlertCircle,
+  CheckCircle,
+  DollarSign,
+} from "lucide-react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { VOTING_CONTRACTS } from "@/constants/voting-contract";
 import {
@@ -40,13 +47,13 @@ interface VoteModalProps {
   } | null;
   onVote: (voteData: {
     musicId: string;
-    voteType: "nobody" | "aice" | "fir";
+    voteType: "nobody" | "aice" | "fir" | "usdt";
     amount: number;
     txHash?: string;
   }) => void;
 }
 
-type VoteType = "nobody" | "aice" | "fir";
+type VoteType = "nobody" | "aice" | "fir" | "usdt";
 
 export default function VoteModal({
   isOpen,
@@ -81,6 +88,12 @@ export default function VoteModal({
     VOTING_CONTRACTS.BSC_MAINNET.TOKEN_FIR,
     VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
     voteType === "fir" && isConnected,
+  );
+
+  const { balance: usdtBalance } = useTokenBalance(
+    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_USDT,
+    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
+    voteType === "usdt" && isConnected,
   );
 
   // NFT余额hook
@@ -119,12 +132,25 @@ export default function VoteModal({
     voteType === "fir" && isConnected,
   );
 
+  const {
+    allowance: usdtAllowance,
+    needsApproval: needsUsdtApproval,
+    approve: approveUsdt,
+    approving: usdtApproving,
+  } = useTokenApproval(
+    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_USDT,
+    VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
+    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
+    voteType === "usdt" && isConnected,
+  );
+
   const isSubmitting =
     tokenVoteLoading ||
     nftVoteLoading ||
     switching ||
     aiceApproving ||
-    firApproving;
+    firApproving ||
+    usdtApproving;
 
   const getVoteTypeInfo = (type: VoteType) => {
     switch (type) {
@@ -154,6 +180,15 @@ export default function VoteModal({
           color: "text-purple-600",
           bgColor: "bg-purple-50",
           borderColor: "border-purple-200",
+        };
+      case "usdt":
+        return {
+          icon: DollarSign,
+          label: "$USDT",
+          description: t("usdtVoteDescription"),
+          color: "text-green-600",
+          bgColor: "bg-green-50",
+          borderColor: "border-green-200",
         };
     }
   };
@@ -197,6 +232,14 @@ export default function VoteModal({
       } else if (voteType === "fir" && needsFirApproval(voteAmount)) {
         setTxStatus("pending");
         await approveFir(voteAmount);
+        // 授权成功后继续投票
+      } else if (voteType === "usdt" && needsUsdtApproval(voteAmount)) {
+        setTxStatus("pending");
+        await approveUsdt(voteAmount);
+        // 授权成功后继续投票
+      } else if (voteType === "usdt" && needsUsdtApproval(voteAmount)) {
+        setTxStatus("pending");
+        await approveUsdt(voteAmount);
         // 授权成功后继续投票
       }
 
@@ -285,8 +328,12 @@ export default function VoteModal({
         return aiceBalance;
       case "fir":
         return firBalance;
+      case "usdt":
+        return usdtBalance;
       case "nobody":
         return nftBalance.toString();
+      case "usdt":
+        return usdtBalance;
       default:
         return "0";
     }
@@ -528,6 +575,64 @@ export default function VoteModal({
                     );
                   })}
                 </div>
+
+                {/* USDT投票 - 单独一行 */}
+                {(() => {
+                  const type = "usdt" as VoteType;
+                  const info = getVoteTypeInfo(type);
+                  const Icon = info.icon;
+                  const isSelected = voteType === type;
+
+                  return (
+                    <div
+                      key={type}
+                      className={`relative cursor-pointer rounded-md border-2 p-2 transition-all duration-300 ${
+                        isSelected
+                          ? `${info.borderColor} ${info.bgColor} shadow-[3px_3px_0_0px_rgba(0,0,0,1)]`
+                          : "border-gray-200 bg-white/20 hover:border-gray-300 hover:bg-white/30 hover:shadow-[3px_3px_0_0px_rgba(0,0,0,1)]"
+                      }`}
+                      onClick={() => setVoteType(type)}
+                    >
+                      <div className="flex items-center space-x-1">
+                        <RadioGroupItem
+                          value={type}
+                          id={type}
+                          className={`${
+                            isSelected ? info.color : "text-gray-400"
+                          }`}
+                        />
+                        <div className="flex flex-1 items-center space-x-1">
+                          <div
+                            className={`rounded-sm p-1 transition-all duration-300 ${
+                              isSelected
+                                ? `${info.bgColor} ${info.color}`
+                                : "bg-white/20 text-gray-500"
+                            }`}
+                          >
+                            <Icon className="h-3 w-3" />
+                          </div>
+                          <div className="flex-1">
+                            <Label
+                              htmlFor={type}
+                              className={`cursor-pointer text-xs font-semibold ${
+                                isSelected ? info.color : "text-gray-700"
+                              }`}
+                            >
+                              {info.label}
+                            </Label>
+                            <p
+                              className={`text-xs ${
+                                isSelected ? "text-gray-600" : "text-gray-500"
+                              }`}
+                            >
+                              {info.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
               </RadioGroup>
 
               {/* 网络提示 */}
@@ -717,13 +822,15 @@ export default function VoteModal({
                       <span>
                         {(voteType === "aice" &&
                           needsAiceApproval(voteAmount)) ||
-                        (voteType === "fir" && needsFirApproval(voteAmount))
+                        (voteType === "fir" && needsFirApproval(voteAmount)) ||
+                        (voteType === "usdt" && needsUsdtApproval(voteAmount))
                           ? t("approving")
                           : t("submitting")}
                       </span>
                     </div>
                   ) : (voteType === "aice" && needsAiceApproval(voteAmount)) ||
-                    (voteType === "fir" && needsFirApproval(voteAmount)) ? (
+                    (voteType === "fir" && needsFirApproval(voteAmount)) ||
+                    (voteType === "usdt" && needsUsdtApproval(voteAmount)) ? (
                     t("approveAndVote")
                   ) : (
                     t("confirmVote")

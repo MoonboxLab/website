@@ -657,9 +657,11 @@ const Header: React.FC = () => {
                             {t("audition")}
                           </div>
                         </Link>
-                        <div className="py-3 text-[16px] font-semibold leading-[16px] text-gray-700 opacity-50">
-                          {t("voting")}
-                        </div>
+                        <Link href={"/" + locale + "/music/voting"}>
+                          <div className="py-3 text-[16px] font-semibold leading-[16px] text-gray-700">
+                            {t("voting")}
+                          </div>
+                        </Link>
                         <Link href={`/${locale}/profile#participation-records`}>
                           <div className="py-3 text-[16px] font-semibold leading-[16px]">
                             {t("participationRecords")}

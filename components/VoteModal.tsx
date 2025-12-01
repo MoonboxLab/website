@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
@@ -30,6 +30,7 @@ import {
   useTokenVote,
   useNftVote,
   useNetworkSwitch,
+  useNftBalance,
 } from "@/lib/use-voting";
 import { getNetwork } from "@wagmi/core";
 import { useTokenApproval } from "@/lib/use-token-approval";
@@ -94,6 +95,13 @@ export default function VoteModal({
     voteType === "usdt" && isConnected,
   );
 
+  // NFT余额hook
+  const { balance: nftBalance } = useNftBalance(
+    VOTING_CONTRACTS.ETH_MAINNET.NFT_CONTRACT,
+    VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID,
+    voteType === "nobody" && isConnected,
+  );
+
   // 投票hooks
   const { vote: voteByToken, loading: tokenVoteLoading } = useTokenVote();
   const { vote: voteByNft, loading: nftVoteLoading } = useNftVote();
@@ -143,6 +151,42 @@ export default function VoteModal({
     firApproving ||
     usdtApproving;
 
+  // 计算投票按钮是否应该禁用
+  const isVoteButtonDisabled = useMemo(() => {
+    // 如果正在提交，禁用
+    if (isSubmitting || txStatus === "pending") {
+      return true;
+    }
+
+    // NFT投票验证
+    if (voteType === "nobody") {
+      // 没有输入
+      if (!nftIdInput) {
+        return true;
+      }
+
+      const nftAmount = parseInt(nftIdInput);
+      // 输入无效（不是数字或小于1）
+      if (isNaN(nftAmount) || nftAmount < 1) {
+        return true;
+      }
+
+      // NFT数量不足（nftBalance 是 number 类型，初始值为 0，直接比较即可）
+      if (nftBalance < nftAmount) {
+        return true;
+      }
+
+      return false;
+    }
+
+    // 代币投票验证
+    if (!voteAmount || parseInt(voteAmount) < 1) {
+      return true;
+    }
+
+    return false;
+  }, [isSubmitting, txStatus, voteType, nftIdInput, nftBalance, voteAmount]);
+
   const getVoteTypeInfo = (type: VoteType) => {
     switch (type) {
       case "nobody":
@@ -189,10 +233,15 @@ export default function VoteModal({
 
     // 验证输入
     if (voteType === "nobody") {
-      // NFT投票：使用输入的NFT ID
-      const nftId = nftIdInput ? parseInt(nftIdInput) : null;
-      if (nftId === null || isNaN(nftId) || nftId < 0) {
-        setError(t("invalidNftId"));
+      // NFT投票：输入的是数量（虽然变量名叫nftId，但实际是数量）
+      const nftAmount = nftIdInput ? parseInt(nftIdInput) : null;
+      if (nftAmount === null || isNaN(nftAmount) || nftAmount < 1) {
+        setError(t("invalidVoteAmount") || "请输入有效的投票数量");
+        return;
+      }
+      // 验证数量是否超过拥有的NFT数量
+      if (nftBalance && nftBalance < nftAmount) {
+        setError(t("insufficientNftBalance") || "NFT数量不足");
         return;
       }
     } else {
@@ -228,17 +277,14 @@ export default function VoteModal({
         setTxStatus("pending");
         await approveUsdt(voteAmount);
         // 授权成功后继续投票
-      } else if (voteType === "usdt" && needsUsdtApproval(voteAmount)) {
-        setTxStatus("pending");
-        await approveUsdt(voteAmount);
-        // 授权成功后继续投票
       }
 
       let hash: string;
 
       if (voteType === "nobody") {
-        const nftId = parseInt(nftIdInput);
-        hash = await voteByNft(parseInt(music.id), nftId);
+        // 虽然参数名叫nftId，但实际传入的是数量
+        const nftAmount = parseInt(nftIdInput);
+        hash = await voteByNft(parseInt(music.id), nftAmount);
       } else {
         hash = await voteByToken(
           parseInt(music.id),
@@ -306,8 +352,6 @@ export default function VoteModal({
     setVoteType("nobody");
     setVoteAmount("1");
     setNftIdInput("");
-    setNftIdInput("");
-    setError("");
     setError("");
     setTxStatus("idle");
     setTxHash("");
@@ -323,10 +367,7 @@ export default function VoteModal({
       case "usdt":
         return usdtBalance;
       case "nobody":
-      case "nobody":
         return "0";
-      case "usdt":
-        return usdtBalance;
       default:
         return "0";
     }
@@ -635,7 +676,7 @@ export default function VoteModal({
             </div>
 
             {/* 投票输入 */}
-            <div className="space-y-1">
+            <div className="space-y-2">
               {voteType === "nobody" ? (
                 <>
                   <Label htmlFor="nftId" className="text-xs font-semibold">
@@ -644,12 +685,43 @@ export default function VoteModal({
                   <Input
                     id="nftId"
                     type="number"
-                    min="0"
+                    min="1"
+                    step="1"
+                    inputMode="numeric"
                     value={nftIdInput}
-                    onChange={(e) => setNftIdInput(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      // 只允许纯数字（整数），过滤掉小数点和其他非数字字符
+                      const numericValue = value.replace(/[^\d]/g, "");
+                      setNftIdInput(numericValue);
+                      setError(""); // 清除之前的错误
+                    }}
+                    onKeyDown={(e) => {
+                      // 阻止输入小数点、负号、e、E等字符
+                      if (
+                        e.key === "." ||
+                        e.key === "-" ||
+                        e.key === "e" ||
+                        e.key === "E" ||
+                        e.key === "+"
+                      ) {
+                        e.preventDefault();
+                      }
+                    }}
                     className="border-2 text-center text-sm font-semibold focus:border-primary"
                     placeholder={t("voteAmountPlaceholder")}
                   />
+                  {/* NFT数量显示 */}
+                  {address && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-gray-700">
+                        {t("nftBalance") || "NFT数量"}:
+                      </span>
+                      <span className="text-xs font-bold text-primary">
+                        {nftBalance}
+                      </span>
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
@@ -790,16 +862,7 @@ export default function VoteModal({
               return (
                 <Button
                   onClick={handleVote}
-                  disabled={
-                    isSubmitting ||
-                    (voteType === "nobody" && !nftIdInput) ||
-                    (voteType === "nobody" &&
-                      nftIdInput &&
-                      parseInt(nftIdInput) < 0) ||
-                    (voteType !== "nobody" &&
-                      (!voteAmount || parseInt(voteAmount) < 1)) ||
-                    txStatus === "pending"
-                  }
+                  disabled={isVoteButtonDisabled}
                   className="h-12 flex-1 border-2 border-black bg-yellow-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-yellow-500 disabled:opacity-50"
                 >
                   {isSubmitting ? (

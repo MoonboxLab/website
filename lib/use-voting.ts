@@ -114,7 +114,6 @@ export function useNftBalance(
   enabled: boolean = true,
 ) {
   const [balance, setBalance] = useState<number>(0);
-  const [nftIds, setNftIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const { address } = useWalletConnection();
 
@@ -136,24 +135,9 @@ export function useNftBalance(
 
       const balanceNum = Number(balanceData);
       setBalance(balanceNum);
-
-      // 获取NFT ID列表
-      const ids: number[] = [];
-      for (let i = 0; i < balanceNum; i++) {
-        const tokenId = await readContract({
-          address: nftAddress as `0x${string}`,
-          abi: ERC721_ABI,
-          functionName: "tokenOfOwnerByIndex",
-          args: [address as `0x${string}`, BigInt(i)],
-          chainId: currentChainId,
-        });
-        ids.push(Number(tokenId));
-      }
-      setNftIds(ids);
     } catch (error) {
       console.error("获取NFT余额失败:", error);
       setBalance(0);
-      setNftIds([]);
     } finally {
       setLoading(false);
     }
@@ -176,7 +160,7 @@ export function useNftBalance(
     };
   }, [fetchBalance]);
 
-  return { balance, nftIds, loading, refetch: fetchBalance };
+  return { balance, loading, refetch: fetchBalance };
 }
 
 // 代币投票hook

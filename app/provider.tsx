@@ -38,12 +38,12 @@ const customBscTestnet = {
   rpcUrls: {
     ...bscTestnet.rpcUrls,
     default: {
-      http: ["https://bsc-testnet.public.blastapi.io"],
-      webSocket: ["wss://bsc-testnet-rpc.publicnode.com"],
+      http: ["https://bnb-testnet.g.alchemy.com/v2/1g-d3hxduh_O9nyYM-Pqb"],
+      webSocket: ["wss://bsc-rpc.publicnode.com"],
     },
     public: {
-      http: ["https://bsc-testnet.public.blastapi.io"],
-      webSocket: ["wss://bsc-testnet-rpc.publicnode.com"],
+      http: ["https://bnb-testnet.g.alchemy.com/v2/1g-d3hxduh_O9nyYM-Pqb"],
+      webSocket: ["wss://bsc-rpc.publicnode.com"],
     },
   },
 } as unknown as typeof bscTestnet;

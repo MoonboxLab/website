@@ -22,8 +22,37 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
+import { checkApiResponse } from "@/lib/api-interceptor";
 
 // 使用 @wagmi/core 的 React hooks
+
+// 根据 chainId 获取对应的合约配置
+function getContractByChainId(
+  chainId: number | undefined,
+  contractType: "BSC_MAINNET" | "ETH_MAINNET",
+):
+  | typeof VOTING_CONTRACTS.BSC_MAINNET
+  | typeof VOTING_CONTRACTS.ETH_MAINNET
+  | typeof VOTING_CONTRACTS.BSC_TESTNET
+  | typeof VOTING_CONTRACTS.ETH_SEPOLIA {
+  // 如果 chainId 匹配，返回对应配置
+  if (chainId === VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID) {
+    return VOTING_CONTRACTS.BSC_MAINNET;
+  }
+  if (chainId === VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID) {
+    return VOTING_CONTRACTS.BSC_TESTNET;
+  }
+  if (chainId === VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID) {
+    return VOTING_CONTRACTS.ETH_MAINNET;
+  }
+  if (chainId === VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID) {
+    return VOTING_CONTRACTS.ETH_SEPOLIA;
+  }
+  // 如果 chainId 不匹配，返回默认链
+  return contractType === "BSC_MAINNET"
+    ? VOTING_CONTRACTS.BSC_MAINNET
+    : VOTING_CONTRACTS.ETH_MAINNET;
+}
 
 // 检查钱包连接状态
 export function useWalletConnection() {
@@ -68,14 +97,22 @@ export function useTokenBalance(
     setLoading(true);
     try {
       const { chain } = getNetwork();
-      const currentChainId = chain?.id || chainId;
+      const currentChainId = chain?.id;
 
+      // 代币都在 BSC 主网，根据当前链选择配置，如果链ID不对，使用默认链（BSC）
+      const contractConfig = getContractByChainId(
+        currentChainId,
+        "BSC_MAINNET",
+      );
+      const targetChainId = contractConfig.CHAIN_ID;
+
+      // 使用传入的代币地址（应该都是 BSC 的代币地址）
       const balanceData = await readContract({
         address: tokenAddress as `0x${string}`,
         abi: erc20ABI,
         functionName: "balanceOf",
         args: [address as `0x${string}`],
-        chainId: currentChainId,
+        chainId: targetChainId,
       });
 
       setBalance(formatUnits(balanceData, 18));
@@ -85,7 +122,7 @@ export function useTokenBalance(
     } finally {
       setLoading(false);
     }
-  }, [address, tokenAddress, chainId, enabled]);
+  }, [address, tokenAddress, enabled]);
 
   useEffect(() => {
     fetchBalance();
@@ -123,25 +160,63 @@ export function useNftBalance(
     setLoading(true);
     try {
       const { chain } = getNetwork();
-      const currentChainId = chain?.id || chainId;
+      const currentChainId = chain?.id;
 
+      // 根据当前链选择配置，如果链ID不对，使用默认链（ETH）
+      const contractConfig = getContractByChainId(
+        currentChainId,
+        "ETH_MAINNET",
+      );
+      const targetChainId = contractConfig.CHAIN_ID;
+
+      // 使用传入的 NFT 地址
       const balanceData = await readContract({
         address: nftAddress as `0x${string}`,
         abi: ERC721_ABI,
         functionName: "balanceOf",
         args: [address as `0x${string}`],
-        chainId: currentChainId,
+        chainId: targetChainId,
       });
 
       const balanceNum = Number(balanceData);
-      setBalance(balanceNum);
+
+      // 获取已投票数
+      let votedCount = 0;
+      try {
+        const token = localStorage.getItem("authToken");
+        const userData = localStorage.getItem("user");
+        const user = userData ? JSON.parse(userData) : null;
+
+        if (token && user?.id) {
+          const response = await fetch("/api/music/vote/nft", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              uid: user.id,
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success && typeof data.data === "number") {
+              votedCount = data.data;
+            }
+          }
+        }
+      } catch (error) {
+        // 如果获取已投票数失败，只记录错误，不影响余额显示
+        console.error("获取已投票数失败:", error);
+      }
+
+      // 减去已投票数，确保不为负数
+      const finalBalance = Math.max(0, balanceNum - votedCount);
+      setBalance(finalBalance);
     } catch (error) {
       console.error("获取NFT余额失败:", error);
       setBalance(0);
     } finally {
       setLoading(false);
     }
-  }, [address, nftAddress, chainId, enabled]);
+  }, [address, nftAddress, enabled]);
 
   useEffect(() => {
     fetchBalance();
@@ -161,6 +236,119 @@ export function useNftBalance(
   }, [fetchBalance]);
 
   return { balance, loading, refetch: fetchBalance };
+}
+
+// 根据 voteType 和当前链获取对应的代币地址和链ID
+function getTokenAddressByVoteType(
+  voteType: VoteType,
+  currentChainId: number | undefined,
+): { tokenAddress: string; chainId: number } {
+  const config = VOTE_CONFIG[voteType];
+  const defaultChainType: "BSC_MAINNET" | "ETH_MAINNET" =
+    config.chain === "BSC_MAINNET" ? "BSC_MAINNET" : "ETH_MAINNET";
+
+  // 根据当前链选择配置
+  const contractConfig = getContractByChainId(currentChainId, defaultChainType);
+  const targetChainId = contractConfig.CHAIN_ID;
+
+  // 根据当前链选择对应的代币地址
+  let targetTokenAddress = config.tokenContract;
+  if (config.chain === "BSC_MAINNET") {
+    // BSC 代币：根据当前链选择主网或测试网地址
+    if (currentChainId === VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID) {
+      // 当前是测试链，使用测试链的代币地址
+      if (voteType === "aice") {
+        targetTokenAddress = VOTING_CONTRACTS.BSC_TESTNET.TOKEN_AICE;
+      } else if (voteType === "fir") {
+        targetTokenAddress = VOTING_CONTRACTS.BSC_TESTNET.TOKEN_FIR;
+      } else if (voteType === "usdt") {
+        targetTokenAddress = VOTING_CONTRACTS.BSC_TESTNET.TOKEN_USDT;
+      }
+    }
+    // 否则使用主网地址（config.tokenContract 已经是主网地址）
+  }
+
+  return { tokenAddress: targetTokenAddress, chainId: targetChainId };
+}
+
+// 根据 voteType 获取代币余额
+export function useTokenBalanceByVoteType(
+  voteType: VoteType,
+  enabled: boolean = true,
+) {
+  const [currentChainId, setCurrentChainId] = useState<number | undefined>(
+    undefined,
+  );
+
+  // 获取当前链ID
+  useEffect(() => {
+    const updateChainId = () => {
+      const { chain } = getNetwork();
+      setCurrentChainId(chain?.id);
+    };
+
+    updateChainId();
+    const unwatchNetwork = watchNetwork(() => {
+      updateChainId();
+    });
+
+    return () => {
+      unwatchNetwork();
+    };
+  }, []);
+
+  // 对于 nobody 类型，使用无效地址和 disabled
+  const dummyAddress = "0x0000000000000000000000000000000000000000";
+  const dummyChainId = VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID;
+  const isNobody = voteType === "nobody";
+
+  // 根据 voteType 和当前链获取对应的代币地址和链ID
+  const { tokenAddress, chainId } = isNobody
+    ? { tokenAddress: dummyAddress, chainId: dummyChainId }
+    : getTokenAddressByVoteType(voteType, currentChainId);
+
+  // 直接调用 useTokenBalance
+  return useTokenBalance(tokenAddress, chainId, !isNobody && enabled);
+}
+
+// 根据 voteType 获取 NFT 余额
+export function useNftBalanceByVoteType(enabled: boolean = true) {
+  const [currentChainId, setCurrentChainId] = useState<number | undefined>(
+    undefined,
+  );
+
+  // 获取当前链ID
+  useEffect(() => {
+    const updateChainId = () => {
+      const { chain } = getNetwork();
+      setCurrentChainId(chain?.id);
+    };
+
+    updateChainId();
+    const unwatchNetwork = watchNetwork(() => {
+      updateChainId();
+    });
+
+    return () => {
+      unwatchNetwork();
+    };
+  }, []);
+
+  // 根据当前链选择对应的 NFT 合约配置（NFT 只在 ETH 链上）
+  let nftAddress: string;
+  let chainId: number;
+
+  if (currentChainId === VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID) {
+    // 当前是 ETH Sepolia 测试链
+    nftAddress = VOTING_CONTRACTS.ETH_SEPOLIA.NFT_CONTRACT;
+    chainId = VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID;
+  } else {
+    // 默认使用 ETH 主网
+    nftAddress = VOTING_CONTRACTS.ETH_MAINNET.NFT_CONTRACT;
+    chainId = VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID;
+  }
+
+  return useNftBalance(nftAddress, chainId, enabled);
 }
 
 // 代币投票hook
@@ -253,7 +441,7 @@ export function useNftVote() {
   const t = useTranslations("Music");
 
   const vote = useCallback(
-    async (musicId: number, nftId: number) => {
+    async (musicId: number, count: number) => {
       const account = getAccount();
       if (!account.address) {
         throw new Error("请连接钱包");
@@ -261,20 +449,58 @@ export function useNftVote() {
 
       setLoading(true);
       try {
-        const config = VOTE_CONFIG.nobody;
+        // 获取认证信息
+        const token = localStorage.getItem("authToken");
+        const userData = localStorage.getItem("user");
+        const user = userData ? JSON.parse(userData) : null;
 
-        // 执行投票
-        const { hash } = await writeContract({
-          address: config.contract,
-          abi: VOTING_CONTRACT_ABI,
-          functionName: "voteByNft",
-          args: [BigInt(musicId), BigInt(nftId)],
+        if (!token || !user?.id) {
+          throw new Error("请先登录");
+        }
+
+        // 调用中心化接口进行NFT投票
+        const response = await fetch("/api/music/vote/nft", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            uid: user.id,
+          },
+          body: JSON.stringify({
+            creationId: musicId,
+            count: count,
+          }),
         });
 
-        await waitForTransaction({ hash });
+        const data = await response.json();
+
+        // 检查是否需要登录（会自动触发登录弹窗并清除登录状态）
+        const needsLogin = checkApiResponse(response, data);
+
+        // 如果 checkApiResponse 没有触发，但数据中明确表示需要登录，也手动触发
+        if ((data.code === 104 || data.requiresLogin) && !needsLogin) {
+          // 手动触发登录弹窗
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("showLoginModal"));
+          }
+        }
+
+        if (needsLogin || data.code === 104 || data.requiresLogin) {
+          throw new Error("请先登录");
+        }
+
+        if (!response.ok) {
+          throw new Error(data.error || data.msg || "投票失败");
+        }
+
+        if (!data.success) {
+          throw new Error(data.error || data.msg || "投票失败");
+        }
+
         toast.success(t("voteSuccess") || "投票成功!");
 
-        return hash;
+        // 返回一个模拟的hash（因为不再使用链上交易）
+        return `nft-vote-${musicId}-${count}-${Date.now()}`;
       } catch (error: any) {
         console.error("投票失败:", error);
 
@@ -282,6 +508,8 @@ export function useNftVote() {
         const errorMessage = error.message || error.toString() || "";
         if (errorMessage.toLowerCase().includes("no nft")) {
           toast.error(t("noNft") || "當前錢包沒有Nobody NFT");
+        } else if (errorMessage.includes("请先登录")) {
+          toast.error(t("pleaseLogin") || "請先登錄");
         } else {
           toast.error(errorMessage || t("voteFailed") || "投票失敗");
         }

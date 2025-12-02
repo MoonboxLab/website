@@ -669,6 +669,7 @@
     "bid": "投票",
     "vote": "投票",
     "artist": "歌手",
+    "login": "登入",
     "votingMethodLabel": "投票方式",
     "voteCount": "投票數量",
     "nobodyVoteLimit": "一個NFT每個月只能投票一次",

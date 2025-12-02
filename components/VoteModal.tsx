@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
@@ -23,17 +23,18 @@ import {
   DollarSign,
 } from "lucide-react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { VOTING_CONTRACTS } from "@/constants/voting-contract";
 import {
   useWalletConnection,
-  useTokenBalance,
   useTokenVote,
   useNftVote,
   useNetworkSwitch,
-  useNftBalance,
+  useTokenBalanceByVoteType,
+  useNftBalanceByVoteType,
 } from "@/lib/use-voting";
 import { getNetwork } from "@wagmi/core";
-import { useTokenApproval } from "@/lib/use-token-approval";
+import { useTokenApprovalByVoteType } from "@/lib/use-token-approval";
+import { useAuthSync } from "@/lib/useAuthSync";
+import { VOTING_CONTRACTS } from "@/constants/voting-contract";
 
 interface VoteModalProps {
   isOpen: boolean;
@@ -75,30 +76,26 @@ export default function VoteModal({
   // 使用hooks
   const { isConnected, address } = useWalletConnection();
   const { switchToChain, switching } = useNetworkSwitch();
+  const { isLoggedIn } = useAuthSync();
 
-  // 代币余额hooks
-  const { balance: aiceBalance } = useTokenBalance(
-    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_AICE,
-    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
+  // 根据 voteType 获取代币余额
+  const { balance: aiceBalance } = useTokenBalanceByVoteType(
+    "aice",
     voteType === "aice" && isConnected,
   );
 
-  const { balance: firBalance } = useTokenBalance(
-    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_FIR,
-    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
+  const { balance: firBalance } = useTokenBalanceByVoteType(
+    "fir",
     voteType === "fir" && isConnected,
   );
 
-  const { balance: usdtBalance } = useTokenBalance(
-    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_USDT,
-    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
+  const { balance: usdtBalance } = useTokenBalanceByVoteType(
+    "usdt",
     voteType === "usdt" && isConnected,
   );
 
   // NFT余额hook
-  const { balance: nftBalance } = useNftBalance(
-    VOTING_CONTRACTS.ETH_MAINNET.NFT_CONTRACT,
-    VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID,
+  const { balance: nftBalance } = useNftBalanceByVoteType(
     voteType === "nobody" && isConnected,
   );
 
@@ -106,42 +103,24 @@ export default function VoteModal({
   const { vote: voteByToken, loading: tokenVoteLoading } = useTokenVote();
   const { vote: voteByNft, loading: nftVoteLoading } = useNftVote();
 
-  // 授权hooks
+  // 根据 voteType 获取授权状态
   const {
-    allowance: aiceAllowance,
     needsApproval: needsAiceApproval,
     approve: approveAice,
     approving: aiceApproving,
-  } = useTokenApproval(
-    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_AICE,
-    VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
-    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
-    voteType === "aice" && isConnected,
-  );
+  } = useTokenApprovalByVoteType("aice", voteType === "aice" && isConnected);
 
   const {
-    allowance: firAllowance,
     needsApproval: needsFirApproval,
     approve: approveFir,
     approving: firApproving,
-  } = useTokenApproval(
-    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_FIR,
-    VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
-    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
-    voteType === "fir" && isConnected,
-  );
+  } = useTokenApprovalByVoteType("fir", voteType === "fir" && isConnected);
 
   const {
-    allowance: usdtAllowance,
     needsApproval: needsUsdtApproval,
     approve: approveUsdt,
     approving: usdtApproving,
-  } = useTokenApproval(
-    VOTING_CONTRACTS.BSC_MAINNET.TOKEN_USDT,
-    VOTING_CONTRACTS.BSC_MAINNET.VOTING_CONTRACT,
-    VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID,
-    voteType === "usdt" && isConnected,
-  );
+  } = useTokenApprovalByVoteType("usdt", voteType === "usdt" && isConnected);
 
   const isSubmitting =
     tokenVoteLoading ||
@@ -257,7 +236,7 @@ export default function VoteModal({
 
     try {
       // 检查当前网络是否正确，只在需要时切换
-      const targetChainId = voteType === "nobody" ? 1 : 56; // ETH Mainnet : BSC Mainnet
+      const targetChainId = getTargetChainId();
       const { chain } = getNetwork();
 
       if (chain?.id !== targetChainId) {
@@ -322,6 +301,20 @@ export default function VoteModal({
         return;
       }
 
+      // 检查是否是登录相关错误
+      if (
+        error.message &&
+        (error.message.includes("请先登录") ||
+          error.message.includes("请先登錄") ||
+          error.message.includes("login") ||
+          error.message.toLowerCase().includes("unauthorized"))
+      ) {
+        // 触发登录弹窗
+        window.dispatchEvent(new CustomEvent("showLoginModal"));
+        setTxStatus("failed");
+        return;
+      }
+
       // 提供简洁的用户友好错误信息
       let errorMessage = t("voteFailedGeneric");
 
@@ -373,13 +366,36 @@ export default function VoteModal({
     }
   };
 
+  // 根据当前链类型和 voteType 获取目标链ID
+  const getTargetChainId = useCallback(() => {
+    const { chain } = getNetwork();
+    const currentChainId = chain?.id;
+
+    // 判断当前链是否是测试链
+    const isTestnet =
+      currentChainId === VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID ||
+      currentChainId === VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID;
+
+    if (voteType === "nobody") {
+      // NFT投票：ETH链
+      return isTestnet
+        ? VOTING_CONTRACTS.ETH_SEPOLIA.CHAIN_ID
+        : VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID;
+    } else {
+      // 代币投票：BSC链
+      return isTestnet
+        ? VOTING_CONTRACTS.BSC_TESTNET.CHAIN_ID
+        : VOTING_CONTRACTS.BSC_MAINNET.CHAIN_ID;
+    }
+  }, [voteType]);
+
   // 自动切换网络
   useEffect(() => {
     if (!address) return; // 只有连接钱包后才切换网络
 
     const switchNetwork = async () => {
       try {
-        const targetChainId = voteType === "nobody" ? 1 : 56; // ETH Mainnet : BSC Mainnet
+        const targetChainId = getTargetChainId();
         await switchToChain(targetChainId);
       } catch (error) {
         console.log("Network switch failed:", error);
@@ -388,7 +404,7 @@ export default function VoteModal({
     };
 
     switchNetwork();
-  }, [voteType, address, switchToChain]);
+  }, [voteType, address, switchToChain, getTargetChainId]);
 
   // 监听钱包连接状态，连接成功后恢复 Dialog 关闭行为
   useEffect(() => {
@@ -855,6 +871,20 @@ export default function VoteModal({
                     className="h-12 flex-1 border-2 border-black bg-red-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-red-500"
                   >
                     {t("wrongNetwork")}
+                  </Button>
+                );
+              }
+
+              // NFT投票需要登录
+              if (voteType === "nobody" && !isLoggedIn) {
+                return (
+                  <Button
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent("showLoginModal"));
+                    }}
+                    className="h-12 flex-1 border-2 border-black bg-blue-400 text-base font-bold text-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:bg-blue-500"
+                  >
+                    {t("login")}
                   </Button>
                 );
               }

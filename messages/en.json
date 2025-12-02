@@ -757,6 +757,7 @@
     "vote": "Vote",
     "artist": "Artist",
     "voteCount": "Vote Count",
+    "login": "Login",
     "nobodyVoteLimit": "Each NFT can vote once per month",
     "voteExplanation": "Vote Explanation",
     "voteExplanationText": "Enter the number of votes, the contract will automatically convert to the corresponding token amount based on the selected voting method",

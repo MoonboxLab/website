@@ -20,5 +20,6 @@ export const API_ENDPOINTS = {
   MUSIC_TEMPLATE_LIST: `${API_BASE_URL}/api/music/template/list`,
   MUSIC_CREATION_VOTE_LIST: `${API_BASE_URL}/api/music/creation/vote/list`,
   MUSIC_CREATION: `${API_BASE_URL}/api/music/creation`,
+  MUSIC_VOTE_NFT: `${API_BASE_URL}/api/music/vote/nft`,
   STS_CREDENTIALS: `${API_BASE_URL}/api/sys/sts`,
 } as const;

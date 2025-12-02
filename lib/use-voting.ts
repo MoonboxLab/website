@@ -150,6 +150,7 @@ export function useNftBalance(
   nftAddress: string,
   chainId: number,
   enabled: boolean = true,
+  monthNumber?: number,
 ) {
   const [balance, setBalance] = useState<number>(0);
   const [loading, setLoading] = useState(false);
@@ -189,15 +190,18 @@ export function useNftBalance(
         const user = userData ? JSON.parse(userData) : null;
 
         if (token && user?.id && address) {
-          const response = await fetch(
-            `/api/music/vote/nft?address=${encodeURIComponent(address)}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                uid: user.id,
-              },
+          const url = new URL("/api/music/vote/nft", window.location.origin);
+          url.searchParams.set("address", address);
+          if (monthNumber !== undefined) {
+            url.searchParams.set("monthNumber", monthNumber.toString());
+          }
+
+          const response = await fetch(url.toString(), {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              uid: user.id,
             },
-          );
+          });
 
           if (response.ok) {
             const data = await response.json();
@@ -220,7 +224,7 @@ export function useNftBalance(
     } finally {
       setLoading(false);
     }
-  }, [address, nftAddress, enabled]);
+  }, [address, nftAddress, enabled, monthNumber]);
 
   useEffect(() => {
     fetchBalance();
@@ -316,7 +320,10 @@ export function useTokenBalanceByVoteType(
 }
 
 // 根据 voteType 获取 NFT 余额
-export function useNftBalanceByVoteType(enabled: boolean = true) {
+export function useNftBalanceByVoteType(
+  enabled: boolean = true,
+  monthNumber?: number,
+) {
   const [currentChainId, setCurrentChainId] = useState<number | undefined>(
     undefined,
   );
@@ -352,7 +359,7 @@ export function useNftBalanceByVoteType(enabled: boolean = true) {
     chainId = VOTING_CONTRACTS.ETH_MAINNET.CHAIN_ID;
   }
 
-  return useNftBalance(nftAddress, chainId, enabled);
+  return useNftBalance(nftAddress, chainId, enabled, monthNumber);
 }
 
 // 代币投票hook

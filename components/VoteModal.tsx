@@ -52,6 +52,7 @@ interface VoteModalProps {
     amount: number;
     txHash?: string;
   }) => void;
+  monthNumber?: number;
 }
 
 type VoteType = "nobody" | "aice" | "fir" | "usdt";
@@ -61,6 +62,7 @@ export default function VoteModal({
   onClose,
   music,
   onVote,
+  monthNumber,
 }: VoteModalProps) {
   const t = useTranslations("Music");
   const [voteType, setVoteType] = useState<VoteType>("nobody");
@@ -96,7 +98,7 @@ export default function VoteModal({
 
   // NFT余额hook
   const { balance: nftBalance, refetch: refetchNftBalance } =
-    useNftBalanceByVoteType(voteType === "nobody" && isConnected);
+    useNftBalanceByVoteType(voteType === "nobody" && isConnected, monthNumber);
 
   // 投票hooks
   const { vote: voteByToken, loading: tokenVoteLoading } = useTokenVote();

@@ -6,6 +6,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const monthNumber = searchParams.get("monthNumber");
+    const address = searchParams.get("address");
 
     // Get authentication headers
     const token = request.headers.get("Authorization")?.replace("Bearer ", "");
@@ -34,6 +35,9 @@ export async function GET(request: Request) {
     const url = new URL(API_ENDPOINTS.MUSIC_VOTE_NFT);
     if (monthNumber) {
       url.searchParams.set("monthNumber", monthNumber);
+    }
+    if (address) {
+      url.searchParams.set("address", address);
     }
 
     const response = await fetch(url.toString(), {

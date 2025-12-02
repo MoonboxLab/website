@@ -95,9 +95,8 @@ export default function VoteModal({
   );
 
   // NFT余额hook
-  const { balance: nftBalance } = useNftBalanceByVoteType(
-    voteType === "nobody" && isConnected,
-  );
+  const { balance: nftBalance, refetch: refetchNftBalance } =
+    useNftBalanceByVoteType(voteType === "nobody" && isConnected);
 
   // 投票hooks
   const { vote: voteByToken, loading: tokenVoteLoading } = useTokenVote();
@@ -275,6 +274,11 @@ export default function VoteModal({
       setTxHash(hash);
       setTxStatus("success");
 
+      // 刷新 NFT balance（如果是 NFT 投票）
+      if (voteType === "nobody") {
+        refetchNftBalance();
+      }
+
       // 调用回调函数
       await onVote({
         musicId: music.id,
@@ -405,6 +409,16 @@ export default function VoteModal({
 
     switchNetwork();
   }, [voteType, address, switchToChain, getTargetChainId]);
+
+  // 当弹窗打开时刷新 NFT balance
+  useEffect(() => {
+    if (isOpen && isConnected && address) {
+      // 延迟一下，确保钱包连接状态已更新
+      setTimeout(() => {
+        refetchNftBalance();
+      }, 300);
+    }
+  }, [isOpen, isConnected, address, refetchNftBalance]);
 
   // 监听钱包连接状态，连接成功后恢复 Dialog 关闭行为
   useEffect(() => {

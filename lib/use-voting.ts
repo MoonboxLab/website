@@ -188,13 +188,16 @@ export function useNftBalance(
         const userData = localStorage.getItem("user");
         const user = userData ? JSON.parse(userData) : null;
 
-        if (token && user?.id) {
-          const response = await fetch("/api/music/vote/nft", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              uid: user.id,
+        if (token && user?.id && address) {
+          const response = await fetch(
+            `/api/music/vote/nft?address=${encodeURIComponent(address)}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                uid: user.id,
+              },
             },
-          });
+          );
 
           if (response.ok) {
             const data = await response.json();

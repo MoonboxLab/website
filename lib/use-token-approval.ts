@@ -76,7 +76,7 @@ export function useTokenApproval(
   const approve = useCallback(
     async (amount?: string) => {
       if (!address) {
-        throw new Error("请连接钱包");
+        throw new Error(t("connectWalletRequired") || "請連接錢包");
       }
 
       setApproving(true);
@@ -86,7 +86,9 @@ export function useTokenApproval(
 
         // 验证当前链是否匹配
         if (!currentChainId) {
-          throw new Error("无法获取当前网络，请确保钱包已连接");
+          throw new Error(
+            t("unableToGetNetwork") || "無法獲取當前網絡，請確保錢包已連接",
+          );
         }
 
         // 根据当前链重新选择配置，确保地址和链ID匹配
@@ -173,7 +175,7 @@ export function useTokenApproval(
         });
 
         await waitForTransaction({ hash });
-        toast.success(t("approveSuccess") || "授权成功!");
+        toast.success(t("approveSuccess") || "授權成功!");
 
         // 重新获取授权额度
         await fetchAllowance();
@@ -193,20 +195,20 @@ export function useTokenApproval(
         }
 
         // 处理特定的合约错误
-        let errorMessage = t("approveFailed") || "授权失败";
+        let errorMessage = t("approveFailed") || "授權失敗";
 
         if (error.message) {
           if (
             error.message.includes("returned no data") ||
             error.message.includes("0x")
           ) {
-            errorMessage = t("invalidContract") || "合约地址无效或合约未部署";
+            errorMessage = t("invalidContract") || "合約地址無效或合約未部署";
           } else if (error.message.includes("insufficient funds")) {
-            errorMessage = t("insufficientFunds") || "余额不足";
+            errorMessage = t("insufficientFunds") || "餘額不足";
           } else if (error.message.includes("user rejected")) {
-            errorMessage = t("userRejected") || "用户取消操作";
+            errorMessage = t("userRejected") || "用戶取消操作";
           } else if (error.message.includes("network")) {
-            errorMessage = t("networkError") || "网络错误，请重试";
+            errorMessage = t("networkError") || "網絡錯誤，請重試";
           }
         }
 

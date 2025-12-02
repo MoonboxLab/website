@@ -8,6 +8,7 @@ import {
   getNetwork,
   watchNetwork,
   watchAccount,
+  signMessage,
   erc20ABI,
   erc721ABI,
 } from "@wagmi/core";
@@ -360,7 +361,7 @@ export function useTokenVote() {
     async (musicId: number, voteType: VoteType, amount: number) => {
       const account = getAccount();
       if (!account.address) {
-        throw new Error("请连接钱包");
+        throw new Error(t("connectWalletRequired") || "請連接錢包");
       }
 
       setLoading(true);
@@ -382,8 +383,10 @@ export function useTokenVote() {
         const amountWei = parseUnits(amount.toString(), 18);
 
         if (balance < amountWei) {
+          const balanceStr = formatUnits(balance, 18);
           throw new Error(
-            `代币余额不足，当前余额: ${formatUnits(balance, 18)}`,
+            t("insufficientTokenBalance", { balance: balanceStr }) ||
+              `代幣餘額不足，當前餘額: ${balanceStr}`,
           );
         }
 
@@ -423,7 +426,7 @@ export function useTokenVote() {
         return hash;
       } catch (error: any) {
         console.error("投票失败:", error);
-        toast.error(error.message || t("voteFailed") || "投票失败");
+        toast.error(error.message || t("voteFailed") || "投票失敗");
         throw error;
       } finally {
         setLoading(false);
@@ -444,7 +447,7 @@ export function useNftVote() {
     async (musicId: number, count: number) => {
       const account = getAccount();
       if (!account.address) {
-        throw new Error("请连接钱包");
+        throw new Error(t("connectWalletRequired") || "請連接錢包");
       }
 
       setLoading(true);
@@ -455,7 +458,28 @@ export function useNftVote() {
         const user = userData ? JSON.parse(userData) : null;
 
         if (!token || !user?.id) {
-          throw new Error("请先登录");
+          throw new Error(t("pleaseLogin") || "請先登錄");
+        }
+
+        // 构建签名字符串：creationId=1&count=1
+        const messageToSign = `creationId=${musicId}&count=${count}`;
+
+        // 调用钱包进行签名
+        let signature: string;
+        try {
+          signature = await signMessage({
+            message: messageToSign,
+          });
+        } catch (error: any) {
+          // 用户取消签名
+          if (error.code === 4001 || error.message?.includes("User rejected")) {
+            throw new Error(t("signatureCancelled") || "用戶取消了簽名");
+          }
+          const errorMsg = error.message || error.toString();
+          throw new Error(
+            t("signatureFailed", { error: errorMsg }) ||
+              `簽名失敗: ${errorMsg}`,
+          );
         }
 
         // 调用中心化接口进行NFT投票
@@ -469,6 +493,8 @@ export function useNftVote() {
           body: JSON.stringify({
             creationId: musicId,
             count: count,
+            address: account.address,
+            signature,
           }),
         });
 
@@ -486,15 +512,19 @@ export function useNftVote() {
         }
 
         if (needsLogin || data.code === 104 || data.requiresLogin) {
-          throw new Error("请先登录");
+          throw new Error(t("pleaseLogin") || "請先登錄");
         }
 
         if (!response.ok) {
-          throw new Error(data.error || data.msg || "投票失败");
+          throw new Error(
+            data.error || data.msg || t("voteFailed") || "投票失敗",
+          );
         }
 
         if (!data.success) {
-          throw new Error(data.error || data.msg || "投票失败");
+          throw new Error(
+            data.error || data.msg || t("voteFailed") || "投票失敗",
+          );
         }
 
         toast.success(t("voteSuccess") || "投票成功!");
@@ -527,29 +557,36 @@ export function useNftVote() {
 // 网络切换hook
 export function useNetworkSwitch() {
   const [switching, setSwitching] = useState(false);
+  const t = useTranslations("Music");
 
-  const switchToChain = useCallback(async (chainId: number) => {
-    if (typeof window === "undefined" || !window.ethereum) {
-      throw new Error("请安装并连接钱包");
-    }
-
-    setSwitching(true);
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: `0x${chainId.toString(16)}` }],
-      });
-    } catch (error: any) {
-      // 如果网络不存在，尝试添加网络
-      if (error.code === 4902) {
-        await addNetwork(chainId);
-      } else {
-        throw new Error(`网络切换失败: ${error.message}`);
+  const switchToChain = useCallback(
+    async (chainId: number) => {
+      if (typeof window === "undefined" || !window.ethereum) {
+        throw new Error(t("installWallet") || "請安裝並連接錢包");
       }
-    } finally {
-      setSwitching(false);
-    }
-  }, []);
+
+      setSwitching(true);
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: `0x${chainId.toString(16)}` }],
+        });
+      } catch (error: any) {
+        // 如果网络不存在，尝试添加网络
+        if (error.code === 4902) {
+          await addNetwork(chainId);
+        } else {
+          throw new Error(
+            t("networkSwitchFailed", { error: error.message }) ||
+              `網絡切換失敗: ${error.message}`,
+          );
+        }
+      } finally {
+        setSwitching(false);
+      }
+    },
+    [t],
+  );
 
   const addNetwork = useCallback(async (chainId: number) => {
     const networkConfig =

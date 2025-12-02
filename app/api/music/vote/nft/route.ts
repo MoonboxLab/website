@@ -87,7 +87,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { creationId, count } = body;
+    const { creationId, count, address, signature } = body;
 
     // 验证必需参数
     if (typeof creationId !== "number" || creationId <= 0) {
@@ -100,6 +100,20 @@ export async function POST(request: Request) {
     if (typeof count !== "number" || count <= 0) {
       return NextResponse.json(
         { error: "count is required and must be a positive integer" },
+        { status: 400 },
+      );
+    }
+
+    if (!address || typeof address !== "string") {
+      return NextResponse.json(
+        { error: "address is required and must be a string" },
+        { status: 400 },
+      );
+    }
+
+    if (!signature || typeof signature !== "string") {
+      return NextResponse.json(
+        { error: "sign is required and must be a string" },
         { status: 400 },
       );
     }
@@ -132,6 +146,8 @@ export async function POST(request: Request) {
     const formData = new URLSearchParams();
     formData.append("creationId", creationId.toString());
     formData.append("count", count.toString());
+    formData.append("address", address);
+    formData.append("signature", signature);
 
     const response = await fetch(API_ENDPOINTS.MUSIC_VOTE_NFT, {
       method: "POST",

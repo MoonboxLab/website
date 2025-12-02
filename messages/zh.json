@@ -767,7 +767,15 @@
     "approveAndVote": "授權並投票",
     "ok": "我明白",
     "noNft": "當前錢包沒有Nobody NFT",
-    "voteHint": "投票後刷新，票數數據會自動更新"
+    "voteHint": "投票後刷新，票數數據會自動更新",
+    "connectWalletRequired": "請連接錢包",
+    "insufficientTokenBalance": "代幣餘額不足，當前餘額: {balance}",
+    "pleaseLogin": "請先登錄",
+    "signatureCancelled": "用戶取消了簽名",
+    "signatureFailed": "簽名失敗: {error}",
+    "installWallet": "請安裝並連接錢包",
+    "networkSwitchFailed": "網絡切換失敗: {error}",
+    "unableToGetNetwork": "無法獲取當前網絡，請確保錢包已連接"
   },
   "Profile": {
     "title": "個人資料",

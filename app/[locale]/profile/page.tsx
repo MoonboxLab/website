@@ -34,6 +34,14 @@ interface UserProfile {
   address?: string;
 }
 
+interface Comment {
+  id: number;
+  creationId: number;
+  bsuid: number;
+  content: string;
+  createTm: number;
+}
+
 interface MusicCreation {
   id: number;
   uid: number;
@@ -44,6 +52,7 @@ interface MusicCreation {
   scope: number;
   status: number;
   createTm: number;
+  comments?: Comment[];
 }
 
 interface VoteRecord {
@@ -1011,66 +1020,101 @@ export default function ProfilePage() {
                 <p className="text-gray-600">{t("loadingSongRecords")}</p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b-[2px] border-black">
-                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                        {t("date")}
-                      </th>
-                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                        {t("songName")}
-                      </th>
-                      <th className="px-[16px] py-[12px] text-left text-[16px] font-semibold text-black">
-                        {t("status")}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {musicCreations.length > 0 ? (
-                      musicCreations.map((creation) => (
-                        <tr
-                          key={creation.id}
-                          className="border-b border-gray-200"
-                        >
-                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+              <div className="space-y-[12px]">
+                {musicCreations.length > 0 ? (
+                  musicCreations.map((creation) => (
+                    <div
+                      key={creation.id}
+                      className="rounded-[8px] border-[2px] border-gray-300 bg-gray-50"
+                    >
+                      <div className="grid grid-cols-1 gap-[12px] p-[16px] md:grid-cols-4 md:items-center">
+                        <div>
+                          <div className="text-[12px] font-medium text-gray-500">
+                            {t("date")}
+                          </div>
+                          <div className="mt-[4px] text-[14px] text-gray-600">
                             {formatDate(creation.createTm)}
-                          </td>
-                          <td className="px-[16px] py-[12px] text-[14px] text-gray-600">
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-[12px] font-medium text-gray-500">
+                            {t("songName")}
+                          </div>
+                          <div className="mt-[4px] text-[14px] text-gray-600">
                             {creation.title}
-                          </td>
-                          <td className="px-[16px] py-[12px] text-[14px]">
-                            <div className="flex items-center gap-[8px] text-green-600">
-                              <svg
-                                className="h-[16px] w-[16px]"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M5 13l4 4L19 7"
-                                />
-                              </svg>
-                              <span>{t("uploadSuccess")}</span>
-                            </div>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td
-                          colSpan={3}
-                          className="px-[16px] py-[20px] text-center text-[14px] text-gray-500"
-                        >
-                          {t("noSongRecords")}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-[12px] font-medium text-gray-500">
+                            {t("status")}
+                          </div>
+                          <div className="mt-[4px] flex items-center gap-[8px] text-[14px] text-green-600">
+                            <svg
+                              className="h-[16px] w-[16px]"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            <span>{t("uploadSuccess")}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-[12px] font-medium text-gray-500">
+                            {t("comments")}
+                          </div>
+                          <div className="mt-[4px] text-[14px] text-gray-600">
+                            {creation.comments?.length || 0}
+                          </div>
+                        </div>
+                      </div>
+                      {creation.comments && creation.comments.length > 0 && (
+                        <Accordion type="single" collapsible className="w-full">
+                          <AccordionItem
+                            value={`comments-${creation.id}`}
+                            className="border-0"
+                          >
+                            <AccordionTrigger className="px-[16px] pb-[12px] text-[14px] text-gray-600 hover:no-underline">
+                              {t("viewComments")} ({creation.comments.length})
+                            </AccordionTrigger>
+                            <AccordionContent className="px-[16px] pb-[16px]">
+                              <div className="space-y-[12px] rounded-[8px] bg-gray-50 p-[12px]">
+                                {creation.comments.map((comment) => (
+                                  <div
+                                    key={comment.id}
+                                    className="border-l-[3px] border-gray-300 pl-[12px]"
+                                  >
+                                    <div className="mb-[4px] flex items-center gap-[8px]">
+                                      <span className="text-[12px] font-medium text-gray-500">
+                                        {t("judgeComment")}
+                                      </span>
+                                      <span className="text-[12px] text-gray-400">
+                                        {formatDate(comment.createTm)}
+                                      </span>
+                                    </div>
+                                    <p className="text-[14px] leading-relaxed text-gray-700">
+                                      {comment.content}
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-[8px] border-[2px] border-gray-300 bg-white p-[40px] text-center text-[14px] text-gray-500">
+                    {t("noSongRecords")}
+                  </div>
+                )}
               </div>
             )}
           </div>

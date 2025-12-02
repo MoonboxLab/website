@@ -369,18 +369,31 @@ export function useTokenVote() {
 
       setLoading(true);
       try {
-        const config = VOTE_CONFIG[voteType];
-        const chainId = VOTING_CONTRACTS[config.chain].CHAIN_ID;
         const { chain } = getNetwork();
-        const currentChainId = chain?.id || chainId;
+        const currentChainId = chain?.id;
+
+        // 根据 voteType 和当前链获取对应的代币地址和链ID
+        const { tokenAddress, chainId: targetChainId } =
+          getTokenAddressByVoteType(voteType, currentChainId);
+
+        // 根据当前链获取投票合约配置
+        const config = VOTE_CONFIG[voteType];
+        const defaultChainType: "BSC_MAINNET" | "ETH_MAINNET" =
+          config.chain === "BSC_MAINNET" ? "BSC_MAINNET" : "ETH_MAINNET";
+        const contractConfig = getContractByChainId(
+          currentChainId,
+          defaultChainType,
+        );
+        const votingContractAddress =
+          contractConfig.VOTING_CONTRACT as `0x${string}`;
 
         // 检查代币余额
         const balance = await readContract({
-          address: config.tokenContract as `0x${string}`,
+          address: tokenAddress as `0x${string}`,
           abi: erc20ABI,
           functionName: "balanceOf",
-          args: [account.address],
-          chainId: currentChainId,
+          args: [account.address as `0x${string}`],
+          chainId: targetChainId,
         });
 
         const amountWei = parseUnits(amount.toString(), 18);
@@ -395,32 +408,32 @@ export function useTokenVote() {
 
         // 检查授权额度
         const allowance = await readContract({
-          address: config.tokenContract as `0x${string}`,
+          address: tokenAddress as `0x${string}`,
           abi: erc20ABI,
           functionName: "allowance",
-          args: [account.address, config.contract],
-          chainId: currentChainId,
+          args: [account.address as `0x${string}`, votingContractAddress],
+          chainId: targetChainId,
         });
 
         if (allowance < amountWei) {
           // 需要授权
           const { hash: approveHash } = await writeContract({
-            address: config.tokenContract as `0x${string}`,
+            address: tokenAddress as `0x${string}`,
             abi: erc20ABI,
             functionName: "approve",
-            args: [config.contract, amountWei],
-            chainId: currentChainId,
+            args: [votingContractAddress, amountWei],
+            chainId: targetChainId,
           });
           await waitForTransaction({ hash: approveHash });
         }
 
         // 执行投票
         const { hash } = await writeContract({
-          address: config.contract,
+          address: votingContractAddress,
           abi: VOTING_CONTRACT_ABI,
           functionName: "voteByToken",
-          args: [BigInt(musicId), config.tokenContract, amountWei],
-          chainId: currentChainId,
+          args: [BigInt(musicId), tokenAddress as `0x${string}`, amountWei],
+          chainId: targetChainId,
         });
 
         await waitForTransaction({ hash });
@@ -562,35 +575,6 @@ export function useNetworkSwitch() {
   const [switching, setSwitching] = useState(false);
   const t = useTranslations("Music");
 
-  const switchToChain = useCallback(
-    async (chainId: number) => {
-      if (typeof window === "undefined" || !window.ethereum) {
-        throw new Error(t("installWallet") || "請安裝並連接錢包");
-      }
-
-      setSwitching(true);
-      try {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: `0x${chainId.toString(16)}` }],
-        });
-      } catch (error: any) {
-        // 如果网络不存在，尝试添加网络
-        if (error.code === 4902) {
-          await addNetwork(chainId);
-        } else {
-          throw new Error(
-            t("networkSwitchFailed", { error: error.message }) ||
-              `網絡切換失敗: ${error.message}`,
-          );
-        }
-      } finally {
-        setSwitching(false);
-      }
-    },
-    [t],
-  );
-
   const addNetwork = useCallback(async (chainId: number) => {
     const networkConfig =
       chainId === 56
@@ -622,6 +606,35 @@ export function useNetworkSwitch() {
       params: [networkConfig],
     });
   }, []);
+
+  const switchToChain = useCallback(
+    async (chainId: number) => {
+      if (typeof window === "undefined" || !window.ethereum) {
+        throw new Error(t("installWallet") || "請安裝並連接錢包");
+      }
+
+      setSwitching(true);
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: `0x${chainId.toString(16)}` }],
+        });
+      } catch (error: any) {
+        // 如果网络不存在，尝试添加网络
+        if (error.code === 4902) {
+          await addNetwork(chainId);
+        } else {
+          throw new Error(
+            t("networkSwitchFailed", { error: error.message }) ||
+              `網絡切換失敗: ${error.message}`,
+          );
+        }
+      } finally {
+        setSwitching(false);
+      }
+    },
+    [t, addNetwork],
+  );
 
   return { switchToChain, switching };
 }

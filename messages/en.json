@@ -144,6 +144,11 @@
     "noVoteRecords": "No vote records",
     "noSongRecords": "No song records",
     "connectWalletToViewVotes": "Please connect your wallet to view voting history",
+    "comments": "Comments",
+    "noComments": "No comments",
+    "viewComments": "View Comments",
+    "hideComments": "Hide Comments",
+    "judgeComment": "Judge Comment",
     "published": "Published",
     "pendingReview": "Pending Review",
     "status": "Status",
@@ -757,6 +762,7 @@
     "vote": "Vote",
     "artist": "Artist",
     "voteCount": "Vote Count",
+    "login": "Login",
     "nobodyVoteLimit": "Each NFT can vote once per month",
     "voteExplanation": "Vote Explanation",
     "voteExplanationText": "Enter the number of votes, the contract will automatically convert to the corresponding token amount based on the selected voting method",
@@ -835,6 +841,7 @@
     "voteSuccessMessage": "Vote successful!",
     "voteFailedMessage": "Vote failed, please try again",
     "invalidVoteAmount": "Please enter a valid vote amount",
+    "insufficientNftBalance": "Insufficient NFT balance",
     "voteFailedGeneric": "Vote failed",
     "nftCount": "pieces",
     "connectWallet": "Connect Wallet",
@@ -852,6 +859,14 @@
     "ok": "OK",
     "noNft": "Current wallet has no Nobody NFT",
     "voteHint": "After voting, refresh — the vote counts update automatically",
-    "contactInfoHint": "Please provide as much contact information as possible to help our staff reach you easily."
+    "contactInfoHint": "Please provide as much contact information as possible to help our staff reach you easily.",
+    "connectWalletRequired": "Please connect wallet",
+    "insufficientTokenBalance": "Insufficient token balance, current balance: {balance}",
+    "pleaseLogin": "Please login first",
+    "signatureCancelled": "User cancelled signature",
+    "signatureFailed": "Signature failed: {error}",
+    "installWallet": "Please install and connect wallet",
+    "networkSwitchFailed": "Network switch failed: {error}",
+    "unableToGetNetwork": "Unable to get current network, please ensure wallet is connected"
   }
 }

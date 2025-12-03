@@ -372,6 +372,7 @@ export default function VotingSongs({
         onClose={() => setIsVoteModalOpen(false)}
         music={selectedMusic}
         onVote={handleVote}
+        monthNumber={currentEventId}
       />
     </div>
   );

@@ -79,10 +79,20 @@ export default function MusicVotingPage() {
           singer: item.singer,
           user: item.user,
           createTm: item.createTm,
+          finalScope: item.finalScope as number,
+          emotionScope: item.emotionScope,
+          dictionScope: item.dictionScope,
+          intonationScope: item.intonationScope,
+          rhythmScope: item.rhythmScope,
         }));
 
         console.log("Transformed voting musics:", transformedMusics.length);
-        setVotingMusics(transformedMusics);
+        setVotingMusics(
+          transformedMusics.sort(
+            (a: { finalScope: number }, b: { finalScope: number }) =>
+              b.finalScope - a.finalScope,
+          ),
+        );
       } else {
         console.log("No data or failed response, setting empty array");
         setVotingMusics([]);

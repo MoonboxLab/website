@@ -30,6 +30,7 @@ export default function VotingSongs({
   onVoted,
 }: VotingSongsProps) {
   const t = useTranslations("Music");
+  const allT = useTranslations();
   const { playTrack } = useMusic();
   const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
   const [selectedMusic, setSelectedMusic] = useState<any>(null);
@@ -270,7 +271,7 @@ export default function VotingSongs({
                 };
 
                 return (
-                  <div className="relative cursor-pointer" key={item.id}>
+                  <div className="relative" key={item.id}>
                     <div
                       className="group relative aspect-square overflow-hidden rounded-lg bg-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                       onClick={() =>
@@ -338,13 +339,22 @@ export default function VotingSongs({
                         <Play size={12} />
                         {t("playNow")}
                       </button>
-                      <button
-                        onClick={() => handleVoteClick(item)}
-                        className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-yellow-400 px-2 py-1 text-xs font-bold hover:bg-yellow-500"
-                      >
-                        <Vote size={12} />
-                        {t("vote")}
-                      </button>
+                      {item.status === 1 ? (
+                        <button
+                          onClick={() => handleVoteClick(item)}
+                          className="flex items-center justify-center gap-1 rounded border border-gray-300 bg-yellow-400 px-2 py-1 text-xs font-bold hover:bg-yellow-500"
+                        >
+                          <Vote size={12} />
+                          {t("vote")}
+                        </button>
+                      ) : (
+                        <button
+                          className="flex cursor-not-allowed items-center justify-center gap-1 rounded border border-gray-300 bg-gray-200 px-2 py-1 text-xs font-bold"
+                          disabled
+                        >
+                          {allT("Show.voteEnd")}
+                        </button>
+                      )}
                     </div>
                   </div>
                 );

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Play, Ticket, Vote, BarChart3 } from "lucide-react";
+import { Play, Ticket, Vote, BarChart3, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMusic } from "@/lib/MusicContext";
 import VoteModal from "./VoteModal";
@@ -308,14 +308,26 @@ export default function VotingSongs({
                         {item.description}
                       </p>
                       <div className="mt-1">
-                        <div
-                          className={`flex items-center gap-1 text-sm font-medium ${getRankColor(
-                            rank,
-                          )}`}
-                        >
-                          <Ticket size={14} />
-                          <span>{item.voteCount || 0}</span>
-                        </div>
+                        {item.status === 3 ? (
+                          <div
+                            className={`flex items-center gap-1 text-sm font-medium ${getRankColor(
+                              rank,
+                            )}`}
+                            title={item.finalScope}
+                          >
+                            <Star size={14} />
+                            <span>{item.finalScope.toFixed(0) || 0}</span>
+                          </div>
+                        ) : (
+                          <div
+                            className={`flex items-center gap-1 text-sm font-medium ${getRankColor(
+                              rank,
+                            )}`}
+                          >
+                            <Ticket size={14} />
+                            <span>{item.voteCount || 0}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="mt-2 flex flex-col gap-2">

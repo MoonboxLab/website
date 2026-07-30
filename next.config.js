@@ -5,7 +5,13 @@ const nextConfig = {
     appDir: true,
   },
   webpack: (config) => {
-    config.resolve.fallback = { fs: false, net: false, tls: false };
+    config.resolve.fallback = {
+      fs: false,
+      net: false,
+      tls: false,
+      // urllib only requires this module when an outbound proxy is enabled.
+      "proxy-agent": false,
+    };
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
@@ -24,6 +30,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "*.s3.ap-east-1.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.aliyuncs.com",
       },
     ],
   },

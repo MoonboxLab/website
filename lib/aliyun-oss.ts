@@ -1,8 +1,7 @@
-import { S3Client } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
+import OSS from "ali-oss";
 
-// STS 凭证接口
-interface STSCredentials {
+// 测试接口继续返回原有字段名，这里只在接入 OSS SDK 时做字段映射。
+interface OSSCredentials {
   region: string;
   endpoint: string;
   accessKeyId: string;
@@ -13,21 +12,40 @@ interface STSCredentials {
   front: string;
 }
 
-// 获取STS凭证
-async function getSTSCredentials(): Promise<STSCredentials> {
+type RefreshSTSToken = NonNullable<OSS.Options["refreshSTSToken"]>;
+
+function toOSSSTSCredentials(credentials: OSSCredentials) {
+  return {
+    accessKeyId: credentials.accessKeyId,
+    accessKeySecret: credentials.secretAccessKey,
+    stsToken: credentials.sessionToken,
+  };
+}
+
+function validateOSSCredentials(credentials: OSSCredentials) {
+  if (
+    !credentials.accessKeyId ||
+    !credentials.secretAccessKey ||
+    !credentials.sessionToken ||
+    !credentials.bucket ||
+    (!credentials.endpoint && !credentials.region)
+  ) {
+    throw new Error("Invalid OSS STS credentials");
+  }
+}
+
+async function getOSSCredentials(): Promise<OSSCredentials> {
   try {
-    // 从 localStorage 获取认证信息
     const authToken = localStorage.getItem("authToken");
     const userData = localStorage.getItem("user");
     const user = userData ? JSON.parse(userData) : null;
 
-    // 准备请求头
     const headers: HeadersInit = {};
     if (authToken) {
-      headers["Authorization"] = `Bearer ${authToken}`;
+      headers.Authorization = `Bearer ${authToken}`;
     }
     if (user?.id) {
-      headers["uid"] = user.id;
+      headers.uid = user.id;
     }
 
     const response = await fetch("/api/sts-credentials", {
@@ -36,117 +54,104 @@ async function getSTSCredentials(): Promise<STSCredentials> {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to get STS credentials");
+      throw new Error("Failed to get OSS STS credentials");
     }
-    return await response.json();
+
+    const credentials = (await response.json()) as OSSCredentials;
+    validateOSSCredentials(credentials);
+    return credentials;
   } catch (error) {
-    console.error("Error getting STS credentials:", error);
-    throw new Error("Failed to get STS credentials");
+    console.error("Error getting OSS STS credentials:", error);
+    throw new Error("Failed to get OSS STS credentials");
   }
 }
 
-// 创建S3客户端
-async function createS3Client(credentials?: STSCredentials): Promise<S3Client> {
-  // 如果传入了 credentials，直接使用；否则获取新的
-  const creds = credentials || (await getSTSCredentials());
+function createOSSClient(
+  credentials: OSSCredentials,
+  bucketName?: string,
+  refreshSTSToken?: RefreshSTSToken,
+): OSS {
+  validateOSSCredentials(credentials);
 
-  return new S3Client({
-    region: creds.region,
-    endpoint: creds.endpoint,
-    forcePathStyle: true, // 使用路径样式URL
-    credentials: {
-      accessKeyId: creds.accessKeyId,
-      secretAccessKey: creds.secretAccessKey,
-      sessionToken: creds.sessionToken,
-    },
-  });
+  const options: OSS.Options = {
+    ...toOSSSTSCredentials(credentials),
+    bucket: bucketName || credentials.bucket,
+    secure: !credentials.endpoint?.toLowerCase().startsWith("http://"),
+    refreshSTSToken,
+    refreshSTSTokenInterval: 5 * 60 * 1000,
+  };
+
+  if (credentials.endpoint) {
+    options.endpoint = credentials.endpoint.replace(/\/+$/, "");
+  } else {
+    options.region = credentials.region;
+  }
+
+  return new OSS(options);
 }
 
-// 上传文件到 S3
-export async function uploadToS3(
-  file: File | Buffer,
+// 浏览器直传到阿里云 OSS，避免大文件经过 Next.js 服务端。
+export async function uploadToOSS(
+  file: File | Blob,
   key: string,
   bucketName?: string,
   contentType?: string,
 ): Promise<string> {
   try {
-    // 只获取一次 credentials，然后传递给 createS3Client 复用
-    const credentials = await getSTSCredentials();
-    const s3Client = await createS3Client(credentials);
-    const bucket = bucketName || credentials.bucket;
+    const credentials = await getOSSCredentials();
+    const client = createOSSClient(credentials, bucketName, async () =>
+      toOSSSTSCredentials(await getOSSCredentials()),
+    );
 
-    const uploadParams = {
-      Bucket: bucket,
-      Key: key,
-      Body: file,
-      ContentType: contentType || "image/jpeg",
-      ACL: "public-read" as const,
-    };
-
-    // 统一使用 Upload 类，它能正确处理 File 对象和 Buffer
-    // 设置较大的 partSize（50MB），对于小于 50MB 的文件会使用单次上传，避免分片上传的 CRC32 校验和问题
-    const upload = new Upload({
-      client: s3Client,
-      params: uploadParams,
-      // 设置较大的 partSize，小文件会使用单次上传，大文件会分片上传
-      partSize: 50 * 1024 * 1024, // 50MB
-      leavePartsOnError: false,
+    await client.multipartUpload(key, file, {
+      parallel: 4,
+      partSize: 5 * 1024 * 1024,
+      mime: contentType || "application/octet-stream",
+      headers: {
+        "x-oss-object-acl": "public-read",
+      },
     });
 
-    await upload.done();
-
-    // 返回文件的公开URL
-    return `${credentials.endpoint}${bucket}/${key}`;
+    return client.generateObjectUrl(key, credentials.front || undefined);
   } catch (error) {
-    console.error("S3 upload error:", error);
-    throw new Error("Failed to upload file to S3");
+    console.error("OSS upload error:", error);
+    throw new Error("Failed to upload file to OSS");
   }
 }
 
-// 上传头像文件
 export async function uploadAvatar(
   file: File,
   userId: string,
 ): Promise<string> {
   try {
-    // 生成唯一的文件名
     const timestamp = Date.now();
     const fileExtension = file.name.split(".").pop() || "jpg";
     const key = `avatars/${userId}/${timestamp}.${fileExtension}`;
 
-    // 上传到 S3
-    const avatarUrl = await uploadToS3(file, key, undefined, file.type);
-
-    return avatarUrl;
+    return await uploadToOSS(file, key, undefined, file.type);
   } catch (error) {
     console.error("Avatar upload error:", error);
     throw new Error("Failed to upload avatar");
   }
 }
 
-// 上传作品文件
 export async function uploadWorkFile(
   file: File,
   userId: string,
   sampleSong: string,
 ): Promise<string> {
   try {
-    // 生成唯一的文件名
     const timestamp = Date.now();
     const fileExtension = file.name.split(".").pop() || "mp3";
     const key = `works/${userId}/${sampleSong}/${timestamp}.${fileExtension}`;
 
-    // 上传到 S3
-    const workFileUrl = await uploadToS3(file, key, undefined, file.type);
-
-    return workFileUrl;
+    return await uploadToOSS(file, key, undefined, file.type);
   } catch (error) {
     console.error("Work file upload error:", error);
     throw new Error("Failed to upload work file");
   }
 }
 
-// 验证文件类型
 export function validateImageFile(file: File): boolean {
   const allowedTypes = [
     "image/jpeg",
@@ -155,7 +160,7 @@ export function validateImageFile(file: File): boolean {
     "image/gif",
     "image/webp",
   ];
-  const maxSize = 5 * 1024 * 1024; // 5MB
+  const maxSize = 5 * 1024 * 1024;
 
   if (!allowedTypes.includes(file.type)) {
     throw new Error(
@@ -170,7 +175,6 @@ export function validateImageFile(file: File): boolean {
   return true;
 }
 
-// 压缩图片（可选）
 export function compressImage(
   file: File,
   maxWidth: number = 300,
@@ -182,7 +186,6 @@ export function compressImage(
     const img = new Image();
 
     img.onload = () => {
-      // 计算新的尺寸
       const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
       const newWidth = img.width * ratio;
       const newHeight = img.height * ratio;
@@ -190,7 +193,6 @@ export function compressImage(
       canvas.width = newWidth;
       canvas.height = newHeight;
 
-      // 绘制压缩后的图片
       ctx?.drawImage(img, 0, 0, newWidth, newHeight);
 
       canvas.toBlob(

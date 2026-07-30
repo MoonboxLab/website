@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "@alifd/biz-anchor": "^2.0.3",
-    "@aws-sdk/client-s3": "^3.914.0",
-    "@aws-sdk/lib-storage": "^3.914.0",
     "@fullpage/react-fullpage": "^0.1.40",
     "@hookform/resolvers": "^3.3.4",
     "@next/third-parties": "^14.2.8",
@@ -37,9 +35,9 @@
     "@wagmi/core": "^1.2.0",
     "ahooks": "^3.7.8",
     "ai": "^2.2.17",
+    "ali-oss": "^6.23.0",
     "antd": "^5.14.1",
     "autoprefixer": "10.4.14",
-    "aws-sdk": "^2.1692.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
@@ -81,6 +79,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/ali-oss": "^6.23.3",
     "@types/big.js": "^6.2.2",
     "@types/react-modal": "^3.16.0",
     "@types/react-scroll": "^1.8.9",

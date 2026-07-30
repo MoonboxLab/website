@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   uploadAvatarServer,
   validateImageFileServer,
-} from "@/lib/aws-s3-server";
+} from "@/lib/aliyun-oss-server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,10 +42,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    // 上传到 S3
-    console.log("Starting S3 upload...");
-    const avatarUrl = await uploadAvatarServer(buffer, userId, request);
-    console.log("S3 upload successful, URL:", avatarUrl);
+    // 上传到阿里云 OSS
+    console.log("Starting OSS upload...");
+    const avatarUrl = await uploadAvatarServer(
+      buffer,
+      userId,
+      file.type,
+      file.name,
+      request,
+    );
+    console.log("OSS upload successful, URL:", avatarUrl);
 
     return NextResponse.json({
       success: true,

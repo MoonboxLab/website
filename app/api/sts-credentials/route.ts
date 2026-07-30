@@ -35,7 +35,12 @@ export async function GET(request: NextRequest) {
       headers["uid"] = uidHeader;
     }
 
-    console.log("STS API - Calling external API with headers:", headers);
+    console.log("STS API - Calling external API:", {
+      endpoint: API_ENDPOINTS.STS_CREDENTIALS,
+      hasToken: !!headers.token,
+      hasUid: !!headers.uid,
+      lang,
+    });
 
     const response = await fetch(API_ENDPOINTS.STS_CREDENTIALS, {
       method: "GET",
@@ -45,7 +50,7 @@ export async function GET(request: NextRequest) {
     console.log("STS API - External API response status:", response.status);
 
     const data = await response.json();
-    console.log("STS API - External API response data:", data);
+    console.log("STS API - External API response code:", data.code);
 
     if (!response.ok) {
       return NextResponse.json(
@@ -55,7 +60,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Check for login requirement (code 104)
-    const loginResponse = handleApiResponse(data, "Failed to get STS credentials");
+    const loginResponse = handleApiResponse(
+      data,
+      "Failed to get STS credentials",
+    );
     if (loginResponse) {
       return loginResponse;
     }

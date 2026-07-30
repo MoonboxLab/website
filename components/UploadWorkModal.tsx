@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { uploadWorkFile } from "@/lib/aws-s3";
+import { uploadWorkFile } from "@/lib/aliyun-oss";
 
 interface UploadWorkModalProps {
   open: boolean;
@@ -164,7 +164,7 @@ export default function UploadWorkModal({
         return;
       }
 
-      // 直接上传到 S3（客户端上传，绕过 Vercel 4.5MB 限制）
+      // 直接上传到阿里云 OSS（客户端上传，绕过 Vercel 4.5MB 限制）
       const workFileUrl = await uploadWorkFile(
         formData.workFile,
         user.id,

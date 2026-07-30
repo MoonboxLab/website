@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { uploadAvatar } from "@/lib/aws-s3";
+import { uploadAvatar } from "@/lib/aliyun-oss";
 
 interface AvatarUploadProps {
   onAvatarChange: (avatarUrl: string) => void;
@@ -55,7 +55,7 @@ export default function AvatarUpload({
         return;
       }
 
-      // 直接上传到 S3（客户端上传，绕过 Vercel 4.5MB 限制）
+      // 直接上传到阿里云 OSS（客户端上传，绕过 Vercel 4.5MB 限制）
       const avatarUrl = await uploadAvatar(file, user.id);
 
       // 上传成功后，调用回调函数

@@ -78,11 +78,13 @@ export function normalizeOSSCredentials(value: unknown): OSSCredentials {
     region: pickString(containers, ["region", "Region"]),
     endpoint: pickString(containers, ["endpoint", "Endpoint"]),
     accessKeyId: pickString(containers, [
+      "accessKey",
       "accessKeyId",
       "AccessKeyId",
       "access_key_id",
     ]),
     secretAccessKey: pickString(containers, [
+      "accessSecret",
       "secretAccessKey",
       "accessKeySecret",
       "AccessKeySecret",

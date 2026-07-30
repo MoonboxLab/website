@@ -3,11 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
-    // ali-oss uses dynamic requires in its Node.js transport. Keep it as a
-    // runtime dependency instead of making webpack inspect those internals.
-    serverComponentsExternalPackages: ["ali-oss"],
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.resolve.fallback = {
       fs: false,
       net: false,
@@ -16,6 +13,11 @@ const nextConfig = {
       "proxy-agent": false,
     };
     config.externals.push("pino-pretty", "lokijs", "encoding");
+    if (isServer) {
+      // ali-oss uses dynamic requires in its Node.js transport. Keep it as a
+      // runtime dependency instead of making webpack inspect those internals.
+      config.externals.push("ali-oss");
+    }
     return config;
   },
   images: {

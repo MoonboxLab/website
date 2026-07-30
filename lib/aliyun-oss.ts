@@ -1,18 +1,25 @@
-import OSS from "ali-oss";
+"use client";
 
-// 测试接口继续返回原有字段名，这里只在接入 OSS SDK 时做字段映射。
-interface OSSCredentials {
-  region: string;
-  endpoint: string;
-  accessKeyId: string;
-  secretAccessKey: string;
-  sessionToken: string;
-  expiration: string;
-  bucket: string;
-  front: string;
-}
+import type OSS from "ali-oss";
+import {
+  normalizeOSSCredentials,
+  OSSCredentials,
+} from "@/lib/aliyun-oss-credentials";
 
 type RefreshSTSToken = NonNullable<OSS.Options["refreshSTSToken"]>;
+type OSSConstructor = typeof OSS;
+
+let browserOSSConstructorPromise: Promise<OSSConstructor> | undefined;
+
+function getBrowserOSSConstructor(): Promise<OSSConstructor> {
+  if (!browserOSSConstructorPromise) {
+    browserOSSConstructorPromise = import(
+      "ali-oss/dist/aliyun-oss-sdk.js"
+    ).then((module) => (module.default || module) as OSSConstructor);
+  }
+
+  return browserOSSConstructorPromise;
+}
 
 function toOSSSTSCredentials(credentials: OSSCredentials) {
   return {
@@ -20,18 +27,6 @@ function toOSSSTSCredentials(credentials: OSSCredentials) {
     accessKeySecret: credentials.secretAccessKey,
     stsToken: credentials.sessionToken,
   };
-}
-
-function validateOSSCredentials(credentials: OSSCredentials) {
-  if (
-    !credentials.accessKeyId ||
-    !credentials.secretAccessKey ||
-    !credentials.sessionToken ||
-    !credentials.bucket ||
-    (!credentials.endpoint && !credentials.region)
-  ) {
-    throw new Error("Invalid OSS STS credentials");
-  }
 }
 
 async function getOSSCredentials(): Promise<OSSCredentials> {
@@ -53,26 +48,31 @@ async function getOSSCredentials(): Promise<OSSCredentials> {
       headers,
     });
 
+    const payload = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to get OSS STS credentials");
+      console.error("OSS STS request failed:", {
+        status: response.status,
+        statusText: response.statusText,
+        payloadKeys:
+          payload && typeof payload === "object" ? Object.keys(payload) : [],
+      });
+      throw new Error(`Failed to get OSS STS credentials (${response.status})`);
     }
 
-    const credentials = (await response.json()) as OSSCredentials;
-    validateOSSCredentials(credentials);
+    const credentials = normalizeOSSCredentials(payload);
     return credentials;
   } catch (error) {
     console.error("Error getting OSS STS credentials:", error);
-    throw new Error("Failed to get OSS STS credentials");
+    throw error;
   }
 }
 
 function createOSSClient(
+  OSSClient: OSSConstructor,
   credentials: OSSCredentials,
   bucketName?: string,
   refreshSTSToken?: RefreshSTSToken,
 ): OSS {
-  validateOSSCredentials(credentials);
-
   const options: OSS.Options = {
     ...toOSSSTSCredentials(credentials),
     bucket: bucketName || credentials.bucket,
@@ -87,7 +87,7 @@ function createOSSClient(
     options.region = credentials.region;
   }
 
-  return new OSS(options);
+  return new OSSClient(options);
 }
 
 // 浏览器直传到阿里云 OSS，避免大文件经过 Next.js 服务端。
@@ -98,9 +98,13 @@ export async function uploadToOSS(
   contentType?: string,
 ): Promise<string> {
   try {
+    const OSSClient = await getBrowserOSSConstructor();
     const credentials = await getOSSCredentials();
-    const client = createOSSClient(credentials, bucketName, async () =>
-      toOSSSTSCredentials(await getOSSCredentials()),
+    const client = createOSSClient(
+      OSSClient,
+      credentials,
+      bucketName,
+      async () => toOSSSTSCredentials(await getOSSCredentials()),
     );
 
     await client.multipartUpload(key, file, {
@@ -115,7 +119,7 @@ export async function uploadToOSS(
     return client.generateObjectUrl(key, credentials.front || undefined);
   } catch (error) {
     console.error("OSS upload error:", error);
-    throw new Error("Failed to upload file to OSS");
+    throw error;
   }
 }
 
@@ -131,7 +135,7 @@ export async function uploadAvatar(
     return await uploadToOSS(file, key, undefined, file.type);
   } catch (error) {
     console.error("Avatar upload error:", error);
-    throw new Error("Failed to upload avatar");
+    throw error;
   }
 }
 
@@ -148,7 +152,7 @@ export async function uploadWorkFile(
     return await uploadToOSS(file, key, undefined, file.type);
   } catch (error) {
     console.error("Work file upload error:", error);
-    throw new Error("Failed to upload work file");
+    throw error;
   }
 }
 

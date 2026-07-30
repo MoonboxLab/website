@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
+    // ali-oss uses dynamic requires in its Node.js transport. Keep it as a
+    // runtime dependency instead of making webpack inspect those internals.
+    serverComponentsExternalPackages: ["ali-oss"],
   },
   webpack: (config) => {
     config.resolve.fallback = {

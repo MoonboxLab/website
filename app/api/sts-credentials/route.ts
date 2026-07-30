@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_ENDPOINTS } from "@/constants/env";
 import { handleApiResponse } from "@/lib/api-response-handler";
+import { normalizeOSSCredentials } from "@/lib/aliyun-oss-credentials";
 
 export async function GET(request: NextRequest) {
   try {
@@ -70,7 +71,10 @@ export async function GET(request: NextRequest) {
 
     // Handle successful response
     if (data.code === 0) {
-      return NextResponse.json(data.result.data, { status: 200 });
+      const payload = data.result?.data ?? data.result;
+      const credentials = normalizeOSSCredentials(payload);
+
+      return NextResponse.json(credentials, { status: 200 });
     } else {
       return NextResponse.json(
         { error: data.msg || "Failed to get STS credentials" },

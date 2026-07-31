@@ -1,6 +1,6 @@
 // API Configuration
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.nobody.xyz";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://new.nobody.xyz";
 
 // API Endpoints
 export const API_ENDPOINTS = {

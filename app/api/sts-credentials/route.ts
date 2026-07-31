@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_ENDPOINTS } from "@/constants/env";
 import { handleApiResponse } from "@/lib/api-response-handler";
+import { normalizeOSSCredentials } from "@/lib/aliyun-oss-credentials";
 
 export async function GET(request: NextRequest) {
   try {
@@ -35,7 +36,12 @@ export async function GET(request: NextRequest) {
       headers["uid"] = uidHeader;
     }
 
-    console.log("STS API - Calling external API with headers:", headers);
+    console.log("STS API - Calling external API:", {
+      endpoint: API_ENDPOINTS.STS_CREDENTIALS,
+      hasToken: !!headers.token,
+      hasUid: !!headers.uid,
+      lang,
+    });
 
     const response = await fetch(API_ENDPOINTS.STS_CREDENTIALS, {
       method: "GET",
@@ -45,7 +51,7 @@ export async function GET(request: NextRequest) {
     console.log("STS API - External API response status:", response.status);
 
     const data = await response.json();
-    console.log("STS API - External API response data:", data);
+    console.log("STS API - External API response code:", data.code);
 
     if (!response.ok) {
       return NextResponse.json(
@@ -55,14 +61,20 @@ export async function GET(request: NextRequest) {
     }
 
     // Check for login requirement (code 104)
-    const loginResponse = handleApiResponse(data, "Failed to get STS credentials");
+    const loginResponse = handleApiResponse(
+      data,
+      "Failed to get STS credentials",
+    );
     if (loginResponse) {
       return loginResponse;
     }
 
     // Handle successful response
     if (data.code === 0) {
-      return NextResponse.json(data.result.data, { status: 200 });
+      const payload = data.result?.data ?? data.result;
+      const credentials = normalizeOSSCredentials(payload);
+
+      return NextResponse.json(credentials, { status: 200 });
     } else {
       return NextResponse.json(
         { error: data.msg || "Failed to get STS credentials" },
